@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@Design.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainPageController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@Design.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainPageController">
    <children>
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -25,11 +27,11 @@
             </ContextMenu>
          </contextMenu>
       </MenuBar>
-      <TabPane layoutX="55.0" layoutY="59.0" prefHeight="83.0" prefWidth="545.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.0">
+      <TabPane layoutX="113.0" layoutY="59.0" prefHeight="83.0" prefWidth="487.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.0">
         <tabs>
           <Tab text="SKRIV">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="118.0" prefWidth="545.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="118.0" prefWidth="545.0" style="-fx-background-color: lightgray;">
                      <children>
                         <ChoiceBox layoutY="2.0" prefHeight="25.0" prefWidth="69.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="2.0" />
                         <MenuButton layoutX="69.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" AnchorPane.leftAnchor="69.0" AnchorPane.topAnchor="2.0">
@@ -42,39 +44,65 @@
                         <Button layoutX="128.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="B" AnchorPane.leftAnchor="132.0" AnchorPane.topAnchor="2.0" />
                         <Button layoutX="155.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="I" AnchorPane.leftAnchor="159.0" AnchorPane.topAnchor="2.0" />
                         <Button layoutX="180.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="U" AnchorPane.leftAnchor="184.0" AnchorPane.topAnchor="2.0" />
-                        <Button layoutX="219.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" AnchorPane.leftAnchor="217.0" AnchorPane.topAnchor="2.0" />
-                        <Button layoutX="244.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" AnchorPane.leftAnchor="242.0" AnchorPane.topAnchor="2.0" />
-                        <Button layoutX="269.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" AnchorPane.leftAnchor="267.0" AnchorPane.topAnchor="2.0" />
-                        <MenuButton layoutX="298.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="46.0" AnchorPane.leftAnchor="297.0" AnchorPane.topAnchor="2.0">
+                        <MenuButton layoutX="219.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="46.0" AnchorPane.leftAnchor="219.0" AnchorPane.topAnchor="4.0">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="Action 1" />
-                            <MenuItem mnemonicParsing="false" text="Action 2" />
+                            <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icons/list_ordered_dot.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></MenuItem>
+                            <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icons/list_ordered_dash.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></MenuItem>
+                              <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icons/list_ordered_decimal.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
                           </items>
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icons/list_ordered_dot.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </MenuButton>
-                        <MenuButton layoutX="349.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="46.0" AnchorPane.leftAnchor="348.0" AnchorPane.topAnchor="2.0">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Action 1" />
-                              <MenuItem mnemonicParsing="false" text="Action 2" />
-                           </items>
-                        </MenuButton>
-                        <Button layoutX="400.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" AnchorPane.leftAnchor="398.0" AnchorPane.topAnchor="2.0" />
+                        <ColorPicker layoutX="295.0" layoutY="2.0" prefHeight="42.0" prefWidth="91.0" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="4.0" />
+                        <ImageView disable="true" fitHeight="39.0" fitWidth="44.0" layoutX="321.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/highlight.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
           <Tab text="MÅLA">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: lightgray;" />
             </content>
           </Tab>
         </tabs>
       </TabPane>
-      <Label layoutX="55.0" layoutY="35.0" text="NAMN:" AnchorPane.leftAnchor="55.0" AnchorPane.topAnchor="35.0">
+      <Label layoutX="113.0" layoutY="36.0" text="NAMN:" AnchorPane.leftAnchor="113.0" AnchorPane.topAnchor="36.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="113.0" layoutY="32.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="171.0" AnchorPane.leftAnchor="113.0" AnchorPane.topAnchor="29.0">
+      <TextField layoutX="171.0" layoutY="31.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="171.0" AnchorPane.leftAnchor="171.0" AnchorPane.topAnchor="29.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -84,5 +112,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
         </content>
       </ScrollPane>
+      <MenuButton layoutX="348.0" layoutY="33.0" mnemonicParsing="false" text="Lägg i grupp" AnchorPane.leftAnchor="348.0" AnchorPane.topAnchor="32.0" />
+      <Button layoutX="488.0" layoutY="32.0" mnemonicParsing="false" text="Skapa ny+" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="32.0" />
    </children>
 </AnchorPane>
