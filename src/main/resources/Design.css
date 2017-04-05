@@ -8,9 +8,6 @@
     -fx-background-color: transparent ;
 }
 
-.text-area {
-    -fx-border-color: lightgray;
-}
 
 .text-area:focused {
     -fx-border-color: blue;

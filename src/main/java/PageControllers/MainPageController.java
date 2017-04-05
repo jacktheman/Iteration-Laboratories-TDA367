@@ -2,10 +2,13 @@ package PageControllers;
 
 import NoteObjects.Objects.TextContainer;
 import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Control;
@@ -46,14 +49,17 @@ public class MainPageController implements Initializable{
     }
 
     private void pressOnCanvas() {
-        notePane.setOnMousePressed(mouseEvent -> {
+
+        notePane.setOnMouseReleased(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                 TextContainer textContainer = new TextContainer((int) mouseEvent.getX(), (int) mouseEvent.getY());
                 Pane pane = textContainer.getPane();
                 addToNotePane(pane);
-                //pane.requestFocus();
-                //pane.getChildren().get(pane.getChildren().size()-1).requestFocus();
+
+                pane.getChildren().get(pane.getChildren().size()-1).requestFocus();
             }
         });
+
+
     }
 }
