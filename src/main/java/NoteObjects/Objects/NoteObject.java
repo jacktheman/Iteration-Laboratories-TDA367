@@ -1,6 +1,7 @@
 package NoteObjects.Objects;
 
 import NoteObjects.NoteObjectI;
+import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
@@ -9,7 +10,13 @@ import javafx.scene.layout.Pane;
  */
 abstract class NoteObject implements NoteObjectI {
 
-    private Pane pane = new Pane();
+    private Pane pane;
+
+    NoteObject(int xPos, int yPos) {
+        pane = new Pane();
+        pane.setLayoutX(xPos);
+        pane.setLayoutY(yPos);
+    }
 
     void addToPane(Node... nodes) {
         pane.getChildren().addAll(nodes);

@@ -1,12 +1,21 @@
 package PageControllers;
 
+import NoteObjects.Objects.TextContainer;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -27,6 +36,8 @@ public class MainPageController implements Initializable{
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         instance = this;
+        notePane.setStyle("-fx-background-color: white");
+        pressOnCanvas();
     }
 
     public void addToNotePane(Node... nodes) {
@@ -35,5 +46,20 @@ public class MainPageController implements Initializable{
 
     public void removeToNotePane(Node... nodes) {
         notePane.getChildren().removeAll(nodes);
+    }
+
+    private void pressOnCanvas() {
+
+        notePane.setOnMouseReleased(mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                TextContainer textContainer = new TextContainer((int) mouseEvent.getX(), (int) mouseEvent.getY());
+                Pane pane = textContainer.getPane();
+                addToNotePane(pane);
+
+                pane.getChildren().get(pane.getChildren().size()-1).requestFocus();
+            }
+        });
+
+
     }
 }
