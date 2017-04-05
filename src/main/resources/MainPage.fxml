@@ -109,7 +109,7 @@
       </TextField>
       <ScrollPane layoutX="13.0" layoutY="141.0" prefHeight="259.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="141.0">
         <content>
-          <AnchorPane fx:id="notePane" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+          <AnchorPane fx:id="notePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1000.0" />
         </content>
       </ScrollPane>
       <MenuButton layoutX="348.0" layoutY="33.0" mnemonicParsing="false" text="Lägg i grupp" AnchorPane.leftAnchor="348.0" AnchorPane.topAnchor="32.0" />

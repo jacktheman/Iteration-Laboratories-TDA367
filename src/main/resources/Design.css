@@ -4,6 +4,18 @@
     -fx-opacity: 20%;
 }
 
+.text-area, .text-area .viewport, .text-area .content {
+    -fx-background-color: transparent ;
+}
+
+.text-area {
+    -fx-border-color: lightgray;
+}
+
+.text-area:focused {
+    -fx-border-color: blue;
+}
+
 .text-field {
     -fx-border-color: transparent;
     -fx-text-fill: blue;
