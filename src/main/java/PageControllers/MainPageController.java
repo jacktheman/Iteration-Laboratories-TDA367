@@ -46,13 +46,13 @@ public class MainPageController implements Initializable{
     }
 
     private void pressOnCanvas() {
-        notePane.setOnMousePressed(mouseEvent -> {
+
+        notePane.setOnMouseReleased(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                 TextContainer textContainer = new TextContainer((int) mouseEvent.getX(), (int) mouseEvent.getY());
                 Pane pane = textContainer.getPane();
                 addToNotePane(pane);
-                //pane.requestFocus();
-                //pane.getChildren().get(pane.getChildren().size()-1).requestFocus();
+                pane.getChildren().get(pane.getChildren().size()-1).requestFocus();
             }
         });
     }
