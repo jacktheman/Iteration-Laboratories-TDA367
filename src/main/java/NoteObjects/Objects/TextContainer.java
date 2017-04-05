@@ -1,7 +1,5 @@
 package NoteObjects.Objects;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
@@ -17,7 +15,7 @@ public class TextContainer extends NoteObject {
 
     /**
      * A Text object for resizing the TextArea.
-     *
+     * <p>
      * Purely for logic. The TextArea contains a ScrollPane,
      * which makes it so that we can't resize it dynamically
      * without extra information about the contents size on screen.
@@ -45,14 +43,33 @@ public class TextContainer extends NoteObject {
                 textArea.setPrefWidth(newWidth);
             if (newHeight != textArea.getPrefHeight())
                 textArea.setPrefHeight(newHeight);
+
+            if (textArea.getText().equals("")) {
+                textArea.setStyle("-fx-border-color: transparent");
+            } else {
+                textArea.setStyle("-fx-border-color: lightskyblue");
+            }
         });
+
+
+        //Lambdauttryck: En listener som gör något när något händer i textArea
     }
 
     private void listener2() {
         textArea.focusedProperty().addListener(e -> {
-            if (!textArea.isFocused() && textArea.getText().equals("")) {
-                removeFromPane(textArea);
+            if (!textArea.isFocused()) {
+                if (textArea.getText().equals("")) {
+                    removeFromPane(textArea);
+                } else {
+                    textArea.setStyle("-fx-border-color: transparent");
+                }
+            } else {
+                if (!textArea.getText().equals("")) {
+                    textArea.setStyle("-fx-border-color: lightskyblue");
+                }
             }
+
+
         });
     }
 
