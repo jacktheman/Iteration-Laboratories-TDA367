@@ -1,0 +1,4 @@
+Fix unwanted scrollbar in textContainers
+Make it possible to move (and resize?) textContainers
+Make it impossible for a textContainer to go outside the note
+Marker should be put where you click
