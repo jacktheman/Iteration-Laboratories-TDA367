@@ -1,4 +1,4 @@
-package NoteObjects;
+package model;
 
 import javafx.scene.layout.Pane;
 

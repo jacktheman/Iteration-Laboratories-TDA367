@@ -1,7 +1,6 @@
-package NoteObjects.Objects;
+package model.noteobjectmodels;
 
-import NoteObjects.NoteObjectI;
-import javafx.collections.ListChangeListener;
+import model.NoteObjectI;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 

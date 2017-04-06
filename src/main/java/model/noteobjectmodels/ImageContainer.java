@@ -1,4 +1,4 @@
-package NoteObjects.Objects;
+package model.noteobjectmodels;
 
 /**
  * Created by aron on 2017-04-03.
