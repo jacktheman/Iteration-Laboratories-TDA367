@@ -1,4 +1,4 @@
-package model;
+package models;
 
 import javafx.scene.layout.Pane;
 

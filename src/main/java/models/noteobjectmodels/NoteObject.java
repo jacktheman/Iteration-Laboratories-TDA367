@@ -1,6 +1,6 @@
-package model.noteobjectmodels;
+package models.noteobjectmodels;
 
-import model.NoteObjectI;
+import models.NoteObjectI;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 

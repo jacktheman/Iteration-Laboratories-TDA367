@@ -1,4 +1,4 @@
-package model.noteobjectmodels;
+package models.noteobjectmodels;
 
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
@@ -6,23 +6,21 @@ import javafx.scene.text.Text;
 /**
  * Created by aron on 2017-04-03.
  */
-public class TextContainer extends NoteObject {
+public class TextContainerModel extends NoteObject {
 
-    /**
-     * The actual area in which the user writes.
-     */
+
     private TextArea textArea;
 
     /**
      * A Text object for resizing the TextArea.
-     * <p>
+     *
      * Purely for logic. The TextArea contains a ScrollPane,
      * which makes it so that we can't resize it dynamically
      * without extra information about the contents size on screen.
      */
     private Text textHolder;
 
-    public TextContainer(int xPos, int yPos) {
+    public TextContainerModel(int xPos, int yPos) {
         super(xPos, yPos);
         textArea = new TextArea();
         textHolder = new Text();

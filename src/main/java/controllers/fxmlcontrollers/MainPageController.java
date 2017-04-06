@@ -1,6 +1,6 @@
 package controllers.fxmlcontrollers;
 
-import model.noteobjectmodels.TextContainer;
+import models.noteobjectmodels.TextContainerModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -39,8 +39,8 @@ public class MainPageController implements Initializable{
 
         notePane.setOnMouseReleased(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                TextContainer textContainer = new TextContainer((int) mouseEvent.getX(), (int) mouseEvent.getY());
-                Pane pane = textContainer.getPane();
+                TextContainerModel textContainerModel = new TextContainerModel((int) mouseEvent.getX(), (int) mouseEvent.getY());
+                Pane pane = textContainerModel.getPane();
                 addToNotePane(pane);
 
                 pane.getChildren().get(pane.getChildren().size()-1).requestFocus();
