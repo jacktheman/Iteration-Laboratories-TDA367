@@ -6,10 +6,8 @@ import javafx.scene.text.Text;
 /**
  * Created by aron on 2017-04-03.
  */
-public class TextContainerModel extends NoteObject {
+public class TextContainerModel {
 
-
-    private TextArea textArea;
 
     /**
      * A Text object for resizing the TextArea.
@@ -20,61 +18,11 @@ public class TextContainerModel extends NoteObject {
      */
     private Text textHolder;
 
-    public TextContainerModel(int xPos, int yPos) {
-        super(xPos, yPos);
-        textArea = new TextArea();
-        textHolder = new Text();
-        textArea.setPrefWidth(50);
-        textArea.setPrefHeight(50);
-
-        textArea.setWrapText(true);
-        textHolder.textProperty().bind(textArea.textProperty());
-
-        initPane();
+    public TextContainerModel(String text) {
+        textHolder = new Text(text);
     }
 
-    private void listener() {
-        textArea.textProperty().addListener(e -> {
-            int newWidth = (int) textHolder.getLayoutBounds().getWidth() + 30; // + 30 because padding
-            int newHeight = (int) textHolder.getLayoutBounds().getHeight() + 30;
-            if (newWidth != textArea.getPrefWidth())
-                textArea.setPrefWidth(newWidth);
-            if (newHeight != textArea.getPrefHeight())
-                textArea.setPrefHeight(newHeight);
-
-            if (textArea.getText().equals("")) {
-                textArea.setStyle("-fx-border-color: transparent");
-            } else {
-                textArea.setStyle("-fx-border-color: lightskyblue");
-            }
-        });
-
-
-        //Lambdauttryck: En listener som gör något när något händer i textArea
-    }
-
-    private void listener2() {
-        textArea.focusedProperty().addListener(e -> {
-            if (!textArea.isFocused()) {
-                if (textArea.getText().equals("")) {
-                    removeFromPane(textArea);
-                } else {
-                    textArea.setStyle("-fx-border-color: transparent");
-                }
-            } else {
-                if (!textArea.getText().equals("")) {
-                    textArea.setStyle("-fx-border-color: lightskyblue");
-                }
-            }
-
-
-        });
-    }
-
-    @Override
-    void initPane() {
-        listener();
-        listener2();
-        addToPane(textArea);
+    public Text getTextHolder(){
+        return textHolder;
     }
 }

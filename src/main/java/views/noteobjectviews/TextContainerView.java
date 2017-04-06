@@ -10,9 +10,14 @@ public class TextContainerView extends TextArea {
         super(text);
         this.setLayoutX(layoutX);
         this.setLayoutY(layoutY);
+        this.setWrapText(true);
     }
 
     public TextContainerView(double layoutX, double layoutY) {
         this("", layoutX, layoutY);
     }
+
+
 }
+
+
