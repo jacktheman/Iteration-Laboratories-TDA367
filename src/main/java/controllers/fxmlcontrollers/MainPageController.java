@@ -39,13 +39,11 @@ public class MainPageController implements Initializable{
         if (currentNote == null) {
             currentNote = new NoteModel();
         }
+        notePane.requestFocus();
         currentNote.addNoteObjectController(new TextContainerController("", x, y));
-        System.out.println("Antal noder i noteMode: " + currentNote.getNodes().size());
-        System.out.println("Antal noder i pane före: " + notePane.getChildren().size());
         notePane.getChildren().clear();
         notePane.getChildren().addAll(currentNote.getNodes());
         currentNote.getNodes().get(currentNote.getNodes().size() - 1).requestFocus();
-        System.out.println("Antal noder i pane efter: " + notePane.getChildren().size());
     }
 
 

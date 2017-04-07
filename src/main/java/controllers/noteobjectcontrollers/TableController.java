@@ -8,9 +8,4 @@ import javafx.scene.Node;
 public class TableController extends NoteObjectController {
 
     TableController(Node view){super(view);}
-
-    @Override
-    void onFocus() {
-
-    }
 }

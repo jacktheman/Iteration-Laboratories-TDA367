@@ -10,7 +10,4 @@ public class ImageContainerController extends NoteObjectController {
 
     ImageContainerController(Node view){super(view);}
 
-    @Override
-    void onFocus() {}
-
 }

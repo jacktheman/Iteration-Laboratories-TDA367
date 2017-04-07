@@ -9,7 +9,4 @@ public class PaintingContainerController extends NoteObjectController {
 
 
     PaintingContainerController(Node view){super(view);}
-
-    @Override
-    void onFocus() {}
 }
