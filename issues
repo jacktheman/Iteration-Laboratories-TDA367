@@ -2,3 +2,4 @@ Fix unwanted scrollbar in textContainers
 Make it possible to move (and resize?) textContainers
 Make it impossible for a textContainerModel to go outside the note
 Marker should be put where you click
+Last used textcontainer doesn't get removed (Maincontroller gets list of nodes before notemodel removes empty containers)
