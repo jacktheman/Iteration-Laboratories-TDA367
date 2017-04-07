@@ -8,4 +8,9 @@ import javafx.scene.Node;
 public interface NoteObjectControllerI {
 
     public Node getNode();
+
+    public void addListener(NoteObjectObserverI noteObjectObserver);
+
+    public void removeListener(NoteObjectObserverI noteObjectObserver);
+
 }

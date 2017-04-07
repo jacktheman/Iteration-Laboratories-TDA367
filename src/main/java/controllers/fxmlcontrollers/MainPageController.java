@@ -1,12 +1,12 @@
 package controllers.fxmlcontrollers;
 
-import models.noteobjectmodels.TextContainerModel;
+import controllers.noteobjectcontrollers.TextContainerController;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import models.notemodel.NoteModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,32 +21,32 @@ public class MainPageController implements Initializable{
     @FXML
     private AnchorPane notePane;
 
+    private NoteModel currentNote;
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         instance = this;
         notePane.setStyle("-fx-background-color: white");
-        pressOnCanvas();
+        pressedOnCanvas();
     }
 
-    public void addToNotePane(Node... nodes) {
-        notePane.getChildren().addAll(nodes);
-    }
-
-    public void removeToNotePane(Node... nodes) {
-        notePane.getChildren().removeAll(nodes);
-    }
-
-    private void pressOnCanvas() {
-
-        notePane.setOnMouseReleased(mouseEvent -> {
-            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                TextContainerModel textContainerModel = new TextContainerModel((int) mouseEvent.getX(), (int) mouseEvent.getY());
-                Pane pane = textContainerModel.getPane();
-                addToNotePane(pane);
-
-                pane.getChildren().get(pane.getChildren().size()-1).requestFocus();
-            }
+    private void pressedOnCanvas() {
+        notePane.setOnMouseReleased(e -> {
+            addToNote(e.getX(), e.getY());
         });
-
-
     }
+
+    private void addToNote(double x, double y) {
+        if (currentNote == null) {
+            currentNote = new NoteModel();
+        }
+        currentNote.addNoteObjectController(new TextContainerController("", x, y));
+        System.out.println("Antal noder i noteMode: " + currentNote.getNodes().size());
+        System.out.println("Antal noder i pane före: " + notePane.getChildren().size());
+        notePane.getChildren().clear();
+        notePane.getChildren().addAll(currentNote.getNodes());
+        currentNote.getNodes().get(currentNote.getNodes().size() - 1).requestFocus();
+        System.out.println("Antal noder i pane efter: " + notePane.getChildren().size());
+    }
+
+
 }

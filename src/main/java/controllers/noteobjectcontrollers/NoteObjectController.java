@@ -1,20 +1,26 @@
 package controllers.noteobjectcontrollers;
 
 import javafx.scene.Node;
-import models.NoteObjectI;
+import org.junit.platform.commons.annotation.Testable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by svante on 2017-04-06.
  */
 abstract class NoteObjectController implements NoteObjectControllerI {
 
+    private static int hash = 0;
+
     private Node view;
-    private NoteObjectI model;
+
+    private List<NoteObjectObserverI> listeners;
 
     NoteObjectController(Node view){
         this.view = view;
+        this.listeners = new ArrayList<>();
     }
-
 
     private void drag(){
 
@@ -28,12 +34,26 @@ abstract class NoteObjectController implements NoteObjectControllerI {
 
     }
 
+    void notifyListeners(){
+        for(int i = 0; i < listeners.size(); i++){
+            listeners.get(i).fireChange(this);
+        }
+    }
+
     @Override
     public Node getNode() {
         return view;
     }
 
-    abstract void onFocus();
+    @Override
+    public void addListener(NoteObjectObserverI noteObjectObserver) {
+        listeners.add(noteObjectObserver);
+    }
+
+    @Override
+    public void removeListener(NoteObjectObserverI noteObjectObserver) {
+        listeners.remove(noteObjectObserver);
+    }
 
 
 }

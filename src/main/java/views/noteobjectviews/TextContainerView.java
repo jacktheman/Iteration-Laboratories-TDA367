@@ -10,6 +10,8 @@ public class TextContainerView extends TextArea {
         super(text);
         this.setLayoutX(layoutX);
         this.setLayoutY(layoutY);
+        this.setPrefWidth(0);
+        this.setPrefHeight(0);
         this.setWrapText(true);
     }
 
@@ -17,6 +19,31 @@ public class TextContainerView extends TextArea {
         this("", layoutX, layoutY);
     }
 
+    public void changeFocus() {
+        if (!this.isFocused()) {
+            if (!this.getText().equals("")) {
+                this.setStyle("-fx-border-color: transparent");
+            } 
+        } else {
+            if (!this.getText().equals("")) {
+                this.setStyle("-fx-border-color: lightskyblue");
+            }
+        }
+    }
+    
+    public void changeTextContainerSize(double newWidth, double newHeight){
+        if (newWidth != this.getPrefWidth())
+            this.setPrefWidth(newWidth);
+        if (newHeight != this.getPrefHeight())
+            this.setPrefHeight(newHeight);
+    }
+
+    public void changeBorderColour(){
+        if (this.getText().equals(""))
+            this.setStyle("-fx-border-color: transparent");
+        else
+            this.setStyle("-fx-border-color: lightskyblue");
+    }
 
 }
 
