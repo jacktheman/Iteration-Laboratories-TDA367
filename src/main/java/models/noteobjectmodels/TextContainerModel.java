@@ -1,6 +1,5 @@
 package models.noteobjectmodels;
 
-import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
 /**

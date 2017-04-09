@@ -1,7 +1,6 @@
 package controllers.noteobjectcontrollers;
 
 import javafx.scene.Node;
-import org.junit.platform.commons.annotation.Testable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,39 +8,39 @@ import java.util.List;
 /**
  * Created by svante on 2017-04-06.
  */
-abstract class NoteObjectController implements NoteObjectControllerI {
+abstract class NoteObjectController<T extends Node> implements NoteObjectControllerI {
+
+    private T view;
 
     private static int hash = 0;
 
-    private Node view;
-
     private List<NoteObjectObserverI> listeners;
 
-    NoteObjectController(Node view){
+    NoteObjectController(T view) {
         this.view = view;
         this.listeners = new ArrayList<>();
     }
 
-    private void drag(){
+    private void drag() {
 
     }
 
-    private void drop(){
+    private void drop() {
 
     }
 
-    private void onRightClick(){
+    private void onRightClick() {
 
     }
 
-    void notifyListeners(){
-        for(int i = 0; i < listeners.size(); i++){
+    void notifyListeners() {
+        for (int i = 0; i < listeners.size(); i++) {
             listeners.get(i).fireChange(this);
         }
     }
 
     @Override
-    public Node getNode() {
+    public T getNode() {
         return view;
     }
 

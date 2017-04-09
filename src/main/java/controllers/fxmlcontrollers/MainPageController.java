@@ -1,10 +1,8 @@
 package controllers.fxmlcontrollers;
 
 import controllers.noteobjectcontrollers.TextContainerController;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import models.notemodel.NoteModel;
 
@@ -16,16 +14,12 @@ import java.util.ResourceBundle;
  */
 public class MainPageController implements Initializable{
 
-    public static MainPageController instance;
-
-    @FXML
+   @FXML
     private AnchorPane notePane;
 
     private NoteModel currentNote;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        instance = this;
-        notePane.setStyle("-fx-background-color: white");
         pressedOnCanvas();
     }
 

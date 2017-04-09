@@ -12,9 +12,11 @@ import java.util.List;
  */
 public class NoteModel implements NoteObjectObserverI {
 
-    private List<Node> nodes;
     private String name;
+
+    private List<Node> nodes;
     private List<String> tags;
+
     private List<NoteObjectControllerI> controllers;
 
     public NoteModel(){
@@ -33,8 +35,8 @@ public class NoteModel implements NoteObjectObserverI {
 
     public void removeNoteObjectController(NoteObjectControllerI controller){
         controller.removeListener(this);
-        this.nodes.remove(controller.getNode());
         this.controllers.remove(controller);
+        this.nodes.remove(controller.getNode());
     }
 
     public List<Node> getNodes(){
