@@ -21,8 +21,8 @@ public class TextContainerController extends NoteObjectController<TextContainerV
 
     private void listener() {
         super.getNode().textProperty().addListener(e -> {
-            double newWidth = textContainerModel.getTextHolder().getLayoutBounds().getWidth() + 30; // + 30 because padding
-            double newHeight = textContainerModel.getTextHolder().getLayoutBounds().getHeight() + 30;
+            double newWidth = this.textContainerModel.getTextHolder().getLayoutBounds().getWidth() + 30; // + 30 because padding
+            double newHeight = this.textContainerModel.getTextHolder().getLayoutBounds().getHeight() + 30;
             super.getNode().changeTextContainerSize(newWidth, newHeight);
             super.getNode().changeBorderColour();
         });
@@ -32,7 +32,7 @@ public class TextContainerController extends NoteObjectController<TextContainerV
         super.getNode().focusedProperty().addListener(e -> {
             super.getNode().changeFocus();
             if (!super.getNode().isFocused() && super.getNode().getText().equals("")) {
-                this.notifyListeners();
+                super.notifyListeners();
             }
         });
     }

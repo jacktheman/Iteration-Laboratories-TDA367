@@ -19,12 +19,15 @@ public class NoteModel implements NoteObjectObserverI {
 
     private List<NoteObjectControllerI> controllers;
 
-    public NoteModel(){
-        nodes = new ArrayList<>();
-        name = "";
-        tags = new ArrayList<>();
-        controllers = new ArrayList<>();
+    public NoteModel(String name){
+        this.name = name;
+        this.nodes = new ArrayList<>();
+        this.tags = new ArrayList<>();
+        this.controllers = new ArrayList<>();
+    }
 
+    public NoteModel() {
+        this("");
     }
 
     public void addNoteObjectController(NoteObjectControllerI controller){
@@ -43,14 +46,34 @@ public class NoteModel implements NoteObjectObserverI {
         return this.nodes;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public List<String> getTags() {
+        List<String> tags = new ArrayList<>();
+        tags.addAll(this.tags);
+        return tags;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void addTag(String tag) {
+        if (!tags.contains(tag.toLowerCase()))
+            tags.add(tag.toLowerCase());
+    }
+
+    public void removeTag(String tag) {
+        if (tags.contains(tag.toLowerCase()))
+            tags.remove(tag.toLowerCase());
+    }
+
     public void save(){}
 
     @Override
     public void fireChange(NoteObjectControllerI controller) {
         removeNoteObjectController(controller);
     }
-
-
-
-    // #TODO Fixa get/set för alla variabler
 }

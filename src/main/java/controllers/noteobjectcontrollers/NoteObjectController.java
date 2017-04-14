@@ -12,8 +12,6 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
 
     private T view;
 
-    private static int hash = 0;
-
     private List<NoteObjectObserverI> listeners;
 
     NoteObjectController(T view) {

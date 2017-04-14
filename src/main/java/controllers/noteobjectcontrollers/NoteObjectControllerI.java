@@ -7,10 +7,10 @@ import javafx.scene.Node;
  */
 public interface NoteObjectControllerI {
 
-    public Node getNode();
+    Node getNode();
 
-    public void addListener(NoteObjectObserverI noteObjectObserver);
+    void addListener(NoteObjectObserverI noteObjectObserver);
 
-    public void removeListener(NoteObjectObserverI noteObjectObserver);
+    void removeListener(NoteObjectObserverI noteObjectObserver);
 
 }

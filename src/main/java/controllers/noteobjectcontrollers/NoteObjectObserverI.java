@@ -5,5 +5,5 @@ package controllers.noteobjectcontrollers;
  */
 public interface NoteObjectObserverI {
 
-    public void fireChange(NoteObjectControllerI subject);
+    void fireChange(NoteObjectControllerI subject);
 }
