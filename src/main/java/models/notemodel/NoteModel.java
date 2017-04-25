@@ -4,6 +4,7 @@ import controllers.noteobjectcontrollers.NoteObjectControllerI;
 import controllers.noteobjectcontrollers.NoteObjectObserverI;
 import javafx.scene.Node;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class NoteModel implements NoteObjectObserverI {
     }
 
     public NoteModel() {
-        this("");
+        this("nameless");
     }
 
     public void addNoteObjectController(NoteObjectControllerI controller){
@@ -66,11 +67,11 @@ public class NoteModel implements NoteObjectObserverI {
     }
 
     public void removeTag(String tag) {
-        if (tags.contains(tag.toLowerCase()))
-            tags.remove(tag.toLowerCase());
+        tags.remove(tag.toLowerCase());
     }
 
-    public void save(){}
+    public void save() throws IOException {
+    }
 
     @Override
     public void fireChange(NoteObjectControllerI controller) {

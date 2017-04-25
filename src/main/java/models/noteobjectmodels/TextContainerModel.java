@@ -1,5 +1,6 @@
 package models.noteobjectmodels;
 
+import javafx.beans.value.ObservableValue;
 import javafx.scene.text.Text;
 
 /**
@@ -21,7 +22,15 @@ public class TextContainerModel {
         textHolder = new Text(text);
     }
 
-    public Text getTextHolder(){
-        return textHolder;
+    public void bindTextProperties(ObservableValue<? extends String> textProperty) {
+        textHolder.textProperty().bind(textProperty);
+    }
+
+    public double getWidth() {
+        return textHolder.getLayoutBounds().getWidth();
+    }
+
+    public double getHeight() {
+        return textHolder.getLayoutBounds().getHeight();
     }
 }

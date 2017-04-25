@@ -20,14 +20,12 @@ public class TextContainerView extends TextArea {
     }
 
     public void changeFocus() {
-        if (!this.isFocused()) {
-            if (!this.getText().equals("")) {
-                this.setStyle("-fx-border-color: transparent");
-            } 
-        } else {
+        if (this.isFocused()) {
             if (!this.getText().equals("")) {
                 this.setStyle("-fx-border-color: lightskyblue");
             }
+        } else {
+            this.setStyle("-fx-border-color: transparent");
         }
     }
     
