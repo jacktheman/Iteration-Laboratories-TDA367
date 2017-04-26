@@ -1,8 +1,10 @@
 package controllers.fxmlcontrollers;
 
+import controllers.noteobjectcontrollers.ImageContainerController;
 import controllers.noteobjectcontrollers.TextContainerController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -11,6 +13,7 @@ import services.FileChooserFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -31,11 +34,28 @@ public class MainPageController implements Initializable {
     private void pressedOnCanvas() {
         notePane.setOnMouseReleased(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY))
-                addToNote(e.getX(), e.getY());
+                addTextToNote(e.getX(), e.getY());
+            else if (e.getButton().equals(MouseButton.SECONDARY))
+                addImageToNote(e.getX(), e.getY());
         });
     }
 
-    private void addToNote(double x, double y) {
+    private void addImageToNote(double x, double y) {
+        if (currentNote == null) {
+            currentNote = new NoteModel();
+        }
+        notePane.requestFocus();
+        try {
+            currentNote.addNoteObjectController(new ImageContainerController(FileChooserFactory.getImageChooser().showOpenDialog(notePane.getScene().getWindow()).toURI().toURL(), x, y));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        notePane.getChildren().clear();
+        notePane.getChildren().addAll(currentNote.getNodes());
+        currentNote.getNodes().get(currentNote.getNodes().size() - 1).requestFocus();
+    }
+
+    private void addTextToNote(double x, double y) {
         if (currentNote == null) {
             currentNote = new NoteModel();
         }
