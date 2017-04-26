@@ -9,26 +9,23 @@ public class FileChooserFactory {
 
     private FileChooserFactory() {}
 
-    public static FileChooser getImageChooser() {
+    public static FileChooser createFileChooser(String title, String... extensions) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Infoga Bild");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Alla bilder", "*.jpg", "*.png", "*.gif", "*.bmp"),
-                new FileChooser.ExtensionFilter("JPG (*.jpg)", "*.jpg"),
-                new FileChooser.ExtensionFilter("PNG (*.png)", "*.png"),
-                new FileChooser.ExtensionFilter("GIF (*.gif)", "*.gif"),
-                new FileChooser.ExtensionFilter("BMP (*.bmp)", "*.bmp")
-        );
+        fileChooser.setTitle(title);
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Alla tillåtna typer", extensions));
+        for (String extension : extensions) {
+            String description = extension.substring(extension.lastIndexOf(".") + 1).toUpperCase();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(description + " (" + extension + ")", extension));
+        }
         return fileChooser;
     }
 
+    public static FileChooser getImageChooser() {
+        return createFileChooser("Infoga Bild", "*.jpg", "*.png", "*.gif", "*.bmp");
+    }
+
     public static FileChooser getFabNotesChooser() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Importera Anteckning");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("FAB", "*.fab") //.fab temporary
-        );
-        return fileChooser;
+        return createFileChooser("Importera Anteckning", "*.fab"); //.fab temporary
     }
 
 }
