@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
  */
 public enum Paintbrush {
 
-    CIRCLE, RECTANGLE, SQUARE;
+    CIRCLE, TRIANGLE, SQUARE;
 
     private static int brushSize;
     private static Color brushColor;
@@ -20,11 +20,11 @@ public enum Paintbrush {
         brushColor = color;
     }
 
-    public int getSize() {
+    public static int getSize() {
         return brushSize;
     }
 
-    public Color getColor() {
+    public static Color getColor() {
         return brushColor;
     }
 

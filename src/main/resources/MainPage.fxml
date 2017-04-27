@@ -13,12 +13,12 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.ToggleButton?>
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1150.0" stylesheets="@Design.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.fxmlcontrollers.MainPageController">
    <children>
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -114,16 +114,16 @@
                      <children>
                         <ButtonBar buttonMinWidth="30.0" layoutX="14.0" layoutY="5.0" prefHeight="40.0" prefWidth="103.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="5.0">
                           <buttons>
-                            <ToggleButton mnemonicParsing="false">
+                            <ToggleButton fx:id="circleButton" mnemonicParsing="false">
                                  <graphic>
-                                    <ImageView fx:id="circleButton" fitHeight="150.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="150.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@icons/circle.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
                               </ToggleButton>
-                              <ToggleButton mnemonicParsing="false">
+                              <ToggleButton fx:id="squareButton" mnemonicParsing="false">
                                  <graphic>
                                     <ImageView fx:id="squareutton" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -132,9 +132,9 @@
                                     </ImageView>
                                  </graphic>
                               </ToggleButton>
-                              <ToggleButton minWidth="0.0" mnemonicParsing="false" prefHeight="26.0">
+                              <ToggleButton fx:id="triangleButton" minWidth="0.0" mnemonicParsing="false" prefHeight="26.0">
                                  <graphic>
-                                    <ImageView fx:id="triangleButton" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@icons/triangle.png" />
                                        </image>
