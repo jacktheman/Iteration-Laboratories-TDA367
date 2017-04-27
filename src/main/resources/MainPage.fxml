@@ -21,6 +21,7 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1150.0" stylesheets="@Design.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.fxmlcontrollers.MainPageController">
    <children>
+      <AnchorPane fx:id="notePane" layoutY="142.0" prefHeight="258.0" prefWidth="591.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="142.0" />
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="Arkiv">
@@ -166,7 +167,6 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </TextField>
-      <AnchorPane fx:id="notePane" layoutY="142.0" prefHeight="258.0" prefWidth="591.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="142.0" />
       <MenuButton layoutX="348.0" layoutY="33.0" mnemonicParsing="false" text="Lägg i grupp" AnchorPane.leftAnchor="348.0" AnchorPane.topAnchor="32.0" />
       <Button layoutX="488.0" layoutY="32.0" mnemonicParsing="false" text="Skapa ny+" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="32.0" />
    </children>

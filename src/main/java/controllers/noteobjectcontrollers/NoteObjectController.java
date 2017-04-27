@@ -1,13 +1,7 @@
 package controllers.noteobjectcontrollers;
 
-import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.effect.Light;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,27 +21,35 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
     NoteObjectController(T view) {
         this.view = view;
         this.listeners = new ArrayList<>();
-        drag();
+        setOnMousePressed();
+        setOnMouseReleased();
+        setOnMouseEntered();
+        setOnMouseExited();
+        setOnMouseDragged();
     }
 
-    private void drag() {
+    private void setOnMousePressed() {
         view.setOnMousePressed(mouseEvent -> {
             view.requestFocus();
             dragx = mouseEvent.getX();
             dragy = mouseEvent.getY();
-            System.out.println("ddd");
             view.getScene().setCursor(Cursor.MOVE);
         });
+    }
+
+    private void setOnMouseReleased() {
         view.setOnMouseReleased(mouseEvent -> view.getScene().setCursor(Cursor.HAND));
-        view.setOnMouseDragged(mouseEvent -> {
-            view.setLayoutX(view.getLayoutX() + mouseEvent.getX() - dragx);
-            view.setLayoutY(view.getLayoutY() + mouseEvent.getY() - dragy);
-        });
+    }
+
+    private void setOnMouseEntered() {
         view.setOnMouseEntered(mouseEvent -> {
             if (!mouseEvent.isPrimaryButtonDown()) {
                 view.getScene().setCursor(Cursor.HAND);
             }
         });
+    }
+
+    private void setOnMouseExited() {
         view.setOnMouseExited(mouseEvent -> {
             if (!mouseEvent.isPrimaryButtonDown()) {
                 view.getScene().setCursor(Cursor.DEFAULT);
@@ -55,9 +57,18 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
         });
     }
 
+    private void setOnMouseDragged() {
+        view.setOnMouseDragged(mouseEvent -> {
+            double newX = view.getLayoutX() + mouseEvent.getX() - dragx;
+            double newY = view.getLayoutY() + mouseEvent.getY() - dragy;
+            if (newX >= 0) {
+                view.setLayoutX(newX);
+            }
+            if (newY >= 0) {
+                view.setLayoutY(newY);
+            }
 
-    private void onRightClick() {
-
+        });
     }
 
     void notifyListeners() {
