@@ -15,14 +15,12 @@ public class NoteModel implements NoteObjectObserverI {
 
     private String name;
 
-    private List<Node> nodes;
     private List<String> tags;
 
     private List<NoteObjectControllerI> controllers;
 
     public NoteModel(String name){
         this.name = name;
-        this.nodes = new ArrayList<>();
         this.tags = new ArrayList<>();
         this.controllers = new ArrayList<>();
     }
@@ -34,17 +32,18 @@ public class NoteModel implements NoteObjectObserverI {
     public void addNoteObjectController(NoteObjectControllerI controller){
         controller.addListener(this);
         this.controllers.add(controller);
-        this.nodes.add(controller.getNode());
     }
 
     public void removeNoteObjectController(NoteObjectControllerI controller){
         controller.removeListener(this);
         this.controllers.remove(controller);
-        this.nodes.remove(controller.getNode());
     }
 
     public List<Node> getNodes(){
-        return this.nodes;
+        List<Node> nodes = new ArrayList<>();
+        for (NoteObjectControllerI controller : controllers)
+            nodes.add(controller.getNode());
+        return nodes;
     }
 
     public String getName() {
