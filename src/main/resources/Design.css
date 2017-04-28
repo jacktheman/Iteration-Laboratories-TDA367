@@ -24,3 +24,18 @@
 #image-view:focused {
     -fx-effect: dropshadow(one-pass-box, lightskyblue, 10, 1.0, 0, 0);
 }
+
+#menu-button {
+    -fx-background-color: silver;
+    -fx-border-color: silver;
+}
+#menu-button:pressed {
+    -fx-effect: dropshadow(one-pass-box, gray, 3, 1.0, 0, 0);
+    -fx-opacity: 75%;
+}
+#menu-button:focused {
+    -fx-border-color: slategray;
+}
+#menu-button:hover {
+    -fx-background-color: lightgray;
+}
