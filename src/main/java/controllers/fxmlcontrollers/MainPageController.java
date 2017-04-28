@@ -19,6 +19,7 @@ import utilities.WriteState;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,12 +79,12 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
                     NoteObjectControllerI controller = noteState.setOnMouseReleased(e);
                     controller.addListener(this);
                     currentControllers.add(controller);
-                    notePane.getChildren().add(currentControllers.get(currentControllers.size()-1).getNode());
-                }
-                else if (e.getButton().equals(MouseButton.SECONDARY))
+                    notePane.getChildren().add(currentControllers.get(currentControllers.size() - 1).getNode());
+                } else if (e.getButton().equals(MouseButton.SECONDARY)) {
                     addImageToNote(e.getX(), e.getY());
+                }
 
-                notePane.getChildren().get(notePane.getChildren().size()-1).requestFocus();
+                notePane.getChildren().get(notePane.getChildren().size() - 1).requestFocus();
             }
 
         });
@@ -96,7 +97,11 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
         }
         notePane.requestFocus();
         try {
-            currentNote.addNoteObjectController(new ImageContainerController(FileChooserFactory.getImageChooser().showOpenDialog(notePane.getScene().getWindow()).toURI().toURL(), x, y));
+            File image = FileChooserFactory.getImageChooser().showOpenDialog(notePane.getScene().getWindow());
+            URI uri = image.toURI();
+            URL url = uri.toURL();
+            ImageContainerController imageContainerController = new ImageContainerController(url, x, y);
+            currentNote.addNoteObjectController(imageContainerController);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -127,17 +132,18 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
     }
 
     @FXML
-    private void changeToWriteState(){
+    private void changeToWriteState() {
         noteState = WriteState.getInstance();
     }
 
     @FXML
-    private void changeToPaintState(){
+    private void changeToPaintState() {
         noteState = PaintState.getInstance();
     }
 
     @Override
     public void fireChange(NoteObjectControllerI subject) {
-        notePane.getChildren().remove(subject);
+        currentControllers.remove(subject);
+        notePane.getChildren().remove(subject.getNode());
     }
 }
