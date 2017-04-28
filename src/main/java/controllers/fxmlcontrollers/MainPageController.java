@@ -12,6 +12,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import models.notemodel.NoteModel;
 import services.FileChooserFactory;
+import utilities.NoteStateI;
+import utilities.WriteState;
 import views.noteobjectviews.ImageContainerView;
 import views.noteobjectviews.TextContainerView;
 
@@ -31,7 +33,10 @@ public class MainPageController implements Initializable {
 
     private NoteModel currentNote;
 
+    private NoteStateI noteState;
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        noteState = WriteState.getInstance();
         pressedOnCanvas();
     }
 
@@ -77,16 +82,6 @@ public class MainPageController implements Initializable {
     }
 
     private void addTextToNote(double x, double y) {
-        if (currentNote == null) {
-            currentNote = new NoteModel();
-        }
-
-        Node currentFocus = notePane.getScene().getFocusOwner();
-            notePane.requestFocus();
-            currentNote.addNoteObjectController(new TextContainerController("", x, y));
-            notePane.getChildren().clear();
-            notePane.getChildren().addAll(currentNote.getNodes());
-            currentNote.getNodes().get(currentNote.getNodes().size() - 1).requestFocus();
 
     }
 
