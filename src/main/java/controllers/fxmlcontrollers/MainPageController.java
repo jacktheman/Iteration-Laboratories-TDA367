@@ -1,6 +1,8 @@
 package controllers.fxmlcontrollers;
 
 import controllers.noteobjectcontrollers.ImageContainerController;
+import controllers.noteobjectcontrollers.NoteObjectControllerI;
+import controllers.noteobjectcontrollers.NoteObjectObserverI;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,12 +20,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
  * Created by aron on 2017-03-29.
  */
-public class MainPageController implements Initializable {
+public class MainPageController implements Initializable, NoteObjectObserverI {
 
     @FXML
     private AnchorPane fabNotesWindow;
@@ -37,7 +41,10 @@ public class MainPageController implements Initializable {
 
     private NoteStateI noteState;
 
+    private List<NoteObjectControllerI> currentControllers;
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        currentControllers = new ArrayList<>();
         noteState = WriteState.getInstance();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TagPage.fxml"));
         try {
@@ -67,8 +74,12 @@ public class MainPageController implements Initializable {
             }
 
             if (addToNotePane) {
-                if (e.getButton().equals(MouseButton.PRIMARY))
-                    noteState.setOnMouseReleased(e,notePane);
+                if (e.getButton().equals(MouseButton.PRIMARY)) {
+                    NoteObjectControllerI controller = noteState.setOnMouseReleased(e);
+                    controller.addListener(this);
+                    currentControllers.add(controller);
+                    notePane.getChildren().add(currentControllers.get(currentControllers.size()-1).getNode());
+                }
                 else if (e.getButton().equals(MouseButton.SECONDARY))
                     addImageToNote(e.getX(), e.getY());
 
@@ -112,7 +123,7 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void saveNote() {
-
+        //TODO
     }
 
     @FXML
@@ -125,4 +136,8 @@ public class MainPageController implements Initializable {
         noteState = PaintState.getInstance();
     }
 
+    @Override
+    public void fireChange(NoteObjectControllerI subject) {
+        notePane.getChildren().remove(subject);
+    }
 }

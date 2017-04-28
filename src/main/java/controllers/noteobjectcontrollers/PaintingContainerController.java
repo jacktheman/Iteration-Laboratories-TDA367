@@ -12,6 +12,7 @@ import views.noteobjectviews.PaintingContainerView;
  */
 public class PaintingContainerController extends NoteObjectController<PaintingContainerView> {
 
+    private boolean isPainting;
 
     public PaintingContainerController(){
         super(new PaintingContainerView());
@@ -21,7 +22,27 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
 
     }
 
+
+
     public void setOnMouseMove(MouseEvent event) {
-        ((PaintingContainerView) super.getNode()).paint(PaintingContainerModel.getPaintbrush(),event.getX(),event.getY());
+        if(isPainting){
+            Node focus = super.getNode().getScene().getFocusOwner();
+            if( focus instanceof PaintingContainerView){
+                if(event.getButton().equals(MouseButton.PRIMARY)){
+                    ((PaintingContainerView) focus).paint(PaintingContainerModel.getPaintbrush(),event.getX(),event.getY());
+                }
+            }
+        }
+        (super.getNode()).paint(PaintingContainerModel.getPaintbrush(),event.getX(),event.getY());
+    }
+
+    @Override
+    public void onMousePressed() {
+        isPainting = true;
+    }
+
+    @Override
+    public void onMouseReleased() {
+        isPainting = false;
     }
 }

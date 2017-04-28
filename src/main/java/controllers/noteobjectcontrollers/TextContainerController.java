@@ -36,4 +36,14 @@ public class TextContainerController extends NoteObjectController<TextContainerV
             }
         });
     }
+
+    @Override
+    public void onMousePressed() {
+
+    }
+
+    @Override
+    public void onMouseReleased() {
+
+    }
 }

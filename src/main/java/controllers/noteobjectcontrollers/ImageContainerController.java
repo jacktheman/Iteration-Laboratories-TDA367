@@ -29,4 +29,13 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
         return imageContainerModel.getImage();
     }
 
+    @Override
+    public void onMousePressed() {
+
+    }
+
+    @Override
+    public void onMouseReleased() {
+
+    }
 }

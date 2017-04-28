@@ -34,11 +34,15 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
             dragx = mouseEvent.getX();
             dragy = mouseEvent.getY();
             view.getScene().setCursor(Cursor.MOVE);
+            onMousePressed();
         });
     }
 
     private void setOnMouseReleased() {
-        view.setOnMouseReleased(mouseEvent -> view.getScene().setCursor(Cursor.HAND));
+        view.setOnMouseReleased(mouseEvent -> {
+            view.getScene().setCursor(Cursor.HAND);
+            onMouseReleased();
+        });
     }
 
     private void setOnMouseEntered() {
