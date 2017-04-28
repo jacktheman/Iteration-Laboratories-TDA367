@@ -117,13 +117,20 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
 
 
 
-/*
-    private ResizablePositions currentResizablePosition(ResizablePositions pos){
+
+    private void currentResizablePosition(ResizablePositions pos){
 
         switch(pos){
+            case RIGHT_UPPER_CORNER:
+            case RIGHT_LOWER_CORNER:
+            case LEFT_UPPER_CORNER:
+            case LEFT_LOWER_CORNER:
+            case BOTTOM_AREA:
+            case UPPER_AREA:
+            case RIGHT_AREA:
             case LEFT_AREA:
         }
     }
-*/
+
 }
 
