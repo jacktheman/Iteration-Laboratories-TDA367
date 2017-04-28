@@ -1,6 +1,7 @@
 package models.noteobjectmodels;
 
 import javafx.scene.image.Image;
+import javafx.scene.layout.Region;
 
 import java.io.File;
 
@@ -9,12 +10,12 @@ import java.io.File;
  */
 public class ImageContainerModel {
 
-
     private Image image;
     private File file;
 
     public ImageContainerModel(Image image){
         this.image = image;
+
     }
 
     public ImageContainerModel(File file){
@@ -28,4 +29,6 @@ public class ImageContainerModel {
     public File getFile(){
         return this.file;
     }
+
+
 }
