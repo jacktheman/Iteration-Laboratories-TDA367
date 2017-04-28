@@ -48,7 +48,7 @@
       </MenuBar>
       <TabPane layoutX="113.0" layoutY="59.0" prefHeight="83.0" prefWidth="487.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.0">
         <tabs>
-          <Tab text="SKRIV">
+          <Tab onSelectionChanged="#changeToWriteState" text="SKRIV">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="118.0" prefWidth="545.0" style="-fx-background-color: lightgray;">
                      <children>
@@ -109,7 +109,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="MÅLA">
+          <Tab onSelectionChanged="#changeToPaintState" text="MÅLA">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: lightgray;">
                      <children>

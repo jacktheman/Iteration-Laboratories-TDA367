@@ -11,6 +11,7 @@ import javafx.stage.FileChooser;
 import models.notemodel.NoteModel;
 import services.FileChooserFactory;
 import utilities.NoteStateI;
+import utilities.PaintState;
 import utilities.WriteState;
 
 import java.io.File;
@@ -67,10 +68,13 @@ public class MainPageController implements Initializable {
 
             if (addToNotePane) {
                 if (e.getButton().equals(MouseButton.PRIMARY))
-                    addTextToNote(e.getX(), e.getY());
+                    noteState.setOnMouseReleased(e,notePane);
                 else if (e.getButton().equals(MouseButton.SECONDARY))
                     addImageToNote(e.getX(), e.getY());
+
+                notePane.getChildren().get(notePane.getChildren().size()-1).requestFocus();
             }
+
         });
 
     }
@@ -109,6 +113,16 @@ public class MainPageController implements Initializable {
     @FXML
     private void saveNote() {
 
+    }
+
+    @FXML
+    private void changeToWriteState(){
+        noteState = WriteState.getInstance();
+    }
+
+    @FXML
+    private void changeToPaintState(){
+        noteState = PaintState.getInstance();
     }
 
 }

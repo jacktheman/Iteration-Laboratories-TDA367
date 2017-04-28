@@ -14,31 +14,31 @@ import views.noteobjectviews.PaintingContainerView;
 /**
  * Created by jackflurry on 2017-04-27.
  */
-public class PaintState extends NoteState{
+public class PaintState implements NoteStateI{
 
     private boolean isPainting;
 
-    PaintState(AnchorPane notePane, NoteModel noteModel) {
-        super(notePane,noteModel);
-    }
+    private static PaintState SINGLETON = new PaintState();
+
+    private PaintState(){}
 
     @Override
-    public void setOnMousePressed(MouseEvent event) {
+    public void setOnMousePressed(MouseEvent event, AnchorPane notePane) {
         if(event.getButton().equals(MouseButton.PRIMARY))
             isPainting = true;
 
     }
 
     @Override
-    public void setOnMouseReleased(MouseEvent event) {
+    public void setOnMouseReleased(MouseEvent event, AnchorPane notePane) {
         if(event.getButton().equals(MouseButton.PRIMARY))
             isPainting = false;
     }
 
     @Override
-    public void setOnMouseMove(MouseEvent event) {
+    public void setOnMouseMove(MouseEvent event, AnchorPane notePane) {
         if(isPainting){
-            Node focus = super.getNotePane().getScene().getFocusOwner();
+            Node focus = notePane.getScene().getFocusOwner();
             if( focus instanceof PaintingContainerView){
                 if(event.getButton().equals(MouseButton.PRIMARY)){
                     ((PaintingContainerView) focus).paint(PaintingContainerModel.getPaintbrush(),event.getX(),event.getY());
@@ -47,5 +47,9 @@ public class PaintState extends NoteState{
         }
         PaintingContainerController paintingContainerController = new PaintingContainerController();
         paintingContainerController.setOnMouseMove(event);
+    }
+
+    public static PaintState getInstance(){
+        return SINGLETON;
     }
 }

@@ -9,36 +9,26 @@ import models.notemodel.NoteModel;
 /**
  * Created by jackflurry on 2017-04-27.
  */
-public class WriteState extends NoteState{
-    
+public class WriteState implements NoteStateI {
 
-    WriteState(AnchorPane notePane, NoteModel noteModel) {
-        super(notePane,noteModel);
+    private static WriteState SINGLETON = new WriteState();
+
+    private WriteState() {
     }
 
-    @Override
-    public void setOnMousePressed(MouseEvent event) {
-        if (super.getNoteModel() == null) {
-            super.setNoteModel(new NoteModel()); 
-        }
-
-        Node currentFocus = super.getNotePane().getScene().getFocusOwner();
-        super.getNotePane().requestFocus();
-        super.getNoteModel().addNoteObjectController(new TextContainerController("", event.getX(), event.getY()));
-        super.getNotePane().getChildren().clear();
-        super.getNotePane().getChildren().addAll(super.getNoteModel().getNodes());
-        super.getNoteModel().getNodes().get(super.getNoteModel().getNodes().size() - 1).requestFocus();
-
+    public void setOnMousePressed(MouseEvent event, AnchorPane notePane) {
 
     }
 
-    @Override
-    public void setOnMouseReleased(MouseEvent event) {
+    public void setOnMouseReleased(MouseEvent event, AnchorPane notePane) {
+        notePane.getChildren().add((new TextContainerController("", event.getX(), event.getY())).getNode());
+    }
+
+    public void setOnMouseMove(MouseEvent event, AnchorPane notePane) {
 
     }
 
-    @Override
-    public void setOnMouseMove(MouseEvent event) {
-
+    public static WriteState getInstance() {
+        return SINGLETON;
     }
 }
