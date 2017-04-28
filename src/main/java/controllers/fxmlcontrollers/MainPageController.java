@@ -1,12 +1,10 @@
 package controllers.fxmlcontrollers;
 
 import controllers.noteobjectcontrollers.ImageContainerController;
-import controllers.noteobjectcontrollers.NoteObjectControllerI;
-import controllers.noteobjectcontrollers.TextContainerController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -14,8 +12,6 @@ import models.notemodel.NoteModel;
 import services.FileChooserFactory;
 import utilities.NoteStateI;
 import utilities.WriteState;
-import views.noteobjectviews.ImageContainerView;
-import views.noteobjectviews.TextContainerView;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +25,12 @@ import java.util.ResourceBundle;
 public class MainPageController implements Initializable {
 
     @FXML
+    private AnchorPane fabNotesWindow;
+
+    @FXML
     private AnchorPane notePane;
+
+    private AnchorPane fille;
 
     private NoteModel currentNote;
 
@@ -37,6 +38,14 @@ public class MainPageController implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         noteState = WriteState.getInstance();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TagPage.fxml"));
+        try {
+            fille = loader.load();
+            fille.setLayoutX(0);
+            fille.setLayoutY(150);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         pressedOnCanvas();
     }
 
@@ -81,8 +90,12 @@ public class MainPageController implements Initializable {
         currentNote.getNodes().get(currentNote.getNodes().size() - 1).requestFocus();
     }
 
-    private void addTextToNote(double x, double y) {
-
+    @FXML
+    private void pressedFilleButton() {
+        if (fabNotesWindow.getChildren().contains(fille))
+            fabNotesWindow.getChildren().remove(fille);
+        else
+            fabNotesWindow.getChildren().add(fille);
     }
 
     @FXML
