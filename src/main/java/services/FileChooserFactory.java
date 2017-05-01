@@ -12,7 +12,7 @@ public class FileChooserFactory {
     public static FileChooser createFileChooser(String title, String... extensions) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(title);
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Alla tillåtna typer", extensions));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Alla Filtyper", extensions));
         for (String extension : extensions) {
             String description = extension.substring(extension.lastIndexOf(".") + 1).toUpperCase();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(description + " (" + extension + ")", extension));

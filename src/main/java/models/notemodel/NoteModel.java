@@ -1,7 +1,6 @@
 package models.notemodel;
 
 import controllers.noteobjectcontrollers.NoteObjectControllerI;
-import controllers.noteobjectcontrollers.NoteObjectObserverI;
 import javafx.scene.Node;
 
 import java.io.*;
@@ -11,7 +10,7 @@ import java.util.List;
 /**
  * Created by svante on 2017-04-07.
  */
-public class NoteModel implements NoteObjectObserverI {
+public class NoteModel {
 
     private String name;
 
@@ -30,12 +29,10 @@ public class NoteModel implements NoteObjectObserverI {
     }
 
     public void addNoteObjectController(NoteObjectControllerI controller){
-        controller.addListener(this);
         this.controllers.add(controller);
     }
 
     public void removeNoteObjectController(NoteObjectControllerI controller){
-        controller.removeListener(this);
         this.controllers.remove(controller);
     }
 
@@ -70,10 +67,5 @@ public class NoteModel implements NoteObjectObserverI {
     }
 
     public void save() throws IOException {
-    }
-
-    @Override
-    public void fireChange(NoteObjectControllerI controller) {
-        removeNoteObjectController(controller);
     }
 }

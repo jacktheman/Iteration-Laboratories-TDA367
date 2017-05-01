@@ -9,8 +9,8 @@ import javafx.scene.layout.AnchorPane;
  */
 public interface NoteStateI {
 
-    public NoteObjectControllerI setOnMousePressed(MouseEvent event);
+    NoteObjectControllerI setOnMousePressed(MouseEvent event);
 
-    public NoteObjectControllerI setOnMouseReleased(MouseEvent event);
+    NoteObjectControllerI setOnMouseReleased(MouseEvent event);
 
 }
