@@ -1,5 +1,6 @@
 package utilities.noteobjectbehaviors;
 
+import javafx.scene.input.MouseEvent;
 import models.noteobjectmodels.PaintingContainerModel;
 import views.noteobjectviews.PaintingContainerView;
 
@@ -12,14 +13,32 @@ public class PaintingBehavior implements NoteObjectBehaviorI {
 
     public PaintingBehavior(PaintingContainerView view){
         this.view = view;
-        setOnMouseDragged();
     }
 
-    private void setOnMouseDragged() {
-        view.setOnMouseDragged(mouseEvent -> {
-            if (mouseEvent.isPrimaryButtonDown()) {
-                view.paint(PaintingContainerModel.getPaintbrush(), mouseEvent.getX(), mouseEvent.getY());
-            }
-        });
+    @Override
+    public void onMousePressed(MouseEvent mouseEvent) {
+    }
+
+    @Override
+    public void onMouseReleased(MouseEvent mouseEvent) {
+    }
+
+    @Override
+    public void onMouseEntered(MouseEvent mouseEvent) {
+    }
+
+    @Override
+    public void onMouseExited(MouseEvent mouseEvent) {
+    }
+
+    @Override
+    public void onMouseMoved(MouseEvent mouseEvent) {
+    }
+
+    @Override
+    public void onMouseDragged(MouseEvent mouseEvent) {
+        if (mouseEvent.isPrimaryButtonDown()) {
+            view.paint(PaintingContainerModel.getPaintbrush(), mouseEvent.getX(), mouseEvent.getY());
+        }
     }
 }

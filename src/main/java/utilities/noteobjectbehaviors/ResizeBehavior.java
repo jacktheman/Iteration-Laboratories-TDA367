@@ -12,28 +12,41 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     private ImageView imageView;
 
     private enum ResizablePositions {
-        LEFT_UPPER_CORNER, LEFT_LOWER_CORNER, RIGHT_UPPER_CORNER, RIGHT_LOWER_CORNER, UPPER_AREA, LEFT_AREA, BOTTOM_AREA, RIGHT_AREA
+        LEFT_UPPER_CORNER, LEFT_LOWER_CORNER, RIGHT_UPPER_CORNER,
+        RIGHT_LOWER_CORNER, UPPER_AREA, LEFT_AREA, BOTTOM_AREA, RIGHT_AREA
+    }
+
+    @Override
+    public void onMousePressed(MouseEvent mouseEvent) {
+    }
+
+    @Override
+    public void onMouseReleased(MouseEvent mouseEvent) {
+    }
+
+    @Override
+    public void onMouseEntered(MouseEvent mouseEvent) {
+    }
+
+    @Override
+    public void onMouseExited(MouseEvent mouseEvent) {
+    }
+
+    @Override
+    public void onMouseMoved(MouseEvent mouseEvent) {
+        ResizablePositions position = returnCursorLocation(mouseEvent);
+        changeCursorBasedOnPosition(position);
+    }
+
+    @Override
+    public void onMouseDragged(MouseEvent mouseEvent) {
+        ResizablePositions resizablePositions = returnCursorLocation(mouseEvent);
+        System.out.println("DragDetected");
+        dragResize(resizablePositions, mouseEvent);
     }
 
     public ResizeBehavior(ImageView view){
         this.imageView = view;
-        setOnMouseMoved();
-        setOnMouseDragged();
-    }
-
-    private void setOnMouseMoved() {
-        imageView.setOnMouseMoved(mouseEvent -> {
-            ResizablePositions position = returnCursorLocation(mouseEvent);
-            changeCursorBasedOnPosition(position);
-        });
-    }
-
-    private void setOnMouseDragged(){
-        imageView.setOnMouseDragged(mouseEvent -> {
-            ResizablePositions resizablePositions = returnCursorLocation(mouseEvent);
-            System.out.println("DragDetected");
-            dragResize(resizablePositions, mouseEvent);
-        });
     }
 
     private ResizablePositions returnCursorLocation(MouseEvent mouseEvent) {

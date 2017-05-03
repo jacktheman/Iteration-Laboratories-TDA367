@@ -2,6 +2,7 @@ package utilities.noteobjectbehaviors;
 
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Created by aron on 2017-05-03.
@@ -14,55 +15,48 @@ public class DragDropBehavior implements NoteObjectBehaviorI {
 
     public DragDropBehavior(Node view) {
         this.view = view;
-        setOnMousePressed();
-        setOnMouseReleased();
-        setOnMouseEntered();
-        setOnMouseExited();
-        setOnMouseDragged();
     }
 
-    private void setOnMousePressed() {
-        view.setOnMousePressed(mouseEvent -> {
-            view.requestFocus();
-            dragx = mouseEvent.getX();
-            dragy = mouseEvent.getY();
-            view.getScene().setCursor(Cursor.MOVE);
-        });
+    @Override
+    public void onMousePressed(MouseEvent mouseEvent) {
+        view.requestFocus();
+        dragx = mouseEvent.getX();
+        dragy = mouseEvent.getY();
+        view.getScene().setCursor(Cursor.MOVE);
     }
 
-    private void setOnMouseReleased() {
-        view.setOnMouseReleased(mouseEvent -> {
+    @Override
+    public void onMouseReleased(MouseEvent mouseEvent) {
+        view.getScene().setCursor(Cursor.HAND);
+    }
+
+    @Override
+    public void onMouseEntered(MouseEvent mouseEvent) {
+        if (!mouseEvent.isPrimaryButtonDown()) {
             view.getScene().setCursor(Cursor.HAND);
-        });
+        }
     }
 
-    private void setOnMouseEntered() {
-        view.setOnMouseEntered(mouseEvent -> {
-            if (!mouseEvent.isPrimaryButtonDown()) {
-                view.getScene().setCursor(Cursor.HAND);
-            }
-        });
+    @Override
+    public void onMouseExited(MouseEvent mouseEvent) {
+        if (!mouseEvent.isPrimaryButtonDown()) {
+            view.getScene().setCursor(Cursor.DEFAULT);
+        }
     }
 
-    private void setOnMouseExited() {
-        view.setOnMouseExited(mouseEvent -> {
-            if (!mouseEvent.isPrimaryButtonDown()) {
-                view.getScene().setCursor(Cursor.DEFAULT);
-            }
-        });
+    @Override
+    public void onMouseMoved(MouseEvent mouseEvent) {
     }
 
-    private void setOnMouseDragged() {
-        view.setOnMouseDragged(mouseEvent -> {
-            double newX = view.getLayoutX() + mouseEvent.getX() - dragx;
-            double newY = view.getLayoutY() + mouseEvent.getY() - dragy;
-            if (newX >= 0) {
-                view.setLayoutX(newX);
-            }
-            if (newY >= 0) {
-                view.setLayoutY(newY);
-            }
-
-        });
+    @Override
+    public void onMouseDragged(MouseEvent mouseEvent) {
+        double newX = view.getLayoutX() + mouseEvent.getX() - dragx;
+        double newY = view.getLayoutY() + mouseEvent.getY() - dragy;
+        if (newX >= 0) {
+            view.setLayoutX(newX);
+        }
+        if (newY >= 0) {
+            view.setLayoutY(newY);
+        }
     }
 }

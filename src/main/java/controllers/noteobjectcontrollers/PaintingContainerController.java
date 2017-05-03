@@ -18,11 +18,9 @@ import java.awt.*;
  */
 public class PaintingContainerController extends NoteObjectController<PaintingContainerView> implements ObserverI<StateHandler>{
 
-    private NoteObjectBehaviorI behavior;
-
     public PaintingContainerController(double x, double y) {
         super(new PaintingContainerView(x,y));
-        behavior = new PaintingBehavior(super.getNode());
+        super.setBehavior(new PaintingBehavior(super.getNode()));
         StateHandler.getInstance().addListener(this);
     }
 
@@ -30,9 +28,9 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
     public void fireChange(StateHandler subject) {
         System.out.print(subject.toString());
         if (subject.getState().equals(PaintState.getInstance())){
-                behavior = new PaintingBehavior(super.getNode());
+            super.setBehavior(new PaintingBehavior(super.getNode()));
         }else{
-            behavior = new DragDropBehavior(super.getNode());
+            super.setBehavior(new DragDropBehavior(super.getNode()));
         }
 
     }
