@@ -11,11 +11,12 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import models.notemodel.NoteModel;
+import models.noteobjectmodels.PaintingContainerModel;
 import services.FileChooserFactory;
 import services.ObserverBus;
-import utilities.NoteStateI;
-import utilities.PaintState;
-import utilities.WriteState;
+import services.StateHandler;
+import utilities.state.PaintState;
+import utilities.state.WriteState;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +26,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static utilities.Paintbrush.CIRCLE;
+import static utilities.Paintbrush.SQUARE;
+import static utilities.Paintbrush.TRIANGLE;
 
 /**
  * Created by aron on 2017-03-29.
@@ -41,13 +46,10 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
 
     private NoteModel currentNote;
 
-    private NoteStateI noteState;
-
     private List<NoteObjectControllerI> currentControllers;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentControllers = new ArrayList<>();
-        noteState = WriteState.getInstance();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TagPage.fxml"));
         try {
             fille = loader.load();
@@ -58,6 +60,8 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
         }
         pressedOnCanvas();
     }
+
+
 
     private void pressedOnCanvas() {
         notePane.setOnMouseReleased(e -> {
@@ -77,7 +81,7 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
 
             if (addToNotePane) {
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
-                    NoteObjectControllerI controller = noteState.setOnMouseReleased(e);
+                    NoteObjectControllerI controller = StateHandler.getInstance().getState().setOnMouseReleased(e);
                     //controller.addListener(this);
                     ObserverBus.addListener(controller, this);
                     currentControllers.add(controller);
@@ -92,6 +96,8 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
         });
 
     }
+
+
 
     private void addImageToNote(double x, double y) {
         if (currentNote == null) {
@@ -135,12 +141,27 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
 
     @FXML
     private void changeToWriteState() {
-        noteState = WriteState.getInstance();
+        StateHandler.getInstance().setState(WriteState.getInstance());
     }
 
     @FXML
     private void changeToPaintState() {
-        noteState = PaintState.getInstance();
+        StateHandler.getInstance().setState(PaintState.getInstance());
+    }
+
+    @FXML
+    private void setPaintbrushToSquare(){
+        PaintingContainerModel.setPaintbrush(SQUARE);
+    }
+
+    @FXML
+    private void setPaintbrushToCircle(){
+        PaintingContainerModel.setPaintbrush(CIRCLE);
+    }
+
+    @FXML
+    private void setPaintbrushToTriangle(){
+        PaintingContainerModel.setPaintbrush(TRIANGLE);
     }
 
     @Override

@@ -1,38 +1,39 @@
 package controllers.noteobjectcontrollers;
 
-import javafx.scene.Node;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import models.noteobjectmodels.PaintingContainerModel;
-import utilities.Paintbrush;
+import services.StateHandler;
+import utilities.ObservableI;
+import utilities.ObserverI;
+import utilities.noteobjectbehaviors.DragDropBehavior;
+import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
+import utilities.noteobjectbehaviors.PaintingBehavior;
+import utilities.state.NoteStateI;
+import utilities.state.PaintState;
+import utilities.state.WriteState;
 import views.noteobjectviews.PaintingContainerView;
+
+import java.awt.*;
 
 /**
  * Created by jackflurry on 2017-04-07.
  */
-public class PaintingContainerController extends NoteObjectController<PaintingContainerView> {
+public class PaintingContainerController extends NoteObjectController<PaintingContainerView> implements ObserverI<StateHandler>{
 
-    private boolean isPainting;
+    private NoteObjectBehaviorI behavior;
 
-    public PaintingContainerController(){
-        super(new PaintingContainerView());
+    public PaintingContainerController(double x, double y) {
+        super(new PaintingContainerView(x,y));
+        behavior = new PaintingBehavior(super.getNode());
+        StateHandler.getInstance().addListener(this);
     }
 
-    public void changePaintbrush(){
-
-    }
-
-
-
-    public void setOnMouseMove(MouseEvent event) {
-        if(isPainting){
-            Node focus = super.getNode().getScene().getFocusOwner();
-            if( focus instanceof PaintingContainerView){
-                if(event.getButton().equals(MouseButton.PRIMARY)){
-                    ((PaintingContainerView) focus).paint(PaintingContainerModel.getPaintbrush(),event.getX(),event.getY());
-                }
-            }
+    @Override
+    public void fireChange(StateHandler subject) {
+        System.out.print(subject.toString());
+        if (subject.getState().equals(PaintState.getInstance())){
+                behavior = new PaintingBehavior(super.getNode());
+        }else{
+            behavior = new DragDropBehavior(super.getNode());
         }
-        (super.getNode()).paint(PaintingContainerModel.getPaintbrush(),event.getX(),event.getY());
+
     }
 }

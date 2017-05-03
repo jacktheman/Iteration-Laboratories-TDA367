@@ -17,7 +17,7 @@ public class PaintingContainerModel {
         return paintbrush;
     }
 
-    public void setPaintbrush(Paintbrush paintbrush) {
-        this.paintbrush = paintbrush;
+    public static void setPaintbrush(Paintbrush paintbrush) {
+        PaintingContainerModel.paintbrush = paintbrush;
     }
 }

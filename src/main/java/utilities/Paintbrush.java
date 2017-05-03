@@ -9,7 +9,7 @@ public enum Paintbrush {
 
     CIRCLE, TRIANGLE, SQUARE;
 
-    private static int brushSize;
+    private static int brushSize = 10;
     private static Color brushColor;
 
     public static void setSize(int size) {

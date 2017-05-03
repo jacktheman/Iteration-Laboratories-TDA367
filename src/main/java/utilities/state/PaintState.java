@@ -1,20 +1,20 @@
-package utilities;
+package utilities.state;
 
 import controllers.noteobjectcontrollers.NoteObjectControllerI;
-import controllers.noteobjectcontrollers.TextContainerController;
+import controllers.noteobjectcontrollers.PaintingContainerController;
 import javafx.scene.input.MouseEvent;
 
 /**
  * Created by jackflurry on 2017-04-27.
  */
-public class WriteState implements NoteStateI {
+public class PaintState implements NoteStateI {
 
-    private static WriteState SINGLETON = new WriteState();
+    private static PaintState SINGLETON = new PaintState();
 
-    private WriteState() {
-    }
+    private PaintState(){}
 
-    public static WriteState getInstance() {
+
+    public static PaintState getInstance(){
         return SINGLETON;
     }
 
@@ -25,6 +25,7 @@ public class WriteState implements NoteStateI {
 
     @Override
     public NoteObjectControllerI setOnMouseReleased(MouseEvent event) {
-        return new TextContainerController("",event.getX(),event.getY());
+        return new PaintingContainerController(event.getX(),event.getY());
     }
+
 }

@@ -8,7 +8,6 @@ import javafx.scene.text.Text;
  */
 public class TextContainerModel {
 
-
     /**
      * A Text object for resizing the TextArea.
      *
