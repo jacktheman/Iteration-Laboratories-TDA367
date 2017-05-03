@@ -35,14 +35,4 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
         }
         (super.getNode()).paint(PaintingContainerModel.getPaintbrush(),event.getX(),event.getY());
     }
-
-    @Override
-    public void onMousePressed() {
-        isPainting = true;
-    }
-
-    @Override
-    public void onMouseReleased() {
-        isPainting = false;
-    }
 }

@@ -7,10 +7,6 @@ import javafx.scene.Node;
  */
 public interface NoteObjectControllerI {
 
-    void onMousePressed();
-
-    void onMouseReleased();
-
     Node getNode();
 
     void addListener(NoteObjectObserverI noteObjectObserver);

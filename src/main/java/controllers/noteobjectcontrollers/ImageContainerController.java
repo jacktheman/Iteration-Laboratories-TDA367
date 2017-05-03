@@ -4,6 +4,8 @@ package controllers.noteobjectcontrollers;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import models.noteobjectmodels.ImageContainerModel;
+import utilities.noteobjectbehaviors.DragDropBehavior;
+import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
 import views.noteobjectviews.ImageContainerView;
 
 import java.net.URL;
@@ -17,30 +19,24 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
         LEFT_UPPER_CORNER, LEFT_LOWER_CORNER, RIGHT_UPPER_CORNER, RIGHT_LOWER_CORNER, UPPER_AREA, LEFT_AREA, BOTTOM_AREA, RIGHT_AREA
     }
 
+    private NoteObjectBehaviorI noteObjectBehavior;
+
     private ImageContainerModel imageContainerModel;
 
     public ImageContainerController(Image image, double layoutX, double layoutY){
         super(new ImageContainerView(image, layoutX, layoutY));
         this.imageContainerModel = new ImageContainerModel(image);
+        noteObjectBehavior = new DragDropBehavior(super.getNode());
     }
 
     public ImageContainerController(URL url, double layoutX, double layoutY){
         super(new ImageContainerView(url,layoutX, layoutY));
         this.imageContainerModel = new ImageContainerModel(new Image(url.toString()));
+        noteObjectBehavior = new DragDropBehavior(super.getNode());
     }
 
     public Image returnModelImage(){
         return imageContainerModel.getImage();
-    }
-
-    @Override
-    public void onMousePressed() {
-
-    }
-
-    @Override
-    public void onMouseReleased() {
-
     }
 
     private ResizablePositions isInUpperLeft(MouseEvent mouseEvent){

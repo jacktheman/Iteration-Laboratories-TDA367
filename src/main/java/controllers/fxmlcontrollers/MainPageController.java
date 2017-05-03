@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import models.notemodel.NoteModel;
 import services.FileChooserFactory;
+import services.ObserverBus;
 import utilities.NoteStateI;
 import utilities.PaintState;
 import utilities.WriteState;
@@ -77,7 +78,8 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
             if (addToNotePane) {
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
                     NoteObjectControllerI controller = noteState.setOnMouseReleased(e);
-                    controller.addListener(this);
+                    //controller.addListener(this);
+                    ObserverBus.addListener(controller, this);
                     currentControllers.add(controller);
                     notePane.getChildren().add(currentControllers.get(currentControllers.size() - 1).getNode());
                 } else if (e.getButton().equals(MouseButton.SECONDARY)) {
