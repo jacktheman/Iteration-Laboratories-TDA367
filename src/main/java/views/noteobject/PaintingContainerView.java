@@ -10,30 +10,61 @@ import utilities.Paintbrush;
 public class PaintingContainerView extends AnchorPane {
 
     private Canvas canvas;
+    private Canvas borderCanvas;
     private final double TRIANGLE_QUANTIFIER_SMALL = 0.75;
     private final double TRIANGLE_QUANTIFIER_BIG = 1.25;
     private final int TRIANGLE_UMBER_OF_CORNERS = 3;
+    private final int DEFAULT_CANVAS_SIZE = 50;
+    private final int DEFAULT_CANVAS_CROP = 25;
+    private final int PAINTING_AREA_RESIZING_CONSTANT = 20;
 
     public PaintingContainerView(double x, double y){
-        this.setLayoutX(x);
-        this.setLayoutY(y);
-        this.setPrefSize(500,500);
-        canvas = new Canvas(500,500);
+        this.setLayoutX(x-DEFAULT_CANVAS_CROP);
+        this.setLayoutY(y-DEFAULT_CANVAS_CROP);
+        this.setPrefSize(DEFAULT_CANVAS_SIZE,DEFAULT_CANVAS_SIZE);
+        canvas = new Canvas(this.getWidth(),this.getHeight());
+        borderCanvas = new Canvas(this.getWidth(),this.getHeight());
+        this.getChildren().add(borderCanvas);
         this.getChildren().add(canvas);
+        createBorder();
     }
 
-    public void resizeWidth(double x){
-        this.setPrefWidth(this.getLayoutX() + getPrefWidth() + x);
+    private void resizeWidthRight(){
+        this.setWidth(getWidth() + PAINTING_AREA_RESIZING_CONSTANT);
         canvas.setWidth(this.getWidth());
+        borderCanvas.setWidth(this.getWidth());
     }
 
-    public void resizeHeight(double y){
-        this.setPrefHeight(this.getLayoutY() + getPrefHeight() + y);
+    private void resizeHeightDown(){
+        this.setHeight(getHeight() + PAINTING_AREA_RESIZING_CONSTANT);
         canvas.setHeight(this.getHeight());
+        borderCanvas.setHeight(this.getHeight());
+    }
+
+    private void createBorder(){
+        borderCanvas.getGraphicsContext2D().strokeRect(canvas.getLayoutX(),canvas.getLayoutY(),canvas.getWidth(),canvas.getHeight());
+    }
+
+    public void removeBorder(){
+        borderCanvas.getGraphicsContext2D().clearRect(canvas.getLayoutX(),canvas.getLayoutY(),canvas.getWidth(),canvas.getHeight());
+    }
+
+    private void paintingSizeCounter(double layoutX, double layoutY){
+        if(layoutX > this.getWidth() - PAINTING_AREA_RESIZING_CONSTANT) {
+            resizeWidthRight();
+            removeBorder();
+            createBorder();
+        }
+        if(layoutY > this.getHeight() - PAINTING_AREA_RESIZING_CONSTANT) {
+            resizeHeightDown();
+            removeBorder();
+            createBorder();
+        }
     }
 
     public void paint(Paintbrush paintbrush, double x, double y){
         double size = Paintbrush.getSize();
+        paintingSizeCounter(x,y);
         canvas.getGraphicsContext2D().setFill(Paintbrush.getColor());
         switch (paintbrush){
             case CIRCLE:

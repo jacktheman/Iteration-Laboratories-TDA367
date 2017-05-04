@@ -12,6 +12,8 @@ import java.io.File;
  */
 public class Main extends Application {
 
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         File customDir = new File(FileHandler.FILE_DIR);

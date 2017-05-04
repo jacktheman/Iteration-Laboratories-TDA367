@@ -5,23 +5,28 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
- * Created by svante on 2017-05-03.
+ * Created by svante on 2017-0BORDER_WIDTH-03.
  */
 public class ResizeBehavior implements NoteObjectBehaviorI {
+
+    public static final double BORDER_WIDTH = 10;
     
     private ImageView imageView;
 
-    private enum ResizablePositions {
-        LEFT_UPPER_CORNER, LEFT_LOWER_CORNER, RIGHT_UPPER_CORNER,
-        RIGHT_LOWER_CORNER, UPPER_AREA, LEFT_AREA, BOTTOM_AREA, RIGHT_AREA
+    private static ResizablePositions pos;
+
+    static ResizablePositions getPos(){
+        return pos;
     }
 
     @Override
     public void onMousePressed(MouseEvent mouseEvent) {
+        pos = returnCursorLocation(mouseEvent);
     }
 
     @Override
     public void onMouseReleased(MouseEvent mouseEvent) {
+        pos = null;
     }
 
     @Override
@@ -40,9 +45,7 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
 
     @Override
     public void onMouseDragged(MouseEvent mouseEvent) {
-        ResizablePositions resizablePositions = returnCursorLocation(mouseEvent);
-        System.out.println("DragDetected");
-        dragResize(resizablePositions, mouseEvent);
+        dragResize(pos, mouseEvent);
     }
 
     public ResizeBehavior(ImageView view){
@@ -52,21 +55,21 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     private ResizablePositions returnCursorLocation(MouseEvent mouseEvent) {
         ResizablePositions pos = null;
 
-        if (mouseEvent.getX() >= 0 && mouseEvent.getX() <= 5 && mouseEvent.getY() >= 0 && mouseEvent.getY() <= 5) {
+        if (mouseEvent.getX() >= 0 && mouseEvent.getX() <= BORDER_WIDTH && mouseEvent.getY() >= 0 && mouseEvent.getY() <= BORDER_WIDTH) {
             pos = ResizablePositions.LEFT_UPPER_CORNER;
-        } else if (mouseEvent.getX() >= 0 && mouseEvent.getX() <= 5 && mouseEvent.getY() >= imageView.getFitHeight() - 5 && mouseEvent.getY() <= imageView.getFitHeight()) {
+        } else if (mouseEvent.getX() >= 0 && mouseEvent.getX() <= BORDER_WIDTH && mouseEvent.getY() >= imageView.getFitHeight() - BORDER_WIDTH && mouseEvent.getY() <= imageView.getFitHeight()) {
             pos = ResizablePositions.LEFT_LOWER_CORNER;
-        } else if (mouseEvent.getX() >= imageView.getFitWidth() - 5 && mouseEvent.getX() <= imageView.getFitWidth() && mouseEvent.getY() >= 0 && mouseEvent.getY() <= 5) {
+        } else if (mouseEvent.getX() >= imageView.getFitWidth() - BORDER_WIDTH && mouseEvent.getX() <= imageView.getFitWidth() && mouseEvent.getY() >= 0 && mouseEvent.getY() <= BORDER_WIDTH) {
             pos = ResizablePositions.RIGHT_UPPER_CORNER;
-        } else if (mouseEvent.getX() >= imageView.getFitWidth() - 5 && mouseEvent.getX() <= imageView.getFitWidth() && mouseEvent.getY() >= imageView.getFitHeight() - 5 && mouseEvent.getY() <= imageView.getFitHeight()) {
+        } else if (mouseEvent.getX() >= imageView.getFitWidth() - BORDER_WIDTH && mouseEvent.getX() <= imageView.getFitWidth() && mouseEvent.getY() >= imageView.getFitHeight() - BORDER_WIDTH && mouseEvent.getY() <= imageView.getFitHeight()) {
             pos = ResizablePositions.RIGHT_LOWER_CORNER;
-        } else if (mouseEvent.getY() >= 0 && mouseEvent.getY() <= 5) {
+        } else if (mouseEvent.getY() >= 0 && mouseEvent.getY() <= BORDER_WIDTH) {
             pos = ResizablePositions.UPPER_AREA;
-        } else if (mouseEvent.getX() >= 0 && mouseEvent.getX() <= 5) {
+        } else if (mouseEvent.getX() >= 0 && mouseEvent.getX() <= BORDER_WIDTH) {
             pos = ResizablePositions.LEFT_AREA;
-        } else if (mouseEvent.getY() >= imageView.getFitHeight() - 5 && mouseEvent.getY() <= imageView.getFitHeight()) {
+        } else if (mouseEvent.getY() >= imageView.getFitHeight() - BORDER_WIDTH /*&& mouseEvent.getY() <= imageView.getFitHeight()*/) {
             pos = ResizablePositions.BOTTOM_AREA;
-        } else if (mouseEvent.getX() >= imageView.getFitWidth() - 5 && mouseEvent.getX() <= imageView.getFitWidth()) {
+        } else if (mouseEvent.getX() >= imageView.getFitWidth() - BORDER_WIDTH) {
             pos = ResizablePositions.RIGHT_AREA;
         }
 
@@ -76,7 +79,7 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
 
     private void dragResize(ResizablePositions position, MouseEvent event){
 
-        double nodeX, nodeY, mouseX, mouseY;
+        double nodeX, nodeY, mouseX, mouseY, mouseSceneY, mouseSceneX, newFitWidth;
         mouseX = event.getX();
         mouseY = event.getY();
         nodeX = imageView.getFitWidth();
@@ -91,13 +94,17 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
         } else if (position == ResizablePositions.RIGHT_LOWER_CORNER){
 
         } else if (position == ResizablePositions.UPPER_AREA){
-
+            double oldy = imageView.getLayoutY();
+            imageView.setLayoutY(oldy + mouseY);
+            imageView.setFitHeight(nodeY - mouseY);
         } else if (position == ResizablePositions.LEFT_AREA){
-
+            double oldx = imageView.getLayoutX();
+            imageView.setLayoutX(oldx + mouseX);
+            imageView.setFitWidth(nodeX - mouseX);
         } else if (position == ResizablePositions.BOTTOM_AREA){
-
+            imageView.setFitHeight(mouseY);
         } else if (position == ResizablePositions.RIGHT_AREA){
-            imageView.setFitWidth(nodeX + mouseX - nodeX);
+            imageView.setFitWidth(mouseX);
         }
     }
 

@@ -1,5 +1,6 @@
 package controllers.noteobject;
 
+import javafx.fxml.FXML;
 import services.ObserverBus;
 import services.StateHandler;
 import utilities.ObserverI;
@@ -17,6 +18,15 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
         super(new PaintingContainerView(x,y));
         super.setBehavior(new PaintingBehavior(super.getNode()));
         ObserverBus.addListener(StateHandler.getInstance(), this);
+        focusPropertyListener();
+    }
+
+    public void focusPropertyListener(){
+        super.getNode().focusedProperty().addListener(observable -> {
+            if(!super.getNode().isFocused()){
+                super.getNode().removeBorder();
+            }
+        });
     }
 
     @Override

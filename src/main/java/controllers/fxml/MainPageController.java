@@ -2,17 +2,22 @@ package controllers.fxml;
 
 import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Button;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 import models.note.Note;
 import models.noteobject.PaintingContainer;
+import models.note.Note;
 import services.FileChooserFactory;
 import services.ObserverBus;
 import services.StateHandler;
@@ -21,6 +26,7 @@ import utilities.Paintbrush;
 import utilities.state.PaintState;
 import utilities.state.WriteState;
 
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -46,6 +52,9 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
     private AnchorPane notePane;
 
     @FXML
+    private Button tagMenuButton;
+
+    @FXML
     private ToggleButton circleButton;
     @FXML
     private ToggleButton squareButton;
@@ -61,16 +70,20 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
 
     private List<NoteObjectControllerI> currentControllers;
 
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentControllers = new ArrayList<>();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TagPage.fxml"));
         try {
             fille = loader.load();
             fille.setLayoutX(0);
+            fille.setTranslateX(-301);
             fille.setLayoutY(150);
+            fabNotesWindow.getChildren().add(fille);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        prepareSlideMenuAnimation();
         pressedOnCanvas();
     }
 
@@ -130,13 +143,26 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
         currentNote.getNodes().get(currentNote.getNodes().size() - 1).requestFocus();
     }
 
-    @FXML
+   @FXML
     private void pressedFilleButton() {
-        if (fabNotesWindow.getChildren().contains(fille))
-            fabNotesWindow.getChildren().remove(fille);
-        else
-            fabNotesWindow.getChildren().add(fille);
+
     }
+
+    private void prepareSlideMenuAnimation () {
+        TranslateTransition openFille = new TranslateTransition(new Duration(1000), fille);
+        openFille.setToX(0);
+        TranslateTransition closeFille = new TranslateTransition(new Duration(1000), fille);
+        tagMenuButton.setOnMouseClicked(mouseEvent -> {
+            fille.toFront();
+            if (fille.getTranslateX() != 0) {
+                openFille.play();
+            } else {
+                closeFille.setToX(-301);
+                closeFille.play();
+            }
+        });
+    }
+
 
     @FXML
     private void importImage() {
@@ -152,8 +178,11 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
     }
 
     @FXML
-    private void saveNote() {
-        //TODO
+    private void saveNote() { //TODO add name to file
+        Note note = new Note();
+        for (NoteObjectControllerI controller : currentControllers)
+            note.addNoteObjectController(controller);
+        note.writeToFile();
     }
 
     @FXML

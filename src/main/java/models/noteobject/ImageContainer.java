@@ -11,6 +11,7 @@ public class ImageContainer {
 
     private Image image;
     private File file;
+    private double quota;
 
     public ImageContainer(Image image){
         this.image = image;
@@ -28,6 +29,8 @@ public class ImageContainer {
     public File getFile(){
         return this.file;
     }
+
+    public double getQuota() { return this.quota; }
 
 
 }
