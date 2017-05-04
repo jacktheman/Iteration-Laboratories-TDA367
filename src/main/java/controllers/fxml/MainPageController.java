@@ -84,63 +84,41 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
             e.printStackTrace();
         }
         prepareSlideMenuAnimation();
-        pressedOnCanvas();
+        setOnMousePressedNotePane();
+        setOnMouseReleasedNotePane();
     }
 
-
-
-    private void pressedOnCanvas() {
-        notePane.setOnMouseReleased(e -> {
-            Node focusOwner = notePane.getScene().getFocusOwner();
-            boolean addToNotePane = true;
-            if (notePane.getChildren().contains(focusOwner)) {
-                double x1 = focusOwner.getLayoutX();
-                double x2 = focusOwner.getLayoutX() + focusOwner.getBoundsInLocal().getWidth();
-                double y1 = focusOwner.getLayoutY();
-                double y2 = focusOwner.getLayoutY() + focusOwner.getBoundsInLocal().getHeight();
-
-                if ((e.getX() >= x1 && e.getX() <= x2 && e.getY() >= y1 && e.getY() <= y2)) {
-                    addToNotePane = false;
-                }
-
+    private void setOnMousePressedNotePane() {
+        notePane.setOnMousePressed(event -> {
+            NoteObjectControllerI controller = null;
+            try {
+                controller = StateHandler.getInstance().getState().getOnMousePressed(notePane, event);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
             }
-
-            if (addToNotePane) {
-                if (e.getButton().equals(MouseButton.PRIMARY)) {
-                    NoteObjectControllerI controller = StateHandler.getInstance().getState().getOnMouseReleased(e);
-                    ObserverBus.addListener(controller, this);
-                    currentControllers.add(controller);
-                    notePane.getChildren().add(currentControllers.get(currentControllers.size() - 1).getNode());
-                } else if (e.getButton().equals(MouseButton.SECONDARY)) {
-                    addImageToNote(e.getX(), e.getY());
-                }
-
-                notePane.getChildren().get(notePane.getChildren().size() - 1).requestFocus();
-            }
-
+            addNodeToNotePane(controller);
         });
-
     }
 
+    private void setOnMouseReleasedNotePane() {
+        notePane.setOnMouseReleased(event -> {
+            NoteObjectControllerI controller = null;
+            try {
+                controller = StateHandler.getInstance().getState().getOnMouseReleased(notePane, event);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            addNodeToNotePane(controller);
+        });
+    }
 
-
-    private void addImageToNote(double x, double y) {
-        if (currentNote == null) {
-            currentNote = new Note();
+    private void addNodeToNotePane(NoteObjectControllerI controller) {
+        if (controller != null) {
+            ObserverBus.addListener(controller, this);
+            currentControllers.add(controller);
+            notePane.getChildren().add(currentControllers.get(currentControllers.size() - 1).getNode());
+            notePane.getChildren().get(notePane.getChildren().size() - 1).requestFocus();
         }
-        notePane.requestFocus();
-        try {
-            File image = FileChooserFactory.getImageChooser().showOpenDialog(notePane.getScene().getWindow());
-            URI uri = image.toURI();
-            URL url = uri.toURL();
-            ImageContainerController imageContainerController = new ImageContainerController(url, x, y);
-            currentNote.addNoteObjectController(imageContainerController);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        notePane.getChildren().clear();
-        notePane.getChildren().addAll(currentNote.getNodes());
-        currentNote.getNodes().get(currentNote.getNodes().size() - 1).requestFocus();
     }
 
    @FXML
