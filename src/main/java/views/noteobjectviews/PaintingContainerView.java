@@ -31,15 +31,19 @@ public class PaintingContainerView extends AnchorPane {
 
     public void paint(Paintbrush paintbrush, double x, double y){
         double size = Paintbrush.getSize();
+        canvas.getGraphicsContext2D().setFill(Paintbrush.getColor());
         switch (paintbrush){
             case CIRCLE:
                 canvas.getGraphicsContext2D().fillOval(x,y,size,size);
+                break;
             case SQUARE:
                 canvas.getGraphicsContext2D().fillRect(x,y,size,size);
+                break;
             case TRIANGLE:
-                double [] xPoints = {x-size*10,x,x+size*10};
-                double [] yPoints = {y-size*5,y+size*10,y-size*5};
+                double [] xPoints = {x-size*1.5,x,x+size*1.5};
+                double [] yPoints = {y+size*0.75,y-size*1.5,y+size*0.75};
                 canvas.getGraphicsContext2D().fillPolygon(xPoints,yPoints,3);
+                break;
         }
 
     }

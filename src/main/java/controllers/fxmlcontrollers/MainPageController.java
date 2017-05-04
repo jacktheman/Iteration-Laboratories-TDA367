@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -15,6 +17,7 @@ import services.FileChooserFactory;
 import services.ObserverBus;
 import services.StateHandler;
 import utilities.ObserverI;
+import utilities.Paintbrush;
 import utilities.state.PaintState;
 import utilities.state.WriteState;
 
@@ -41,6 +44,16 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
 
     @FXML
     private AnchorPane notePane;
+
+    @FXML
+    private ToggleButton circleButton;
+    @FXML
+    private ToggleButton squareButton;
+    @FXML
+    private ToggleButton triangleButton;
+
+    @FXML
+    private ColorPicker colorPicker;
 
     private AnchorPane fille;
 
@@ -134,6 +147,11 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
     }
 
     @FXML
+    private void changeColor(){
+        Paintbrush.setColor(colorPicker.getValue());
+    }
+
+    @FXML
     private void saveNote() {
         //TODO
     }
@@ -151,16 +169,32 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
     @FXML
     private void setPaintbrushToSquare(){
         PaintingContainerModel.setPaintbrush(SQUARE);
+        circleButton.setSelected(false);
+        triangleButton.setSelected(false);
     }
 
     @FXML
     private void setPaintbrushToCircle(){
         PaintingContainerModel.setPaintbrush(CIRCLE);
+        squareButton.setSelected(false);
+        triangleButton.setSelected(false);
     }
 
     @FXML
     private void setPaintbrushToTriangle(){
         PaintingContainerModel.setPaintbrush(TRIANGLE);
+        circleButton.setSelected(false);
+        squareButton.setSelected(false);
+    }
+
+    @FXML
+    private void shrinkBrushSize(){
+        Paintbrush.setSize(Paintbrush.getSize()*0.9);
+    }
+
+    @FXML
+    private void enlargeBrushSize(){
+        Paintbrush.setSize(Paintbrush.getSize()*1.1);
     }
 
     @Override
