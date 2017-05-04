@@ -1,5 +1,6 @@
-package models.note;
+package models.notemodel;
 
+import models.note.Note;
 import org.junit.Test;
 
 import java.util.List;
@@ -9,17 +10,17 @@ import static org.junit.Assert.*;
 /**
  * Created by aron on 2017-04-14.
  */
-public class NoteModelTest {
+public class NoteTest {
 
     @Test
     public void addTag() throws Exception {
-        NoteModel noteModel = new NoteModel("Test");
-        List<String> tags = noteModel.getTags();
+        Note Note = new Note("Test");
+        List<String> tags = Note.getTags();
 
         int nTagsBefore = tags.size();
 
-        noteModel.addTag("test");
-        tags = noteModel.getTags();
+        Note.addTag("test");
+        tags = Note.getTags();
 
         int nTagsAfter = tags.size();
         assertTrue(nTagsBefore < nTagsAfter);
@@ -27,14 +28,14 @@ public class NoteModelTest {
 
     @Test
     public void removeTag() throws Exception {
-        NoteModel noteModel = new NoteModel("Test");
-        noteModel.addTag("test");
-        List<String> tags = noteModel.getTags();
+        Note Note = new Note("Test");
+        Note.addTag("test");
+        List<String> tags = Note.getTags();
 
         int nTagsBefore = tags.size();
 
-        noteModel.removeTag("test");
-        tags = noteModel.getTags();
+        Note.removeTag("test");
+        tags = Note.getTags();
 
         int nTagsAfter = tags.size();
         assertTrue(nTagsBefore > nTagsAfter);
