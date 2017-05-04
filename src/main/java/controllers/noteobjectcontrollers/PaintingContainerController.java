@@ -1,5 +1,6 @@
 package controllers.noteobjectcontrollers;
 
+import services.ObserverBus;
 import services.StateHandler;
 import utilities.ObservableI;
 import utilities.ObserverI;
@@ -21,12 +22,11 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
     public PaintingContainerController(double x, double y) {
         super(new PaintingContainerView(x,y));
         super.setBehavior(new PaintingBehavior(super.getNode()));
-        StateHandler.getInstance().addListener(this);
+        ObserverBus.addListener(StateHandler.getInstance(), this);
     }
 
     @Override
     public void fireChange(StateHandler subject) {
-        System.out.print(subject.toString());
         if (subject.getState().equals(PaintState.getInstance())){
             super.setBehavior(new PaintingBehavior(super.getNode()));
         }else{

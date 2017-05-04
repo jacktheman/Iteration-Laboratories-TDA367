@@ -1,6 +1,8 @@
 package controllers.noteobjectcontrollers;
 
 import javafx.scene.Node;
+import utilities.ObservableI;
+import utilities.ObserverI;
 import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
 
     private NoteObjectBehaviorI noteObjectBehavior;
 
-    private List<NoteObjectObserverI> listeners;
+    private List<ObserverI> listeners;
 
     NoteObjectController(T view) {
         this.view = view;
@@ -41,13 +43,13 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
     }
 
     @Override
-    public void addListener(NoteObjectObserverI noteObjectObserver) {
-        listeners.add(noteObjectObserver);
+    public void addListener(ObserverI observer) {
+        listeners.add(observer);
     }
 
     @Override
-    public void removeListener(NoteObjectObserverI noteObjectObserver) {
-        listeners.remove(noteObjectObserver);
+    public void removeListener(ObserverI observer) {
+        listeners.remove(observer);
     }
 
     NoteObjectBehaviorI getBehavior() {
@@ -60,37 +62,43 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
 
     private void setOnMousePressed() {
         this.getNode().setOnMousePressed(mouseEvent -> {
-            noteObjectBehavior.onMousePressed(mouseEvent);
+            if (noteObjectBehavior != null)
+                noteObjectBehavior.onMousePressed(mouseEvent);
         });
     }
 
     private void setOnMouseReleased() {
         this.getNode().setOnMouseReleased(mouseEvent -> {
-            noteObjectBehavior.onMouseReleased(mouseEvent);
+            if (noteObjectBehavior != null)
+                noteObjectBehavior.onMouseReleased(mouseEvent);
         });
     }
 
     private void setOnMouseEntered() {
         this.getNode().setOnMouseEntered(mouseEvent -> {
-            noteObjectBehavior.onMouseEntered(mouseEvent);
+            if (noteObjectBehavior != null)
+                noteObjectBehavior.onMouseEntered(mouseEvent);
         });
     }
 
     private void setOnMouseExited() {
         this.getNode().setOnMouseExited(mouseEvent -> {
-            noteObjectBehavior.onMouseExited(mouseEvent);
+            if (noteObjectBehavior != null)
+                noteObjectBehavior.onMouseExited(mouseEvent);
         });
     }
 
     private void setOnMouseMoved() {
         this.getNode().setOnMouseMoved(mouseEvent -> {
-            noteObjectBehavior.onMouseMoved(mouseEvent);
+            if (noteObjectBehavior != null)
+                noteObjectBehavior.onMouseMoved(mouseEvent);
         });
     }
 
     private void setOnMouseDragged() {
         this.getNode().setOnMouseDragged(mouseEvent -> {
-            noteObjectBehavior.onMouseDragged(mouseEvent);
+            if (noteObjectBehavior != null)
+                noteObjectBehavior.onMouseDragged(mouseEvent);
         });
     }
 

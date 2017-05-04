@@ -2,7 +2,6 @@ package controllers.fxmlcontrollers;
 
 import controllers.noteobjectcontrollers.ImageContainerController;
 import controllers.noteobjectcontrollers.NoteObjectControllerI;
-import controllers.noteobjectcontrollers.NoteObjectObserverI;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,6 +14,7 @@ import models.noteobjectmodels.PaintingContainerModel;
 import services.FileChooserFactory;
 import services.ObserverBus;
 import services.StateHandler;
+import utilities.ObserverI;
 import utilities.state.PaintState;
 import utilities.state.WriteState;
 
@@ -34,7 +34,7 @@ import static utilities.Paintbrush.TRIANGLE;
 /**
  * Created by aron on 2017-03-29.
  */
-public class MainPageController implements Initializable, NoteObjectObserverI {
+public class MainPageController implements Initializable, ObserverI<NoteObjectControllerI> {
 
     @FXML
     private AnchorPane fabNotesWindow;
@@ -81,8 +81,7 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
 
             if (addToNotePane) {
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
-                    NoteObjectControllerI controller = StateHandler.getInstance().getState().setOnMouseReleased(e);
-                    //controller.addListener(this);
+                    NoteObjectControllerI controller = StateHandler.getInstance().getState().getOnMouseReleased(e);
                     ObserverBus.addListener(controller, this);
                     currentControllers.add(controller);
                     notePane.getChildren().add(currentControllers.get(currentControllers.size() - 1).getNode());
