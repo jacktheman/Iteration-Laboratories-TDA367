@@ -1,10 +1,10 @@
-package controllers.noteobjectcontrollers;
+package controllers.noteobject;
 
 
 import javafx.scene.image.Image;
-import models.noteobjectmodels.ImageContainerModel;
+import models.noteobject.ImageContainer;
 import utilities.noteobjectbehaviors.DragDropBehavior;
-import views.noteobjectviews.ImageContainerView;
+import views.noteobject.ImageContainerView;
 
 import java.net.URL;
 
@@ -14,16 +14,16 @@ import java.net.URL;
  */
 public class ImageContainerController extends NoteObjectController<ImageContainerView> {
 
-    private ImageContainerModel imageContainerModel;
+    private ImageContainer imageContainerModel;
 
     public ImageContainerController(Image image, double layoutX, double layoutY) {
         super(new ImageContainerView(image, layoutX, layoutY));
-        this.imageContainerModel = new ImageContainerModel(image);
+        this.imageContainerModel = new ImageContainer(image);
     }
 
     public ImageContainerController(URL url, double layoutX, double layoutY) {
         super(new ImageContainerView(url, layoutX, layoutY));
-        this.imageContainerModel = new ImageContainerModel(new Image(url.toString()));
+        this.imageContainerModel = new ImageContainer(new Image(url.toString()));
         super.setBehavior(new DragDropBehavior(super.getNode()));
     }
 

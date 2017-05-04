@@ -1,4 +1,4 @@
-package controllers.noteobjectcontrollers;
+package controllers.noteobject;
 
 import javafx.scene.Node;
 

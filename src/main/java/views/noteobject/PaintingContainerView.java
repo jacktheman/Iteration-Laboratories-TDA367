@@ -1,4 +1,4 @@
-package views.noteobjectviews;
+package views.noteobject;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
@@ -10,6 +10,9 @@ import utilities.Paintbrush;
 public class PaintingContainerView extends AnchorPane {
 
     private Canvas canvas;
+    private final double TRIANGLE_QUANTIFIER_SMALL = 0.75;
+    private final double TRIANGLE_QUANTIFIER_BIG = 1.25;
+    private final int TRIANGLE_UMBER_OF_CORNERS = 3;
 
     public PaintingContainerView(double x, double y){
         this.setLayoutX(x);
@@ -40,9 +43,9 @@ public class PaintingContainerView extends AnchorPane {
                 canvas.getGraphicsContext2D().fillRect(x,y,size,size);
                 break;
             case TRIANGLE:
-                double [] xPoints = {x-size*1.5,x,x+size*1.5};
-                double [] yPoints = {y+size*0.75,y-size*1.5,y+size*0.75};
-                canvas.getGraphicsContext2D().fillPolygon(xPoints,yPoints,3);
+                double [] xPoints = {x-size*TRIANGLE_QUANTIFIER_BIG,x,x+size*TRIANGLE_QUANTIFIER_BIG};
+                double [] yPoints = {y+size*TRIANGLE_QUANTIFIER_SMALL,y-size*TRIANGLE_QUANTIFIER_BIG,y+size*TRIANGLE_QUANTIFIER_SMALL};
+                canvas.getGraphicsContext2D().fillPolygon(xPoints,yPoints,TRIANGLE_UMBER_OF_CORNERS);
                 break;
         }
 

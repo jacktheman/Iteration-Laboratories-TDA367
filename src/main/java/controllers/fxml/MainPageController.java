@@ -1,7 +1,7 @@
-package controllers.fxmlcontrollers;
+package controllers.fxml;
 
-import controllers.noteobjectcontrollers.ImageContainerController;
-import controllers.noteobjectcontrollers.NoteObjectControllerI;
+import controllers.noteobject.ImageContainerController;
+import controllers.noteobject.NoteObjectControllerI;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,8 +11,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import models.notemodel.NoteModel;
-import models.noteobjectmodels.PaintingContainerModel;
+import models.note.Note;
+import models.noteobject.PaintingContainer;
 import services.FileChooserFactory;
 import services.ObserverBus;
 import services.StateHandler;
@@ -57,7 +57,7 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
 
     private AnchorPane fille;
 
-    private NoteModel currentNote;
+    private Note currentNote;
 
     private List<NoteObjectControllerI> currentControllers;
 
@@ -113,7 +113,7 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
 
     private void addImageToNote(double x, double y) {
         if (currentNote == null) {
-            currentNote = new NoteModel();
+            currentNote = new Note();
         }
         notePane.requestFocus();
         try {
@@ -168,21 +168,21 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
 
     @FXML
     private void setPaintbrushToSquare(){
-        PaintingContainerModel.setPaintbrush(SQUARE);
+        PaintingContainer.setPaintbrush(SQUARE);
         circleButton.setSelected(false);
         triangleButton.setSelected(false);
     }
 
     @FXML
     private void setPaintbrushToCircle(){
-        PaintingContainerModel.setPaintbrush(CIRCLE);
+        PaintingContainer.setPaintbrush(CIRCLE);
         squareButton.setSelected(false);
         triangleButton.setSelected(false);
     }
 
     @FXML
     private void setPaintbrushToTriangle(){
-        PaintingContainerModel.setPaintbrush(TRIANGLE);
+        PaintingContainer.setPaintbrush(TRIANGLE);
         circleButton.setSelected(false);
         squareButton.setSelected(false);
     }

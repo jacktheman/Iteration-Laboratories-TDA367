@@ -1,8 +1,8 @@
 package utilities.noteobjectbehaviors;
 
 import javafx.scene.input.MouseEvent;
-import models.noteobjectmodels.PaintingContainerModel;
-import views.noteobjectviews.PaintingContainerView;
+import models.noteobject.PaintingContainer;
+import views.noteobject.PaintingContainerView;
 
 /**
  * Created by jackflurry on 2017-05-03.
@@ -38,7 +38,7 @@ public class PaintingBehavior implements NoteObjectBehaviorI {
     @Override
     public void onMouseDragged(MouseEvent mouseEvent) {
         if (mouseEvent.isPrimaryButtonDown()) {
-            view.paint(PaintingContainerModel.getPaintbrush(), mouseEvent.getX(), mouseEvent.getY());
+            view.paint(PaintingContainer.getPaintbrush(), mouseEvent.getX(), mouseEvent.getY());
         }
     }
 }

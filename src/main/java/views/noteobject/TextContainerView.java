@@ -1,4 +1,4 @@
-package views.noteobjectviews;
+package views.noteobject;
 
 import javafx.scene.control.TextArea;
 

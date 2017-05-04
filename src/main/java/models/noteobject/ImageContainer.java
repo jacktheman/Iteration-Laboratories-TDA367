@@ -1,24 +1,23 @@
-package models.noteobjectmodels;
+package models.noteobject;
 
 import javafx.scene.image.Image;
-import javafx.scene.layout.Region;
 
 import java.io.File;
 
 /**
  * Created by svante on 2017-04-26.
  */
-public class ImageContainerModel {
+public class ImageContainer {
 
     private Image image;
     private File file;
 
-    public ImageContainerModel(Image image){
+    public ImageContainer(Image image){
         this.image = image;
 
     }
 
-    public ImageContainerModel(File file){
+    public ImageContainer(File file){
         this.file = file;
     }
 

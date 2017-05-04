@@ -1,7 +1,6 @@
-package controllers.noteobjectcontrollers;
+package controllers.noteobject;
 
 import javafx.scene.Node;
-import utilities.ObservableI;
 import utilities.ObserverI;
 import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
 

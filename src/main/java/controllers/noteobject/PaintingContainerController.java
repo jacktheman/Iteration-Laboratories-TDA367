@@ -1,18 +1,12 @@
-package controllers.noteobjectcontrollers;
+package controllers.noteobject;
 
 import services.ObserverBus;
 import services.StateHandler;
-import utilities.ObservableI;
 import utilities.ObserverI;
 import utilities.noteobjectbehaviors.DragDropBehavior;
-import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
 import utilities.noteobjectbehaviors.PaintingBehavior;
-import utilities.state.NoteStateI;
 import utilities.state.PaintState;
-import utilities.state.WriteState;
-import views.noteobjectviews.PaintingContainerView;
-
-import java.awt.*;
+import views.noteobject.PaintingContainerView;
 
 /**
  * Created by jackflurry on 2017-04-07.

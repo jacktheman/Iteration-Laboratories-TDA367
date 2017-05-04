@@ -1,4 +1,4 @@
-package models.noteobjectmodels;
+package models.noteobject;
 
 import javafx.beans.value.ObservableValue;
 import javafx.scene.text.Text;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by aron on 2017-04-03.
  */
-public class TextContainerModel implements ObservableI {
+public class TextContainer implements ObservableI {
 
     /**
      * A Text object for resizing the TextArea.
@@ -24,7 +24,7 @@ public class TextContainerModel implements ObservableI {
 
     private List<ObserverI> listeners;
 
-    public TextContainerModel(String text) {
+    public TextContainer(String text) {
         textHolder = new Text(text);
         listeners = new ArrayList<>();
     }

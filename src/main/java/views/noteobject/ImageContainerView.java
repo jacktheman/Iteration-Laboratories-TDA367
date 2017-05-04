@@ -1,4 +1,4 @@
-package views.noteobjectviews;
+package views.noteobject;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

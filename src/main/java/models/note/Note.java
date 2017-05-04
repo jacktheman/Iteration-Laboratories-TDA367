@@ -1,6 +1,6 @@
-package models.notemodel;
+package models.note;
 
-import controllers.noteobjectcontrollers.NoteObjectControllerI;
+import controllers.noteobject.NoteObjectControllerI;
 import javafx.scene.Node;
 
 import java.io.*;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by svante on 2017-04-07.
  */
-public class NoteModel {
+public class Note {
 
     private String name;
 
@@ -18,13 +18,13 @@ public class NoteModel {
 
     private List<NoteObjectControllerI> controllers;
 
-    public NoteModel(String name){
+    public Note(String name){
         this.name = name;
         this.tags = new ArrayList<>();
         this.controllers = new ArrayList<>();
     }
 
-    public NoteModel() {
+    public Note() {
         this("nameless");
     }
 

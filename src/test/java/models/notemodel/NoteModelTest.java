@@ -1,4 +1,4 @@
-package models.notemodel;
+package models.note;
 
 import org.junit.Test;
 

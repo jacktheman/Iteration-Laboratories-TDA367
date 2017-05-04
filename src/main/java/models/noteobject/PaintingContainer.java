@@ -1,15 +1,15 @@
-package models.noteobjectmodels;
+package models.noteobject;
 
 import utilities.Paintbrush;
 
 /**
  * Created by jackflurry on 2017-04-07.
  */
-public class PaintingContainerModel {
+public class PaintingContainer {
 
     private static Paintbrush paintbrush;
 
-    PaintingContainerModel(Paintbrush paintbrush){
+    PaintingContainer(Paintbrush paintbrush){
         this.paintbrush = paintbrush;
     }
 
@@ -18,6 +18,6 @@ public class PaintingContainerModel {
     }
 
     public static void setPaintbrush(Paintbrush paintbrush) {
-        PaintingContainerModel.paintbrush = paintbrush;
+        PaintingContainer.paintbrush = paintbrush;
     }
 }
