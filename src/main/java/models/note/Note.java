@@ -10,7 +10,10 @@ import java.util.List;
 /**
  * Created by svante on 2017-04-07.
  */
-public class Note {
+public class Note implements Serializable {
+
+    private static final String FILE_PATH = System.getProperty("user.home") + File.separator + ".fabNotes"
+            + File.separator;
 
     private String name;
 
@@ -18,7 +21,7 @@ public class Note {
 
     private List<NoteObjectControllerI> controllers;
 
-    public Note(String name){
+    public Note(String name) {
         this.name = name;
         this.tags = new ArrayList<>();
         this.controllers = new ArrayList<>();
@@ -28,15 +31,15 @@ public class Note {
         this("nameless");
     }
 
-    public void addNoteObjectController(NoteObjectControllerI controller){
+    public void addNoteObjectController(NoteObjectControllerI controller) {
         this.controllers.add(controller);
     }
 
-    public void removeNoteObjectController(NoteObjectControllerI controller){
+    public void removeNoteObjectController(NoteObjectControllerI controller) {
         this.controllers.remove(controller);
     }
 
-    public List<Node> getNodes(){
+    public List<Node> getNodes() {
         List<Node> nodes = new ArrayList<>();
         for (NoteObjectControllerI controller : controllers)
             nodes.add(controller.getNode());
@@ -66,6 +69,18 @@ public class Note {
         tags.remove(tag.toLowerCase());
     }
 
-    public void save() throws IOException {
+    public void writeToFile() {
+        File file = new File(FILE_PATH + name + ".fab");
+        if (file.exists()) {
+            name = name + "_N";
+        }
+        try {
+            FileOutputStream fos = new FileOutputStream(FILE_PATH + name + ".fab");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(this);
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

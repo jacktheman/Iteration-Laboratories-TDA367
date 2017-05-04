@@ -152,8 +152,11 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
     }
 
     @FXML
-    private void saveNote() {
-        //TODO
+    private void saveNote() { //TODO add name to file
+        Note note = new Note();
+        for (NoteObjectControllerI controller : currentControllers)
+            note.addNoteObjectController(controller);
+        note.writeToFile();
     }
 
     @FXML
