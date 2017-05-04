@@ -45,7 +45,6 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
 
     @Override
     public void onMouseDragged(MouseEvent mouseEvent) {
-        System.out.println("DragDetected");
         dragResize(pos, mouseEvent);
     }
 
