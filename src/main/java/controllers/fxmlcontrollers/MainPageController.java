@@ -3,13 +3,16 @@ package controllers.fxmlcontrollers;
 import controllers.noteobjectcontrollers.ImageContainerController;
 import controllers.noteobjectcontrollers.NoteObjectControllerI;
 import controllers.noteobjectcontrollers.NoteObjectObserverI;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 import models.notemodel.NoteModel;
 import services.FileChooserFactory;
 import services.ObserverBus;
@@ -17,6 +20,7 @@ import utilities.NoteStateI;
 import utilities.PaintState;
 import utilities.WriteState;
 
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -37,6 +41,9 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
     @FXML
     private AnchorPane notePane;
 
+    @FXML
+    private Button tagMenuButton;
+
     private AnchorPane fille;
 
     private NoteModel currentNote;
@@ -45,6 +52,8 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
 
     private List<NoteObjectControllerI> currentControllers;
 
+    private TranslateTransition openFille = new TranslateTransition(new Duration(350), fille);
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentControllers = new ArrayList<>();
         noteState = WriteState.getInstance();
@@ -52,10 +61,13 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
         try {
             fille = loader.load();
             fille.setLayoutX(0);
+            fille.setTranslateX(-301);
             fille.setLayoutY(150);
+            fabNotesWindow.getChildren().add(fille);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        prepareSlideMenuAnimation();
         pressedOnCanvas();
     }
 
@@ -112,13 +124,26 @@ public class MainPageController implements Initializable, NoteObjectObserverI {
         currentNote.getNodes().get(currentNote.getNodes().size() - 1).requestFocus();
     }
 
-    @FXML
+   @FXML
     private void pressedFilleButton() {
-        if (fabNotesWindow.getChildren().contains(fille))
-            fabNotesWindow.getChildren().remove(fille);
-        else
-            fabNotesWindow.getChildren().add(fille);
+
     }
+
+    private void prepareSlideMenuAnimation () {
+        TranslateTransition openFille = new TranslateTransition(new Duration(1000), fille);
+        openFille.setToX(0);
+        TranslateTransition closeFille = new TranslateTransition(new Duration(1000), fille);
+        tagMenuButton.setOnMouseClicked(mouseEvent -> {
+            fille.toFront();
+            if (fille.getTranslateX() != 0) {
+                openFille.play();
+            } else {
+                closeFille.setToX(-301);
+                closeFille.play();
+            }
+        });
+    }
+
 
     @FXML
     private void importImage() {
