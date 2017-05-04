@@ -3,7 +3,6 @@ package models.note;
 import controllers.noteobject.NoteObjectControllerI;
 import javafx.scene.Node;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,8 +63,5 @@ public class Note {
 
     public void removeTag(String tag) {
         tags.remove(tag.toLowerCase());
-    }
-
-    public void save() throws IOException {
     }
 }
