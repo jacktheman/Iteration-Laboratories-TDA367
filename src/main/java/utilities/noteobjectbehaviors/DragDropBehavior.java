@@ -2,6 +2,7 @@ package utilities.noteobjectbehaviors;
 
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -39,6 +40,7 @@ public class DragDropBehavior implements NoteObjectBehaviorI {
 
     @Override
     public void onMouseExited(MouseEvent mouseEvent) {
+
         if (!mouseEvent.isPrimaryButtonDown()) {
             view.getScene().setCursor(Cursor.DEFAULT);
         }
