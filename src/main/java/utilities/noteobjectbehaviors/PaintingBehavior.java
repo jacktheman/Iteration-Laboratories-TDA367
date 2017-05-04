@@ -41,4 +41,5 @@ public class PaintingBehavior implements NoteObjectBehaviorI {
             view.paint(PaintingContainer.getPaintbrush(), mouseEvent.getX(), mouseEvent.getY());
         }
     }
+
 }

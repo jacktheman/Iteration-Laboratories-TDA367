@@ -9,9 +9,7 @@ public class PaintingContainer {
 
     private static Paintbrush paintbrush;
 
-    PaintingContainer(Paintbrush paintbrush){
-        this.paintbrush = paintbrush;
-    }
+    private PaintingContainer(){}
 
     public static Paintbrush getPaintbrush() {
         return paintbrush;
