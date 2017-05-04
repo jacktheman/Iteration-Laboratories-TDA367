@@ -1,7 +1,8 @@
 package models.note;
 
-import controllers.noteobject.NoteObjectControllerI;
 import javafx.scene.Node;
+import utilities.ObservableI;
+import utilities.ObserverI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,36 +10,38 @@ import java.util.List;
 /**
  * Created by svante on 2017-04-07.
  */
-public class Note {
+public class Note implements ObservableI<Node> {
 
     private String name;
 
     private List<String> tags;
 
-    private List<NoteObjectControllerI> controllers;
+    private List<Node> nodes;
+
+    private List<ObserverI<Node>> listeners;
 
     public Note(String name) {
         this.name = name;
         this.tags = new ArrayList<>();
-        this.controllers = new ArrayList<>();
+        this.nodes = new ArrayList<>();
+        listeners = new ArrayList<>();
     }
 
     public Note() {
         this("nameless");
     }
 
-    public void addNoteObjectController(NoteObjectControllerI controller) {
-        this.controllers.add(controller);
+    public void addNoteObject(Node node) {
+        this.nodes.add(node);
+        notifyListeners(node);
     }
 
-    public void removeNoteObjectController(NoteObjectControllerI controller) {
-        this.controllers.remove(controller);
+    public void removeNoteObject(Node node) {
+        this.nodes.remove(node);
+        notifyListeners(node);
     }
 
     public List<Node> getNodes() {
-        List<Node> nodes = new ArrayList<>();
-        for (NoteObjectControllerI controller : controllers)
-            nodes.add(controller.getNode());
         return nodes;
     }
 
@@ -63,5 +66,20 @@ public class Note {
 
     public void removeTag(String tag) {
         tags.remove(tag.toLowerCase());
+    }
+
+    private void notifyListeners(Node node) {
+        for (ObserverI<Node> listener : listeners)
+            listener.fireChange(node);
+    }
+
+    @Override
+    public void addListener(ObserverI<Node> observer) {
+        this.listeners.add(observer);
+    }
+
+    @Override
+    public void removeListener(ObserverI<Node> observer) {
+        this.listeners.remove(observer);
     }
 }

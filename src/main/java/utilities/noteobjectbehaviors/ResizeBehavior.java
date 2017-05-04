@@ -21,6 +21,8 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
 
     @Override
     public void onMousePressed(MouseEvent mouseEvent) {
+        imageView.requestFocus();
+        imageView.toFront();
         pos = returnCursorLocation(mouseEvent);
     }
 

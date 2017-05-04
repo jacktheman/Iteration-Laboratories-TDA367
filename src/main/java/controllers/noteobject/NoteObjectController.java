@@ -1,12 +1,7 @@
 package controllers.noteobject;
 
 import javafx.scene.Node;
-import utilities.ObserverI;
 import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * Created by svante on 2017-04-06.
@@ -17,11 +12,8 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
 
     private NoteObjectBehaviorI noteObjectBehavior;
 
-    private List<ObserverI> listeners;
-
     NoteObjectController(T view) {
         this.view = view;
-        this.listeners = new ArrayList<>();
         setOnMousePressed();
         setOnMouseReleased();
         setOnMouseEntered();
@@ -30,25 +22,9 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
         setOnMouseDragged();
     }
 
-    void notifyListeners() {
-        for (int i = 0; i < listeners.size(); i++) {
-            listeners.get(i).fireChange(this);
-        }
-    }
-
     @Override
     public T getNode() {
         return view;
-    }
-
-    @Override
-    public void addListener(ObserverI observer) {
-        listeners.add(observer);
-    }
-
-    @Override
-    public void removeListener(ObserverI observer) {
-        listeners.remove(observer);
     }
 
     NoteObjectBehaviorI getBehavior() {

@@ -41,7 +41,7 @@ public class PaintingContainerView extends AnchorPane {
         borderCanvas.setHeight(this.getHeight());
     }
 
-    private void createBorder(){
+    public void createBorder(){
         borderCanvas.getGraphicsContext2D().strokeRect(canvas.getLayoutX(),canvas.getLayoutY(),canvas.getWidth(),canvas.getHeight());
     }
 

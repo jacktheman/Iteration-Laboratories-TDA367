@@ -1,6 +1,5 @@
 package controllers.fxml;
 
-import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
@@ -10,14 +9,11 @@ import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Button;
-import javafx.scene.control.Button;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import models.note.Note;
 import models.noteobject.PaintingContainer;
-import models.note.Note;
 import services.FileChooserFactory;
 import services.ObserverBus;
 import services.StateHandler;
@@ -26,14 +22,10 @@ import utilities.Paintbrush;
 import utilities.state.PaintState;
 import utilities.state.WriteState;
 
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import static utilities.Paintbrush.CIRCLE;
@@ -43,7 +35,7 @@ import static utilities.Paintbrush.TRIANGLE;
 /**
  * Created by aron on 2017-03-29.
  */
-public class MainPageController implements Initializable, ObserverI<NoteObjectControllerI> {
+public class MainPageController implements Initializable, ObserverI<Node> {
 
     @FXML
     private AnchorPane fabNotesWindow;
@@ -66,13 +58,13 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
 
     private AnchorPane fille;
 
-    private Note currentNote;
-
-    private List<NoteObjectControllerI> currentControllers;
+    private static Note currentNote;
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        currentControllers = new ArrayList<>();
+        currentNote = new Note();
+        ObserverBus.addListener(currentNote, this);
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TagPage.fxml"));
         try {
             fille = loader.load();
@@ -114,9 +106,7 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
 
     private void addNodeToNotePane(NoteObjectControllerI controller) {
         if (controller != null) {
-            ObserverBus.addListener(controller, this);
-            currentControllers.add(controller);
-            notePane.getChildren().add(currentControllers.get(currentControllers.size() - 1).getNode());
+            notePane.getChildren().add(controller.getNode());
             notePane.getChildren().get(notePane.getChildren().size() - 1).requestFocus();
         }
     }
@@ -141,6 +131,9 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
         });
     }
 
+    public static Note getCurrentNote() {
+        return currentNote;
+    }
 
     @FXML
     private void importImage() {
@@ -201,8 +194,10 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
     }
 
     @Override
-    public void fireChange(NoteObjectControllerI subject) {
-        currentControllers.remove(subject);
-        notePane.getChildren().remove(subject.getNode());
+    public void fireChange(Node subject) {
+        if (notePane.getChildren().contains(subject))
+            notePane.getChildren().remove(subject);
+        else
+            notePane.getChildren().add(subject);
     }
 }
