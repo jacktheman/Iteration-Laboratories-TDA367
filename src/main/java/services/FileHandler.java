@@ -1,6 +1,10 @@
 package services;
 
-import java.io.File;
+import javafx.scene.Node;
+import models.note.Note;
+
+import java.io.*;
+import java.util.List;
 
 /**
  * Created by aron on 2017-05-04.
@@ -13,11 +17,11 @@ public class FileHandler {
 
     public static final String FILE_TYPE = ".fab";
 
-    private FileHandler() {}
+    private FileHandler() {
+    }
 
     public static String checkFileName(String name) {
-        File file = new File(FILE_PATH + name);
-        System.out.println(FILE_PATH + name);
+        File file = new File(FILE_PATH + name + FILE_TYPE);
         if (file.exists()) {
             int fileNumber = 1;
             String fileName = file.getName().replaceAll(FILE_TYPE, "");
@@ -29,8 +33,33 @@ public class FileHandler {
                     fileNumber += Integer.parseInt(number);
                 }
             }
-            return checkFileName(fileName + "_" + fileNumber + FILE_TYPE);
+            return checkFileName(fileName + "_" + fileNumber);
         }
         return name;
+    }
+
+    public static File saveNote(Note note) throws IOException {
+        if (note.getNodes().size() > 0) {
+            String filePath = FILE_PATH + note.getName() + FILE_TYPE;
+            FileOutputStream fos = new FileOutputStream(filePath);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(note.getNodes());
+            oos.close();
+            return new File(filePath);
+        }
+        return null;
+    }
+
+    public static Note loadNote(File file) throws IOException, ClassNotFoundException {
+        if (file.exists()) {
+            FileInputStream fis = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            List<Node> nodes = (List<Node>) ois.readObject();
+            Note note = new Note(file.getName().replace(FILE_TYPE, ""));
+            for (Node node : nodes)
+                note.addNoteObject(node);
+            return note;
+        }
+        return null;
     }
 }
