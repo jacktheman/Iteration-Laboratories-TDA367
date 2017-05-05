@@ -2,10 +2,12 @@ package views.noteobject;
 
 import javafx.scene.control.TextArea;
 
+import java.io.Serializable;
+
 /**
  * Created by aron on 2017-04-06.
  */
-public class TextContainerView extends TextArea {
+public class TextContainerView extends TextArea implements Serializable {
     public TextContainerView(String text, double layoutX, double layoutY) {
         super(text);
         this.setLayoutX(layoutX);

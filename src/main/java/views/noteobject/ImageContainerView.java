@@ -3,12 +3,13 @@ package views.noteobject;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.Serializable;
 import java.net.URL;
 
 /**
  * Created by jackflurry on 2017-04-07.
  */
-public class ImageContainerView extends ImageView {
+public class ImageContainerView extends ImageView implements Serializable {
 
     public ImageContainerView(Image image, double layoutX, double layoutY){
         super(image);
