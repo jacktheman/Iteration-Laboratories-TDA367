@@ -30,7 +30,6 @@ public class WriteState implements NoteStateI, ObservableI {
 
     public void setFont (String fontFamilyName) {
         this.fontFamilyName = fontFamilyName;
-        System.out.println(fontFamilyName);
     }
 
     @Override
@@ -40,7 +39,9 @@ public class WriteState implements NoteStateI, ObservableI {
 
     @Override
     public NoteObjectControllerI getOnMouseReleased(MouseEvent event) {
-        return new TextContainerController("",event.getX(),event.getY());
+        TextContainerController controller = new TextContainerController("",event.getX(),event.getY());
+        this.addListener(controller);
+        return controller;
     }
 
 
@@ -58,5 +59,9 @@ public class WriteState implements NoteStateI, ObservableI {
         for (int i = 0; i < listeners.size(); i++){
             listeners.get(i).fireChange(this);
         }
+    }
+
+    public String getFontFamilyName () {
+        return fontFamilyName;
     }
 }

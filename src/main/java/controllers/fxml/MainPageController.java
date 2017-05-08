@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
@@ -27,7 +28,7 @@ import utilities.Paintbrush;
 import utilities.state.PaintState;
 import utilities.state.WriteState;
 
-import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
@@ -77,7 +78,7 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
     @FXML
     private ComboBox textFontComboBox;
 
-    private String [] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+    private List<String> fonts = Font.getFamilies();
 
     @FXML
     private ComboBox textSizeComboBox;
@@ -100,6 +101,11 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
         options.addAll(fonts);
         textFontComboBox.setItems(options);
         textFontComboBox.getSelectionModel().select("Calibri");
+        WriteState.getInstance().setFont((String)textFontComboBox.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    private void changeFont () {
         WriteState.getInstance().setFont((String)textFontComboBox.getSelectionModel().getSelectedItem());
     }
 
