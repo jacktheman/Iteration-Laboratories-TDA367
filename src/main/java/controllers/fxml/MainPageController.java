@@ -10,6 +10,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import models.note.Note;
@@ -78,6 +79,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         prepareSlideMenuAnimation();
         setOnMousePressedNotePane();
         setOnMouseReleasedNotePane();
+        colorPicker.setValue(Color.BLACK);
     }
 
     private void setOnMousePressedNotePane() {

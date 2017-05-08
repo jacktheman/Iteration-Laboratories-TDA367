@@ -17,6 +17,9 @@ public class PaintingBehavior implements NoteObjectBehaviorI {
 
     @Override
     public void onMousePressed(MouseEvent mouseEvent) {
+        if(view.isFocused()) {
+            view.paint(mouseEvent.getX(), mouseEvent.getY());
+        }
         view.requestFocus();
         view.toFront();
     }
@@ -40,7 +43,7 @@ public class PaintingBehavior implements NoteObjectBehaviorI {
     @Override
     public void onMouseDragged(MouseEvent mouseEvent) {
         if (mouseEvent.isPrimaryButtonDown()) {
-            view.paint(PaintingContainer.getPaintbrush(), mouseEvent.getX(), mouseEvent.getY());
+            view.paint(mouseEvent.getX(), mouseEvent.getY());
         }
     }
 
