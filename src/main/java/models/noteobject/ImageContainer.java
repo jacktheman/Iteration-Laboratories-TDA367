@@ -1,5 +1,7 @@
 package models.noteobject;
 
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 
 import java.io.File;
@@ -15,6 +17,7 @@ public class ImageContainer {
 
     public ImageContainer(Image image){
         this.image = image;
+        this.quota = image.getHeight() / image.getWidth();
 
     }
 
@@ -31,6 +34,5 @@ public class ImageContainer {
     }
 
     public double getQuota() { return this.quota; }
-
 
 }

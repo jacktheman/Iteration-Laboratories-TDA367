@@ -1,6 +1,7 @@
 package controllers.noteobject;
 
 
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import models.noteobject.ImageContainer;
 import utilities.noteobjectbehaviors.DragDropBehavior;
@@ -9,6 +10,8 @@ import utilities.noteobjectbehaviors.ResizeBehavior;
 import views.noteobject.ImageContainerView;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -34,5 +37,10 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
         return imageContainerModel.getImage();
     }
 
+    @Override
+    List<MenuItem> initContextMenuItems() {
+        List<MenuItem> menuItemList = new ArrayList<>();
+        return menuItemList;
+    }
 }
 

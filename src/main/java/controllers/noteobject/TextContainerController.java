@@ -2,6 +2,7 @@ package controllers.noteobject;
 
 
 import controllers.fxml.MainPageController;
+import javafx.scene.control.MenuItem;
 
 import javafx.scene.text.Font;
 
@@ -9,6 +10,9 @@ import models.noteobject.TextContainer;
 import utilities.ObserverI;
 import utilities.state.WriteState;
 import views.noteobject.TextContainerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by aron on 2017-04-06.
@@ -51,5 +55,11 @@ public class TextContainerController extends NoteObjectController<TextContainerV
         if (super.getNode().isFocused()){
             super.getNode().setFont(Font.font(WriteState.getInstance().getFontFamilyName(), 12));
         }
+    }
+
+    @Override
+    List<MenuItem> initContextMenuItems() {
+        List<MenuItem> menuItemList = new ArrayList<>();
+        return menuItemList;
     }
 }

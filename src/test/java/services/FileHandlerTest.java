@@ -2,7 +2,7 @@ package services;
 
 import models.note.Note;
 import org.junit.Test;
-import views.noteobject.TableView;
+import views.noteobject.TableContainerView;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,8 +28,8 @@ public class FileHandlerTest {
     @Test
     public void saveNote() {
         Note note = new Note("TestNote");
-        TableView tableView = new TableView();
-        note.addNoteObject(tableView);
+        TableContainerView tableContainerView = new TableContainerView(3,3);
+        note.addNoteObject(tableContainerView);
         try {
             File file = FileHandler.saveNote(note);
             if (file != null)
@@ -47,7 +47,7 @@ public class FileHandlerTest {
         try {
             Note note = FileHandler.loadNote(file);
             if (note != null)
-                assertTrue(note.getNodes().get(0) instanceof TableView);
+                assertTrue(note.getNodes().get(0) instanceof TableContainerView);
             else
                 fail("Data lost");
         } catch (IOException e) {
