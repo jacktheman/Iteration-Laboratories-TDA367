@@ -21,6 +21,8 @@ public class PaintingContainerView extends AnchorPane implements Serializable {
     private final int DEFAULT_CANVAS_CROP = 25;
     private final int PAINTING_AREA_RESIZING_CONSTANT = 20;
 
+    private boolean gotPaint = false;
+
     public PaintingContainerView(double x, double y){
         this.setLayoutX(x-DEFAULT_CANVAS_CROP);
         this.setLayoutY(y- DEFAULT_CANVAS_CROP);
@@ -66,7 +68,12 @@ public class PaintingContainerView extends AnchorPane implements Serializable {
         }
     }
 
+    public boolean getPaintStatus(){
+        return gotPaint;
+    }
+
     public void paint(double x, double y){
+        gotPaint = true;
         double size = Paintbrush.getSize();
         paintingSizeCounter(x,y);
         canvas.getGraphicsContext2D().setFill(Paintbrush.getColor());

@@ -1,5 +1,6 @@
 package controllers.noteobject;
 
+import controllers.fxml.MainPageController;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import services.ObserverBus;
@@ -26,6 +27,9 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
     public void focusPropertyListener(){
         super.getNode().focusedProperty().addListener(observable -> {
             if(!super.getNode().isFocused()){
+                if(!super.getNode().getPaintStatus()){
+                    MainPageController.getCurrentNote().removeNoteObject(super.getNode());
+                }
                 super.getNode().removeBorder();
             } else {
                 super.getNode().createBorder();
