@@ -19,7 +19,7 @@ public class PaintingContainerView extends AnchorPane implements Serializable {
     private final int TRIANGLE_UMBER_OF_CORNERS = 3;
     private final int DEFAULT_CANVAS_SIZE = 50;
     private final int DEFAULT_CANVAS_CROP = 25;
-    private final int PAINTING_AREA_RESIZING_CONSTANT = 20;
+    private final int PAINTING_AREA_RESIZING_CONSTANT = 10;
 
     private boolean gotPaint = false;
 
