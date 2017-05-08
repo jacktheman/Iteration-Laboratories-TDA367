@@ -16,7 +16,7 @@ public class PaintingContainerView extends AnchorPane implements Serializable {
     private Canvas borderCanvas;
     private final double TRIANGLE_QUANTIFIER_SMALL = 0.75;
     private final double TRIANGLE_QUANTIFIER_BIG = 1.25;
-    private final int TRIANGLE_UMBER_OF_CORNERS = 3;
+    private final int TRIANGLE_NUMBER_OF_CORNERS = 3;
     private final int DEFAULT_CANVAS_SIZE = 50;
     private final int DEFAULT_CANVAS_CROP = 25;
     private final int PAINTING_AREA_RESIZING_CONSTANT = 10;
@@ -87,7 +87,7 @@ public class PaintingContainerView extends AnchorPane implements Serializable {
             case TRIANGLE:
                 double [] xPoints = {x-size*TRIANGLE_QUANTIFIER_BIG,x,x+size*TRIANGLE_QUANTIFIER_BIG};
                 double [] yPoints = {y+size*TRIANGLE_QUANTIFIER_SMALL,y-size*TRIANGLE_QUANTIFIER_BIG,y+size*TRIANGLE_QUANTIFIER_SMALL};
-                canvas.getGraphicsContext2D().fillPolygon(xPoints,yPoints,TRIANGLE_UMBER_OF_CORNERS);
+                canvas.getGraphicsContext2D().fillPolygon(xPoints,yPoints,TRIANGLE_NUMBER_OF_CORNERS);
                 break;
         }
 
