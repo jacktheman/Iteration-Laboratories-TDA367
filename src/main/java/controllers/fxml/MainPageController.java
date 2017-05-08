@@ -26,14 +26,12 @@ import utilities.ObserverI;
 import utilities.Paintbrush;
 import utilities.state.PaintState;
 import utilities.state.WriteState;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import static utilities.Paintbrush.CIRCLE;
 import static utilities.Paintbrush.SQUARE;
 import static utilities.Paintbrush.TRIANGLE;
@@ -111,6 +109,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+            addNodeToNotePane(controller);
         });
     }
 
