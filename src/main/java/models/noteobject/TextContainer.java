@@ -1,6 +1,7 @@
 package models.noteobject;
 
 import javafx.beans.value.ObservableValue;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -26,4 +27,7 @@ public class TextContainer {
         return textHolder.getLayoutBounds().getHeight();
     }
 
+    public void setFont(Font font) {
+        textHolder.setFont(font);
+    }
 }

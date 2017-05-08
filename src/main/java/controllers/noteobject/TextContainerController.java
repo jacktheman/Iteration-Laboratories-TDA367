@@ -21,17 +21,16 @@ public class TextContainerController extends NoteObjectController<TextContainerV
         super(new TextContainerView(text, layoutX, layoutY));
         this.textContainerModel = new TextContainer(text);
         this.textContainerModel.bindTextProperties(super.getNode().textProperty());
-
-        super.getNode().setFont(Font.font(WriteState.getInstance().getFontFamilyName(), 12));
-
+        super.getNode().setFont(Font.font(WriteState.getInstance().getFontFamilyName(), WriteState.getInstance().getTextSize()));
+        this.textContainerModel.setFont(Font.font(WriteState.getInstance().getFontFamilyName(), WriteState.getInstance().getTextSize()));
         listener();
         listener2();
     }
 
     private void listener() {
         super.getNode().textProperty().addListener(e -> {
-            double newWidth = this.textContainerModel.getWidth() + 30; // + 30 because padding
-            double newHeight = this.textContainerModel.getHeight() + 30;
+            double newWidth = this.textContainerModel.getWidth() + 30 + WriteState.getInstance().getTextSize(); // + 30 because padding
+            double newHeight = this.textContainerModel.getHeight() + 30 + WriteState.getInstance().getTextSize();
             super.getNode().changeTextContainerSize(newWidth, newHeight);
             super.getNode().changeBorderColour();
         });
@@ -49,7 +48,7 @@ public class TextContainerController extends NoteObjectController<TextContainerV
     @Override
     public void fireChange(WriteState subject) {
         if (super.getNode().isFocused()){
-            super.getNode().setFont(Font.font(WriteState.getInstance().getFontFamilyName(), 12));
+            super.getNode().setFont(Font.font(WriteState.getInstance().getFontFamilyName(), WriteState.getInstance().getTextSize()));
         }
     }
 }

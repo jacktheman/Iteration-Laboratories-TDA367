@@ -89,11 +89,15 @@ public class MainPageController implements Initializable, ObserverI<Node> {
             e.printStackTrace();
         }
 
-        ObservableList<String> observableList = FXCollections.observableList(fonts);
+        ObservableList<String> fonts = FXCollections.observableList(this.fonts);
 
-        textFontComboBox.setItems(observableList);
+        textFontComboBox.setItems(fonts);
         textFontComboBox.getSelectionModel().select("Calibri");
         WriteState.getInstance().setFont((String) textFontComboBox.getSelectionModel().getSelectedItem());
+
+        ObservableList<Integer> sizes = FXCollections.observableArrayList(9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 28, 30);
+        textSizeComboBox.setItems(sizes);
+        textSizeComboBox.getSelectionModel().select(sizes.get(3));
 
         prepareSlideMenuAnimation();
         setOnMousePressedNotePane();
@@ -116,6 +120,11 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     @FXML
     private void changeFont() {
         WriteState.getInstance().setFont((String) textFontComboBox.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    private void changeSize() {
+        WriteState.getInstance().setSize((int) textSizeComboBox.getSelectionModel().getSelectedItem());
     }
 
     private void setOnMouseReleasedNotePane() {

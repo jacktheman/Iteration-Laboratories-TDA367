@@ -32,10 +32,14 @@ public class WriteState extends NoteState implements ObservableI {
 
     private String fontFamilyName;
 
+    private int textSize;
+
     private List<ObserverI<WriteState>> listeners;
 
     private WriteState() {
         listeners = new ArrayList<>();
+        fontFamilyName = "Calibri";
+        textSize = 12;
     }
 
     public static WriteState getInstance() {
@@ -44,6 +48,11 @@ public class WriteState extends NoteState implements ObservableI {
 
     public void setFont (String fontFamilyName) {
         this.fontFamilyName = fontFamilyName;
+        notifyListeners();
+    }
+
+    public void setSize (int textSize) {
+        this.textSize = textSize;
         notifyListeners();
     }
 
@@ -85,4 +94,9 @@ public class WriteState extends NoteState implements ObservableI {
     public String getFontFamilyName () {
         return fontFamilyName;
     }
+
+    public int getTextSize() {
+        return  textSize;
+    }
+
 }
