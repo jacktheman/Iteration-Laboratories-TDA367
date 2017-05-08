@@ -56,12 +56,12 @@ public class PaintingContainerView extends AnchorPane implements Serializable {
     }
 
     private void paintingSizeCounter(double layoutX, double layoutY){
-        if(layoutX > this.getWidth() - PAINTING_AREA_RESIZING_CONSTANT) {
+        if(layoutX > this.getWidth() - (PAINTING_AREA_RESIZING_CONSTANT+Paintbrush.getSize())) {
             resizeWidthRight();
             removeBorder();
             createBorder();
         }
-        if(layoutY > this.getHeight() - PAINTING_AREA_RESIZING_CONSTANT) {
+        if(layoutY > this.getHeight() - (PAINTING_AREA_RESIZING_CONSTANT+Paintbrush.getSize())) {
             resizeHeightDown();
             removeBorder();
             createBorder();
@@ -79,10 +79,10 @@ public class PaintingContainerView extends AnchorPane implements Serializable {
         canvas.getGraphicsContext2D().setFill(Paintbrush.getColor());
         switch (PaintingContainer.getPaintbrush()){
             case CIRCLE:
-                canvas.getGraphicsContext2D().fillOval(x,y,size,size);
+                canvas.getGraphicsContext2D().fillOval(x-(Paintbrush.getSize()/2),y-(Paintbrush.getSize()/2),size,size);
                 break;
             case SQUARE:
-                canvas.getGraphicsContext2D().fillRect(x,y,size,size);
+                canvas.getGraphicsContext2D().fillRect(x-(Paintbrush.getSize()/2),y-(Paintbrush.getSize()/2),size,size);
                 break;
             case TRIANGLE:
                 double [] xPoints = {x-size*TRIANGLE_QUANTIFIER_BIG,x,x+size*TRIANGLE_QUANTIFIER_BIG};
