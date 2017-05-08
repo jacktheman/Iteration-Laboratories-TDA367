@@ -20,12 +20,12 @@ public class PaintState implements NoteStateI {
 
     @Override
     public NoteObjectControllerI getOnMousePressed(MouseEvent event) {
-        return null;
+        return new PaintingContainerController(event.getX(),event.getY());g
     }
 
     @Override
     public NoteObjectControllerI getOnMouseReleased(MouseEvent event) {
-        return new PaintingContainerController(event.getX(),event.getY());
+        return null;
     }
 
 }
