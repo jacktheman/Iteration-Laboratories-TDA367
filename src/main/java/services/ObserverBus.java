@@ -36,7 +36,7 @@ public class ObserverBus implements ObserverI {
     }
 
     @Override
-    public void fireChange(ObservableI subject) {
+    public void fireChange(Object subject) {
         System.out.println("Subject: " + subject.toString());
         System.out.println("Observer: " + observer.toString());
         System.out.println();

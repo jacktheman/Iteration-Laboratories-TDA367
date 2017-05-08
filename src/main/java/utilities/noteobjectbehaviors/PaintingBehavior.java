@@ -17,6 +17,8 @@ public class PaintingBehavior implements NoteObjectBehaviorI {
 
     @Override
     public void onMousePressed(MouseEvent mouseEvent) {
+        view.requestFocus();
+        view.toFront();
     }
 
     @Override

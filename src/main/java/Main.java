@@ -3,6 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import services.FileHandler;
 
 import java.io.File;
 
@@ -15,9 +16,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        String path = System.getProperty("user.home");
-        path += File.separator + ".fabNotes";
-        File customDir = new File(path);
+        File customDir = new File(FileHandler.FILE_DIR);
         if (!customDir.exists()) {
             if (!customDir.mkdirs()) {
                 System.err.println(customDir + " didn't get created");

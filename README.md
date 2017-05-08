@@ -1,7 +1,7 @@
 # Iteration-Laboratories-TDA367
 Object orientated programming project at Chalmers University of Technology
 
-Cutecurtains:
+Cutecurtain:
 Aron Sandstedt
 aron.sandstedt@live.se
 
@@ -9,10 +9,10 @@ Skroudelz:
 Svante Bennhage
 s.bennhage@gmail.com
 
-AlexAndra Garrido
+AlexAndra Garrido:
 Alexandra Garrido Jaque
 alexandragj07@gmail.com
 
-JackFlurry
+JackFlurry:
 Jack Ahlkvist
 jack.ahlkvist@gmail.com

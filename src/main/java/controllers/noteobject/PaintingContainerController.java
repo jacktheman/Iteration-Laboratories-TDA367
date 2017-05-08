@@ -25,6 +25,8 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
         super.getNode().focusedProperty().addListener(observable -> {
             if(!super.getNode().isFocused()){
                 super.getNode().removeBorder();
+            } else {
+                super.getNode().createBorder();
             }
         });
     }

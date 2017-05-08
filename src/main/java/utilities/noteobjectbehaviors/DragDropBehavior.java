@@ -21,6 +21,7 @@ public class DragDropBehavior implements NoteObjectBehaviorI {
     @Override
     public void onMousePressed(MouseEvent mouseEvent) {
         view.requestFocus();
+        view.toFront();
         dragx = mouseEvent.getX();
         dragy = mouseEvent.getY();
         view.getScene().setCursor(Cursor.MOVE);

@@ -4,10 +4,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
 import utilities.Paintbrush;
 
+import java.io.Serializable;
+
 /**
  * Created by jackflurry on 2017-04-26.
  */
-public class PaintingContainerView extends AnchorPane {
+public class PaintingContainerView extends AnchorPane implements Serializable {
 
     private Canvas canvas;
     private Canvas borderCanvas;
@@ -41,7 +43,7 @@ public class PaintingContainerView extends AnchorPane {
         borderCanvas.setHeight(this.getHeight());
     }
 
-    private void createBorder(){
+    public void createBorder(){
         borderCanvas.getGraphicsContext2D().strokeRect(canvas.getLayoutX(),canvas.getLayoutY(),canvas.getWidth(),canvas.getHeight());
     }
 

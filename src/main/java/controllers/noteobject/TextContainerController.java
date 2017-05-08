@@ -1,5 +1,6 @@
 package controllers.noteobject;
 
+import controllers.fxml.MainPageController;
 import models.noteobject.TextContainer;
 import views.noteobject.TextContainerView;
 
@@ -32,7 +33,7 @@ public class TextContainerController extends NoteObjectController<TextContainerV
         super.getNode().focusedProperty().addListener(e -> {
             super.getNode().changeFocus();
             if (!super.getNode().isFocused() && super.getNode().getText().equals("")) {
-                super.notifyListeners();
+                MainPageController.getCurrentNote().removeNoteObject(super.getNode());
             }
         });
     }
