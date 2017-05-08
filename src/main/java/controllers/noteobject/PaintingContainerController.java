@@ -1,6 +1,7 @@
 package controllers.noteobject;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.MenuItem;
 import services.ObserverBus;
 import services.StateHandler;
 import utilities.ObserverI;
@@ -8,6 +9,9 @@ import utilities.noteobjectbehaviors.DragDropBehavior;
 import utilities.noteobjectbehaviors.PaintingBehavior;
 import utilities.state.PaintState;
 import views.noteobject.PaintingContainerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jackflurry on 2017-04-07.
@@ -39,5 +43,11 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
             super.setBehavior(new DragDropBehavior(super.getNode()));
         }
 
+    }
+
+    @Override
+    List<MenuItem> initContextMenuItems() {
+        List<MenuItem> menuItemList = new ArrayList<>();
+        return menuItemList;
     }
 }

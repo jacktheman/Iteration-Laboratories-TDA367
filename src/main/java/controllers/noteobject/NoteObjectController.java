@@ -1,7 +1,12 @@
 package controllers.noteobject;
 
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by svante on 2017-04-06.
@@ -12,8 +17,12 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
 
     private NoteObjectBehaviorI noteObjectBehavior;
 
+    private ContextMenu contextMenu;
+
     NoteObjectController(T view) {
         this.view = view;
+        this.contextMenu = new ContextMenu();
+        loadNewContextMenu();
         setOnMousePressed();
         setOnMouseReleased();
         setOnMouseEntered();
@@ -39,6 +48,8 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
         this.getNode().setOnMousePressed(mouseEvent -> {
             if (noteObjectBehavior != null)
                 noteObjectBehavior.onMousePressed(mouseEvent);
+            if(mouseEvent.isSecondaryButtonDown())
+                contextMenu.show(view, mouseEvent.getScreenX(), mouseEvent.getScreenY());
         });
     }
 
@@ -76,5 +87,14 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
                 noteObjectBehavior.onMouseDragged(mouseEvent);
         });
     }
+
+    private void loadNewContextMenu(){
+        MenuItem copy = new MenuItem("Kopiera");
+        MenuItem remove = new MenuItem("Ta bort");
+        contextMenu.getItems().addAll(initContextMenuItems());
+        contextMenu.getItems().addAll(copy, remove);
+    }
+
+    abstract List<MenuItem> initContextMenuItems();
 
 }
