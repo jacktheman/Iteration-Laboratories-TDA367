@@ -152,6 +152,7 @@
                               <Button fx:id="paintSizePlusButton" mnemonicParsing="false" onAction="#enlargeBrushSize" text="+" />
                           </buttons>
                         </ButtonBar>
+                        <AnchorPane fx:id="brushPicture" layoutX="659.0" layoutY="10.0" prefHeight="30.0" prefWidth="30.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="659.0" AnchorPane.rightAnchor="348.0" AnchorPane.topAnchor="10.0" />
                      </children></AnchorPane>
             </content>
           </Tab>

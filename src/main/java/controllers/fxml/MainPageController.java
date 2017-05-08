@@ -80,6 +80,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         setOnMousePressedNotePane();
         setOnMouseReleasedNotePane();
         colorPicker.setValue(Color.BLACK);
+        PaintingContainer.setPaintbrush(CIRCLE);
     }
 
     private void setOnMousePressedNotePane() {
