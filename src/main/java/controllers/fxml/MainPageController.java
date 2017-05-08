@@ -2,6 +2,8 @@ package controllers.fxml;
 
 import controllers.noteobject.NoteObjectControllerI;
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,6 +12,9 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.control.*;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import models.note.Note;
@@ -21,13 +26,12 @@ import utilities.ObserverI;
 import utilities.Paintbrush;
 import utilities.state.PaintState;
 import utilities.state.WriteState;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
-
 import static utilities.Paintbrush.CIRCLE;
 import static utilities.Paintbrush.SQUARE;
 import static utilities.Paintbrush.TRIANGLE;
@@ -48,8 +52,10 @@ public class MainPageController implements Initializable, ObserverI<Node> {
 
     @FXML
     private ToggleButton circleButton;
+
     @FXML
     private ToggleButton squareButton;
+
     @FXML
     private ToggleButton triangleButton;
 
@@ -60,6 +66,13 @@ public class MainPageController implements Initializable, ObserverI<Node> {
 
     private static Note currentNote;
 
+    @FXML
+    private ComboBox textFontComboBox;
+
+    private List<String> fonts = Font.getFamilies();
+
+    @FXML
+    private ComboBox textSizeComboBox;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentNote = new Note();
@@ -75,9 +88,17 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        ObservableList<String> observableList = FXCollections.observableList(fonts);
+
+        textFontComboBox.setItems(observableList);
+        textFontComboBox.getSelectionModel().select("Calibri");
+        WriteState.getInstance().setFont((String) textFontComboBox.getSelectionModel().getSelectedItem());
+
         prepareSlideMenuAnimation();
         setOnMousePressedNotePane();
         setOnMouseReleasedNotePane();
+        colorPicker.setValue(Color.BLACK);
     }
 
     private void setOnMousePressedNotePane() {
@@ -92,6 +113,11 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         });
     }
 
+    @FXML
+    private void changeFont() {
+        WriteState.getInstance().setFont((String) textFontComboBox.getSelectionModel().getSelectedItem());
+    }
+
     private void setOnMouseReleasedNotePane() {
         notePane.setOnMouseReleased(event -> {
             NoteObjectControllerI controller = null;
@@ -104,6 +130,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         });
     }
 
+
     private void addNodeToNotePane(NoteObjectControllerI controller) {
         if (controller != null) {
             notePane.getChildren().add(controller.getNode());
@@ -111,12 +138,12 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         }
     }
 
-   @FXML
+    @FXML
     private void pressedFilleButton() {
 
-    }
+    } // Empty method but causes problem when removed
 
-    private void prepareSlideMenuAnimation () {
+    private void prepareSlideMenuAnimation() {
         TranslateTransition openFille = new TranslateTransition(new Duration(1000), fille);
         openFille.setToX(0);
         TranslateTransition closeFille = new TranslateTransition(new Duration(1000), fille);
@@ -131,9 +158,11 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         });
     }
 
+
     public static Note getCurrentNote() {
         return currentNote;
     }
+
 
     @FXML
     private void importImage() {
@@ -144,7 +173,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     }
 
     @FXML
-    private void changeColor(){
+    private void changeColor() {
         Paintbrush.setColor(colorPicker.getValue());
     }
 
@@ -163,34 +192,34 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     }
 
     @FXML
-    private void setPaintbrushToSquare(){
+    private void setPaintbrushToSquare() {
         PaintingContainer.setPaintbrush(SQUARE);
         circleButton.setSelected(false);
         triangleButton.setSelected(false);
     }
 
     @FXML
-    private void setPaintbrushToCircle(){
+    private void setPaintbrushToCircle() {
         PaintingContainer.setPaintbrush(CIRCLE);
         squareButton.setSelected(false);
         triangleButton.setSelected(false);
     }
 
     @FXML
-    private void setPaintbrushToTriangle(){
+    private void setPaintbrushToTriangle() {
         PaintingContainer.setPaintbrush(TRIANGLE);
         circleButton.setSelected(false);
         squareButton.setSelected(false);
     }
 
     @FXML
-    private void shrinkBrushSize(){
-        Paintbrush.setSize(Paintbrush.getSize()*0.9);
+    private void shrinkBrushSize() {
+        Paintbrush.setSize(Paintbrush.getSize() * 0.9);
     }
 
     @FXML
-    private void enlargeBrushSize(){
-        Paintbrush.setSize(Paintbrush.getSize()*1.1);
+    private void enlargeBrushSize() {
+        Paintbrush.setSize(Paintbrush.getSize() * 1.1);
     }
 
     @Override
@@ -200,4 +229,6 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         else
             notePane.getChildren().add(subject);
     }
+
+
 }

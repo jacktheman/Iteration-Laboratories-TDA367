@@ -1,8 +1,14 @@
 package controllers.noteobject;
 
+
 import controllers.fxml.MainPageController;
 import javafx.scene.control.MenuItem;
+
+import javafx.scene.text.Font;
+
 import models.noteobject.TextContainer;
+import utilities.ObserverI;
+import utilities.state.WriteState;
 import views.noteobject.TextContainerView;
 
 import java.util.ArrayList;
@@ -11,7 +17,7 @@ import java.util.List;
 /**
  * Created by aron on 2017-04-06.
  */
-public class TextContainerController extends NoteObjectController<TextContainerView> {
+public class TextContainerController extends NoteObjectController<TextContainerView> implements ObserverI<WriteState> {
 
     private TextContainer textContainerModel;
 
@@ -19,6 +25,8 @@ public class TextContainerController extends NoteObjectController<TextContainerV
         super(new TextContainerView(text, layoutX, layoutY));
         this.textContainerModel = new TextContainer(text);
         this.textContainerModel.bindTextProperties(super.getNode().textProperty());
+
+        super.getNode().setFont(Font.font(WriteState.getInstance().getFontFamilyName(), 12));
 
         listener();
         listener2();
@@ -40,6 +48,13 @@ public class TextContainerController extends NoteObjectController<TextContainerV
                 MainPageController.getCurrentNote().removeNoteObject(super.getNode());
             }
         });
+    }
+
+    @Override
+    public void fireChange(WriteState subject) {
+        if (super.getNode().isFocused()){
+            super.getNode().setFont(Font.font(WriteState.getInstance().getFontFamilyName(), 12));
+        }
     }
 
     @Override

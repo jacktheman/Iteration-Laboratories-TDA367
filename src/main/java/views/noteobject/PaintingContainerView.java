@@ -2,6 +2,7 @@ package views.noteobject;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
+import models.noteobject.PaintingContainer;
 import utilities.Paintbrush;
 
 import java.io.Serializable;
@@ -18,12 +19,15 @@ public class PaintingContainerView extends AnchorPane implements Serializable {
     private final int TRIANGLE_UMBER_OF_CORNERS = 3;
     private final int DEFAULT_CANVAS_SIZE = 50;
     private final int DEFAULT_CANVAS_CROP = 25;
-    private final int PAINTING_AREA_RESIZING_CONSTANT = 20;
+    private final int PAINTING_AREA_RESIZING_CONSTANT = 10;
+
+    private boolean gotPaint = false;
 
     public PaintingContainerView(double x, double y){
         this.setLayoutX(x-DEFAULT_CANVAS_CROP);
-        this.setLayoutY(y-DEFAULT_CANVAS_CROP);
-        this.setPrefSize(DEFAULT_CANVAS_SIZE,DEFAULT_CANVAS_SIZE);
+        this.setLayoutY(y- DEFAULT_CANVAS_CROP);
+        this.setWidth(DEFAULT_CANVAS_SIZE);
+        this.setHeight(DEFAULT_CANVAS_SIZE);
         canvas = new Canvas(this.getWidth(),this.getHeight());
         borderCanvas = new Canvas(this.getWidth(),this.getHeight());
         this.getChildren().add(borderCanvas);
@@ -64,11 +68,16 @@ public class PaintingContainerView extends AnchorPane implements Serializable {
         }
     }
 
-    public void paint(Paintbrush paintbrush, double x, double y){
+    public boolean getPaintStatus(){
+        return gotPaint;
+    }
+
+    public void paint(double x, double y){
+        gotPaint = true;
         double size = Paintbrush.getSize();
         paintingSizeCounter(x,y);
         canvas.getGraphicsContext2D().setFill(Paintbrush.getColor());
-        switch (paintbrush){
+        switch (PaintingContainer.getPaintbrush()){
             case CIRCLE:
                 canvas.getGraphicsContext2D().fillOval(x,y,size,size);
                 break;
