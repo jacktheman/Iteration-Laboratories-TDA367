@@ -2,6 +2,7 @@ package utilities.state;
 
 import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
+import controllers.noteobject.TableController;
 import controllers.noteobject.TextContainerController;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -70,6 +71,8 @@ public class WriteState extends NoteState implements ObservableI {
                 FileChooser fileChooser = FileChooserFactory.getImageChooser();
                 File file = fileChooser.showOpenDialog(notePane.getScene().getWindow());
                 return new ImageContainerController(file.toURI().toURL(), event.getX(), event.getY());
+            } else if (event.getButton().equals(MouseButton.MIDDLE)) {
+                return new TableController(event.getX(),event.getY(), 3, 3);
             }
         }
         return null;

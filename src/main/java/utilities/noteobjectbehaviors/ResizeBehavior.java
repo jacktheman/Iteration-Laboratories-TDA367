@@ -81,27 +81,44 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
 
     private void dragResize(ResizablePositions position, MouseEvent event){
 
-        double nodeX, nodeY, mouseX, mouseY, mouseSceneY, mouseSceneX, newFitWidth;
+        double nodeX, nodeY, mouseX, mouseY, oldX, oldY, quota;
         mouseX = event.getX();
         mouseY = event.getY();
         nodeX = imageView.getFitWidth();
         nodeY = imageView.getFitHeight();
+        oldX = imageView.getLayoutX();
+        oldY = imageView.getLayoutY();
+        quota = imageView.getFitHeight() / imageView.getFitWidth();
 
         if(position == ResizablePositions.LEFT_UPPER_CORNER){
 
         } else if (position == ResizablePositions.LEFT_LOWER_CORNER){
 
         } else if (position == ResizablePositions.RIGHT_UPPER_CORNER){
-
+            /*if(mouseX <= oldX || mouseX >= oldX) {
+                imageView.setFitWidth(mouseX);
+                imageView.setLayoutY(oldY + mouseY);
+                imageView.setFitHeight(mouseX * quota);
+            }
+            if (mouseY <= oldY || mouseY >= oldY){
+                imageView.setLayoutY(oldY + mouseY);
+                imageView.setFitHeight(oldY + mouseY);
+                imageView.setFitWidth(mouseY / quota);
+            } */
         } else if (position == ResizablePositions.RIGHT_LOWER_CORNER){
-
+            if(mouseX <= oldX || mouseX >= oldX){
+                imageView.setFitWidth(mouseX);
+                imageView.setFitHeight(mouseX * quota);
+            }
+            if(mouseY <= oldY || mouseY >= oldY){
+                imageView.setFitHeight(mouseY);
+                imageView.setFitWidth(mouseY / quota);
+            }
         } else if (position == ResizablePositions.UPPER_AREA){
-            double oldy = imageView.getLayoutY();
-            imageView.setLayoutY(oldy + mouseY);
+            imageView.setLayoutY(oldY + mouseY);
             imageView.setFitHeight(nodeY - mouseY);
         } else if (position == ResizablePositions.LEFT_AREA){
-            double oldx = imageView.getLayoutX();
-            imageView.setLayoutX(oldx + mouseX);
+            imageView.setLayoutX(oldX + mouseX);
             imageView.setFitWidth(nodeX - mouseX);
         } else if (position == ResizablePositions.BOTTOM_AREA){
             imageView.setFitHeight(mouseY);
@@ -113,7 +130,6 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     private void changeCursorBasedOnPosition(ResizablePositions pos) {
 
         if (pos != null) {
-            //System.out.println(pos.toString());
             switch (pos) {
                 case RIGHT_UPPER_CORNER:
                     imageView.setCursor(Cursor.NE_RESIZE);

@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Button;
@@ -62,6 +64,15 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     @FXML
     private ColorPicker colorPicker;
 
+    @FXML
+    private AnchorPane brushPicture;
+    @FXML
+    private Canvas brushPictureCanvas;
+
+    private final double TRIANGLE_QUANTIFIER_SMALL = 0.75;
+    private final double TRIANGLE_QUANTIFIER_BIG = 1.25;
+    private final int TRIANGLE_NUMBER_OF_CORNERS = 3;
+
     private AnchorPane fille;
 
     private static Note currentNote;
@@ -103,6 +114,9 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         setOnMousePressedNotePane();
         setOnMouseReleasedNotePane();
         colorPicker.setValue(Color.BLACK);
+        PaintingContainer.setPaintbrush(CIRCLE);
+        circleButton.setSelected(true);
+        setBrushPicture();
     }
 
     private void setOnMousePressedNotePane() {
@@ -184,6 +198,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     @FXML
     private void changeColor() {
         Paintbrush.setColor(colorPicker.getValue());
+        setBrushPicture();
     }
 
     @FXML
@@ -205,6 +220,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         PaintingContainer.setPaintbrush(SQUARE);
         circleButton.setSelected(false);
         triangleButton.setSelected(false);
+        setBrushPicture();
     }
 
     @FXML
@@ -212,6 +228,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         PaintingContainer.setPaintbrush(CIRCLE);
         squareButton.setSelected(false);
         triangleButton.setSelected(false);
+        setBrushPicture();
     }
 
     @FXML
@@ -219,16 +236,41 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         PaintingContainer.setPaintbrush(TRIANGLE);
         circleButton.setSelected(false);
         squareButton.setSelected(false);
+        setBrushPicture();
+    }
+
+    private void setBrushPicture(){
+        GraphicsContext gc = brushPictureCanvas.getGraphicsContext2D();
+        gc.clearRect(brushPictureCanvas.getLayoutX(),brushPictureCanvas.getLayoutY(),brushPictureCanvas.getWidth(),brushPictureCanvas.getHeight());
+        //gc.setFill(Color.WHITE);
+        //gc.fillRect(brushPictureCanvas.getLayoutX(),brushPictureCanvas.getLayoutY(),brushPictureCanvas.getWidth(),brushPictureCanvas.getHeight());
+        gc.setFill(Paintbrush.getColor());
+        switch (PaintingContainer.getPaintbrush()){
+            case TRIANGLE:
+                double [] xPoints = {brushPicture.getPrefWidth()/2-Paintbrush.getSize()*TRIANGLE_QUANTIFIER_BIG,brushPicture.getPrefWidth()/2,brushPicture.getPrefWidth()/2+Paintbrush.getSize()*TRIANGLE_QUANTIFIER_BIG};
+                double [] yPoints = {brushPicture.getPrefHeight()/2+Paintbrush.getSize()*TRIANGLE_QUANTIFIER_SMALL,brushPicture.getPrefHeight()/2-Paintbrush.getSize()*TRIANGLE_QUANTIFIER_BIG,brushPicture.getPrefHeight()/2+Paintbrush.getSize()*TRIANGLE_QUANTIFIER_SMALL};
+                gc.fillPolygon(xPoints,yPoints,TRIANGLE_NUMBER_OF_CORNERS);
+                break;
+            case SQUARE:
+                gc.fillRect(brushPicture.getPrefWidth()/2-(Paintbrush.getSize()/2),brushPicture.getPrefHeight()/2-(Paintbrush.getSize()/2),Paintbrush.getSize(),Paintbrush.getSize());
+                break;
+            case CIRCLE:
+                gc.fillOval(brushPicture.getPrefWidth()/2-(Paintbrush.getSize()/2),brushPicture.getPrefHeight()/2-(Paintbrush.getSize()/2),Paintbrush.getSize(),Paintbrush.getSize());
+                break;
+        }
+
     }
 
     @FXML
     private void shrinkBrushSize() {
         Paintbrush.setSize(Paintbrush.getSize() * 0.9);
+        setBrushPicture();
     }
 
     @FXML
     private void enlargeBrushSize() {
         Paintbrush.setSize(Paintbrush.getSize() * 1.1);
+        setBrushPicture();
     }
 
     @Override
