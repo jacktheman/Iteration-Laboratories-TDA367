@@ -21,11 +21,11 @@ public class FileChooserFactory {
     }
 
     public static FileChooser getImageChooser() {
-        return createFileChooser("Infoga Bild", "*.jpg", "*.png", "*.gif", "*.bmp");
+        return createFileChooser("Infoga Bild", FileHandler.IMAGE_EXTENSIONS);
     }
 
     public static FileChooser getFabNotesChooser() {
-        return createFileChooser("Importera Anteckning", "*.fab"); //.fab temporary
+        return createFileChooser("Importera Anteckning", FileHandler.FILE_EXTENSION);
     }
 
 }
