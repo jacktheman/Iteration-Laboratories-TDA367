@@ -3,16 +3,17 @@ package controllers.fxml;
 import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import models.note.Note;
@@ -26,6 +27,7 @@ import utilities.Paintbrush;
 import utilities.state.PaintState;
 import utilities.state.WriteState;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
@@ -56,8 +58,10 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
 
     @FXML
     private ToggleButton circleButton;
+
     @FXML
     private ToggleButton squareButton;
+
     @FXML
     private ToggleButton triangleButton;
 
@@ -70,6 +74,13 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
 
     private List<NoteObjectControllerI> currentControllers;
 
+    @FXML
+    private ComboBox textFontComboBox;
+
+    private String [] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+
+    @FXML
+    private ComboBox textSizeComboBox;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentControllers = new ArrayList<>();
@@ -85,9 +96,12 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
         }
         prepareSlideMenuAnimation();
         pressedOnCanvas();
+        ObservableList<String> options = FXCollections.observableArrayList();
+        options.addAll(fonts);
+        textFontComboBox.setItems(options);
+        textFontComboBox.getSelectionModel().select("Calibri");
+        WriteState.getInstance().setFont((String)textFontComboBox.getSelectionModel().getSelectedItem());
     }
-
-
 
     private void pressedOnCanvas() {
         notePane.setOnMouseReleased(e -> {
@@ -122,8 +136,6 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
 
     }
 
-
-
     private void addImageToNote(double x, double y) {
         if (currentNote == null) {
             currentNote = new Note();
@@ -143,10 +155,10 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
         currentNote.getNodes().get(currentNote.getNodes().size() - 1).requestFocus();
     }
 
-   @FXML
+    @FXML
     private void pressedFilleButton() {
 
-    }
+    } // Empty method but causes problem when removed
 
     private void prepareSlideMenuAnimation () {
         TranslateTransition openFille = new TranslateTransition(new Duration(1000), fille);
@@ -162,7 +174,6 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
             }
         });
     }
-
 
     @FXML
     private void importImage() {
@@ -228,4 +239,6 @@ public class MainPageController implements Initializable, ObserverI<NoteObjectCo
         currentControllers.remove(subject);
         notePane.getChildren().remove(subject.getNode());
     }
+
+
 }

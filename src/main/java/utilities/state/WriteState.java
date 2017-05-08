@@ -11,11 +11,18 @@ public class WriteState implements NoteStateI {
 
     private static WriteState SINGLETON = new WriteState();
 
+    private String fontFamilyName;
+
     private WriteState() {
     }
 
     public static WriteState getInstance() {
         return SINGLETON;
+    }
+
+    public void setFont (String fontFamilyName) {
+        this.fontFamilyName = fontFamilyName;
+        System.out.println(fontFamilyName);
     }
 
     @Override
@@ -27,4 +34,6 @@ public class WriteState implements NoteStateI {
     public NoteObjectControllerI getOnMouseReleased(MouseEvent event) {
         return new TextContainerController("",event.getX(),event.getY());
     }
+
+
 }

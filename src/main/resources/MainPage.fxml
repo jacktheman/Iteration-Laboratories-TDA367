@@ -2,8 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -52,18 +52,10 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="118.0" prefWidth="545.0" style="-fx-background-color: lightgray;">
                      <children>
-                        <ChoiceBox layoutY="2.0" prefHeight="25.0" prefWidth="69.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="2.0" />
-                        <MenuButton layoutX="69.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" AnchorPane.leftAnchor="69.0" AnchorPane.topAnchor="2.0">
-                          <items>
-                            <MenuItem mnemonicParsing="false" text="1" />
-                            <MenuItem mnemonicParsing="false" text="2" />
-                          </items>
-                        </MenuButton>
-                        <TextField layoutX="69.0" layoutY="2.0" prefHeight="25.0" prefWidth="34.0" text="11" />
-                        <Button layoutX="128.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="B" AnchorPane.leftAnchor="132.0" AnchorPane.topAnchor="2.0" />
-                        <Button layoutX="155.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="I" AnchorPane.leftAnchor="159.0" AnchorPane.topAnchor="2.0" />
-                        <Button layoutX="180.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="U" AnchorPane.leftAnchor="184.0" AnchorPane.topAnchor="2.0" />
-                        <MenuButton layoutX="219.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="46.0" AnchorPane.leftAnchor="219.0" AnchorPane.topAnchor="4.0">
+                        <Button fx:id="boldButton" layoutX="179.0" layoutY="3.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="B" AnchorPane.leftAnchor="179.0" AnchorPane.topAnchor="3.0" />
+                        <Button fx:id="italicsButton" layoutX="204.0" layoutY="3.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="I" AnchorPane.leftAnchor="204.0" AnchorPane.topAnchor="3.0" />
+                        <Button fx:id="underlinedButton" layoutX="229.0" layoutY="3.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="U" AnchorPane.leftAnchor="229.0" AnchorPane.topAnchor="3.0" />
+                        <MenuButton layoutX="271.0" layoutY="6.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="46.0" AnchorPane.leftAnchor="271.0" AnchorPane.topAnchor="6.0">
                           <items>
                             <MenuItem mnemonicParsing="false">
                                  <graphic>
@@ -99,12 +91,14 @@
                               </ImageView>
                            </graphic>
                         </MenuButton>
-                        <ColorPicker layoutX="295.0" layoutY="2.0" prefHeight="42.0" prefWidth="91.0" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="4.0" />
-                        <ImageView disable="true" fitHeight="39.0" fitWidth="44.0" layoutX="321.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                        <ColorPicker layoutX="335.0" layoutY="5.0" prefHeight="42.0" prefWidth="91.0" AnchorPane.leftAnchor="335.0" AnchorPane.topAnchor="5.0" />
+                        <ImageView disable="true" fitHeight="39.0" fitWidth="44.0" layoutX="341.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@icons/highlight.png" />
                            </image>
                         </ImageView>
+                        <ComboBox fx:id="textFontComboBox" layoutX="3.0" layoutY="3.0" prefHeight="25.0" prefWidth="122.0" />
+                        <ComboBox fx:id="textSizeComboBox" layoutX="126.0" layoutY="3.0" prefHeight="25.0" prefWidth="53.0" />
                      </children>
                   </AnchorPane>
             </content>
