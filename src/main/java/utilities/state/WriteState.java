@@ -10,6 +10,10 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import services.FileChooserFactory;
 
@@ -39,6 +43,9 @@ public class WriteState extends NoteState implements ObservableI {
 
     private List<ObserverI<WriteState>> listeners;
 
+    private FontWeight fontWeight;
+    private FontPosture fontPosture;
+
     private WriteState() {
         listeners = new ArrayList<>();
         fontFamilyName = "Calibri";
@@ -58,6 +65,17 @@ public class WriteState extends NoteState implements ObservableI {
         this.textSize = textSize;
         notifyListeners();
     }
+
+    public void setFontWeight (FontWeight fontWeight) {
+        this.fontWeight = fontWeight;
+        notifyListeners();
+    }
+
+    public void setFontPosture (FontPosture fontPosture) {
+     this.fontPosture = fontPosture;
+     notifyListeners();
+    }
+
 
     @Override
     public NoteObjectControllerI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
@@ -94,5 +112,15 @@ public class WriteState extends NoteState implements ObservableI {
     public int getTextSize() {
         return  textSize;
     }
+
+    public FontWeight getFontWeight() {
+        return fontWeight;
+    }
+
+    public FontPosture getFontPosture() {
+        return fontPosture;
+    }
+
+
 
 }

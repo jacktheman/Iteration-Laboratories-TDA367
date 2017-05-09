@@ -11,13 +11,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.control.*;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import models.note.Note;
@@ -46,45 +45,40 @@ public class MainPageController implements Initializable, ObserverI<Node> {
 
     @FXML
     private AnchorPane fabNotesWindow;
-
     @FXML
     private AnchorPane notePane;
-
     @FXML
     private Button tagMenuButton;
-
     @FXML
     private ToggleButton circleButton;
-
     @FXML
     private ToggleButton squareButton;
-
     @FXML
     private ToggleButton triangleButton;
-
     @FXML
     private ColorPicker colorPicker;
-
     @FXML
     private AnchorPane brushPicture;
     @FXML
     private Canvas brushPictureCanvas;
+    @FXML
+    private ComboBox textFontComboBox;
+    @FXML
+    private ComboBox textSizeComboBox;
+    @FXML
+    private ToggleButton boldToggleButton;
+    @FXML
+    private ToggleButton italicsToggleButton;
+    @FXML
+    private ToggleButton underlineToggleButton;
 
     private final double TRIANGLE_QUANTIFIER_SMALL = 0.75;
     private final double TRIANGLE_QUANTIFIER_BIG = 1.25;
     private final int TRIANGLE_NUMBER_OF_CORNERS = 3;
-
     private AnchorPane fille;
-
     private static Note currentNote;
-
-    @FXML
-    private ComboBox textFontComboBox;
-
     private List<String> fonts = Font.getFamilies();
 
-    @FXML
-    private ComboBox textSizeComboBox;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentNote = new Note();
@@ -133,13 +127,31 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     }
 
     @FXML
+    private void makeItalics() {
+        if (italicsToggleButton.isSelected()) {
+            WriteState.getInstance().setFontPosture(FontPosture.ITALIC);
+        } else {
+            WriteState.getInstance().setFontPosture(FontPosture.REGULAR);
+        }
+    }
+
+    @FXML
+    private void makeBold () {
+        if (boldToggleButton.isSelected()) {
+            WriteState.getInstance().setFontWeight(FontWeight.BOLD);
+        } else {
+            WriteState.getInstance().setFontWeight(FontWeight.NORMAL);
+        }
+    }
+
+    @FXML
     private void changeFont() {
-        WriteState.getInstance().setFont((String) textFontComboBox.getSelectionModel().getSelectedItem());
+        WriteState.getInstance().setFont((String)textFontComboBox.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void changeSize() {
-        WriteState.getInstance().setSize((int) textSizeComboBox.getSelectionModel().getSelectedItem());
+        WriteState.getInstance().setSize((int)textSizeComboBox.getSelectionModel().getSelectedItem());
     }
 
     private void setOnMouseReleasedNotePane() {
@@ -154,18 +166,12 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         });
     }
 
-
     private void addNodeToNotePane(NoteObjectControllerI controller) {
         if (controller != null) {
             notePane.getChildren().add(controller.getNode());
             notePane.getChildren().get(notePane.getChildren().size() - 1).requestFocus();
         }
     }
-
-    @FXML
-    private void pressedFilleButton() {
-
-    } // Empty method but causes problem when removed
 
     private void prepareSlideMenuAnimation() {
         TranslateTransition openFille = new TranslateTransition(new Duration(1000), fille);
@@ -182,11 +188,9 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         });
     }
 
-
     public static Note getCurrentNote() {
         return currentNote;
     }
-
 
     @FXML
     private void importImage() {

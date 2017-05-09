@@ -5,6 +5,7 @@ import controllers.fxml.MainPageController;
 import javafx.scene.control.MenuItem;
 
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import models.noteobject.TextContainer;
 import utilities.ObserverI;
@@ -25,7 +26,9 @@ public class TextContainerController extends NoteObjectController<TextContainerV
         super(new TextContainerView(text, layoutX, layoutY));
         this.textContainerModel = new TextContainer(text);
         this.textContainerModel.bindTextProperties(super.getNode().textProperty());
-        super.getNode().setFont(Font.font(WriteState.getInstance().getFontFamilyName(), WriteState.getInstance().getTextSize()));
+        //behöver fixa denna långa rad med kod
+        super.getNode().setFont(Font.font(WriteState.getInstance().getFontFamilyName(), WriteState.getInstance().getFontWeight(), WriteState.getInstance().getFontPosture(), WriteState.getInstance().getTextSize()));
+
         this.textContainerModel.setFont(Font.font(WriteState.getInstance().getFontFamilyName(), WriteState.getInstance().getTextSize()));
         listener();
         listener2();
