@@ -1,5 +1,6 @@
 package controllers.fxml;
 
+import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
@@ -195,8 +196,11 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     private void importImage() {
         FileChooser fileChooser = FileChooserFactory.getImageChooser();
         File image = fileChooser.showOpenDialog(notePane.getScene().getWindow());
-
-        //TODO send the file URL to ImageContainerController
+        try {
+            currentNote.addNoteObject(new ImageContainerController(image.toURI().toURL(), 0, 0).getNode());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

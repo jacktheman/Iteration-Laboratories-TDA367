@@ -1,8 +1,13 @@
 package controllers.noteobject;
 
+import controllers.fxml.MainPageController;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
 
 import java.util.ArrayList;
@@ -19,6 +24,7 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
 
     private ContextMenu contextMenu;
 
+
     NoteObjectController(T view) {
         this.view = view;
         this.contextMenu = new ContextMenu();
@@ -30,6 +36,7 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
         setOnMouseMoved();
         setOnMouseDragged();
     }
+
 
     @Override
     public T getNode() {
@@ -91,10 +98,35 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
     private void loadNewContextMenu(){
         MenuItem copy = new MenuItem("Kopiera");
         MenuItem remove = new MenuItem("Ta bort");
+        copy.setOnAction(KeyEvent -> {
+            //this.copy();
+        });
+        remove.setOnAction(actionEvent -> {
+            removeThisNode();
+        });
+        this.getNode().setOnKeyPressed(KeyEvent ->{
+            if(KeyEvent.getCode().equals(KeyCode.DELETE) || KeyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
+                remove.fire();
+            } else if (KeyEvent.getCode().equals(KeyCode.C) && KeyEvent.isControlDown()){
+                copy.fire();
+            }
+        });
+
         contextMenu.getItems().addAll(initContextMenuItems());
         contextMenu.getItems().addAll(copy, remove);
     }
 
-    abstract List<MenuItem> initContextMenuItems();
+
+    void removeThisNode(){
+        MainPageController.getCurrentNote().removeNoteObject(this.getNode());
+    }
+
+    List<MenuItem> initContextMenuItems(){
+        List<MenuItem> menuItemList = new ArrayList<>();
+        return menuItemList;
+    }
+
+
+
 
 }

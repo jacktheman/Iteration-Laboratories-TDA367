@@ -24,6 +24,7 @@ public class PaintState extends NoteState {
 
     @Override
     public NoteObjectControllerI getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
+        super.getOnMousePressed(notePane, event);
         if (!super.pressedFocusOwner(notePane, event)) {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 return new PaintingContainerController(event);
@@ -33,8 +34,9 @@ public class PaintState extends NoteState {
     }
 
     @Override
-    public NoteObjectControllerI getOnMouseReleased(AnchorPane notePane, MouseEvent event) {
+    public NoteObjectControllerI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
         return null;
     }
+
 
 }

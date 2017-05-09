@@ -59,9 +59,4 @@ public class TextContainerController extends NoteObjectController<TextContainerV
         }
     }
 
-    @Override
-    List<MenuItem> initContextMenuItems() {
-        List<MenuItem> menuItemList = new ArrayList<>();
-        return menuItemList;
-    }
 }
