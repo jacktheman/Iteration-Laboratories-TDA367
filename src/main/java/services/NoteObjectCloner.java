@@ -1,5 +1,6 @@
 package services;
 
+import controllers.fxml.MainPageController;
 import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.PaintingContainerController;
 import controllers.noteobject.TableController;
@@ -27,13 +28,6 @@ public class NoteObjectCloner {
         return null;
     }
 
-    private static Node clonePaintingContainer(){
-        if (node instanceof PaintingContainerView){
-            PaintingContainerView paintingContainerView = (PaintingContainerView)node;
-            return new PaintingContainerController(paintingContainerView).getNode();
-        }
-        return null;
-    }
 
     private static Node cloneTableContainer(){
         if (node instanceof TableContainerView){
@@ -43,11 +37,18 @@ public class NoteObjectCloner {
         return null;
     }
 
-    private static Node getCopiedObject(){
+    public static Node getCopiedObject(){
+        if (MainPageController.getCurrentNote().getNodes().contains(node)) {
+            Node temp;
+            if((temp = cloneImageContainer()) != null){
+            } else if ((temp = cloneTableContainer()) != null){
+            }
+            node = temp;
+        }
         return node;
     }
 
-    private static void setCopiedObject(Node node){
+    public static void setCopiedObject(Node node){
         NoteObjectCloner.node = node;
     }
 

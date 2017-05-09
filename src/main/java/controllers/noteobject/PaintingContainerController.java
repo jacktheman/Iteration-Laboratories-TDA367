@@ -1,8 +1,6 @@
 package controllers.noteobject;
 
 import controllers.fxml.MainPageController;
-import javafx.fxml.FXML;
-import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import services.ObserverBus;
 import services.StateHandler;
@@ -11,9 +9,6 @@ import utilities.noteobjectbehaviors.DragDropBehavior;
 import utilities.noteobjectbehaviors.PaintingBehavior;
 import utilities.state.PaintState;
 import views.noteobject.PaintingContainerView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by jackflurry on 2017-04-07.
@@ -24,13 +19,6 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
         super(new PaintingContainerView(event.getX(),event.getY()));
         super.setBehavior(new PaintingBehavior(super.getNode()));
         super.getBehavior().onMousePressed(event);
-        ObserverBus.addListener(StateHandler.getInstance(), this);
-        focusPropertyListener();
-    }
-
-    public PaintingContainerController(PaintingContainerView paintingContainerView){
-        super(paintingContainerView);
-        super.setBehavior(new PaintingBehavior(super.getNode()));
         ObserverBus.addListener(StateHandler.getInstance(), this);
         focusPropertyListener();
     }

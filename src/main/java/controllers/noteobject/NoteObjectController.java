@@ -5,9 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
+import services.NoteObjectCloner;
 import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
 
 import java.util.ArrayList;
@@ -98,22 +96,26 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
     private void loadNewContextMenu(){
         MenuItem copy = new MenuItem("Kopiera");
         MenuItem remove = new MenuItem("Ta bort");
+        MenuItem putToFront = new MenuItem("Placera längst fram");
         copy.setOnAction(KeyEvent -> {
-            //this.copy();
+            NoteObjectCloner.setCopiedObject(this.getNode());
         });
         remove.setOnAction(actionEvent -> {
             removeThisNode();
         });
+        putToFront.setOnAction(actionEvent -> {
+            this.getNode().toFront();
+        });
         this.getNode().setOnKeyPressed(KeyEvent ->{
-            if(KeyEvent.getCode().equals(KeyCode.DELETE) || KeyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
+            if(KeyEvent.getCode().equals(KeyCode.DELETE)) {
                 remove.fire();
             } else if (KeyEvent.getCode().equals(KeyCode.C) && KeyEvent.isControlDown()){
                 copy.fire();
-            }
+            } // else if (KeyEvent.getCode())
         });
 
         contextMenu.getItems().addAll(initContextMenuItems());
-        contextMenu.getItems().addAll(copy, remove);
+        contextMenu.getItems().addAll(putToFront, copy, remove);
     }
 
 
