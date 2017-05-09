@@ -4,6 +4,8 @@ import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
 import controllers.noteobject.TableController;
 import controllers.noteobject.TextContainerController;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
@@ -49,19 +51,10 @@ public class WriteState extends NoteState implements ObservableI {
     }
 
     @Override
-    public NoteObjectControllerI getOnMousePressed(AnchorPane notePane, MouseEvent event) {
-        return null;
-    }
-
-    @Override
     public NoteObjectControllerI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
         if (!super.pressedFocusOwner(notePane, event)) {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 return new TextContainerController("", event.getX(), event.getY());
-            } else if (event.getButton().equals(MouseButton.SECONDARY)) {
-                FileChooser fileChooser = FileChooserFactory.getImageChooser();
-                File file = fileChooser.showOpenDialog(notePane.getScene().getWindow());
-                return new ImageContainerController(file.toURI().toURL(), event.getX(), event.getY());
             } else if (event.getButton().equals(MouseButton.MIDDLE)) {
                 return new TableController(event.getX(),event.getY(), 3, 3);
             }

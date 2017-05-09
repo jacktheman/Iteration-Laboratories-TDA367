@@ -28,6 +28,13 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
         focusPropertyListener();
     }
 
+    public PaintingContainerController(PaintingContainerView paintingContainerView){
+        super(paintingContainerView);
+        super.setBehavior(new PaintingBehavior(super.getNode()));
+        ObserverBus.addListener(StateHandler.getInstance(), this);
+        focusPropertyListener();
+    }
+
     public void focusPropertyListener(){
         super.getNode().focusedProperty().addListener(observable -> {
             if(!super.getNode().isFocused()){
@@ -51,9 +58,4 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
 
     }
 
-    @Override
-    List<MenuItem> initContextMenuItems() {
-        List<MenuItem> menuItemList = new ArrayList<>();
-        return menuItemList;
-    }
 }
