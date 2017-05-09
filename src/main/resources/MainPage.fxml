@@ -22,7 +22,7 @@
 
 <AnchorPane fx:id="fabNotesWindow" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1150.0" stylesheets="@Design.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.fxml.MainPageController">
    <children>
-      <AnchorPane fx:id="notePane" layoutY="149.0" prefHeight="258.0" prefWidth="591.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="-7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="149.0" />
+      <AnchorPane fx:id="notePane" layoutX="-14.0" layoutY="142.0" prefHeight="258.0" prefWidth="591.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="142.0" />
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="Arkiv">
@@ -53,7 +53,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="118.0" prefWidth="545.0" style="-fx-background-color: lightgray;">
                      <children>
-                        <MenuButton layoutX="345.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="65.0" AnchorPane.leftAnchor="345.0" AnchorPane.topAnchor="3.0">
+                        <MenuButton layoutX="392.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="65.0" AnchorPane.leftAnchor="392.0" AnchorPane.topAnchor="3.0">
                           <items>
                             <MenuItem mnemonicParsing="false">
                                  <graphic>
@@ -89,7 +89,6 @@
                               </ImageView>
                            </graphic>
                         </MenuButton>
-                        <ColorPicker layoutX="410.0" layoutY="3.0" prefHeight="45.0" prefWidth="65.0" AnchorPane.leftAnchor="410.0" AnchorPane.topAnchor="3.0" />
                         <ImageView disable="true" fitHeight="39.0" fitWidth="44.0" layoutX="541.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@icons/highlight.png" />
@@ -107,11 +106,17 @@
                               <Font name="System Italic" size="14.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="underlineToggleButton" layoutX="291.0" layoutY="3.0" mnemonicParsing="false" onAction="#makeUnderlined" prefHeight="45.0" prefWidth="45.0" text="U">
+                        <ToggleButton fx:id="underlineToggleButton" layoutX="291.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" text="U">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </ToggleButton>
+                        <ToggleButton fx:id="strikeThroughToggleButton" layoutX="336.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" text="T">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </ToggleButton>
+                        <ColorPicker layoutX="457.0" layoutY="3.0" prefHeight="45.0" prefWidth="65.0" AnchorPane.leftAnchor="457.0" AnchorPane.topAnchor="3.0" />
                      </children>
                   </AnchorPane>
             </content>
