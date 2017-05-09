@@ -53,19 +53,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="118.0" prefWidth="545.0" style="-fx-background-color: lightgray;">
                      <children>
-                        <Button fx:id="boldButton" layoutX="197.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" text="B" AnchorPane.leftAnchor="197.0" AnchorPane.topAnchor="3.0">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font></Button>
-                        <Button fx:id="italicsButton" layoutX="242.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" text="I" AnchorPane.leftAnchor="242.0" AnchorPane.topAnchor="3.0">
-                           <font>
-                              <Font name="System Italic" size="14.0" />
-                           </font></Button>
-                        <Button fx:id="underlinedButton" layoutX="287.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" text="U" AnchorPane.leftAnchor="287.0" AnchorPane.topAnchor="3.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font></Button>
-                        <MenuButton layoutX="338.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="65.0" AnchorPane.leftAnchor="338.0" AnchorPane.topAnchor="3.0">
+                        <MenuButton layoutX="345.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="65.0" AnchorPane.leftAnchor="345.0" AnchorPane.topAnchor="3.0">
                           <items>
                             <MenuItem mnemonicParsing="false">
                                  <graphic>
@@ -101,7 +89,7 @@
                               </ImageView>
                            </graphic>
                         </MenuButton>
-                        <ColorPicker layoutX="403.0" layoutY="3.0" prefHeight="45.0" prefWidth="65.0" AnchorPane.leftAnchor="403.0" AnchorPane.topAnchor="3.0" />
+                        <ColorPicker layoutX="410.0" layoutY="3.0" prefHeight="45.0" prefWidth="65.0" AnchorPane.leftAnchor="410.0" AnchorPane.topAnchor="3.0" />
                         <ImageView disable="true" fitHeight="39.0" fitWidth="44.0" layoutX="541.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@icons/highlight.png" />
@@ -109,6 +97,21 @@
                         </ImageView>
                         <ComboBox fx:id="textFontComboBox" layoutX="3.0" layoutY="3.0" onAction="#changeFont" prefHeight="45.0" prefWidth="122.0" />
                         <ComboBox fx:id="textSizeComboBox" layoutX="126.0" layoutY="3.0" onAction="#changeSize" prefHeight="45.0" prefWidth="65.0" />
+                        <ToggleButton fx:id="boldToggleButton" layoutX="201.0" layoutY="3.0" mnemonicParsing="false" onAction="#makeBold" prefHeight="45.0" prefWidth="45.0" text="B">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="italicsToggleButton" layoutX="246.0" layoutY="3.0" mnemonicParsing="false" onAction="#makeItalics" prefHeight="45.0" prefWidth="45.0" text="I">
+                           <font>
+                              <Font name="System Italic" size="14.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="underlineToggleButton" layoutX="291.0" layoutY="3.0" mnemonicParsing="false" onAction="#makeUnderlined" prefHeight="45.0" prefWidth="45.0" text="U">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </ToggleButton>
                      </children>
                   </AnchorPane>
             </content>
@@ -177,9 +180,9 @@
       </TextField>
       <MenuButton layoutX="348.0" layoutY="27.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="112.0" text="Lägg till etikett" AnchorPane.leftAnchor="348.0" AnchorPane.topAnchor="27.0" />
       <Button layoutX="1032.0" layoutY="27.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="104.0" text="Ny anteckning +" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="27.0" />
-      <Button fx:id="tagMenuButton" layoutX="14.0" layoutY="31.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pressedFilleButton" prefHeight="112.0" prefWidth="112.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <Button fx:id="tagMenuButton" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="117.0" prefWidth="112.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
          <graphic>
-            <ImageView fitHeight="117.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="111.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@icons/three-lines.png" />
                </image>
