@@ -16,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -31,12 +32,14 @@ import utilities.ObserverI;
 import utilities.Paintbrush;
 import utilities.state.PaintState;
 import utilities.state.WriteState;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import static utilities.Paintbrush.CIRCLE;
 import static utilities.Paintbrush.SQUARE;
 import static utilities.Paintbrush.TRIANGLE;
@@ -75,7 +78,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     @FXML
     private ToggleButton underlineToggleButton;
     @FXML
-    private HBox tagBar; //behöver egentligen inte göra något med den. den ska bara finnas
+    private TilePane tagBar;
     @FXML
     private TextField addTagTextField;
 
@@ -85,8 +88,6 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     private AnchorPane fille;
     private static Note currentNote;
     private List<String> fonts = Font.getFamilies();
-    private ObservableList<String> tags;
-    private FXMLLoader loaderTag;
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -122,7 +123,6 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         circleButton.setSelected(true);
         setBrushPicture();
 
-        loaderTag = new FXMLLoader(getClass().getResource("/TagPane.fxml"));
 
     }
 
@@ -132,13 +132,15 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         if (event.getCode().equals(KeyCode.ENTER)) {
             String newTagText = addTagTextField.getText();
             try {
-                AnchorPane tag = loaderTag.load();
-                ((Label) tag.getChildren().get(0)).setText(newTagText);
-                tagBar.getChildren().add(tag);
+                if (currentNote.addTag(newTagText)) {
+                    FXMLLoader newTag = new FXMLLoader(getClass().getResource("/TagPane.fxml"));
+                    AnchorPane tag = newTag.load();
+                    ((Label) tag.getChildren().get(0)).setText(newTagText);
+                    tagBar.getChildren().add(tag);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            tags.add(addTagTextField.getText());
             addTagTextField.clear();
         }
     }
@@ -166,7 +168,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     }
 
     @FXML
-    private void makeBold () {
+    private void makeBold() {
         if (boldToggleButton.isSelected()) {
             WriteState.getInstance().setFontWeight(FontWeight.BOLD);
         } else {
@@ -176,12 +178,12 @@ public class MainPageController implements Initializable, ObserverI<Node> {
 
     @FXML
     private void changeFont() {
-        WriteState.getInstance().setFont((String)textFontComboBox.getSelectionModel().getSelectedItem());
+        WriteState.getInstance().setFont((String) textFontComboBox.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void changeSize() {
-        WriteState.getInstance().setSize((int)textSizeComboBox.getSelectionModel().getSelectedItem());
+        WriteState.getInstance().setSize((int) textSizeComboBox.getSelectionModel().getSelectedItem());
     }
 
     private void setOnMouseReleasedNotePane() {
@@ -277,23 +279,23 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         setBrushPicture();
     }
 
-    private void setBrushPicture(){
+    private void setBrushPicture() {
         GraphicsContext gc = brushPictureCanvas.getGraphicsContext2D();
-        gc.clearRect(brushPictureCanvas.getLayoutX(),brushPictureCanvas.getLayoutY(),brushPictureCanvas.getWidth(),brushPictureCanvas.getHeight());
+        gc.clearRect(brushPictureCanvas.getLayoutX(), brushPictureCanvas.getLayoutY(), brushPictureCanvas.getWidth(), brushPictureCanvas.getHeight());
         //gc.setFill(Color.WHITE);
         //gc.fillRect(brushPictureCanvas.getLayoutX(),brushPictureCanvas.getLayoutY(),brushPictureCanvas.getWidth(),brushPictureCanvas.getHeight());
         gc.setFill(Paintbrush.getColor());
-        switch (PaintingContainer.getPaintbrush()){
+        switch (PaintingContainer.getPaintbrush()) {
             case TRIANGLE:
-                double [] xPoints = {brushPicture.getPrefWidth()/2-Paintbrush.getSize()*TRIANGLE_QUANTIFIER_BIG,brushPicture.getPrefWidth()/2,brushPicture.getPrefWidth()/2+Paintbrush.getSize()*TRIANGLE_QUANTIFIER_BIG};
-                double [] yPoints = {brushPicture.getPrefHeight()/2+Paintbrush.getSize()*TRIANGLE_QUANTIFIER_SMALL,brushPicture.getPrefHeight()/2-Paintbrush.getSize()*TRIANGLE_QUANTIFIER_BIG,brushPicture.getPrefHeight()/2+Paintbrush.getSize()*TRIANGLE_QUANTIFIER_SMALL};
-                gc.fillPolygon(xPoints,yPoints,TRIANGLE_NUMBER_OF_CORNERS);
+                double[] xPoints = {brushPicture.getPrefWidth() / 2 - Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefWidth() / 2, brushPicture.getPrefWidth() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG};
+                double[] yPoints = {brushPicture.getPrefHeight() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_SMALL, brushPicture.getPrefHeight() / 2 - Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefHeight() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_SMALL};
+                gc.fillPolygon(xPoints, yPoints, TRIANGLE_NUMBER_OF_CORNERS);
                 break;
             case SQUARE:
-                gc.fillRect(brushPicture.getPrefWidth()/2-(Paintbrush.getSize()/2),brushPicture.getPrefHeight()/2-(Paintbrush.getSize()/2),Paintbrush.getSize(),Paintbrush.getSize());
+                gc.fillRect(brushPicture.getPrefWidth() / 2 - (Paintbrush.getSize() / 2), brushPicture.getPrefHeight() / 2 - (Paintbrush.getSize() / 2), Paintbrush.getSize(), Paintbrush.getSize());
                 break;
             case CIRCLE:
-                gc.fillOval(brushPicture.getPrefWidth()/2-(Paintbrush.getSize()/2),brushPicture.getPrefHeight()/2-(Paintbrush.getSize()/2),Paintbrush.getSize(),Paintbrush.getSize());
+                gc.fillOval(brushPicture.getPrefWidth() / 2 - (Paintbrush.getSize() / 2), brushPicture.getPrefHeight() / 2 - (Paintbrush.getSize() / 2), Paintbrush.getSize(), Paintbrush.getSize());
                 break;
         }
 

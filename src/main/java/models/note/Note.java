@@ -59,9 +59,12 @@ public class Note implements ObservableI<Node> {
         this.name = name;
     }
 
-    public void addTag(String tag) {
-        if (!tags.contains(tag.toLowerCase()))
+    public boolean addTag(String tag) {
+        if (!tags.contains(tag.toLowerCase())) {
             tags.add(tag.toLowerCase());
+            return true;
+        }
+        return false;
     }
 
     public void removeTag(String tag) {
