@@ -2,12 +2,13 @@ package controllers.noteobject;
 
 import controllers.fxml.MainPageController;
 import javafx.scene.input.MouseEvent;
+import models.note.Note;
 import services.ObserverBus;
 import services.StateHandler;
 import utilities.ObserverI;
 import utilities.noteobjectbehaviors.DragDropBehavior;
 import utilities.noteobjectbehaviors.PaintingBehavior;
-import state.PaintState;
+import controllers.state.PaintState;
 import views.noteobject.PaintingContainerView;
 
 /**
@@ -27,7 +28,7 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
         super.getNode().focusedProperty().addListener(observable -> {
             if(!super.getNode().isFocused()){
                 if(!super.getNode().getPaintStatus()){
-                    MainPageController.getCurrentNote().removeNoteObject(super.getNode());
+                    Note.getCurrentNote().removeNoteObject(super.getNode());
                 }
                 super.getNode().removeBorder();
             } else {

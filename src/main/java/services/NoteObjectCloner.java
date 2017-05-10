@@ -5,6 +5,7 @@ import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.PaintingContainerController;
 import controllers.noteobject.TableController;
 import javafx.scene.Node;
+import models.note.Note;
 import models.noteobject.ImageContainer;
 import views.noteobject.ImageContainerView;
 import views.noteobject.PaintingContainerView;
@@ -38,7 +39,7 @@ public class NoteObjectCloner {
     }
 
     public static Node getCopiedObject(){
-        if (MainPageController.getCurrentNote().getNodes().contains(node)) {
+        if (Note.getCurrentNote().getNodes().contains(node)) {
             Node temp;
             if((temp = cloneImageContainer()) != null){
             } else if ((temp = cloneTableContainer()) != null){

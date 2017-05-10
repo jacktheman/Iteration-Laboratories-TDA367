@@ -5,9 +5,10 @@ import controllers.fxml.MainPageController;
 
 import javafx.scene.text.Font;
 
+import models.note.Note;
 import models.noteobject.TextContainer;
 import utilities.ObserverI;
-import state.WriteState;
+import controllers.state.WriteState;
 import views.noteobject.RichTextContainerView;
 
 /**
@@ -45,7 +46,7 @@ public class TextContainerController extends NoteObjectController<RichTextContai
         super.getNode().focusedProperty().addListener(e -> {
             super.getNode().changeFocus();
             if (!super.getNode().isFocused() && super.getNode().getText().equals("")) {
-                MainPageController.getCurrentNote().removeNoteObject(super.getNode());
+                Note.getCurrentNote().removeNoteObject(super.getNode());
             }
         });
     }

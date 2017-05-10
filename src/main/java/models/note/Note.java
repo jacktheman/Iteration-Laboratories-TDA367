@@ -20,6 +20,8 @@ public class Note implements ObservableI<Node> {
 
     private List<ObserverI<Node>> listeners;
 
+    private static Note currentNote;
+
     public Note(String name) {
         this.name = name;
         this.tags = new ArrayList<>();
@@ -81,5 +83,13 @@ public class Note implements ObservableI<Node> {
     @Override
     public void removeListener(ObserverI<Node> observer) {
         this.listeners.remove(observer);
+    }
+
+    public static void setCurrentNote(Note note) {
+        currentNote = note;
+    }
+
+    public static Note getCurrentNote() {
+        return currentNote;
     }
 }

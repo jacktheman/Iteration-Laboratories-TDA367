@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
+import models.note.Note;
 import services.ContextMenuFactory;
 import services.NoteObjectCloner;
 import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
@@ -110,7 +111,7 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
 
 
     void removeThisNode(){
-        MainPageController.getCurrentNote().removeNoteObject(this.getNode());
+        Note.getCurrentNote().removeNoteObject(this.getNode());
     }
 
     List<MenuItem> initContextMenuItems(){

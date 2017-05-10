@@ -1,4 +1,4 @@
-package state;
+package controllers.state;
 
 import controllers.fxml.MainPageController;
 import controllers.noteobject.NoteObjectControllerI;
@@ -8,6 +8,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import models.note.Note;
 import services.NoteObjectCloner;
 
 import java.net.MalformedURLException;
@@ -59,7 +60,7 @@ abstract class NoteState implements NoteStateI {
         Node node = NoteObjectCloner.getCopiedObject();
         node.setLayoutX(event.getX());
         node.setLayoutY(event.getY());
-        MainPageController.getCurrentNote().addNoteObject(node);
+        Note.getCurrentNote().addNoteObject(node);
     }
 
     public ContextMenu getContextMenu(){

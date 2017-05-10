@@ -1,4 +1,4 @@
-package state;
+package controllers.state;
 
 import controllers.noteobject.NoteObjectControllerI;
 import controllers.noteobject.PaintingContainerController;

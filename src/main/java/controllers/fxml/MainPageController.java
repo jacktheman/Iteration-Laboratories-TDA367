@@ -26,8 +26,8 @@ import services.ObserverBus;
 import services.StateHandler;
 import utilities.ObserverI;
 import utilities.Paintbrush;
-import state.PaintState;
-import state.WriteState;
+import controllers.state.PaintState;
+import controllers.state.WriteState;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -76,13 +76,12 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     private final double TRIANGLE_QUANTIFIER_BIG = 1.25;
     private final int TRIANGLE_NUMBER_OF_CORNERS = 3;
     private AnchorPane fille;
-    private static Note currentNote;
     private List<String> fonts = Font.getFamilies();
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        currentNote = new Note();
-        ObserverBus.addListener(currentNote, this);
+        Note.setCurrentNote(new Note());
+        ObserverBus.addListener(Note.getCurrentNote(), this);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TagPage.fxml"));
         try {
@@ -188,16 +187,12 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         });
     }
 
-    public static Note getCurrentNote() {
-        return currentNote;
-    }
-
     @FXML
     private void importImage() {
         FileChooser fileChooser = FileChooserFactory.getImageChooser();
         File image = fileChooser.showOpenDialog(notePane.getScene().getWindow());
         try {
-            currentNote.addNoteObject(new ImageContainerController(image.toURI().toURL(), 0, 0).getNode());
+            Note.getCurrentNote().addNoteObject(new ImageContainerController(image.toURI().toURL(), 0, 0).getNode());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

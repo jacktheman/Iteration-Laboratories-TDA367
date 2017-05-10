@@ -4,6 +4,7 @@ import controllers.fxml.MainPageController;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import models.note.Note;
 
 /**
  * Created by svante on 2017-05-10.
@@ -23,7 +24,7 @@ public class ContextMenuFactory {
     public static MenuItem removeItem(Node view){
         MenuItem remove = new MenuItem("Ta bort");
         remove.setOnAction(actionEvent -> {
-            MainPageController.getCurrentNote().removeNoteObject(view);
+            Note.getCurrentNote().removeNoteObject(view);
         });
         return remove;
     }
