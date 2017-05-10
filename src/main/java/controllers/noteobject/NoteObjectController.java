@@ -1,8 +1,13 @@
 package controllers.noteobject;
 
+import controllers.fxml.MainPageController;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
+import models.note.Note;
+import services.ContextMenuFactory;
+import services.NoteObjectCloner;
 import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
 
 import java.util.ArrayList;
@@ -30,6 +35,7 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
         setOnMouseMoved();
         setOnMouseDragged();
     }
+
 
     @Override
     public T getNode() {
@@ -89,12 +95,31 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
     }
 
     private void loadNewContextMenu(){
-        MenuItem copy = new MenuItem("Kopiera");
-        MenuItem remove = new MenuItem("Ta bort");
-        contextMenu.getItems().addAll(initContextMenuItems());
-        contextMenu.getItems().addAll(copy, remove);
+        MenuItem copy = ContextMenuFactory.copyItem(this.getNode());
+        MenuItem remove = ContextMenuFactory.removeItem(this.getNode());
+        MenuItem putToFront = ContextMenuFactory.putToFrontItem(this.getNode());
+        this.getNode().setOnKeyPressed(KeyEvent ->{
+            if(KeyEvent.getCode().equals(KeyCode.DELETE)) {
+                remove.fire();
+            } else if (KeyEvent.getCode().equals(KeyCode.C) && KeyEvent.isControlDown()){
+                copy.fire();
+            } // else if (KeyEvent.getCode())
+        });
+
+        contextMenu = ContextMenuFactory.createContextMenu(copy,remove,putToFront);
     }
 
-    abstract List<MenuItem> initContextMenuItems();
+
+    void removeThisNode(){
+        Note.getCurrentNote().removeNoteObject(this.getNode());
+    }
+
+    List<MenuItem> initContextMenuItems(){
+        List<MenuItem> menuItemList = new ArrayList<>();
+        return menuItemList;
+    }
+
+
+
 
 }

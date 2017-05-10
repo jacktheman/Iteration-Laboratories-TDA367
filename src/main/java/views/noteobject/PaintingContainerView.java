@@ -35,6 +35,7 @@ public class PaintingContainerView extends AnchorPane implements Serializable {
         createBorder();
     }
 
+
     private void resizeWidthRight(){
         this.setWidth(getWidth() + PAINTING_AREA_RESIZING_CONSTANT);
         canvas.setWidth(this.getWidth());
@@ -70,6 +71,14 @@ public class PaintingContainerView extends AnchorPane implements Serializable {
 
     public boolean getPaintStatus(){
         return gotPaint;
+    }
+
+    public Canvas getCanvas(){
+        return this.canvas;
+    }
+
+    public Canvas getBorderCanvas(){
+        return this.borderCanvas;
     }
 
     public void paint(double x, double y){

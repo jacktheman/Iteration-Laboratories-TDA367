@@ -1,6 +1,5 @@
-package utilities.state;
+package controllers.state;
 
-import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
 import controllers.noteobject.TableController;
 import controllers.noteobject.TextContainerController;
@@ -8,10 +7,10 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
-import services.FileChooserFactory;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 
-import java.io.File;
 import java.net.MalformedURLException;
 
 import utilities.ObservableI;
@@ -33,10 +32,17 @@ public class WriteState extends NoteState implements ObservableI {
 
     private String fontFamilyName;
 
+    private int textSize;
+
     private List<ObserverI<WriteState>> listeners;
+
+    private FontWeight fontWeight;
+    private FontPosture fontPosture;
 
     private WriteState() {
         listeners = new ArrayList<>();
+        fontFamilyName = "Calibri";
+        textSize = 12;
     }
 
     public static WriteState getInstance() {
@@ -48,9 +54,23 @@ public class WriteState extends NoteState implements ObservableI {
         notifyListeners();
     }
 
-    @Override
-    public NoteObjectControllerI getOnMousePressed(AnchorPane notePane, MouseEvent event) {
-        return null;
+    public void setSize (int textSize) {
+        this.textSize = textSize;
+    notifyListeners();
+    }
+
+    public void setFontWeight (FontWeight fontWeight) {
+        this.fontWeight = fontWeight;
+        notifyListeners();
+    }
+
+    public void setFontPosture (FontPosture fontPosture) {
+     this.fontPosture = fontPosture;
+     notifyListeners();
+    }
+
+    public Font getFont() {
+        return Font.font(fontFamilyName, fontWeight, fontPosture, textSize);
     }
 
     @Override
@@ -58,10 +78,6 @@ public class WriteState extends NoteState implements ObservableI {
         if (!super.pressedFocusOwner(notePane, event)) {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 return new TextContainerController("", event.getX(), event.getY());
-            } else if (event.getButton().equals(MouseButton.SECONDARY)) {
-                FileChooser fileChooser = FileChooserFactory.getImageChooser();
-                File file = fileChooser.showOpenDialog(notePane.getScene().getWindow());
-                return new ImageContainerController(file.toURI().toURL(), event.getX(), event.getY());
             } else if (event.getButton().equals(MouseButton.MIDDLE)) {
                 return new TableController(event.getX(),event.getY(), 3, 3);
             }
@@ -88,4 +104,19 @@ public class WriteState extends NoteState implements ObservableI {
     public String getFontFamilyName () {
         return fontFamilyName;
     }
+
+    public int getTextSize() {
+        return  textSize;
+    }
+
+    public FontWeight getFontWeight() {
+        return fontWeight;
+    }
+
+    public FontPosture getFontPosture() {
+        return fontPosture;
+    }
+
+
+
 }

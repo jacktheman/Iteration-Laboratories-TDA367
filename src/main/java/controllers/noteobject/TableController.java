@@ -23,4 +23,5 @@ public class TableController extends NoteObjectController<TableContainerView> {
         List<MenuItem> menuItemList = new ArrayList<>();
         return menuItemList;
     }
+
 }

@@ -39,3 +39,16 @@
 #menu-button:hover {
     -fx-background-color: lightgray;
 }
+
+#tagPane{
+    -fx-background-color: #CEE0ED;
+}
+
+#removeTagButton{
+    -fx-background-color: #CEE0ED;
+    -fx-text-fill: red;
+}
+
+#removeTagButton:hover{
+    -fx-background-color: #ABC5D7;
+}

@@ -80,7 +80,6 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     }
 
     private void dragResize(ResizablePositions position, MouseEvent event){
-
         double nodeX, nodeY, mouseX, mouseY, oldX, oldY, quota;
         mouseX = event.getX();
         mouseY = event.getY();
@@ -88,29 +87,29 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
         nodeY = imageView.getFitHeight();
         oldX = imageView.getLayoutX();
         oldY = imageView.getLayoutY();
-        quota = imageView.getFitHeight() / imageView.getFitWidth();
+        quota = Math.min(nodeY / nodeX, nodeX / nodeY);
 
         if(position == ResizablePositions.LEFT_UPPER_CORNER){
-
+            if(mouseY <= oldY || mouseY >= oldY) {
+                imageView.setLayoutY(oldY + mouseY);
+                imageView.setFitHeight(nodeY - mouseY);
+                imageView.setLayoutX(oldX + mouseY / quota);
+                imageView.setFitWidth(imageView.getFitHeight() / quota);
+            }
         } else if (position == ResizablePositions.LEFT_LOWER_CORNER){
-
-        } else if (position == ResizablePositions.RIGHT_UPPER_CORNER){
-            /*if(mouseX <= oldX || mouseX >= oldX) {
-                imageView.setFitWidth(mouseX);
-                imageView.setLayoutY(oldY + mouseY);
-                imageView.setFitHeight(mouseX * quota);
-            }
-            if (mouseY <= oldY || mouseY >= oldY){
-                imageView.setLayoutY(oldY + mouseY);
-                imageView.setFitHeight(oldY + mouseY);
+            if(mouseY <= nodeY || mouseY >= nodeY) {
+                imageView.setLayoutX(oldX + nodeX - mouseY / quota);
                 imageView.setFitWidth(mouseY / quota);
-            } */
-        } else if (position == ResizablePositions.RIGHT_LOWER_CORNER){
-            if(mouseX <= oldX || mouseX >= oldX){
-                imageView.setFitWidth(mouseX);
-                imageView.setFitHeight(mouseX * quota);
+                imageView.setFitHeight(mouseY);
             }
-            if(mouseY <= oldY || mouseY >= oldY){
+        } else if (position == ResizablePositions.RIGHT_UPPER_CORNER){
+            if(mouseY <= oldY || mouseY >= oldY) {
+                imageView.setLayoutY(oldY + mouseY);
+                imageView.setFitHeight(nodeY - mouseY);
+                imageView.setFitWidth(imageView.getFitHeight() / quota);
+            }
+        } else if (position == ResizablePositions.RIGHT_LOWER_CORNER){
+            if(mouseY <= nodeY || mouseY >= nodeY){
                 imageView.setFitHeight(mouseY);
                 imageView.setFitWidth(mouseY / quota);
             }

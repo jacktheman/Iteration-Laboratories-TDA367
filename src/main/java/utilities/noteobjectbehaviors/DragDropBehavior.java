@@ -2,7 +2,6 @@ package utilities.noteobjectbehaviors;
 
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -21,7 +20,6 @@ public class DragDropBehavior implements NoteObjectBehaviorI {
     @Override
     public void onMousePressed(MouseEvent mouseEvent) {
         view.requestFocus();
-        view.toFront();
         dragx = mouseEvent.getX();
         dragy = mouseEvent.getY();
         view.getScene().setCursor(Cursor.MOVE);
