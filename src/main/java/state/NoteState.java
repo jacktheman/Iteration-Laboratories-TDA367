@@ -1,4 +1,4 @@
-package utilities.state;
+package state;
 
 import controllers.fxml.MainPageController;
 import controllers.noteobject.NoteObjectControllerI;

@@ -1,4 +1,4 @@
-package utilities.state;
+package state;
 
 import controllers.noteobject.NoteObjectControllerI;
 import javafx.scene.input.MouseEvent;

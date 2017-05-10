@@ -1,23 +1,16 @@
-package utilities.state;
+package state;
 
-import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
 import controllers.noteobject.TableController;
 import controllers.noteobject.TextContainerController;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.stage.FileChooser;
-import services.FileChooserFactory;
 
-import java.io.File;
 import java.net.MalformedURLException;
 
 import utilities.ObservableI;
@@ -76,6 +69,9 @@ public class WriteState extends NoteState implements ObservableI {
      notifyListeners();
     }
 
+    public Font getFont() {
+        return Font.font(fontFamilyName, fontWeight, fontPosture, textSize);
+    }
 
     @Override
     public NoteObjectControllerI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException {

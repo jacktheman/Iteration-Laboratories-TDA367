@@ -2,8 +2,8 @@ package services;
 
 import utilities.ObservableI;
 import utilities.ObserverI;
-import utilities.state.NoteStateI;
-import utilities.state.WriteState;
+import state.NoteStateI;
+import state.WriteState;
 
 import java.util.ArrayList;
 import java.util.List;

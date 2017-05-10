@@ -7,7 +7,7 @@ import services.StateHandler;
 import utilities.ObserverI;
 import utilities.noteobjectbehaviors.DragDropBehavior;
 import utilities.noteobjectbehaviors.PaintingBehavior;
-import utilities.state.PaintState;
+import state.PaintState;
 import views.noteobject.PaintingContainerView;
 
 /**

@@ -25,7 +25,7 @@ public class FileHandlerTest {
         assertTrue(name.equals("test_1"));
     }
 
-    @Test
+    /*@Test
     public void saveNote() {
         Note note = new Note("TestNote");
         TableContainerView tableContainerView = new TableContainerView(3,3);
@@ -55,6 +55,6 @@ public class FileHandlerTest {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 }
