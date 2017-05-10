@@ -1,14 +1,15 @@
-package utilities.state;
+package controllers.state;
 
 import controllers.fxml.MainPageController;
 import controllers.noteobject.NoteObjectControllerI;
-import controllers.noteobject.TextContainerController;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import models.note.Note;
+import services.NoteObjectCloner;
 
 import java.net.MalformedURLException;
 
@@ -37,13 +38,12 @@ abstract class NoteState implements NoteStateI {
     @Override
     public NoteObjectControllerI getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
         MenuItem paste = new MenuItem("Klistra in");
-        MenuItem remove = new MenuItem("Ta bort");
         paste.setOnAction(actionEvent -> {
-            //pasteToNote();
+            pasteOnCanvas(event);
         });
         if(!pressedFocusOwner(notePane, event)) {
             if (event.getSource().equals(notePane) && event.getButton().equals(MouseButton.SECONDARY)) {
-                contextMenu = new ContextMenu(paste, remove);
+                contextMenu = new ContextMenu(paste);
                 contextMenu.show(notePane, event.getScreenX(), event.getScreenY());
             }
         }
@@ -54,6 +54,13 @@ abstract class NoteState implements NoteStateI {
     public NoteObjectControllerI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException{
 
         return null;
+    }
+
+    private void pasteOnCanvas(MouseEvent event){
+        Node node = NoteObjectCloner.getCopiedObject();
+        node.setLayoutX(event.getX());
+        node.setLayoutY(event.getY());
+        Note.getCurrentNote().addNoteObject(node);
     }
 
     public ContextMenu getContextMenu(){

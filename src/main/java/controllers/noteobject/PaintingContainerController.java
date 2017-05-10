@@ -1,19 +1,15 @@
 package controllers.noteobject;
 
 import controllers.fxml.MainPageController;
-import javafx.fxml.FXML;
-import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
+import models.note.Note;
 import services.ObserverBus;
 import services.StateHandler;
 import utilities.ObserverI;
 import utilities.noteobjectbehaviors.DragDropBehavior;
 import utilities.noteobjectbehaviors.PaintingBehavior;
-import utilities.state.PaintState;
+import controllers.state.PaintState;
 import views.noteobject.PaintingContainerView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by jackflurry on 2017-04-07.
@@ -28,18 +24,11 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
         focusPropertyListener();
     }
 
-    public PaintingContainerController(PaintingContainerView paintingContainerView){
-        super(paintingContainerView);
-        super.setBehavior(new PaintingBehavior(super.getNode()));
-        ObserverBus.addListener(StateHandler.getInstance(), this);
-        focusPropertyListener();
-    }
-
     public void focusPropertyListener(){
         super.getNode().focusedProperty().addListener(observable -> {
             if(!super.getNode().isFocused()){
                 if(!super.getNode().getPaintStatus()){
-                    MainPageController.getCurrentNote().removeNoteObject(super.getNode());
+                    Note.getCurrentNote().removeNoteObject(super.getNode());
                 }
                 super.getNode().removeBorder();
             } else {

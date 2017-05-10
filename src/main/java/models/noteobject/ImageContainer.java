@@ -15,6 +15,7 @@ public class ImageContainer {
     private File file;
     private double quota;
 
+
     public ImageContainer(Image image){
         this.image = image;
         this.quota = image.getHeight() / image.getWidth();

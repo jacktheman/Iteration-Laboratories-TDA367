@@ -5,9 +5,9 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
+import models.note.Note;
+import services.ContextMenuFactory;
+import services.NoteObjectCloner;
 import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
 
 import java.util.ArrayList;
@@ -23,7 +23,6 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
     private NoteObjectBehaviorI noteObjectBehavior;
 
     private ContextMenu contextMenu;
-
 
     NoteObjectController(T view) {
         this.view = view;
@@ -96,29 +95,23 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
     }
 
     private void loadNewContextMenu(){
-        MenuItem copy = new MenuItem("Kopiera");
-        MenuItem remove = new MenuItem("Ta bort");
-        copy.setOnAction(KeyEvent -> {
-            //this.copy();
-        });
-        remove.setOnAction(actionEvent -> {
-            removeThisNode();
-        });
+        MenuItem copy = ContextMenuFactory.copyItem(this.getNode());
+        MenuItem remove = ContextMenuFactory.removeItem(this.getNode());
+        MenuItem putToFront = ContextMenuFactory.putToFrontItem(this.getNode());
         this.getNode().setOnKeyPressed(KeyEvent ->{
-            if(KeyEvent.getCode().equals(KeyCode.DELETE) || KeyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
+            if(KeyEvent.getCode().equals(KeyCode.DELETE)) {
                 remove.fire();
             } else if (KeyEvent.getCode().equals(KeyCode.C) && KeyEvent.isControlDown()){
                 copy.fire();
-            }
+            } // else if (KeyEvent.getCode())
         });
 
-        contextMenu.getItems().addAll(initContextMenuItems());
-        contextMenu.getItems().addAll(copy, remove);
+        contextMenu = ContextMenuFactory.createContextMenu(copy,remove,putToFront);
     }
 
 
     void removeThisNode(){
-        MainPageController.getCurrentNote().removeNoteObject(this.getNode());
+        Note.getCurrentNote().removeNoteObject(this.getNode());
     }
 
     List<MenuItem> initContextMenuItems(){

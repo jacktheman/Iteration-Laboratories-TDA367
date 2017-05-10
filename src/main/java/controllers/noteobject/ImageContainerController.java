@@ -1,19 +1,11 @@
 package controllers.noteobject;
 
-
-import controllers.fxml.MainPageController;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import models.noteobject.ImageContainer;
-import utilities.noteobjectbehaviors.DragDropBehavior;
 import utilities.noteobjectbehaviors.DragDropResizeBehavior;
-import utilities.noteobjectbehaviors.ResizeBehavior;
 import views.noteobject.ImageContainerView;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * Created by jackflurry on 2017-04-07.

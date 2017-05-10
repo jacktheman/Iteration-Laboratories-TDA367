@@ -1,6 +1,5 @@
-package models.notemodel;
+package models.note;
 
-import models.note.Note;
 import org.junit.Test;
 
 import java.util.List;
