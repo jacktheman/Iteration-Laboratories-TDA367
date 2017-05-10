@@ -63,7 +63,7 @@ public class WriteState extends NoteState implements ObservableI {
 
     public void setSize (int textSize) {
         this.textSize = textSize;
-        notifyListeners();
+    notifyListeners();
     }
 
     public void setFontWeight (FontWeight fontWeight) {

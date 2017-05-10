@@ -12,7 +12,10 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -71,6 +74,10 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     private ToggleButton italicsToggleButton;
     @FXML
     private ToggleButton underlineToggleButton;
+    @FXML
+    private HBox tagBar; //behöver egentligen inte göra något med den. den ska bara finnas
+    @FXML
+    private TextField addTagTextField;
 
     private final double TRIANGLE_QUANTIFIER_SMALL = 0.75;
     private final double TRIANGLE_QUANTIFIER_BIG = 1.25;
@@ -78,6 +85,8 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     private AnchorPane fille;
     private static Note currentNote;
     private List<String> fonts = Font.getFamilies();
+    private ObservableList<String> tags;
+    private FXMLLoader loaderTag;
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -112,7 +121,28 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         PaintingContainer.setPaintbrush(CIRCLE);
         circleButton.setSelected(true);
         setBrushPicture();
+
+        loaderTag = new FXMLLoader(getClass().getResource("/TagPane.fxml"));
+
     }
+
+    @FXML
+    private void addTag(KeyEvent event) {
+        //System.out.println("addTag");
+        if (event.getCode().equals(KeyCode.ENTER)) {
+            String newTagText = addTagTextField.getText();
+            try {
+                AnchorPane tag = loaderTag.load();
+                ((Label) tag.getChildren().get(0)).setText(newTagText);
+                tagBar.getChildren().add(tag);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            tags.add(addTagTextField.getText());
+            addTagTextField.clear();
+        }
+    }
+
 
     private void setOnMousePressedNotePane() {
         notePane.setOnMousePressed(event -> {
