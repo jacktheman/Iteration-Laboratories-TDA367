@@ -7,17 +7,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 
 import java.net.MalformedURLException;
-
-import utilities.ObservableI;
-import utilities.ObserverI;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -26,7 +17,6 @@ import java.util.List;
 
 
 public class WriteState extends NoteState {
-
 
     private static WriteState SINGLETON = new WriteState();
 

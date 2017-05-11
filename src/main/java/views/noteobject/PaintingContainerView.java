@@ -18,14 +18,13 @@ public class PaintingContainerView extends AnchorPane implements Serializable {
     private final double TRIANGLE_QUANTIFIER_BIG = 1.25;
     private final int TRIANGLE_NUMBER_OF_CORNERS = 3;
     private final int DEFAULT_CANVAS_SIZE = 50;
-    private final int DEFAULT_CANVAS_CROP = 25;
     private final int PAINTING_AREA_RESIZING_CONSTANT = 10;
 
     private boolean gotPaint = false;
 
     public PaintingContainerView(double x, double y){
-        this.setLayoutX(x-DEFAULT_CANVAS_CROP);
-        this.setLayoutY(y- DEFAULT_CANVAS_CROP);
+        this.setLayoutX(x- DEFAULT_CANVAS_SIZE/2);
+        this.setLayoutY(y- DEFAULT_CANVAS_SIZE/2);
         this.setWidth(DEFAULT_CANVAS_SIZE);
         this.setHeight(DEFAULT_CANVAS_SIZE);
         canvas = new Canvas(this.getWidth(),this.getHeight());

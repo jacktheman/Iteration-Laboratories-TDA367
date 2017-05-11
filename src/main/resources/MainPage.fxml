@@ -18,6 +18,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="fabNotesWindow" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1150.0" stylesheets="@Design.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.fxml.MainPageController">
@@ -30,7 +31,10 @@
               <MenuItem mnemonicParsing="false" onAction="#saveNote" text="Spara" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Redigera" />
+          <Menu mnemonicParsing="false" text="Redigera">
+               <items>
+                  <MenuItem fx:id="undoButton" mnemonicParsing="false" onAction="#undoAction" text="Ångra" />
+               </items></Menu>
             <Menu mnemonicParsing="false" text="Infoga">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#importImage" text="Infoga bild" />
@@ -106,12 +110,12 @@
                               <Font name="System Italic" size="14.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="underlineToggleButton" layoutX="291.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" text="U">
+                        <ToggleButton fx:id="underlineToggleButton" disable="true" layoutX="291.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" text="U">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="strikeThroughToggleButton" layoutX="336.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" text="T">
+                        <ToggleButton fx:id="strikeThroughToggleButton" disable="true" layoutX="336.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" text="T">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -183,7 +187,6 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </TextField>
-      <MenuButton layoutX="348.0" layoutY="27.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="112.0" text="Lägg till etikett" AnchorPane.leftAnchor="348.0" AnchorPane.topAnchor="27.0" />
       <Button layoutX="1032.0" layoutY="27.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="104.0" text="Ny anteckning +" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="27.0" />
       <Button fx:id="tagMenuButton" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="117.0" prefWidth="112.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
          <graphic>
@@ -194,5 +197,7 @@
             </ImageView>
          </graphic>
       </Button>
+      <TextField fx:id="addTagTextField" layoutX="344.0" layoutY="27.0" onKeyPressed="#addTag" prefHeight="30.0" prefWidth="98.0" promptText="lägg till etikett" />
+      <TilePane fx:id="tagBar" hgap="3.0" layoutX="446.0" layoutY="27.0" prefHeight="30.0" prefWidth="583.0" />
    </children>
 </AnchorPane>
