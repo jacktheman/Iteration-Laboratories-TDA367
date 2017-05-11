@@ -1,66 +1,44 @@
 package controllers.noteobject;
 
-
-import controllers.fxml.MainPageController;
-
-import javafx.scene.text.Font;
-
 import models.note.Note;
 import models.noteobject.TextContainer;
-import utilities.ObserverI;
-import controllers.state.WriteState;
-import views.noteobject.RichTextContainerView;
+import views.noteobject.TextContainerView;
 
 /**
  * Created by aron on 2017-04-06.
  */
-public class TextContainerController extends NoteObjectController<RichTextContainerView> implements ObserverI<WriteState> {
-
-    private final int PADDING = 30;
+public class TextContainerController extends NoteObjectController<TextContainerView> {
 
     private TextContainer textContainerModel;
 
     public TextContainerController(String text, double layoutX, double layoutY) {
-        super(new RichTextContainerView(text, layoutX, layoutY));
+        super(new TextContainerView(text, layoutX, layoutY));
         this.textContainerModel = new TextContainer(text);
         this.textContainerModel.bindTextProperties(super.getNode().textProperty());
-        //behöver fixa denna långa rad med kod
-        WriteState writeState = WriteState.getInstance();
-        //super.getNode().setFont(Font.font(writeState.getFontFamilyName(), writeState.getFontWeight(), writeState.getFontPosture(), writeState.getTextSize()));
-
-        this.textContainerModel.setFont(Font.font(writeState.getFontFamilyName(), writeState.getTextSize()));
+        this.textContainerModel.addStyle(textContainerModel.getFont());
         listener();
         listener2();
     }
 
     private void listener() {
         super.getNode().textProperty().addListener((value, oldValue, newValue) -> {
-            double newWidth = this.textContainerModel.getWidth() + this.PADDING + WriteState.getInstance().getTextSize(); // + 30 because padding
-            double newHeight = this.textContainerModel.getHeight() + this.PADDING + WriteState.getInstance().getTextSize();
+            double newWidth = this.textContainerModel.getWidth() + TextContainer.PADDING + this.textContainerModel.getFontSize();
+            double newHeight = this.textContainerModel.getHeight() + TextContainer.PADDING + this.textContainerModel.getFontSize();
             super.getNode().changeTextContainerSize(newWidth, newHeight);
-            super.getNode().changeBorderColour();
+            this.textContainerModel.changeBorder();
+            super.getNode().setStyle(this.textContainerModel.getStyles());
         });
     }
 
     private void listener2() {
         super.getNode().focusedProperty().addListener(e -> {
-            super.getNode().changeFocus();
+            this.textContainerModel.setIsFocused(super.getNode().isFocused());
+            this.textContainerModel.changeBorder();
+            super.getNode().setStyle(this.textContainerModel.getStyles());
             if (!super.getNode().isFocused() && super.getNode().getText().equals("")) {
                 Note.getCurrentNote().removeNoteObject(super.getNode());
             }
         });
-    }
-
-    private String fontToCss(Font font) {
-        return "-fx-font: " + font.getStyle().toLowerCase().replace("regular", "") +
-                " " + ((int) font.getSize()) + "px \"" + font.getFamily() + "\"";
-    }
-
-    @Override
-    public void fireChange(WriteState subject) {
-        if (super.getNode().isFocused()){
-            //super.getNode().setFont(Font.font(WriteState.getInstance().getFontFamilyName(), WriteState.getInstance().getTextSize()));
-        }
     }
 
 }

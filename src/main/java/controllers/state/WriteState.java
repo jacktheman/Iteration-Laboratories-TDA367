@@ -25,52 +25,15 @@ import java.util.List;
  */
 
 
-public class WriteState extends NoteState implements ObservableI {
+public class WriteState extends NoteState {
 
 
     private static WriteState SINGLETON = new WriteState();
 
-    private String fontFamilyName;
-
-    private int textSize;
-
-    private List<ObserverI<WriteState>> listeners;
-
-    private FontWeight fontWeight;
-    private FontPosture fontPosture;
-
-    private WriteState() {
-        listeners = new ArrayList<>();
-        fontFamilyName = "Calibri";
-        textSize = 12;
-    }
+    private WriteState() {}
 
     public static WriteState getInstance() {
         return SINGLETON;
-    }
-
-    public void setFont (String fontFamilyName) {
-        this.fontFamilyName = fontFamilyName;
-        notifyListeners();
-    }
-
-    public void setSize (int textSize) {
-        this.textSize = textSize;
-        notifyListeners();
-    }
-
-    public void setFontWeight (FontWeight fontWeight) {
-        this.fontWeight = fontWeight;
-        notifyListeners();
-    }
-
-    public void setFontPosture (FontPosture fontPosture) {
-     this.fontPosture = fontPosture;
-     notifyListeners();
-    }
-
-    public Font getFont() {
-        return Font.font(fontFamilyName, fontWeight, fontPosture, textSize);
     }
 
     @Override
@@ -84,39 +47,5 @@ public class WriteState extends NoteState implements ObservableI {
         }
         return null;
     }
-
-    @Override
-    public void addListener(ObserverI observer) {
-        listeners.add(observer);
-    }
-
-    @Override
-    public void removeListener(ObserverI observer) {
-        listeners.remove(observer);
-    }
-
-    private void notifyListeners () {
-        for (int i = 0; i < listeners.size(); i++){
-            listeners.get(i).fireChange(this);
-        }
-    }
-
-    public String getFontFamilyName () {
-        return fontFamilyName;
-    }
-
-    public int getTextSize() {
-        return  textSize;
-    }
-
-    public FontWeight getFontWeight() {
-        return fontWeight;
-    }
-
-    public FontPosture getFontPosture() {
-        return fontPosture;
-    }
-
-
 
 }

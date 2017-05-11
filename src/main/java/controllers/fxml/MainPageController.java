@@ -17,10 +17,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import models.note.Note;
 import models.noteobject.PaintingContainer;
+import models.noteobject.TextContainer;
 import services.FileChooserFactory;
 import services.ObserverBus;
 import services.StateHandler;
@@ -97,8 +99,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         ObservableList<String> fonts = FXCollections.observableList(this.fonts);
 
         textFontComboBox.setItems(fonts);
-        textFontComboBox.getSelectionModel().select("Calibri");
-        WriteState.getInstance().setFont((String) textFontComboBox.getSelectionModel().getSelectedItem());
+        textFontComboBox.getSelectionModel().select(TextContainer.DEFAULT_FONT);
 
         ObservableList<Integer> sizes = FXCollections.observableArrayList(9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 28, 30);
         textSizeComboBox.setItems(sizes);
@@ -128,29 +129,29 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     @FXML
     private void makeItalics() {
         if (italicsToggleButton.isSelected()) {
-            WriteState.getInstance().setFontPosture(FontPosture.ITALIC);
+            TextContainer.setIsItalic(true);
         } else {
-            WriteState.getInstance().setFontPosture(FontPosture.REGULAR);
+            TextContainer.setIsItalic(false);
         }
     }
 
     @FXML
     private void makeBold () {
         if (boldToggleButton.isSelected()) {
-            WriteState.getInstance().setFontWeight(FontWeight.BOLD);
+            TextContainer.setIsBold(true);
         } else {
-            WriteState.getInstance().setFontWeight(FontWeight.NORMAL);
+            TextContainer.setIsBold(false);
         }
     }
 
     @FXML
     private void changeFont() {
-        WriteState.getInstance().setFont((String)textFontComboBox.getSelectionModel().getSelectedItem());
+        TextContainer.setFontFamilyName((String)textFontComboBox.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void changeSize() {
-        WriteState.getInstance().setSize((int)textSizeComboBox.getSelectionModel().getSelectedItem());
+        TextContainer.setFontSize((int)textSizeComboBox.getSelectionModel().getSelectedItem());
     }
 
     private void setOnMouseReleasedNotePane() {
