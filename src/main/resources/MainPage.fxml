@@ -31,7 +31,10 @@
               <MenuItem mnemonicParsing="false" onAction="#saveNote" text="Spara" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Redigera" />
+          <Menu mnemonicParsing="false" text="Redigera">
+               <items>
+                  <MenuItem fx:id="undoButton" mnemonicParsing="false" onAction="#undoAction" text="Ångra" />
+               </items></Menu>
             <Menu mnemonicParsing="false" text="Infoga">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#importImage" text="Infoga bild" />
@@ -195,6 +198,6 @@
          </graphic>
       </Button>
       <TextField fx:id="addTagTextField" layoutX="344.0" layoutY="27.0" onKeyPressed="#addTag" prefHeight="30.0" prefWidth="98.0" promptText="lägg till etikett" />
-      <TilePane fx:id="tagBar" hgap="3.0" layoutX="445.0" layoutY="27.0" prefHeight="30.0" prefWidth="584.0" />
+      <TilePane fx:id="tagBar" hgap="3.0" layoutX="446.0" layoutY="27.0" prefHeight="30.0" prefWidth="583.0" />
    </children>
 </AnchorPane>

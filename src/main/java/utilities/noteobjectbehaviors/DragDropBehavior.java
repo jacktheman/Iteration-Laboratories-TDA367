@@ -3,6 +3,8 @@ package utilities.noteobjectbehaviors;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import utilities.events.Event;
+import utilities.events.MovedNoteEvent;
 
 /**
  * Created by aron on 2017-05-03.
@@ -22,6 +24,7 @@ public class DragDropBehavior implements NoteObjectBehaviorI {
         view.requestFocus();
         dragx = mouseEvent.getX();
         dragy = mouseEvent.getY();
+        Event.addEvent(new MovedNoteEvent(view,dragx,dragy));
         view.getScene().setCursor(Cursor.MOVE);
     }
 

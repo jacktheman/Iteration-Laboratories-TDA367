@@ -32,6 +32,8 @@ import utilities.ObserverI;
 import utilities.Paintbrush;
 import controllers.state.PaintState;
 import controllers.state.WriteState;
+import utilities.events.Event;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -122,6 +124,11 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         setBrushPicture();
 
 
+    }
+
+    @FXML
+    private void undoAction(){
+        Event.getEvents().get(Event.getEvents().size()-1).undo();
     }
 
     @FXML

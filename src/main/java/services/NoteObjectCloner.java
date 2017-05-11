@@ -1,14 +1,9 @@
 package services;
 
-import controllers.fxml.MainPageController;
 import controllers.noteobject.ImageContainerController;
-import controllers.noteobject.PaintingContainerController;
-import controllers.noteobject.TableController;
 import javafx.scene.Node;
 import models.note.Note;
-import models.noteobject.ImageContainer;
 import views.noteobject.ImageContainerView;
-import views.noteobject.PaintingContainerView;
 import views.noteobject.TableContainerView;
 
 /**
