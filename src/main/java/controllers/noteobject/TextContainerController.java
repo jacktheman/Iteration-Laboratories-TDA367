@@ -13,7 +13,15 @@ public class TextContainerController extends NoteObjectController<TextContainerV
 
     public TextContainerController(String text, double layoutX, double layoutY) {
         super(new TextContainerView(text, layoutX, layoutY));
-        this.textContainerModel = new TextContainer(text);
+        this.textContainerModel = new TextContainer(text, layoutX, layoutY);
+        this.textContainerModel.bindTextProperties(super.getNode().textProperty());
+        this.textContainerModel.addStyle(textContainerModel.getFont());
+        listener();
+        listener2();
+    }
+
+    public TextContainerController(TextContainer textContainerModel) {
+        super(new TextContainerView(textContainerModel.getText(), textContainerModel.getLayoutX(), textContainerModel.getLayoutY()));
         this.textContainerModel.bindTextProperties(super.getNode().textProperty());
         this.textContainerModel.addStyle(textContainerModel.getFont());
         listener();
@@ -27,6 +35,7 @@ public class TextContainerController extends NoteObjectController<TextContainerV
             super.getNode().changeTextContainerSize(newWidth, newHeight);
             this.textContainerModel.changeBorder();
             super.getNode().setStyle(this.textContainerModel.getStyles());
+            this.textContainerModel.setText(newValue);
         });
     }
 

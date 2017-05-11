@@ -26,25 +26,55 @@ public class TextContainer {
     private static boolean isBold = false;
     private static boolean isItalic = false;
 
-    private Text textHolder;
+    private String text;
 
+    private String personalFontFamilyName;
     private int personalFontSize;
+    private boolean personalIsBold;
+    private boolean personalIsItalic;
+
+    private double layoutX;
+    private double layoutY;
 
     private String styles;
 
     private boolean isFocused;
 
-    public TextContainer(String text) {
+    private Text textHolder;
+
+    public TextContainer(String text, double layoutX, double layoutY) {
+        this.text = text;
+        this.layoutX = layoutX;
+        this.layoutY = layoutY;
         this.textHolder = new Text(text);
+        this.personalFontFamilyName = fontFamilyName;
         this.personalFontSize = fontSize;
-        this.setFont();
+        this.personalIsBold = isBold;
+        this.personalIsItalic = isItalic;
         this.styles = DEFAULT_BACKGROUND + ";";
-        this.addStyle(VISABLE_BORDER);
         this.isFocused = true;
+        this.setFont();
+        this.addStyle(VISABLE_BORDER);
     }
 
     public void bindTextProperties(ObservableValue<? extends String> textProperty) {
         textHolder.textProperty().bind(textProperty);
+    }
+
+    public double getLayoutX() {
+        return this.layoutX;
+    }
+
+    public void setLayoutX(double layoutX) {
+        this.layoutX = layoutX;
+    }
+
+    public double getLayoutY() {
+        return this.layoutY;
+    }
+
+    public void setLayoutY(double layoutY) {
+        this.layoutY = layoutY;
     }
 
     public double getWidth() {
@@ -57,14 +87,14 @@ public class TextContainer {
 
     private void setFont() {
         Font font;
-        if (isBold && isItalic)
-            font = Font.font(fontFamilyName, FontWeight.BOLD, FontPosture.ITALIC, this.personalFontSize);
-        else if (isBold)
-            font = Font.font(fontFamilyName, FontWeight.BOLD, this.personalFontSize);
-        else if (isItalic)
-            font = Font.font(fontFamilyName, FontPosture.ITALIC, this.personalFontSize);
+        if (personalIsBold && personalIsItalic)
+            font = Font.font(this.personalFontFamilyName, FontWeight.BOLD, FontPosture.ITALIC, this.personalFontSize);
+        else if (personalIsBold)
+            font = Font.font(this.personalFontFamilyName, FontWeight.BOLD, this.personalFontSize);
+        else if (personalIsItalic)
+            font = Font.font(this.personalFontFamilyName, FontPosture.ITALIC, this.personalFontSize);
         else
-            font = Font.font(fontFamilyName, this.personalFontSize);
+            font = Font.font(this.personalFontFamilyName, this.personalFontSize);
         this.textHolder.setFont(font);
     }
 
@@ -114,6 +144,14 @@ public class TextContainer {
 
     public void setIsFocused(boolean isFocused) {
         this.isFocused = isFocused;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getText() {
+        return this.text;
     }
 
     public int getFontSize() {

@@ -1,10 +1,9 @@
 package services;
 
-import javafx.scene.Node;
 import models.note.Note;
+import utilities.NoteSave;
 
 import java.io.*;
-import java.util.List;
 
 /**
  * Created by aron on 2017-05-04.
@@ -42,12 +41,12 @@ public class FileHandler {
         return name;
     }
 
-    public static File saveNote(Note note) throws IOException {
-        if (note.getNodes().size() > 0) {
-            String filePath = FILE_PATH + note.getName() + FILE_TYPE;
+    public static File saveNote(NoteSave noteSave) throws IOException {
+        if (noteSave.getModels().size() > 0) {
+            String filePath = FILE_PATH + noteSave.getName() + FILE_TYPE;
             FileOutputStream fos = new FileOutputStream(filePath);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(note.getNodes());
+            oos.writeObject(noteSave);
             oos.close();
             return new File(filePath);
         }
@@ -55,15 +54,20 @@ public class FileHandler {
     }
 
     public static Note loadNote(File file) throws IOException, ClassNotFoundException {
-        if (file.exists()) {
+        /*if (file.exists()) {
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            List<Node> nodes = (List<Node>) ois.readObject();
-            Note note = new Note(file.getName().replace(FILE_TYPE, ""));
-            for (Node node : nodes)
-                note.addNoteObject(node);
-            return note;
-        }
+            Object loaded = ois.readObject();
+            if (loaded instanceof NoteSave) {
+                NoteSave noteSave = (NoteSave) loaded;
+                Note note = new Note(noteSave.getName().replace(FILE_TYPE, ""));
+                note.setTags(noteSave.getTags());
+
+                ois.close();
+                return note;
+            }
+            ois.close();
+        }*/
         return null;
     }
 }
