@@ -13,6 +13,12 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     
     private ImageView imageView;
 
+    private double nodeX;
+    private double nodeY;
+    private double oldX;
+    private double oldY;
+    private double quota;
+
     private static ResizablePositions pos;
 
     static ResizablePositions getPos(){
@@ -47,31 +53,44 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
 
     @Override
     public void onMouseDragged(MouseEvent mouseEvent) {
-        dragResize(pos, mouseEvent);
+        dragResize(mouseEvent);
     }
 
     public ResizeBehavior(ImageView view){
         this.imageView = view;
+        this.nodeX = imageView.getFitWidth();
+        this.nodeY = imageView.getFitHeight();
+        this.oldX = imageView.getLayoutX();
+        this.oldY = imageView.getLayoutY();
+        this.quota = Math.min(nodeY / nodeX, nodeX / nodeY);
+    }
+
+    private void updateVariables(){
+        this.nodeX = imageView.getFitWidth();
+        this.nodeY = imageView.getFitHeight();
+        this.oldX = imageView.getLayoutX();
+        this.oldY = imageView.getLayoutY();
+        this.quota = Math.min(nodeY / nodeX, nodeX / nodeY);
     }
 
     private ResizablePositions returnCursorLocation(MouseEvent mouseEvent) {
         ResizablePositions pos = null;
 
-        if (mouseEvent.getX() >= 0 && mouseEvent.getX() <= BORDER_WIDTH && mouseEvent.getY() >= 0 && mouseEvent.getY() <= BORDER_WIDTH) {
+        if (cursorIsInUpperLeftCorner(mouseEvent)) {
             pos = ResizablePositions.LEFT_UPPER_CORNER;
-        } else if (mouseEvent.getX() >= 0 && mouseEvent.getX() <= BORDER_WIDTH && mouseEvent.getY() >= imageView.getFitHeight() - BORDER_WIDTH && mouseEvent.getY() <= imageView.getFitHeight()) {
+        } else if (cursorIsInLowerLeftCorner(mouseEvent)) {
             pos = ResizablePositions.LEFT_LOWER_CORNER;
-        } else if (mouseEvent.getX() >= imageView.getFitWidth() - BORDER_WIDTH && mouseEvent.getX() <= imageView.getFitWidth() && mouseEvent.getY() >= 0 && mouseEvent.getY() <= BORDER_WIDTH) {
+        } else if (cursorIsInUpperRightCorner(mouseEvent)) {
             pos = ResizablePositions.RIGHT_UPPER_CORNER;
-        } else if (mouseEvent.getX() >= imageView.getFitWidth() - BORDER_WIDTH && mouseEvent.getX() <= imageView.getFitWidth() && mouseEvent.getY() >= imageView.getFitHeight() - BORDER_WIDTH && mouseEvent.getY() <= imageView.getFitHeight()) {
+        } else if (cursorIsInLowerRightCorner(mouseEvent)) {
             pos = ResizablePositions.RIGHT_LOWER_CORNER;
-        } else if (mouseEvent.getY() >= 0 && mouseEvent.getY() <= BORDER_WIDTH) {
+        } else if (cursorIsInUpperArea(mouseEvent)) {
             pos = ResizablePositions.UPPER_AREA;
-        } else if (mouseEvent.getX() >= 0 && mouseEvent.getX() <= BORDER_WIDTH) {
+        } else if (cursorIsInLeftArea(mouseEvent)) {
             pos = ResizablePositions.LEFT_AREA;
-        } else if (mouseEvent.getY() >= imageView.getFitHeight() - BORDER_WIDTH /*&& mouseEvent.getY() <= imageView.getFitHeight()*/) {
+        } else if (cursorIsInBottomArea(mouseEvent)) {
             pos = ResizablePositions.BOTTOM_AREA;
-        } else if (mouseEvent.getX() >= imageView.getFitWidth() - BORDER_WIDTH) {
+        } else if (cursorIsInRightArea(mouseEvent)) {
             pos = ResizablePositions.RIGHT_AREA;
         }
 
@@ -79,50 +98,28 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
 
     }
 
-    private void dragResize(ResizablePositions position, MouseEvent event){
-        double nodeX, nodeY, mouseX, mouseY, oldX, oldY, quota;
+    private void dragResize(MouseEvent event){
+        double mouseX, mouseY;
         mouseX = event.getX();
         mouseY = event.getY();
-        nodeX = imageView.getFitWidth();
-        nodeY = imageView.getFitHeight();
-        oldX = imageView.getLayoutX();
-        oldY = imageView.getLayoutY();
-        quota = Math.min(nodeY / nodeX, nodeX / nodeY);
+        updateVariables();
 
-        if(position == ResizablePositions.LEFT_UPPER_CORNER){
-            if(mouseY <= oldY || mouseY >= oldY) {
-                imageView.setLayoutY(oldY + mouseY);
-                imageView.setFitHeight(nodeY - mouseY);
-                imageView.setLayoutX(oldX + mouseY / quota);
-                imageView.setFitWidth(imageView.getFitHeight() / quota);
-            }
-        } else if (position == ResizablePositions.LEFT_LOWER_CORNER){
-            if(mouseY <= nodeY || mouseY >= nodeY) {
-                imageView.setLayoutX(oldX + nodeX - mouseY / quota);
-                imageView.setFitWidth(mouseY / quota);
-                imageView.setFitHeight(mouseY);
-            }
-        } else if (position == ResizablePositions.RIGHT_UPPER_CORNER){
-            if(mouseY <= oldY || mouseY >= oldY) {
-                imageView.setLayoutY(oldY + mouseY);
-                imageView.setFitHeight(nodeY - mouseY);
-                imageView.setFitWidth(imageView.getFitHeight() / quota);
-            }
-        } else if (position == ResizablePositions.RIGHT_LOWER_CORNER){
-            if(mouseY <= nodeY || mouseY >= nodeY){
-                imageView.setFitHeight(mouseY);
-                imageView.setFitWidth(mouseY / quota);
-            }
-        } else if (position == ResizablePositions.UPPER_AREA){
-            imageView.setLayoutY(oldY + mouseY);
-            imageView.setFitHeight(nodeY - mouseY);
-        } else if (position == ResizablePositions.LEFT_AREA){
-            imageView.setLayoutX(oldX + mouseX);
-            imageView.setFitWidth(nodeX - mouseX);
-        } else if (position == ResizablePositions.BOTTOM_AREA){
-            imageView.setFitHeight(mouseY);
-        } else if (position == ResizablePositions.RIGHT_AREA){
-            imageView.setFitWidth(mouseX);
+        if(pos == ResizablePositions.LEFT_UPPER_CORNER){
+            leftUpperCornerResize(mouseY);
+        } else if (pos == ResizablePositions.LEFT_LOWER_CORNER){
+            leftLowerCornerResize(mouseY);
+        } else if (pos == ResizablePositions.RIGHT_UPPER_CORNER){
+            rightUpperCornerResize(mouseY);
+        } else if (pos == ResizablePositions.RIGHT_LOWER_CORNER){
+            rightLowerCornerResize(mouseY);
+        } else if (pos == ResizablePositions.UPPER_AREA){
+            upperAreaResize(mouseY);
+        } else if (pos == ResizablePositions.LEFT_AREA){
+            leftAreaResize(mouseX);
+        } else if (pos == ResizablePositions.BOTTOM_AREA){
+            bottomAreaResize(mouseY);
+        } else if (pos == ResizablePositions.RIGHT_AREA){
+            rightAreaResize(mouseX);
         }
     }
 
@@ -159,6 +156,91 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
             imageView.setCursor(Cursor.HAND);
         }
     }
+
+    private boolean cursorIsInUpperLeftCorner(MouseEvent event){
+        return (event.getX() >= 0 && event.getX() <= BORDER_WIDTH && event.getY() >= 0 && event.getY() <= BORDER_WIDTH);
+    }
+
+    private boolean cursorIsInLowerLeftCorner(MouseEvent event){
+        return (event.getX() >= 0 && event.getX() <= BORDER_WIDTH && event.getY() >= imageView.getFitHeight() - BORDER_WIDTH && event.getY() <= imageView.getFitHeight());
+    }
+
+    private boolean cursorIsInUpperRightCorner(MouseEvent event){
+        return (event.getX() >= imageView.getFitWidth() - BORDER_WIDTH && event.getX() <= imageView.getFitWidth() && event.getY() >= 0 && event.getY() <= BORDER_WIDTH);
+    }
+
+    private boolean cursorIsInLowerRightCorner(MouseEvent event){
+        return (event.getX() >= imageView.getFitWidth() - BORDER_WIDTH && event.getX() <= imageView.getFitWidth() && event.getY() >= imageView.getFitHeight() - BORDER_WIDTH && event.getY() <= imageView.getFitHeight());
+    }
+
+    private boolean cursorIsInUpperArea(MouseEvent event){
+        return (event.getY() >= 0 && event.getY() <= BORDER_WIDTH);
+    }
+
+    private boolean cursorIsInLeftArea(MouseEvent event){
+        return (event.getX() >= 0 && event.getX() <= BORDER_WIDTH);
+    }
+
+    private boolean cursorIsInBottomArea(MouseEvent event){
+        return (event.getY() >= imageView.getFitHeight() - BORDER_WIDTH);
+    }
+
+    private boolean cursorIsInRightArea(MouseEvent event){
+        return (event.getX() >= imageView.getFitWidth() - BORDER_WIDTH);
+    }
+
+    private void leftUpperCornerResize(double mouseY){
+
+        if(mouseY <= oldY || mouseY >= oldY) {
+            imageView.setLayoutY(oldY + mouseY);
+            imageView.setFitHeight(nodeY - mouseY);
+            imageView.setLayoutX(oldX + mouseY / quota);
+            imageView.setFitWidth(imageView.getFitHeight() / quota);
+        }
+
+    }
+
+    private void leftLowerCornerResize(double mouseY){
+        if(mouseY <= nodeY || mouseY >= nodeY) {
+            imageView.setLayoutX(oldX + nodeX - mouseY / quota);
+            imageView.setFitWidth(mouseY / quota);
+            imageView.setFitHeight(mouseY);
+        }
+    }
+
+    private void rightUpperCornerResize(double mouseY){
+        if(mouseY <= oldY || mouseY >= oldY) {
+            imageView.setLayoutY(oldY + mouseY);
+            imageView.setFitHeight(nodeY - mouseY);
+            imageView.setFitWidth(imageView.getFitHeight() / quota);
+        }
+    }
+
+    private void rightLowerCornerResize(double mouseY){
+        if(mouseY <= nodeY || mouseY >= nodeY){
+            imageView.setFitHeight(mouseY);
+            imageView.setFitWidth(mouseY / quota);
+        }
+    }
+
+    private void upperAreaResize(double mouseY){
+        imageView.setLayoutY(oldY + mouseY);
+        imageView.setFitHeight(nodeY - mouseY);
+    }
+
+    private void leftAreaResize(double mouseX){
+        imageView.setLayoutX(oldX + mouseX);
+        imageView.setFitWidth(nodeX - mouseX);
+    }
+
+    private void bottomAreaResize(double mouseY){
+        imageView.setFitHeight(mouseY);
+    }
+
+    private void rightAreaResize(double mouseX){
+        imageView.setFitWidth(mouseX);
+    }
+
 
 
 }
