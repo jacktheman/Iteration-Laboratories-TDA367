@@ -5,11 +5,16 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import utilities.ObservableI;
+import utilities.ObserverI;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by aron on 2017-04-03.
  */
-public class TextContainer {
+public class TextContainer extends NoteObject implements ObservableI {
 
     public static final int PADDING = 30;
 
@@ -42,7 +47,10 @@ public class TextContainer {
 
     private Text textHolder;
 
+    private List<ObserverI<TextContainer>> listeners;
+
     public TextContainer(String text, double layoutX, double layoutY) {
+        super();
         this.text = text;
         this.layoutX = layoutX;
         this.layoutY = layoutY;
@@ -55,26 +63,43 @@ public class TextContainer {
         this.isFocused = true;
         this.setFont();
         this.addStyle(VISABLE_BORDER);
+        this.listeners = new ArrayList<>();
     }
 
     public void bindTextProperties(ObservableValue<? extends String> textProperty) {
         textHolder.textProperty().bind(textProperty);
     }
 
+    @Override
     public double getLayoutX() {
         return this.layoutX;
     }
 
+    @Override
     public void setLayoutX(double layoutX) {
         this.layoutX = layoutX;
     }
 
+    @Override
     public double getLayoutY() {
         return this.layoutY;
     }
 
+    @Override
     public void setLayoutY(double layoutY) {
         this.layoutY = layoutY;
+    }
+
+    @Override
+    public void add() {
+        for (ObserverI<TextContainer> listener : listeners)
+            listener.fireChange(this);
+    }
+
+    @Override
+    public void remove() {
+        for (ObserverI<TextContainer> listener : listeners)
+            listener.fireChange(this);
     }
 
     public double getWidth() {
@@ -172,5 +197,31 @@ public class TextContainer {
 
     public static void setIsItalic(boolean isItalic) {
         TextContainer.isItalic = isItalic;
+    }
+
+    @Override
+    public int hashCode() {
+        return (super.hashCode() + super.getModelNumber() + 2*super.hashCode()*super.getModelNumber())*2;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o.hashCode() == this.hashCode()) {
+            if (o instanceof TextContainer) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void addListener(ObserverI observer) {
+        if (!listeners.contains(observer))
+            listeners.add(observer);
+    }
+
+    @Override
+    public void removeListener(ObserverI observer) {
+        listeners.remove(observer);
     }
 }

@@ -11,12 +11,13 @@ import java.util.List;
 /**
  * Created by jackflurry on 2017-04-07.
  */
-public class PaintingContainer implements NoteObjectI, ObservableI{
+public class PaintingContainer extends NoteObject implements ObservableI{
 
     private static Paintbrush paintbrush;
     private List<PaintStrokeToData> paintings;
 
     public PaintingContainer(){
+        super();
         paintings = new ArrayList<>();
     }
 
@@ -58,6 +59,16 @@ public class PaintingContainer implements NoteObjectI, ObservableI{
     }
 
     @Override
+    public void add() {
+
+    }
+
+    @Override
+    public void remove() {
+
+    }
+
+    @Override
     public void addListener(ObserverI observer) {
 
     }
@@ -65,5 +76,20 @@ public class PaintingContainer implements NoteObjectI, ObservableI{
     @Override
     public void removeListener(ObserverI observer) {
 
+    }
+
+    @Override
+    public int hashCode() {
+        return (super.hashCode() + super.getModelNumber() + 2*super.hashCode()*super.getModelNumber())*5;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o.hashCode() == this.hashCode()) {
+            if (o instanceof PaintingContainer) {
+                return true;
+            }
+        }
+        return false;
     }
 }

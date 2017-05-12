@@ -26,6 +26,8 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import models.note.Note;
+import models.noteobject.ImageContainer;
+import models.noteobject.NoteObjectI;
 import models.noteobject.PaintingContainer;
 import models.noteobject.TextContainer;
 import services.FileChooserFactory;
@@ -55,7 +57,7 @@ import static utilities.Paintbrush.TRIANGLE;
 /**
  * Created by aron on 2017-03-29.
  */
-public class MainPageController implements Initializable, ObserverI<Node> {
+public class MainPageController implements Initializable {
 
     @FXML
     private AnchorPane fabNotesWindow;
@@ -98,9 +100,20 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     private AnchorPane fille;
     private List<String> fonts = Font.getFamilies();
 
+    private static List<Node> currentNodes;
+
+    public static List<Node> getCurrentNodes() {
+        return currentNodes;
+    }
+
+    public static void setCurrentNodes(List<Node> currentNodes) {
+        MainPageController.currentNodes = currentNodes;
+    }
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Note.setCurrentNote(new Note());
-        ObserverBus.addListener(Note.getCurrentNote(), this);
+
+        currentNodes = notePane.getChildren();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TagPage.fxml"));
         try {
@@ -221,7 +234,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
 
     private void addNodeToNotePane(NoteObjectControllerI controller) {
         if (controller != null) {
-            Note.getCurrentNote().addNoteObject(controller.getNode());
+            Note.getCurrentNote().addNoteObject(controller.getModel());
         }
     }
 
@@ -246,7 +259,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         File image = fileChooser.showOpenDialog(notePane.getScene().getWindow());
         try {
             NoteObjectControllerI controller = new ImageContainerController(image.toURI().toURL(), 0, 0);
-            Note.getCurrentNote().addNoteObject(controller.getNode());
+            Note.getCurrentNote().addNoteObject(controller.getModel());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -360,15 +373,5 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     private void enlargeBrushSize() {
         Paintbrush.setSize(Paintbrush.getSize() * 1.1);
         setBrushPicture();
-    }
-
-    @Override
-    public void fireChange(Node subject) {
-        if (notePane.getChildren().contains(subject))
-            notePane.getChildren().remove(subject);
-        else {
-            notePane.getChildren().add(subject);
-            subject.requestFocus();
-        }
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by svante on 2017-04-26.
  */
-public class ImageContainer implements ObservableI, NoteObjectResizeableI {
+public class ImageContainer extends NoteObjectResizeable implements ObservableI {
 
     private Image image;
 
@@ -34,6 +34,7 @@ public class ImageContainer implements ObservableI, NoteObjectResizeableI {
 
 
     public ImageContainer(Image image){
+        super();
         this.image = image;
         this.fitWidth = image.getWidth();
         this.fitHeight = image.getHeight();
@@ -86,6 +87,16 @@ public class ImageContainer implements ObservableI, NoteObjectResizeableI {
     }
 
     @Override
+    public void add() {
+
+    }
+
+    @Override
+    public void remove() {
+
+    }
+
+    @Override
     public void setLayoutY(double layoutY) {
         this.layoutY = layoutY;
         this.fireChange();
@@ -118,5 +129,20 @@ public class ImageContainer implements ObservableI, NoteObjectResizeableI {
         for (ObserverI observer : observerIList) {
             observer.fireChange(this);
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return (super.hashCode() + super.getModelNumber() + 2*super.hashCode()*super.getModelNumber())*3;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o.hashCode() == this.hashCode()) {
+            if (o instanceof ImageContainer) {
+                return true;
+            }
+        }
+        return false;
     }
 }

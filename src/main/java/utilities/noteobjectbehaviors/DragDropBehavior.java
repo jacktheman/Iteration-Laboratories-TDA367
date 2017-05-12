@@ -27,7 +27,7 @@ public class DragDropBehavior implements NoteObjectBehaviorI {
         view.requestFocus();
         dragx = mouseEvent.getX();
         dragy = mouseEvent.getY();
-        Event.addEvent(new MovedNoteEvent(view,dragx,dragy));
+        Event.addEvent(new MovedNoteEvent(model,dragx,dragy));
         view.getScene().setCursor(Cursor.MOVE);
     }
 

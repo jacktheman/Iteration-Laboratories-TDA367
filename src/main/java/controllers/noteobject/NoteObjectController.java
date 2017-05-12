@@ -7,6 +7,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import models.note.Note;
+import models.noteobject.NoteObjectI;
 import services.ContextMenuFactory;
 import services.NoteObjectCloner;
 import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * Created by svante on 2017-04-06.
  */
-abstract class NoteObjectController<T1 extends Node, T2 extends Object> implements NoteObjectControllerI {
+abstract class NoteObjectController<T1 extends Node, T2 extends NoteObjectI> implements NoteObjectControllerI {
 
     private T1 view;
 
@@ -123,7 +124,7 @@ abstract class NoteObjectController<T1 extends Node, T2 extends Object> implemen
 
 
     void removeThisNode(){
-        Note.getCurrentNote().removeNoteObject(this.getNode());
+        Note.getCurrentNote().removeNoteObject(this.getModel());
     }
 
     List<MenuItem> initContextMenuItems(){

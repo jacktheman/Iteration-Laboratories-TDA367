@@ -15,4 +15,8 @@ public interface NoteObjectI extends Serializable{
 
     double getLayoutY();
 
+    void add();
+
+    void remove();
+
 }

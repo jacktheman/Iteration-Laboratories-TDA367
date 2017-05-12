@@ -60,7 +60,7 @@ abstract class NoteState implements NoteStateI {
         Node node = NoteObjectCloner.getCopiedObject();
         node.setLayoutX(event.getX());
         node.setLayoutY(event.getY());
-        Note.getCurrentNote().addNoteObject(node);
+        //Note.getCurrentNote().addNoteObject(node);
     }
 
     public ContextMenu getContextMenu(){

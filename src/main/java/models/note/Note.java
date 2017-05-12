@@ -11,15 +11,13 @@ import java.util.List;
 /**
  * Created by svante on 2017-04-07.
  */
-public class Note implements ObservableI<NoteObjectI> {
+public class Note {
 
     private String name;
 
     private String tags;
 
     private List<Node> nodes;
-
-    private List<ObserverI<NoteObjectI>> listeners;
 
     private static Note currentNote;
 
@@ -30,7 +28,6 @@ public class Note implements ObservableI<NoteObjectI> {
         this.tags = "";
         this.nodes = new ArrayList<>();
         this.models = new ArrayList<>();
-        listeners = new ArrayList<>();
     }
 
     public Note() {
@@ -38,13 +35,15 @@ public class Note implements ObservableI<NoteObjectI> {
     }
 
     public void addNoteObject(NoteObjectI model) {
-        this.models.add(model);
-        notifyListeners(model);
+        if (!this.models.contains(model)) {
+            this.models.add(model);
+            model.add();
+        }
     }
 
     public void removeNoteObject(NoteObjectI model) {
         this.nodes.remove(model);
-        notifyListeners(model);
+        model.remove();
     }
 
     public List<NoteObjectI> getModels() {
@@ -82,21 +81,6 @@ public class Note implements ObservableI<NoteObjectI> {
     public void removeTag(String tag) {
         String temp = tags.replace(tag.toLowerCase(), "");
         tags = temp.replace("..", ".");
-    }
-
-    private void notifyListeners(NoteObjectI model) {
-        for (ObserverI<NoteObjectI> listener : listeners)
-            listener.fireChange(model);
-    }
-
-    @Override
-    public void addListener(ObserverI<NoteObjectI> observer) {
-        this.listeners.add(observer);
-    }
-
-    @Override
-    public void removeListener(ObserverI<NoteObjectI> observer) {
-        this.listeners.remove(observer);
     }
 
     public static void setCurrentNote(Note note) {

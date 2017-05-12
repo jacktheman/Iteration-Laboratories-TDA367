@@ -1,6 +1,7 @@
 package controllers.noteobject;
 
 import javafx.scene.control.MenuItem;
+import models.noteobject.NoteObjectI;
 import views.noteobject.TableContainerView;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Created by jackflurry on 2017-04-07.
  */
-public class TableController extends NoteObjectController<TableContainerView, Object> {
+public class TableController extends NoteObjectController<TableContainerView, NoteObjectI> {
 
     public TableController(double x, double y, double rows, double columns) {
         super(new TableContainerView(rows, columns), null);

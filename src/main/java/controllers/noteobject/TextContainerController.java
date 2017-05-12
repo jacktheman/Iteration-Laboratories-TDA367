@@ -2,6 +2,7 @@ package controllers.noteobject;
 
 import models.note.Note;
 import models.noteobject.TextContainer;
+import services.ObserverBus;
 import views.noteobject.TextContainerView;
 
 /**
@@ -13,6 +14,7 @@ public class TextContainerController extends NoteObjectController<TextContainerV
         super(new TextContainerView(text, layoutX, layoutY), new TextContainer(text, layoutX, layoutY));
         super.getModel().bindTextProperties(super.getNode().textProperty());
         super.getModel().addStyle(super.getModel().getFont());
+        ObserverBus.addListener(super.getModel(), super.getNode());
         listener();
         listener2();
     }
@@ -22,6 +24,7 @@ public class TextContainerController extends NoteObjectController<TextContainerV
                 textContainerModel);
         super.getModel().bindTextProperties(super.getNode().textProperty());
         super.getModel().addStyle(textContainerModel.getFont());
+        ObserverBus.addListener(super.getModel(), super.getNode());
         listener();
         listener2();
     }
@@ -43,7 +46,7 @@ public class TextContainerController extends NoteObjectController<TextContainerV
             super.getModel().changeBorder();
             super.getNode().setStyle(super.getModel().getStyles());
             if (!super.getNode().isFocused() && super.getNode().getText().equals("")) {
-                Note.getCurrentNote().removeNoteObject(super.getNode());
+                Note.getCurrentNote().removeNoteObject(super.getModel());
             }
         });
     }

@@ -18,14 +18,14 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
 
     public ImageContainerController(Image image, double layoutX, double layoutY) {
         super(new ImageContainerView(image, layoutX, layoutY), new ImageContainer(image));
-        Event.addEvent(new AddNoteEvent(super.getNode()));
+        Event.addEvent(new AddNoteEvent(super.getModel()));
         super.setBehavior(new DragDropResizeBehavior(super.getModel(), super.getNode()));
         ObserverBus.addListener(super.getModel(), super.getNode());
     }
 
     public ImageContainerController(URL url, double layoutX, double layoutY) {
         super(new ImageContainerView(url, layoutX, layoutY), new ImageContainer(new Image(url.toString())));
-        Event.addEvent(new AddNoteEvent(super.getNode()));
+        Event.addEvent(new AddNoteEvent(super.getModel()));
         super.setBehavior(new DragDropResizeBehavior(super.getModel(), super.getNode()));
         ObserverBus.addListener(super.getModel(), super.getNode());
     }
@@ -33,7 +33,7 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
     public ImageContainerController(ImageContainer imageContainer){
         super(new ImageContainerView(new Image(imageContainer.getURL()), imageContainer.getLayoutX(), imageContainer.getLayoutY()),
                 new ImageContainer(imageContainer.getURL()));
-        Event.addEvent(new AddNoteEvent(super.getNode()));
+        Event.addEvent(new AddNoteEvent(super.getModel()));
         super.setBehavior(new DragDropResizeBehavior(super.getModel(), super.getNode()));
         ObserverBus.addListener(super.getModel(), super.getNode());
     }

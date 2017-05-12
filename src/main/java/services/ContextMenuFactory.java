@@ -24,7 +24,7 @@ public class ContextMenuFactory {
     public static MenuItem removeItem(Node view){
         MenuItem remove = new MenuItem("Ta bort");
         remove.setOnAction(actionEvent -> {
-            Note.getCurrentNote().removeNoteObject(view);
+            //Note.getCurrentNote().removeNoteObject(view);
         });
         return remove;
     }
