@@ -17,8 +17,6 @@ public class Note {
 
     private String tags;
 
-    private List<Node> nodes;
-
     private static Note currentNote;
 
     private List<NoteObjectI> models;
@@ -26,7 +24,6 @@ public class Note {
     public Note(String name) {
         this.name = name;
         this.tags = "";
-        this.nodes = new ArrayList<>();
         this.models = new ArrayList<>();
     }
 
@@ -42,16 +39,12 @@ public class Note {
     }
 
     public void removeNoteObject(NoteObjectI model) {
-        this.nodes.remove(model);
+        this.models.remove(model);
         model.remove();
     }
 
     public List<NoteObjectI> getModels() {
         return models;
-    }
-
-    public List<Node> getNodes() {
-        return nodes;
     }
 
     public String getName() {

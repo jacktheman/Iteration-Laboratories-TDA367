@@ -9,6 +9,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import models.note.Note;
+import models.noteobject.NoteObjectI;
 import services.NoteObjectCloner;
 
 import java.net.MalformedURLException;
@@ -57,10 +58,14 @@ abstract class NoteState implements NoteStateI {
     }
 
     private void pasteOnCanvas(MouseEvent event){
-        Node node = NoteObjectCloner.getCopiedObject();
+       /* Node node = NoteObjectCloner.getCopiedObject();
         node.setLayoutX(event.getX());
-        node.setLayoutY(event.getY());
-        //Note.getCurrentNote().addNoteObject(node);
+        node.setLayoutY(event.getY()); */
+
+        NoteObjectI model = NoteObjectCloner.getCopiedObject();
+        model.setLayoutX(event.getX());
+        model.setLayoutY(event.getY());
+        Note.getCurrentNote().addNoteObject(model);
     }
 
     public ContextMenu getContextMenu(){
