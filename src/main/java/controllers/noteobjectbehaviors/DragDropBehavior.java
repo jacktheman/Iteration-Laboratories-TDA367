@@ -1,11 +1,11 @@
-package utilities.noteobjectbehaviors;
+package controllers.noteobjectbehaviors;
 
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import models.noteobject.NoteObjectI;
-import utilities.events.Event;
-import utilities.events.MovedNoteEvent;
+import events.Event;
+import events.MovedNoteEvent;
 
 /**
  * Created by aron on 2017-05-03.

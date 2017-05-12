@@ -1,4 +1,4 @@
-package utilities.noteobjectbehaviors;
+package controllers.noteobjectbehaviors;
 
 /**
  * Created by svante on 2017-05-04.

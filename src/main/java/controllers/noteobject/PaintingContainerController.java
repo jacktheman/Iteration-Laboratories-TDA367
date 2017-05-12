@@ -6,8 +6,8 @@ import models.noteobject.PaintingContainer;
 import services.ObserverBus;
 import services.StateHandler;
 import utilities.ObserverI;
-import utilities.noteobjectbehaviors.DragDropBehavior;
-import utilities.noteobjectbehaviors.PaintingBehavior;
+import controllers.noteobjectbehaviors.DragDropBehavior;
+import controllers.noteobjectbehaviors.PaintingBehavior;
 import controllers.state.PaintState;
 import views.noteobject.PaintingContainerView;
 

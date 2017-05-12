@@ -1,12 +1,11 @@
 package controllers.noteobject;
 
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import models.noteobject.ImageContainer;
 import services.ObserverBus;
-import utilities.events.AddNoteEvent;
-import utilities.events.Event;
-import utilities.noteobjectbehaviors.DragDropResizeBehavior;
+import events.AddNoteEvent;
+import events.Event;
+import controllers.noteobjectbehaviors.DragDropResizeBehavior;
 import views.noteobject.ImageContainerView;
 
 import java.net.URL;

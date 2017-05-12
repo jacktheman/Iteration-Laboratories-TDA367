@@ -1,7 +1,6 @@
-package utilities.events;
+package events;
 
 import models.noteobject.PaintingContainer;
-import views.noteobject.PaintingContainerView;
 
 /**
  * Created by jackflurry on 2017-05-11.

@@ -2,14 +2,9 @@ package views.noteobject;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
-import models.noteobject.PaintingContainer;
 import utilities.*;
-import utilities.events.Event;
-import utilities.events.PaintingEvent;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by jackflurry on 2017-04-26.
@@ -21,8 +16,6 @@ public class PaintingContainerView extends AnchorPane implements Serializable, O
     private final int DEFAULT_CANVAS_SIZE = 50;
     private final int PAINTING_AREA_RESIZING_CONSTANT = 10;
     private boolean gotPaint;
-
-    private List<PaintingToData> paintStroke;
 
     public PaintingContainerView(double x, double y){
         this.setLayoutX(x- DEFAULT_CANVAS_SIZE/2);

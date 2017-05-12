@@ -1,9 +1,8 @@
-package utilities.noteobjectbehaviors;
+package controllers.noteobjectbehaviors;
 
 import javafx.scene.input.MouseEvent;
 import models.noteobject.PaintingContainer;
 import utilities.PaintStrokeToData;
-import views.noteobject.PaintingContainerView;
 
 /**
  * Created by jackflurry on 2017-05-03.

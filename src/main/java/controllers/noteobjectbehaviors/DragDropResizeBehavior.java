@@ -1,9 +1,7 @@
-package utilities.noteobjectbehaviors;
+package controllers.noteobjectbehaviors;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import models.noteobject.ImageContainer;
-import models.noteobject.NoteObjectI;
 import models.noteobject.NoteObjectResizeableI;
 
 /**
