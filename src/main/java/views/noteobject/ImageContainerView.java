@@ -20,6 +20,8 @@ public class ImageContainerView extends ImageView implements Serializable {
         this.setId("image-view");
     }
 
+
+
     public ImageContainerView(URL url, double layoutX, double layoutY){
         super(new Image(url.toString()));
         this.setFitWidth(this.getImage().getWidth());
