@@ -1,6 +1,7 @@
 package controllers.noteobject;
 
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import models.noteobject.ImageContainer;
 import utilities.events.AddNoteEvent;
 import utilities.events.Event;
@@ -25,6 +26,16 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
         Event.addEvent(new AddNoteEvent(super.getNode()));
         super.setBehavior(new DragDropResizeBehavior(super.getNode()));
     }
+
+    @Override
+    void onMouseDragged(MouseEvent event){
+        super.getModel().setFitHeight(super.getNode().getFitHeight());
+        super.getModel().setFitWidth(super.getNode().getFitWidth());
+        super.getModel().setLayoutX(event.getSceneX());
+        super.getModel().setLayoutY(event.getSceneY()    );
+        System.out.println(super.getModel().getLayoutX());
+    }
+
 
     public Image returnModelImage() {
         return super.getModel().getImage();
