@@ -1,8 +1,10 @@
 package utilities.noteobjectbehaviors;
 
 import javafx.scene.Cursor;
-import javafx.scene.image.ImageView;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import models.noteobject.ImageContainer;
+import models.noteobject.NoteObjectResizeableI;
 
 /**
  * Created by svante on 2017-0BORDER_WIDTH-03.
@@ -10,8 +12,9 @@ import javafx.scene.input.MouseEvent;
 public class ResizeBehavior implements NoteObjectBehaviorI {
 
     public static final double BORDER_WIDTH = 10;
-    
-    private ImageView imageView;
+
+    private final NoteObjectResizeableI imageContainer;
+    private final Node node;
 
     private double nodeX;
     private double nodeY;
@@ -27,8 +30,7 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
 
     @Override
     public void onMousePressed(MouseEvent mouseEvent) {
-        imageView.requestFocus();
-        imageView.toFront();
+        node.requestFocus();
         pos = returnCursorLocation(mouseEvent);
     }
 
@@ -56,20 +58,21 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
         dragResize(mouseEvent);
     }
 
-    public ResizeBehavior(ImageView view){
-        this.imageView = view;
-        this.nodeX = imageView.getFitWidth();
-        this.nodeY = imageView.getFitHeight();
-        this.oldX = imageView.getLayoutX();
-        this.oldY = imageView.getLayoutY();
+    public ResizeBehavior(NoteObjectResizeableI model, Node view){
+        this.imageContainer = model;
+        this.node = view;
+        this.nodeX = imageContainer.getFitWidth();
+        this.nodeY = imageContainer.getFitHeight();
+        this.oldX = imageContainer.getLayoutX();
+        this.oldY = imageContainer.getLayoutY();
         this.quota = Math.min(nodeY / nodeX, nodeX / nodeY);
     }
 
     private void updateVariables(){
-        this.nodeX = imageView.getFitWidth();
-        this.nodeY = imageView.getFitHeight();
-        this.oldX = imageView.getLayoutX();
-        this.oldY = imageView.getLayoutY();
+        this.nodeX = imageContainer.getFitWidth();
+        this.nodeY = imageContainer.getFitHeight();
+        this.oldX = imageContainer.getLayoutX();
+        this.oldY = imageContainer.getLayoutY();
         this.quota = Math.min(nodeY / nodeX, nodeX / nodeY);
     }
 
@@ -128,32 +131,32 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
         if (pos != null) {
             switch (pos) {
                 case RIGHT_UPPER_CORNER:
-                    imageView.setCursor(Cursor.NE_RESIZE);
+                    node.setCursor(Cursor.NE_RESIZE);
                     break;
                 case RIGHT_LOWER_CORNER:
-                    imageView.setCursor(Cursor.SE_RESIZE);
+                    node.setCursor(Cursor.SE_RESIZE);
                     break;
                 case LEFT_UPPER_CORNER:
-                    imageView.setCursor(Cursor.NW_RESIZE);
+                    node.setCursor(Cursor.NW_RESIZE);
                     break;
                 case LEFT_LOWER_CORNER:
-                    imageView.setCursor(Cursor.SW_RESIZE);
+                    node.setCursor(Cursor.SW_RESIZE);
                     break;
                 case BOTTOM_AREA:
-                    imageView.setCursor(Cursor.S_RESIZE);
+                    node.setCursor(Cursor.S_RESIZE);
                     break;
                 case UPPER_AREA:
-                    imageView.setCursor(Cursor.N_RESIZE);
+                    node.setCursor(Cursor.N_RESIZE);
                     break;
                 case RIGHT_AREA:
-                    imageView.setCursor(Cursor.E_RESIZE);
+                    node.setCursor(Cursor.E_RESIZE);
                     break;
                 case LEFT_AREA:
-                    imageView.setCursor(Cursor.W_RESIZE);
+                    node.setCursor(Cursor.W_RESIZE);
                     break;
             }
         } else {
-            imageView.setCursor(Cursor.HAND);
+            node.setCursor(Cursor.HAND);
         }
     }
 
@@ -162,15 +165,15 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     }
 
     private boolean cursorIsInLowerLeftCorner(MouseEvent event){
-        return (event.getX() >= 0 && event.getX() <= BORDER_WIDTH && event.getY() >= imageView.getFitHeight() - BORDER_WIDTH && event.getY() <= imageView.getFitHeight());
+        return (event.getX() >= 0 && event.getX() <= BORDER_WIDTH && event.getY() >= imageContainer.getFitHeight() - BORDER_WIDTH && event.getY() <= imageContainer.getFitHeight());
     }
 
     private boolean cursorIsInUpperRightCorner(MouseEvent event){
-        return (event.getX() >= imageView.getFitWidth() - BORDER_WIDTH && event.getX() <= imageView.getFitWidth() && event.getY() >= 0 && event.getY() <= BORDER_WIDTH);
+        return (event.getX() >= imageContainer.getFitWidth() - BORDER_WIDTH && event.getX() <= imageContainer.getFitWidth() && event.getY() >= 0 && event.getY() <= BORDER_WIDTH);
     }
 
     private boolean cursorIsInLowerRightCorner(MouseEvent event){
-        return (event.getX() >= imageView.getFitWidth() - BORDER_WIDTH && event.getX() <= imageView.getFitWidth() && event.getY() >= imageView.getFitHeight() - BORDER_WIDTH && event.getY() <= imageView.getFitHeight());
+        return (event.getX() >= imageContainer.getFitWidth() - BORDER_WIDTH && event.getX() <= imageContainer.getFitWidth() && event.getY() >= imageContainer.getFitHeight() - BORDER_WIDTH && event.getY() <= imageContainer.getFitHeight());
     }
 
     private boolean cursorIsInUpperArea(MouseEvent event){
@@ -182,63 +185,63 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     }
 
     private boolean cursorIsInBottomArea(MouseEvent event){
-        return (event.getY() >= imageView.getFitHeight() - BORDER_WIDTH);
+        return (event.getY() >= imageContainer.getFitHeight() - BORDER_WIDTH);
     }
 
     private boolean cursorIsInRightArea(MouseEvent event){
-        return (event.getX() >= imageView.getFitWidth() - BORDER_WIDTH);
+        return (event.getX() >= imageContainer.getFitWidth() - BORDER_WIDTH);
     }
 
     private void leftUpperCornerResize(double mouseY){
 
         if(mouseY <= oldY || mouseY >= oldY) {
-            imageView.setLayoutY(oldY + mouseY);
-            imageView.setFitHeight(nodeY - mouseY);
-            imageView.setLayoutX(oldX + mouseY / quota);
-            imageView.setFitWidth(imageView.getFitHeight() / quota);
+            imageContainer.setLayoutY(oldY + mouseY);
+            imageContainer.setFitHeight(nodeY - mouseY);
+            imageContainer.setLayoutX(oldX + mouseY / quota);
+            imageContainer.setFitWidth(imageContainer.getFitHeight() / quota);
         }
 
     }
 
     private void leftLowerCornerResize(double mouseY){
         if(mouseY <= nodeY || mouseY >= nodeY) {
-            imageView.setLayoutX(oldX + nodeX - mouseY / quota);
-            imageView.setFitWidth(mouseY / quota);
-            imageView.setFitHeight(mouseY);
+            imageContainer.setLayoutX(oldX + nodeX - mouseY / quota);
+            imageContainer.setFitWidth(mouseY / quota);
+            imageContainer.setFitHeight(mouseY);
         }
     }
 
     private void rightUpperCornerResize(double mouseY){
         if(mouseY <= oldY || mouseY >= oldY) {
-            imageView.setLayoutY(oldY + mouseY);
-            imageView.setFitHeight(nodeY - mouseY);
-            imageView.setFitWidth(imageView.getFitHeight() / quota);
+            imageContainer.setLayoutY(oldY + mouseY);
+            imageContainer.setFitHeight(nodeY - mouseY);
+            imageContainer.setFitWidth(imageContainer.getFitHeight() / quota);
         }
     }
 
     private void rightLowerCornerResize(double mouseY){
         if(mouseY <= nodeY || mouseY >= nodeY){
-            imageView.setFitHeight(mouseY);
-            imageView.setFitWidth(mouseY / quota);
+            imageContainer.setFitHeight(mouseY);
+            imageContainer.setFitWidth(mouseY / quota);
         }
     }
 
     private void upperAreaResize(double mouseY){
-        imageView.setLayoutY(oldY + mouseY);
-        imageView.setFitHeight(nodeY - mouseY);
+        imageContainer.setLayoutY(oldY + mouseY);
+        imageContainer.setFitHeight(nodeY - mouseY);
     }
 
     private void leftAreaResize(double mouseX){
-        imageView.setLayoutX(oldX + mouseX);
-        imageView.setFitWidth(nodeX - mouseX);
+        imageContainer.setLayoutX(oldX + mouseX);
+        imageContainer.setFitWidth(nodeX - mouseX);
     }
 
     private void bottomAreaResize(double mouseY){
-        imageView.setFitHeight(mouseY);
+        imageContainer.setFitHeight(mouseY);
     }
 
     private void rightAreaResize(double mouseX){
-        imageView.setFitWidth(mouseX);
+        imageContainer.setFitWidth(mouseX);
     }
 
 

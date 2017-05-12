@@ -11,10 +11,19 @@ import java.util.List;
 /**
  * Created by svante on 2017-04-26.
  */
-public class ImageContainer implements ObservableI {
+public class ImageContainer implements ObservableI, NoteObjectResizeableI {
 
     private Image image;
-    private File file;
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    private String URL;
 
     private List<ObserverI<ImageContainer>> observerIList;
     private double fitWidth;
@@ -26,41 +35,57 @@ public class ImageContainer implements ObservableI {
 
     public ImageContainer(Image image){
         this.image = image;
+        this.fitWidth = image.getWidth();
+        this.fitHeight = image.getHeight();
         this.quota = Math.min(fitHeight / fitWidth, fitWidth / fitHeight);
         this.observerIList = new ArrayList<>();
 
     }
+
+    public ImageContainer(String URL){
+        this(new Image(URL));
+        this.URL = URL;
+    }
+
+    @Override
     public double getFitWidth() {
         return fitWidth;
     }
 
+    @Override
     public void setFitWidth(double fitWidth) {
         this.fitWidth = fitWidth;
         this.fireChange();
     }
 
+    @Override
     public double getFitHeight() {
         return fitHeight;
     }
 
+    @Override
     public void setFitHeight(double fitHeight) {
         this.fitHeight = fitHeight;
         this.fireChange();
     }
 
+    @Override
     public double getLayoutX() {
         return layoutX;
     }
 
+    @Override
     public void setLayoutX(double layoutX) {
         this.layoutX = layoutX;
         this.fireChange();
     }
 
+    @Override
     public double getLayoutY() {
         return layoutY;
     }
 
+    @Override
     public void setLayoutY(double layoutY) {
         this.layoutY = layoutY;
         this.fireChange();
@@ -71,16 +96,8 @@ public class ImageContainer implements ObservableI {
         this.fireChange();
     }
 
-    public ImageContainer(File file){
-        this.file = file;
-    }
-
     public Image getImage(){
         return this.image;
-    }
-
-    public File getFile(){
-        return this.file;
     }
 
     public double getQuota() { return this.quota; }

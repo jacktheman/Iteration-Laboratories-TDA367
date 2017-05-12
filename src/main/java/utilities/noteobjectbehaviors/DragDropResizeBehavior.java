@@ -2,6 +2,9 @@ package utilities.noteobjectbehaviors;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import models.noteobject.ImageContainer;
+import models.noteobject.NoteObjectI;
+import models.noteobject.NoteObjectResizeableI;
 
 /**
  * Created by svante on 2017-05-04.
@@ -11,9 +14,9 @@ public class DragDropResizeBehavior implements NoteObjectBehaviorI {
     private NoteObjectBehaviorI dragDrop;
     private NoteObjectBehaviorI resize;
 
-    public DragDropResizeBehavior(ImageView imageView){
-        dragDrop = new DragDropBehavior(imageView);
-        resize = new ResizeBehavior(imageView);
+    public DragDropResizeBehavior(NoteObjectResizeableI model, ImageView imageView){
+        dragDrop = new DragDropBehavior(model, imageView);
+        resize = new ResizeBehavior(model, imageView);
     }
 
 

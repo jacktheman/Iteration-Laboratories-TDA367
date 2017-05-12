@@ -5,7 +5,7 @@ import utilities.Paintbrush;
 /**
  * Created by jackflurry on 2017-04-07.
  */
-public class PaintingContainer {
+public class PaintingContainer implements NoteObjectI{
 
     private static Paintbrush paintbrush;
 
@@ -17,5 +17,25 @@ public class PaintingContainer {
 
     public static void setPaintbrush(Paintbrush paintbrush) {
         PaintingContainer.paintbrush = paintbrush;
+    }
+
+    @Override
+    public void setLayoutX(double d) {
+
+    }
+
+    @Override
+    public double getLayoutX() {
+        return 0;
+    }
+
+    @Override
+    public void setLayoutY(double d) {
+
+    }
+
+    @Override
+    public double getLayoutY() {
+        return 0;
     }
 }

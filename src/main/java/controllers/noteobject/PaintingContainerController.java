@@ -42,7 +42,7 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
         if (subject.getState().equals(PaintState.getInstance())){
             super.setBehavior(new PaintingBehavior(super.getNode()));
         }else{
-            super.setBehavior(new DragDropBehavior(super.getNode()));
+            super.setBehavior(new DragDropBehavior(super.getModel(), super.getNode()));
         }
 
     }
