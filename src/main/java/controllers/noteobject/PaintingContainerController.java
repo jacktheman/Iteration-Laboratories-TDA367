@@ -18,7 +18,7 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
 
     public PaintingContainerController(MouseEvent event) {
         super(new PaintingContainerView(event.getX(),event.getY()), null);
-        super.setBehavior(new PaintingBehavior(super.getNode()));
+        super.setBehavior(new PaintingBehavior(super.getModel()));
         super.getBehavior().onMousePressed(event);
         ObserverBus.addListener(StateHandler.getInstance(), this);
         focusPropertyListener();
@@ -28,7 +28,7 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
         super.getNode().focusedProperty().addListener(observable -> {
             if(!super.getNode().isFocused()){
                 if(!super.getNode().getPaintStatus()){
-                    Note.getCurrentNote().removeNoteObject(super.getNode());
+                    Note.getCurrentNote().removeNoteObject(super.getModel());
                 }
                 super.getNode().removeBorder();
             } else {
@@ -40,7 +40,7 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
     @Override
     public void fireChange(StateHandler subject) {
         if (subject.getState().equals(PaintState.getInstance())){
-            super.setBehavior(new PaintingBehavior(super.getNode()));
+            super.setBehavior(new PaintingBehavior(super.getModel()));
         }else{
             super.setBehavior(new DragDropBehavior(super.getModel(), super.getNode()));
         }

@@ -2,6 +2,7 @@ package utilities.noteobjectbehaviors;
 
 import javafx.scene.input.MouseEvent;
 import models.noteobject.PaintingContainer;
+import utilities.PaintStrokeToData;
 import views.noteobject.PaintingContainerView;
 
 /**
@@ -9,23 +10,22 @@ import views.noteobject.PaintingContainerView;
  */
 public class PaintingBehavior implements NoteObjectBehaviorI {
 
-    private PaintingContainerView view;
+    private PaintingContainer model;
+    private PaintStrokeToData paintStroke;
 
-    public PaintingBehavior(PaintingContainerView view){
-        this.view = view;
+
+    public PaintingBehavior(PaintingContainer model){
+        this.model = model;
     }
 
     @Override
     public void onMousePressed(MouseEvent mouseEvent) {
-        if(view.isFocused()) {
-            view.paint(mouseEvent.getX(), mouseEvent.getY());
-        }
-        view.requestFocus();
-        view.toFront();
+        paintStroke = new PaintStrokeToData(mouseEvent.getX(),mouseEvent.getY());
     }
 
     @Override
     public void onMouseReleased(MouseEvent mouseEvent) {
+        model.addPainting(paintStroke);
     }
 
     @Override
@@ -42,9 +42,9 @@ public class PaintingBehavior implements NoteObjectBehaviorI {
 
     @Override
     public void onMouseDragged(MouseEvent mouseEvent) {
-        if (mouseEvent.isPrimaryButtonDown()) {
-            view.paint(mouseEvent.getX(), mouseEvent.getY());
-        }
+        paintStroke.createPaintStroke(mouseEvent.getX(),mouseEvent.getY());
     }
 
+
 }
+

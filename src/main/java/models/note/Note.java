@@ -1,6 +1,7 @@
 package models.note;
 
 import javafx.scene.Node;
+import models.noteobject.NoteObjectI;
 import utilities.ObservableI;
 import utilities.ObserverI;
 
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by svante on 2017-04-07.
  */
-public class Note implements ObservableI<Node> {
+public class Note implements ObservableI<NoteObjectI> {
 
     private String name;
 
@@ -18,14 +19,17 @@ public class Note implements ObservableI<Node> {
 
     private List<Node> nodes;
 
-    private List<ObserverI<Node>> listeners;
+    private List<ObserverI<NoteObjectI>> listeners;
 
     private static Note currentNote;
+
+    private List<NoteObjectI> models;
 
     public Note(String name) {
         this.name = name;
         this.tags = "";
         this.nodes = new ArrayList<>();
+        this.models = new ArrayList<>();
         listeners = new ArrayList<>();
     }
 
@@ -33,14 +37,18 @@ public class Note implements ObservableI<Node> {
         this("");
     }
 
-    public void addNoteObject(Node node) {
-        this.nodes.add(node);
-        notifyListeners(node);
+    public void addNoteObject(NoteObjectI model) {
+        this.models.add(model);
+        notifyListeners(model);
     }
 
-    public void removeNoteObject(Node node) {
-        this.nodes.remove(node);
-        notifyListeners(node);
+    public void removeNoteObject(NoteObjectI model) {
+        this.nodes.remove(model);
+        notifyListeners(model);
+    }
+
+    public List<NoteObjectI> getModels() {
+        return models;
     }
 
     public List<Node> getNodes() {
@@ -76,18 +84,18 @@ public class Note implements ObservableI<Node> {
         tags = temp.replace("..", ".");
     }
 
-    private void notifyListeners(Node node) {
-        for (ObserverI<Node> listener : listeners)
-            listener.fireChange(node);
+    private void notifyListeners(NoteObjectI model) {
+        for (ObserverI<NoteObjectI> listener : listeners)
+            listener.fireChange(model);
     }
 
     @Override
-    public void addListener(ObserverI<Node> observer) {
+    public void addListener(ObserverI<NoteObjectI> observer) {
         this.listeners.add(observer);
     }
 
     @Override
-    public void removeListener(ObserverI<Node> observer) {
+    public void removeListener(ObserverI<NoteObjectI> observer) {
         this.listeners.remove(observer);
     }
 
