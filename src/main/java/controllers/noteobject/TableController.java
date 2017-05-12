@@ -9,10 +9,10 @@ import java.util.List;
 /**
  * Created by jackflurry on 2017-04-07.
  */
-public class TableController extends NoteObjectController<TableContainerView> {
+public class TableController extends NoteObjectController<TableContainerView, Object> {
 
     public TableController(double x, double y, double rows, double columns) {
-        super(new TableContainerView(rows, columns));
+        super(new TableContainerView(rows, columns), null);
         super.getNode().setLayoutX(x);
         super.getNode().setLayoutY(y);
     }

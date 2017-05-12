@@ -16,16 +16,19 @@ import java.util.List;
 /**
  * Created by svante on 2017-04-06.
  */
-abstract class NoteObjectController<T extends Node> implements NoteObjectControllerI {
+abstract class NoteObjectController<T1 extends Node, T2 extends Object> implements NoteObjectControllerI {
 
-    private T view;
+    private T1 view;
+
+    private T2 model;
 
     private NoteObjectBehaviorI noteObjectBehavior;
 
     private ContextMenu contextMenu;
 
-    NoteObjectController(T view) {
+    NoteObjectController(T1 view, T2 model) {
         this.view = view;
+        this.model = model;
         this.contextMenu = new ContextMenu();
         loadNewContextMenu();
         setOnMousePressed();
@@ -38,8 +41,13 @@ abstract class NoteObjectController<T extends Node> implements NoteObjectControl
 
 
     @Override
-    public T getNode() {
-        return view;
+    public T1 getNode() {
+        return this.view;
+    }
+
+    @Override
+    public T2 getModel() {
+        return this.model;
     }
 
     NoteObjectBehaviorI getBehavior() {

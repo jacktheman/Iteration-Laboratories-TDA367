@@ -12,27 +12,22 @@ import java.net.URL;
 /**
  * Created by jackflurry on 2017-04-07.
  */
-public class ImageContainerController extends NoteObjectController<ImageContainerView> {
-
-    private ImageContainer imageContainerModel;
+public class ImageContainerController extends NoteObjectController<ImageContainerView, ImageContainer> {
 
     public ImageContainerController(Image image, double layoutX, double layoutY) {
-        super(new ImageContainerView(image, layoutX, layoutY));
+        super(new ImageContainerView(image, layoutX, layoutY), new ImageContainer(image));
         Event.addEvent(new AddNoteEvent(super.getNode()));
-        this.imageContainerModel = new ImageContainer(image);
         super.setBehavior(new DragDropResizeBehavior(super.getNode()));
     }
 
     public ImageContainerController(URL url, double layoutX, double layoutY) {
-        super(new ImageContainerView(url, layoutX, layoutY));
+        super(new ImageContainerView(url, layoutX, layoutY), new ImageContainer(new Image(url.toString())));
         Event.addEvent(new AddNoteEvent(super.getNode()));
-        this.imageContainerModel = new ImageContainer(new Image(url.toString()));
         super.setBehavior(new DragDropResizeBehavior(super.getNode()));
     }
 
-
     public Image returnModelImage() {
-        return imageContainerModel.getImage();
+        return super.getModel().getImage();
     }
 
 
