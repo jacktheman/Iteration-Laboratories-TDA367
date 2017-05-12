@@ -14,7 +14,7 @@ public class Note implements ObservableI<Node> {
 
     private String name;
 
-    private List<String> tags;
+    private String tags;
 
     private List<Node> nodes;
 
@@ -24,13 +24,13 @@ public class Note implements ObservableI<Node> {
 
     public Note(String name) {
         this.name = name;
-        this.tags = new ArrayList<>();
+        this.tags = "";
         this.nodes = new ArrayList<>();
         listeners = new ArrayList<>();
     }
 
     public Note() {
-        this("nameless");
+        this("");
     }
 
     public void addNoteObject(Node node) {
@@ -51,9 +51,7 @@ public class Note implements ObservableI<Node> {
         return name;
     }
 
-    public List<String> getTags() {
-        List<String> tags = new ArrayList<>();
-        tags.addAll(this.tags);
+    public String getTags() {
         return tags;
     }
 
@@ -61,16 +59,21 @@ public class Note implements ObservableI<Node> {
         this.name = name;
     }
 
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
     public boolean addTag(String tag) {
         if (!tags.contains(tag.toLowerCase())) {
-            tags.add(tag.toLowerCase());
+            tags += "." + tag.toLowerCase();
             return true;
         }
         return false;
     }
 
     public void removeTag(String tag) {
-        tags.remove(tag.toLowerCase());
+        String temp = tags.replace(tag.toLowerCase(), "");
+        tags = temp.replace("..", ".");
     }
 
     private void notifyListeners(Node node) {

@@ -29,6 +29,7 @@
           <Menu mnemonicParsing="false" text="Arkiv">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#saveNote" text="Spara" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadNote" text="Ladda in" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Redigera">
@@ -182,7 +183,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="166.0" layoutY="27.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="178.0" AnchorPane.leftAnchor="166.0" AnchorPane.topAnchor="27.0">
+      <TextField fx:id="nameTextField" layoutX="166.0" layoutY="27.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="178.0" AnchorPane.leftAnchor="166.0" AnchorPane.topAnchor="27.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>

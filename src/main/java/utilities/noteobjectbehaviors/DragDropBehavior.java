@@ -3,6 +3,7 @@ package utilities.noteobjectbehaviors;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import models.noteobject.NoteObjectI;
 import utilities.events.Event;
 import utilities.events.MovedNoteEvent;
 
@@ -11,11 +12,13 @@ import utilities.events.MovedNoteEvent;
  */
 public class DragDropBehavior implements NoteObjectBehaviorI {
 
-    private Node view;
+    private final Node view;
+    private final NoteObjectI model;
 
     private double dragx, dragy;
 
-    public DragDropBehavior(Node view) {
+    public DragDropBehavior(NoteObjectI model ,Node view) {
+        this.model = model;
         this.view = view;
     }
 
@@ -54,13 +57,13 @@ public class DragDropBehavior implements NoteObjectBehaviorI {
 
     @Override
     public void onMouseDragged(MouseEvent mouseEvent) {
-        double newX = view.getLayoutX() + mouseEvent.getX() - dragx;
-        double newY = view.getLayoutY() + mouseEvent.getY() - dragy;
+        double newX = model.getLayoutX() + mouseEvent.getX() - dragx;
+        double newY = model.getLayoutY() + mouseEvent.getY() - dragy;
         if (newX >= 0) {
-            view.setLayoutX(newX);
+            model.setLayoutX(newX);
         }
         if (newY >= 0) {
-            view.setLayoutY(newY);
+            model.setLayoutY(newY);
         }
     }
 }

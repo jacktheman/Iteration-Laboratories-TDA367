@@ -2,6 +2,8 @@ package views.noteobject;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import models.noteobject.ImageContainer;
+import utilities.ObserverI;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -9,7 +11,7 @@ import java.net.URL;
 /**
  * Created by jackflurry on 2017-04-07.
  */
-public class ImageContainerView extends ImageView implements Serializable {
+public class ImageContainerView extends ImageView implements Serializable, ObserverI<ImageContainer> {
 
     public ImageContainerView(Image image, double layoutX, double layoutY){
         super(image);
@@ -32,4 +34,11 @@ public class ImageContainerView extends ImageView implements Serializable {
     }
 
 
+    @Override
+    public void fireChange(ImageContainer subject) {
+        this.setFitWidth(subject.getFitWidth());
+        this.setFitHeight(subject.getFitHeight());
+        this.setLayoutX(subject.getLayoutX());
+        this.setLayoutY(subject.getLayoutY());
+    }
 }

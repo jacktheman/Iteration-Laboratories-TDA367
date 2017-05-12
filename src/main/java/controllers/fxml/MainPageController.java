@@ -3,8 +3,11 @@ package controllers.fxml;
 import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
 import javafx.animation.TranslateTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -25,18 +29,22 @@ import models.note.Note;
 import models.noteobject.PaintingContainer;
 import models.noteobject.TextContainer;
 import services.FileChooserFactory;
+import services.FileHandler;
 import services.ObserverBus;
 import services.StateHandler;
+import utilities.NoteSave;
 import utilities.ObserverI;
 import utilities.Paintbrush;
 import controllers.state.PaintState;
 import controllers.state.WriteState;
 import utilities.events.Event;
+import views.noteobject.TextContainerView;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -81,13 +89,14 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     private TilePane tagBar;
     @FXML
     private TextField addTagTextField;
+    @FXML
+    private TextField nameTextField;
 
     private final double TRIANGLE_QUANTIFIER_SMALL = 0.75;
     private final double TRIANGLE_QUANTIFIER_BIG = 1.25;
     private final int TRIANGLE_NUMBER_OF_CORNERS = 3;
     private AnchorPane fille;
     private List<String> fonts = Font.getFamilies();
-
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Note.setCurrentNote(new Note());
@@ -120,8 +129,17 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         PaintingContainer.setPaintbrush(CIRCLE);
         circleButton.setSelected(true);
         setBrushPicture();
+        setOnNameTextFieldChanged();
 
+    }
 
+    private void setOnNameTextFieldChanged() {
+        nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.matches("") || newValue.matches("[A-ZÅÄÖÆØÐÞa-zåäöæøðþ0-9_ ]+"))
+                Note.getCurrentNote().setName(newValue);
+            else
+                nameTextField.setText(oldValue);
+        });
     }
 
     @FXML
@@ -203,8 +221,7 @@ public class MainPageController implements Initializable, ObserverI<Node> {
 
     private void addNodeToNotePane(NoteObjectControllerI controller) {
         if (controller != null) {
-            notePane.getChildren().add(controller.getNode());
-            notePane.getChildren().get(notePane.getChildren().size() - 1).requestFocus();
+            Note.getCurrentNote().addNoteObject(controller.getNode());
         }
     }
 
@@ -228,7 +245,8 @@ public class MainPageController implements Initializable, ObserverI<Node> {
         FileChooser fileChooser = FileChooserFactory.getImageChooser();
         File image = fileChooser.showOpenDialog(notePane.getScene().getWindow());
         try {
-            Note.getCurrentNote().addNoteObject(new ImageContainerController(image.toURI().toURL(), 0, 0).getNode());
+            NoteObjectControllerI controller = new ImageContainerController(image.toURI().toURL(), 0, 0);
+            Note.getCurrentNote().addNoteObject(controller.getNode());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -241,7 +259,39 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     }
 
     @FXML
-    private void saveNote() { //TODO
+    private void saveNote() {
+        /*if (!Note.getCurrentNote().getName().equals("")) {
+            Note currentNote = Note.getCurrentNote();
+            currentNote.setName(FileHandler.checkFileName(currentNote.getName()));
+            nameTextField.setText(currentNote.getName());
+            NoteSave noteSave = new NoteSave(currentNote.getName(), currentNote.getTags(), currentNote.getModels());
+            try {
+                File file = FileHandler.saveNote(noteSave);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }*/
+    }
+
+    @FXML
+    private void loadNote() {
+        /*FileChooser fileChooser = FileChooserFactory.getFabNotesChooser();
+        File file = fileChooser.showOpenDialog(this.notePane.getScene().getWindow());
+        try {
+            NoteSave noteSave = FileHandler.loadNote(file);
+            Note.getCurrentNote().removeListener(this);
+            Note.setCurrentNote(new Note(noteSave));
+            Note.getCurrentNote().addListener(this);
+            nameTextField.setText(noteSave.getName());
+            notePane.getChildren().clear();
+            for (NoteObjectControllerI controller : noteSave.loadControllers()) {
+                notePane.getChildren().add(controller.getNode());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }*/
     }
 
     @FXML
@@ -316,9 +366,9 @@ public class MainPageController implements Initializable, ObserverI<Node> {
     public void fireChange(Node subject) {
         if (notePane.getChildren().contains(subject))
             notePane.getChildren().remove(subject);
-        else
+        else {
             notePane.getChildren().add(subject);
+            subject.requestFocus();
+        }
     }
-
-
 }

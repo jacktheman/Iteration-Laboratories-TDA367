@@ -1,8 +1,8 @@
 package controllers.noteobject;
 
-import controllers.fxml.MainPageController;
 import javafx.scene.input.MouseEvent;
 import models.note.Note;
+import models.noteobject.PaintingContainer;
 import services.ObserverBus;
 import services.StateHandler;
 import utilities.ObserverI;
@@ -14,10 +14,10 @@ import views.noteobject.PaintingContainerView;
 /**
  * Created by jackflurry on 2017-04-07.
  */
-public class PaintingContainerController extends NoteObjectController<PaintingContainerView> implements ObserverI<StateHandler>{
+public class PaintingContainerController extends NoteObjectController<PaintingContainerView, PaintingContainer> implements ObserverI<StateHandler>{
 
     public PaintingContainerController(MouseEvent event) {
-        super(new PaintingContainerView(event.getX(),event.getY()));
+        super(new PaintingContainerView(event.getX(),event.getY()), null);
         super.setBehavior(new PaintingBehavior(super.getNode()));
         super.getBehavior().onMousePressed(event);
         ObserverBus.addListener(StateHandler.getInstance(), this);
@@ -42,7 +42,7 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
         if (subject.getState().equals(PaintState.getInstance())){
             super.setBehavior(new PaintingBehavior(super.getNode()));
         }else{
-            super.setBehavior(new DragDropBehavior(super.getNode()));
+            super.setBehavior(new DragDropBehavior(super.getModel(), super.getNode()));
         }
 
     }

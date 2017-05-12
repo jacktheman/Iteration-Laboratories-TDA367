@@ -7,4 +7,5 @@ import javafx.scene.Node;
  */
 public interface NoteObjectControllerI {
     Node getNode();
+    Object getModel();
 }
