@@ -1,6 +1,5 @@
 package controllers.noteobject;
 
-import controllers.fxml.MainPageController;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -9,8 +8,7 @@ import javafx.scene.input.MouseEvent;
 import models.note.Note;
 import models.noteobject.NoteObjectI;
 import services.ContextMenuFactory;
-import services.NoteObjectCloner;
-import utilities.noteobjectbehaviors.NoteObjectBehaviorI;
+import controllers.noteobjectbehaviors.NoteObjectBehaviorI;
 
 import java.util.ArrayList;
 import java.util.List;

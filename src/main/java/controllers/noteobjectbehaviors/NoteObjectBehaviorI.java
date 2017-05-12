@@ -1,4 +1,4 @@
-package utilities.noteobjectbehaviors;
+package controllers.noteobjectbehaviors;
 
 import javafx.scene.input.MouseEvent;
 

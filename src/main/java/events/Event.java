@@ -1,4 +1,4 @@
-package utilities.events;
+package events;
 
 import models.noteobject.NoteObjectI;
 

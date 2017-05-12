@@ -1,8 +1,5 @@
-package utilities.events;
+package events;
 
-import controllers.fxml.MainPageController;
-import controllers.noteobject.NoteObjectControllerI;
-import javafx.scene.Node;
 import models.note.Note;
 import models.noteobject.NoteObjectI;
 

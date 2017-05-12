@@ -25,5 +25,4 @@ public class TableContainerView extends TableView implements Serializable {
         }
     }
 
-
 }

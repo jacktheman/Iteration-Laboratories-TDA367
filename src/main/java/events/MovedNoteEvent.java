@@ -1,7 +1,5 @@
-package utilities.events;
+package events;
 
-import controllers.noteobject.NoteObjectControllerI;
-import javafx.scene.Node;
 import models.noteobject.NoteObjectI;
 
 /**
