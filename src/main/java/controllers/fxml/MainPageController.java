@@ -25,6 +25,7 @@ import models.note.Note;
 import models.noteobject.PaintingContainer;
 import models.noteobject.TextContainer;
 import services.FileChooserFactory;
+import services.FileHandler;
 import services.StateHandler;
 import utilities.Paintbrush;
 import controllers.state.PaintState;
@@ -159,6 +160,7 @@ public class MainPageController implements Initializable {
                     AnchorPane tag = newTag.load();
                     ((Label) tag.getChildren().get(0)).setText(newTagText);
                     tagBar.getChildren().add(tag);
+                    FileHandler.addTags(newTagText);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
