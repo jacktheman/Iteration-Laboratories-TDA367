@@ -2,6 +2,7 @@ package controllers.noteobject;
 
 import javafx.scene.image.Image;
 import models.noteobject.ImageContainer;
+import models.noteobject.NoteObjectI;
 import services.ObserverBus;
 import events.AddNoteEvent;
 import events.Event;
@@ -15,27 +16,23 @@ import java.net.URL;
  */
 public class ImageContainerController extends NoteObjectController<ImageContainerView, ImageContainer> {
 
-    public ImageContainerController(Image image, double layoutX, double layoutY) {
-        super(new ImageContainerView(image, layoutX, layoutY), new ImageContainer(image));
-        Event.addEvent(new AddNoteEvent(super.getModel()));
-        super.setBehavior(new DragDropResizeBehavior(super.getModel(), super.getNode()));
-        ObserverBus.addListener(super.getModel(), super.getNode());
-    }
-
     public ImageContainerController(URL url, double layoutX, double layoutY) {
-        super(new ImageContainerView(url, layoutX, layoutY), new ImageContainer(new Image(url.toString())));
+        super(new ImageContainerView(url, layoutX, layoutY), new ImageContainer(url.toString()));
         Event.addEvent(new AddNoteEvent(super.getModel()));
         super.setBehavior(new DragDropResizeBehavior(super.getModel(), super.getNode()));
         ObserverBus.addListener(super.getModel(), super.getNode());
     }
 
     public ImageContainerController(ImageContainer imageContainer){
-        super(new ImageContainerView(new Image(imageContainer.getURL()), imageContainer.getLayoutX(), imageContainer.getLayoutY()),
-                new ImageContainer(imageContainer.getURL()));
-        Event.addEvent(new AddNoteEvent(super.getModel()));
-        super.setBehavior(new DragDropResizeBehavior(super.getModel(), super.getNode()));
-        ObserverBus.addListener(super.getModel(), super.getNode());
+            super(new ImageContainerView(new Image(imageContainer.getURL()), imageContainer.getLayoutX(), imageContainer.getLayoutY()),
+                    new ImageContainer(imageContainer.getURL()));
+            Event.addEvent(new AddNoteEvent(super.getModel()));
+            super.setBehavior(new DragDropResizeBehavior(super.getModel(), super.getNode()));
+            ObserverBus.addListener(super.getModel(), super.getNode());
+
     }
+
+
 
 
     public Image returnModelImage() {
