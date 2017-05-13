@@ -161,6 +161,7 @@ public class MainPageController implements Initializable {
                     AnchorPane tag = newTag.load();
                     ((Label) tag.getChildren().get(0)).setText(newTagText);
                     tagBar.getChildren().add(tag);
+                    FileHandler.addTags(newTagText);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
