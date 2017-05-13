@@ -50,7 +50,7 @@ public class FileHandler {
     }
 
     public static File saveNote(NoteSave noteSave) throws IOException {
-        if (noteSave.getModels().size() > 0) {
+        if (noteSave.getModels().size() > 0 && !noteSave.getName().equals("")) {
             String filePath = FILE_PATH + noteSave.getName() + FILE_TYPE;
             FileOutputStream fos = new FileOutputStream(filePath);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -61,21 +61,17 @@ public class FileHandler {
         return null;
     }
 
-    public static Note loadNote(File file) throws IOException, ClassNotFoundException {
-        /*if (file.exists()) {
+    public static NoteSave loadNote(File file) throws IOException, ClassNotFoundException {
+        if (file.exists()) {
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
             Object loaded = ois.readObject();
+            ois.close();
             if (loaded instanceof NoteSave) {
                 NoteSave noteSave = (NoteSave) loaded;
-                Note note = new Note(noteSave.getName().replace(FILE_TYPE, ""));
-                note.setTags(noteSave.getTags());
-
-                ois.close();
-                return note;
+                return noteSave;
             }
-            ois.close();
-        }*/
+        }
         return null;
     }
 
