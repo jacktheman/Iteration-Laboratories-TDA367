@@ -15,7 +15,6 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
 
 
     private boolean remove;
-    private Image image;
 
     public String getURL() {
         return URL;
@@ -39,10 +38,21 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
     public ImageContainer(String URL){
         super();
         this.URL = URL;
-        this.image = new Image(URL);
+        Image image = new Image(URL);
         this.fitWidth = image.getWidth();
         this.fitHeight = image.getHeight();
         this.quota = Math.min(fitHeight / fitWidth, fitWidth / fitHeight);
+        this.observerIList = new ArrayList<>();
+    }
+
+    public ImageContainer(ImageContainer imageContainer) {
+        super();
+        this.URL = imageContainer.getURL();
+        this.layoutX = imageContainer.getLayoutX();
+        this.layoutY = imageContainer.getLayoutY();
+        this.fitWidth = imageContainer.getFitWidth();
+        this.fitHeight = imageContainer.getFitHeight();
+        this.quota = imageContainer.getQuota();
         this.observerIList = new ArrayList<>();
     }
 
@@ -105,10 +115,6 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
     public void setQuota(double quota) {
         this.quota = quota;
         this.fireChange();
-    }
-
-    public Image getImage(){
-        return this.image;
     }
 
     public double getQuota() { return this.quota; }

@@ -2,10 +2,12 @@ package utilities;
 
 import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
+import controllers.noteobject.PaintingContainerController;
 import controllers.noteobject.TextContainerController;
 import models.note.Note;
 import models.noteobject.ImageContainer;
 import models.noteobject.NoteObjectI;
+import models.noteobject.PaintingContainer;
 import models.noteobject.TextContainer;
 
 import java.io.Serializable;
@@ -21,21 +23,21 @@ public class NoteSave implements Serializable {
 
     private List<TextContainer> textContainers;
     private List<ImageContainer> imageContainers;
-    //private List<PaintingContainer> paintingContainers;
+    private List<PaintingContainer> paintingContainers;
 
     public NoteSave(String name, String tags, List<NoteObjectI> models) {
         this.name = name;
         this.tags = tags;
         textContainers = new ArrayList<>();
         imageContainers = new ArrayList<>();
-        //paintingContainers = new ArrayList<>();
+        paintingContainers = new ArrayList<>();
         for (NoteObjectI model : models) {
             if (model instanceof TextContainer)
                 textContainers.add(new TextContainer((TextContainer) model));
             else if (model instanceof ImageContainer)
-                imageContainers.add(new ImageContainer(((ImageContainer) model).getURL()));
-            //else if (model instanceof PaintingContainer)
-                //paintingContainers.add(new PaintingContainer());
+                imageContainers.add(new ImageContainer((ImageContainer) model));
+            else if (model instanceof PaintingContainer)
+                paintingContainers.add(new PaintingContainer((PaintingContainer) model));
         }
     }
 
@@ -55,7 +57,7 @@ public class NoteSave implements Serializable {
         List<NoteObjectI> models = new ArrayList<>();
         models.addAll(textContainers);
         models.addAll(imageContainers);
-        //models.addAll(paintingContainers);
+        models.addAll(paintingContainers);
         return models;
     }
 
@@ -63,7 +65,7 @@ public class NoteSave implements Serializable {
         List<NoteObjectControllerI> controllers = new ArrayList<>();
         controllers.addAll(loadTextContainers());
         controllers.addAll(loadImageContainers());
-        //controllers.addAll(loadPaintingContainers());
+        controllers.addAll(loadPaintingContainers());
         return controllers;
     }
 
@@ -82,6 +84,9 @@ public class NoteSave implements Serializable {
     }
 
     private List<NoteObjectControllerI> loadPaintingContainers() {
-        return null;
+        List<NoteObjectControllerI> controllers = new ArrayList<>();
+        for (PaintingContainer paintingContainer : paintingContainers)
+            controllers.add(new PaintingContainerController(paintingContainer));
+        return controllers;
     }
 }

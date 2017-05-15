@@ -24,8 +24,7 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
     }
 
     public ImageContainerController(ImageContainer imageContainer){
-            super(new ImageContainerView(new Image(imageContainer.getURL()), imageContainer.getLayoutX(), imageContainer.getLayoutY()),
-                    new ImageContainer(imageContainer.getURL()));
+            super(new ImageContainerView(imageContainer), new ImageContainer(imageContainer));
             super.getModel().setFitWidth(imageContainer.getFitWidth());
             super.getModel().setFitHeight(imageContainer.getFitHeight());
             Event.addEvent(new AddNoteEvent(super.getModel()));
@@ -33,14 +32,5 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
             ObserverBus.addListener(super.getModel(), super.getNode());
 
     }
-
-
-
-
-    public Image returnModelImage() {
-        return super.getModel().getImage();
-    }
-
-
 }
 

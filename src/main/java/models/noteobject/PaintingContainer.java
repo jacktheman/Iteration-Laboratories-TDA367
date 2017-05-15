@@ -42,7 +42,7 @@ public class PaintingContainer extends NoteObject implements ObservableI{
     public PaintingContainer(PaintingContainer model){
         super();
         paintings = model.getPaintings();
-        listeners = model.getListeners();
+        listeners = new ArrayList<>();
         this.x = model.getLayoutX();
         this.y = model.getLayoutY();
         this.w = model.getFitWidth();
@@ -61,14 +61,14 @@ public class PaintingContainer extends NoteObject implements ObservableI{
 
     public void removeLastPainting() {
         paintings.remove(paintings.size() - 1);
-        notifyListerners();
+        notifyListeners();
         newPaint = true;
     }
 
     public void addPainting(PaintStrokeToData paintStroke){
         paintings.add(paintStroke);
         newPaint = true;
-        notifyListerners();
+        notifyListeners();
     }
 
     public void paintingSizeCounter(double layoutX, double layoutY){
@@ -88,7 +88,7 @@ public class PaintingContainer extends NoteObject implements ObservableI{
     @Override
     public void setLayoutX(double x) {
         this.x = x;
-        notifyListerners();
+        notifyListeners();
     }
 
     @Override
@@ -99,7 +99,7 @@ public class PaintingContainer extends NoteObject implements ObservableI{
     @Override
     public void setLayoutY(double y) {
         this.y = y;
-        notifyListerners();
+        notifyListeners();
     }
 
     @Override
@@ -115,7 +115,7 @@ public class PaintingContainer extends NoteObject implements ObservableI{
 
     private void setFitWidth(double w) {
         this.w = w;
-        notifyListerners();
+        notifyListeners();
     }
 
 
@@ -125,20 +125,20 @@ public class PaintingContainer extends NoteObject implements ObservableI{
 
     private void setFitHeight(double h) {
         this.h = h;
-        notifyListerners();
+        notifyListeners();
     }
 
     @Override
     public void add() {
         isAlive = true;
         newPaint = true;
-        notifyListerners();
+        notifyListeners();
     }
 
     @Override
     public void remove() {
         isAlive = false;
-        notifyListerners();
+        notifyListeners();
     }
 
     public boolean getStatus(){
@@ -149,10 +149,9 @@ public class PaintingContainer extends NoteObject implements ObservableI{
         return newPaint;
     }
 
-    private void notifyListerners(){
-        for(ObserverI<PaintingContainer> observer : listeners){
-            observer.fireChange(this);
-        }
+    private void notifyListeners(){
+        for (int i = 0; i < listeners.size(); i++)
+            listeners.get(i).fireChange(this);
     }
 
     @Override
