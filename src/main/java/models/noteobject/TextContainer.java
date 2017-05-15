@@ -1,10 +1,5 @@
 package models.noteobject;
 
-import javafx.beans.value.ObservableValue;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import utilities.ObservableI;
 import utilities.ObserverI;
 
@@ -45,8 +40,6 @@ public class TextContainer extends NoteObject implements ObservableI {
 
     private boolean isFocused;
 
-    private Text textHolder;
-
     private List<ObserverI<TextContainer>> listeners;
 
     public TextContainer(String text, double layoutX, double layoutY) {
@@ -54,20 +47,22 @@ public class TextContainer extends NoteObject implements ObservableI {
         this.text = text;
         this.layoutX = layoutX;
         this.layoutY = layoutY;
-        this.textHolder = new Text(text);
         this.personalFontFamilyName = fontFamilyName;
         this.personalFontSize = fontSize;
         this.personalIsBold = isBold;
         this.personalIsItalic = isItalic;
         this.styles = DEFAULT_BACKGROUND + ";";
         this.isFocused = true;
-        this.setFont();
         this.addStyle(VISABLE_BORDER);
         this.listeners = new ArrayList<>();
     }
 
-    public void bindTextProperties(ObservableValue<? extends String> textProperty) {
-        textHolder.textProperty().bind(textProperty);
+    public TextContainer(TextContainer textContainer) {
+        this(textContainer.getText(), textContainer.getLayoutX(), textContainer.getLayoutY());
+        this.personalFontFamilyName = textContainer.getFontFamilyName();
+        this.personalFontSize = textContainer.getFontSize();
+        this.personalIsBold = textContainer.isBold();
+        this.personalIsItalic = textContainer.isItalic();
     }
 
     @Override
@@ -102,34 +97,13 @@ public class TextContainer extends NoteObject implements ObservableI {
             listener.fireChange(this);
     }
 
-    public double getWidth() {
-        return textHolder.getLayoutBounds().getWidth();
-    }
-
-    public double getHeight() {
-        return textHolder.getLayoutBounds().getHeight();
-    }
-
-    private void setFont() {
-        Font font;
-        if (personalIsBold && personalIsItalic)
-            font = Font.font(this.personalFontFamilyName, FontWeight.BOLD, FontPosture.ITALIC, this.personalFontSize);
-        else if (personalIsBold)
-            font = Font.font(this.personalFontFamilyName, FontWeight.BOLD, this.personalFontSize);
-        else if (personalIsItalic)
-            font = Font.font(this.personalFontFamilyName, FontPosture.ITALIC, this.personalFontSize);
-        else
-            font = Font.font(this.personalFontFamilyName, this.personalFontSize);
-        this.textHolder.setFont(font);
-    }
-
     public String getFont() {
         String font = CSS_FONT;
-        if (isBold)
+        if (this.personalIsBold)
             font += "bold ";
-        if (isItalic)
+        if (this.personalIsItalic)
             font += "italic ";
-        font += this.personalFontSize + "px \"" + fontFamilyName + "\"";
+        font += this.personalFontSize + "px \"" + this.personalFontFamilyName + "\"";
         return font;
     }
 
@@ -156,7 +130,7 @@ public class TextContainer extends NoteObject implements ObservableI {
     }
 
     public void changeBorder() {
-        if (this.textHolder.getText().length() == 0 || !this.isFocused) {
+        if (text.equals("") || !this.isFocused) {
             switchToInvisibleBorder();
         } else {
             switchToVisibleBorder();
@@ -179,8 +153,20 @@ public class TextContainer extends NoteObject implements ObservableI {
         return this.text;
     }
 
+    public String getFontFamilyName() {
+        return this.personalFontFamilyName;
+    }
+
     public int getFontSize() {
         return this.personalFontSize;
+    }
+
+    public boolean isBold() {
+        return this.personalIsBold;
+    }
+
+    public boolean isItalic() {
+        return this.personalIsItalic;
     }
 
     public static void setFontFamilyName(String fontFamilyName) {

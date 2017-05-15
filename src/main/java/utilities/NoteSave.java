@@ -1,9 +1,11 @@
 package utilities;
 
+import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
 import controllers.noteobject.TextContainerController;
+import models.note.Note;
 import models.noteobject.ImageContainer;
-import models.noteobject.PaintingContainer;
+import models.noteobject.NoteObjectI;
 import models.noteobject.TextContainer;
 
 import java.io.Serializable;
@@ -19,22 +21,26 @@ public class NoteSave implements Serializable {
 
     private List<TextContainer> textContainers;
     private List<ImageContainer> imageContainers;
-    private List<PaintingContainer> paintingContainers;
+    //private List<PaintingContainer> paintingContainers;
 
-    public NoteSave(String name, String tags, List<Object> models) {
+    public NoteSave(String name, String tags, List<NoteObjectI> models) {
         this.name = name;
         this.tags = tags;
         textContainers = new ArrayList<>();
         imageContainers = new ArrayList<>();
-        paintingContainers = new ArrayList<>();
-        for (Object objetc : models) {
-            if (objetc instanceof TextContainer)
-                textContainers.add((TextContainer) objetc);
-            else if (objetc instanceof ImageContainer)
-                imageContainers.add((ImageContainer) objetc);
-            else if (objetc instanceof PaintingContainer)
-                paintingContainers.add((PaintingContainer) objetc);
+        //paintingContainers = new ArrayList<>();
+        for (NoteObjectI model : models) {
+            if (model instanceof TextContainer)
+                textContainers.add(new TextContainer((TextContainer) model));
+            else if (model instanceof ImageContainer)
+                imageContainers.add(new ImageContainer(((ImageContainer) model).getURL()));
+            //else if (model instanceof PaintingContainer)
+                //paintingContainers.add(new PaintingContainer());
         }
+    }
+
+    public NoteSave(Note note) {
+        this(note.getName(), note.getTags(), note.getModels());
     }
 
     public String getName() {
@@ -45,19 +51,19 @@ public class NoteSave implements Serializable {
         return this.tags;
     }
 
-    public List<Object> getModels() {
-        List<Object> models = new ArrayList<>();
+    public List<NoteObjectI> getModels() {
+        List<NoteObjectI> models = new ArrayList<>();
         models.addAll(textContainers);
         models.addAll(imageContainers);
-        models.addAll(paintingContainers);
+        //models.addAll(paintingContainers);
         return models;
     }
 
     public List<NoteObjectControllerI> loadControllers(){
         List<NoteObjectControllerI> controllers = new ArrayList<>();
         controllers.addAll(loadTextContainers());
-        //controllers.addAll(loadImageContainers());
-        //controllers.addAll(loadPaintingtContainers());
+        controllers.addAll(loadImageContainers());
+        //controllers.addAll(loadPaintingContainers());
         return controllers;
     }
 
@@ -69,10 +75,13 @@ public class NoteSave implements Serializable {
     }
 
     private List<NoteObjectControllerI> loadImageContainers() {
-        return null;
+        List<NoteObjectControllerI> controllers = new ArrayList<>();
+        for (ImageContainer imageContainer : imageContainers)
+            controllers.add(new ImageContainerController(imageContainer));
+        return controllers;
     }
 
-    private List<NoteObjectControllerI> loadPaintingtContainers() {
+    private List<NoteObjectControllerI> loadPaintingContainers() {
         return null;
     }
 }

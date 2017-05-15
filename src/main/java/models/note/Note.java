@@ -1,25 +1,25 @@
 package models.note;
 
-import javafx.scene.Node;
+import events.Event;
+import events.RemoveNoteEvent;
 import models.noteobject.NoteObjectI;
-import utilities.ObservableI;
-import utilities.ObserverI;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by svante on 2017-04-07.
  */
-public class Note {
+public class Note implements Serializable {
 
     private String name;
 
     private String tags;
 
-    private static Note currentNote;
-
     private List<NoteObjectI> models;
+
+    private static Note currentNote;
 
     public Note(String name) {
         this.name = name;
@@ -34,13 +34,16 @@ public class Note {
     public void addNoteObject(NoteObjectI model) {
         if (!this.models.contains(model)) {
             this.models.add(model);
-            model.add();
+            if (this == currentNote)
+                model.add();
         }
     }
 
     public void removeNoteObject(NoteObjectI model) {
+        Event.addEvent(new RemoveNoteEvent(model));
         this.models.remove(model);
-        model.remove();
+        if (this == currentNote)
+            model.remove();
     }
 
     public List<NoteObjectI> getModels() {
@@ -77,7 +80,9 @@ public class Note {
     }
 
     public static void setCurrentNote(Note note) {
-        currentNote = note;
+        currentNote = new Note(note.getName());
+        for (NoteObjectI model : note.getModels())
+            currentNote.addNoteObject(model);
     }
 
     public static Note getCurrentNote() {

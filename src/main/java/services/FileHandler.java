@@ -18,9 +18,9 @@ public class FileHandler {
 
     public static final String FILE_DIR = System.getProperty("user.home") + File.separator + ".fabNotes";
 
-    static final String FILE_PATH = FILE_DIR + File.separator;
+    public static final String FILE_PATH = FILE_DIR + File.separator;
 
-    static final String FILE_TYPE = ".fab";
+    public static final String FILE_TYPE = ".fab";
 
     static final String FILE_EXTENSION = "*" + FILE_TYPE;
 
@@ -50,7 +50,7 @@ public class FileHandler {
     }
 
     public static File saveNote(NoteSave noteSave) throws IOException {
-        if (noteSave.getModels().size() > 0) {
+        if (noteSave.getModels().size() > 0 && !noteSave.getName().equals("")) {
             String filePath = FILE_PATH + noteSave.getName() + FILE_TYPE;
             FileOutputStream fos = new FileOutputStream(filePath);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -61,21 +61,17 @@ public class FileHandler {
         return null;
     }
 
-    public static Note loadNote(File file) throws IOException, ClassNotFoundException {
-        /*if (file.exists()) {
+    public static NoteSave loadNote(File file) throws IOException, ClassNotFoundException {
+        if (file.exists()) {
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
             Object loaded = ois.readObject();
+            ois.close();
             if (loaded instanceof NoteSave) {
                 NoteSave noteSave = (NoteSave) loaded;
-                Note note = new Note(noteSave.getName().replace(FILE_TYPE, ""));
-                note.setTags(noteSave.getTags());
-
-                ois.close();
-                return note;
+                return noteSave;
             }
-            ois.close();
-        }*/
+        }
         return null;
     }
 
@@ -103,4 +99,10 @@ public class FileHandler {
             Files.write(file.toPath(), sb.toString().getBytes(), StandardOpenOption.WRITE);
         }
     }
+
+    public static File[] listNotes() {
+        File file = new File(FILE_DIR);
+        return file.listFiles((file1, s) -> s.contains(FILE_TYPE));
+    }
+
 }

@@ -2,6 +2,7 @@ package views.noteobject;
 
 import controllers.fxml.MainPageController;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
 import models.noteobject.TextContainer;
 import utilities.ObserverI;
 
@@ -12,12 +13,17 @@ import java.io.Serializable;
  */
 public class TextContainerView extends TextArea implements ObserverI<TextContainer> {
 
+    private Text textHolder;
+
     public TextContainerView(String text, double layoutX, double layoutY) {
         super(text);
+        this.textHolder = new Text(text);
         this.setLayoutX(layoutX);
         this.setLayoutY(layoutY);
         this.setPrefWidth(0);
         this.setPrefHeight(0);
+        textHolder.textProperty().bind(this.textProperty());
+        updateTextContainerSize();
         this.setWrapText(true);
     }
 
@@ -25,14 +31,16 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
         this("", layoutX, layoutY);
     }
 
-    public void changeTextContainerSize(double newWidth, double newHeight) {
+    public void updateTextContainerSize() {
+        double newWidth = this.textHolder.getLayoutBounds().getWidth() + TextContainer.PADDING + this.getFont().getSize();
+        double newHeight = this.textHolder.getLayoutBounds().getHeight() + TextContainer.PADDING + this.getFont().getSize();
+
         this.setPrefWidth(newWidth);
         this.setPrefHeight(newHeight);
     }
 
     @Override
     public void fireChange(TextContainer subject) {
-        System.out.println("Added text");
         if (MainPageController.getCurrentNodes().contains(this))
             MainPageController.getCurrentNodes().remove(this);
         else {

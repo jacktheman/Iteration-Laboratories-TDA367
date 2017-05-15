@@ -27,6 +27,7 @@ import models.noteobject.TextContainer;
 import services.FileChooserFactory;
 import services.FileHandler;
 import services.StateHandler;
+import utilities.NoteSave;
 import utilities.Paintbrush;
 import controllers.state.PaintState;
 import controllers.state.WriteState;
@@ -88,6 +89,9 @@ public class MainPageController implements Initializable {
     private final int TRIANGLE_NUMBER_OF_CORNERS = 3;
     private AnchorPane fille;
     private List<String> fonts = Font.getFamilies();
+
+    private static TextField currentNoteName;
+
     private static List<Node> currentNodes;
 
     public static List<Node> getCurrentNodes() {
@@ -98,10 +102,22 @@ public class MainPageController implements Initializable {
         MainPageController.currentNodes = currentNodes;
     }
 
+    public static void loadNoteSave(NoteSave noteSave) {
+        List<NoteObjectControllerI> controllers = noteSave.loadControllers();
+        currentNodes.clear();
+        Note note = new Note(noteSave.getName());
+        note.setTags(noteSave.getTags());
+        for (NoteObjectControllerI controller : controllers)
+            note.getModels().add(controller.getModel());
+        Note.setCurrentNote(note);
+        currentNoteName.setText(note.getName());
+    }
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Note.setCurrentNote(new Note());
 
         currentNodes = notePane.getChildren();
+        currentNoteName = nameTextField;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TagPage.fxml"));
         try {
@@ -144,8 +160,8 @@ public class MainPageController implements Initializable {
     }
 
     @FXML
-    private void undoAction(){
-        Event.getEvents().get(Event.getEvents().size()-1).undo();
+    private void undoAction() {
+        Event.getEvents().get(Event.getEvents().size() - 1).undo();
     }
 
     @FXML
@@ -203,12 +219,12 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void changeFont() {
-        TextContainer.setFontFamilyName((String)textFontComboBox.getSelectionModel().getSelectedItem());
+        TextContainer.setFontFamilyName((String) textFontComboBox.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void changeSize() {
-        TextContainer.setFontSize((int)textSizeComboBox.getSelectionModel().getSelectedItem());
+        TextContainer.setFontSize((int) textSizeComboBox.getSelectionModel().getSelectedItem());
     }
 
     private void setOnMouseReleasedNotePane() {
@@ -264,38 +280,27 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void saveNote() {
-        /*if (!Note.getCurrentNote().getName().equals("")) {
-            Note currentNote = Note.getCurrentNote();
-            currentNote.setName(FileHandler.checkFileName(currentNote.getName()));
-            nameTextField.setText(currentNote.getName());
-            NoteSave noteSave = new NoteSave(currentNote.getName(), currentNote.getTags(), currentNote.getModels());
-            try {
-                File file = FileHandler.saveNote(noteSave);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
+        Note.getCurrentNote().setName(FileHandler.checkFileName(Note.getCurrentNote().getName()));
+        nameTextField.setText(Note.getCurrentNote().getName());
+        try {
+            File file = FileHandler.saveNote(new NoteSave(Note.getCurrentNote()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void loadNote() {
-        /*FileChooser fileChooser = FileChooserFactory.getFabNotesChooser();
+        FileChooser fileChooser = FileChooserFactory.getFabNotesChooser();
         File file = fileChooser.showOpenDialog(this.notePane.getScene().getWindow());
         try {
             NoteSave noteSave = FileHandler.loadNote(file);
-            Note.getCurrentNote().removeListener(this);
-            Note.setCurrentNote(new Note(noteSave));
-            Note.getCurrentNote().addListener(this);
-            nameTextField.setText(noteSave.getName());
-            notePane.getChildren().clear();
-            for (NoteObjectControllerI controller : noteSave.loadControllers()) {
-                notePane.getChildren().add(controller.getNode());
-            }
+            loadNoteSave(noteSave);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     @FXML
