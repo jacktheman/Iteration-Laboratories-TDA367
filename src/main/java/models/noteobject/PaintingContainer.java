@@ -39,6 +39,18 @@ public class PaintingContainer extends NoteObject implements ObservableI{
         newPaint = false;
     }
 
+    public PaintingContainer(PaintingContainer model){
+        super();
+        paintings = model.getPaintings();
+        listeners = model.getListeners();
+        this.x = model.getLayoutX();
+        this.y = model.getLayoutY();
+        this.w = model.getFitWidth();
+        setFitHeight(model.getFitHeight());
+        isAlive = true;
+        newPaint = model.getIfNewPaint();
+    }
+
     public static Paintbrush getPaintbrush() {
         return paintbrush;
     }
@@ -154,6 +166,10 @@ public class PaintingContainer extends NoteObject implements ObservableI{
     @Override
     public void removeListener(ObserverI observer) {
         listeners.remove(observer);
+    }
+
+    public List<ObserverI<PaintingContainer>> getListeners() {
+        return listeners;
     }
 
     @Override

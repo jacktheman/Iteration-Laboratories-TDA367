@@ -18,8 +18,15 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
 
     public PaintingContainerController(MouseEvent event) {
         super(new PaintingContainerView(), new PaintingContainer(event.getX(),event.getY()));
-        super.setBehavior(new PaintingBehavior(super.getModel(), super.getNode()));
+        fireChange(StateHandler.getInstance());
         super.getBehavior().onMousePressed(event);
+        ObserverBus.addListener(super.getModel(),super.getNode());
+        ObserverBus.addListener(StateHandler.getInstance(), this);
+        focusPropertyListener();
+    }
+
+    public PaintingContainerController(PaintingContainer model){
+        super(new PaintingContainerView(), new PaintingContainer(model));
         ObserverBus.addListener(super.getModel(),super.getNode());
         ObserverBus.addListener(StateHandler.getInstance(), this);
         focusPropertyListener();
