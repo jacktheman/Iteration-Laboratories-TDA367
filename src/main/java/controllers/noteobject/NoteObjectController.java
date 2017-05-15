@@ -60,6 +60,7 @@ abstract class NoteObjectController<T1 extends Node, T2 extends NoteObjectI> imp
 
     private void setOnMousePressed() {
         this.getNode().setOnMousePressed(mouseEvent -> {
+            this.getNode().requestFocus();
             onMousePressed(mouseEvent);
             if (noteObjectBehavior != null)
                 noteObjectBehavior.onMousePressed(mouseEvent);
