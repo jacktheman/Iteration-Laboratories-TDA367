@@ -1,67 +1,73 @@
 package views.noteobject;
 
+import controllers.fxml.MainPageController;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
+import models.noteobject.PaintingContainer;
 import utilities.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by jackflurry on 2017-04-26.
  */
-public class PaintingContainerView extends AnchorPane implements Serializable, ObserverI {
+public class PaintingContainerView extends AnchorPane implements Serializable, ObserverI<PaintingContainer> {
 
     private Canvas canvas;
     private Canvas borderCanvas;
-    private final int DEFAULT_CANVAS_SIZE = 50;
-    private final int PAINTING_AREA_RESIZING_CONSTANT = 10;
     private boolean gotPaint;
 
-    public PaintingContainerView(double x, double y){
-        this.setLayoutX(x- DEFAULT_CANVAS_SIZE/2);
-        this.setLayoutY(y- DEFAULT_CANVAS_SIZE/2);
-        this.setWidth(DEFAULT_CANVAS_SIZE);
-        this.setHeight(DEFAULT_CANVAS_SIZE);
-        canvas = new Canvas(this.getWidth(),this.getHeight());
-        borderCanvas = new Canvas(this.getWidth(),this.getHeight());
+    public PaintingContainerView(){
+        gotPaint = false;
+        canvas = new Canvas();
+        borderCanvas = new Canvas();
         this.getChildren().add(borderCanvas);
         this.getChildren().add(canvas);
+    }
+
+    private void resizeWidthRight(double w){
+        this.setWidth(w);
+        canvas.setWidth(w);
+        borderCanvas.setWidth(w);
+        removeBorder();
         createBorder();
-        gotPaint = false;
     }
 
+    private void resizeHeightDown(double h){
+        this.setHeight(h);
+        canvas.setHeight(h);
+        borderCanvas.setHeight(h);
+        removeBorder();
+        createBorder();
+    }
 
-    private void resizeWidthRight(){
-        this.setWidth(getWidth() + PAINTING_AREA_RESIZING_CONSTANT);
+    public void updateLayoutX(double x){
+        this.setLayoutX(x);
+        removeBorder();
+        createBorder();
+    }
+
+    public void updateLayoutY(double y){
+        this.setLayoutY(y);
+        removeBorder();
+        createBorder();
+    }
+
+    private void initCanvas(){
         canvas.setWidth(this.getWidth());
-        borderCanvas.setWidth(this.getWidth());
-    }
-
-    private void resizeHeightDown(){
-        this.setHeight(getHeight() + PAINTING_AREA_RESIZING_CONSTANT);
         canvas.setHeight(this.getHeight());
+        borderCanvas.setWidth(this.getWidth());
         borderCanvas.setHeight(this.getHeight());
+        createBorder();
     }
 
     public void createBorder(){
         borderCanvas.getGraphicsContext2D().strokeRect(canvas.getLayoutX(),canvas.getLayoutY(),canvas.getWidth(),canvas.getHeight());
-    }
+}
 
     public void removeBorder(){
         borderCanvas.getGraphicsContext2D().clearRect(canvas.getLayoutX(),canvas.getLayoutY(),canvas.getWidth(),canvas.getHeight());
-    }
-
-    private void paintingSizeCounter(double layoutX, double layoutY){
-        if(layoutX > this.getWidth() - (PAINTING_AREA_RESIZING_CONSTANT+Paintbrush.getSize())) {
-            resizeWidthRight();
-            removeBorder();
-            createBorder();
-        }
-        if(layoutY > this.getHeight() - (PAINTING_AREA_RESIZING_CONSTANT+Paintbrush.getSize())) {
-            resizeHeightDown();
-            removeBorder();
-            createBorder();
-        }
     }
 
     public boolean getPaintStatus(){
@@ -69,13 +75,36 @@ public class PaintingContainerView extends AnchorPane implements Serializable, O
     }
 
 
-    public void fillCanvas(){
+    public void fillCanvas(List<PaintStrokeToData> paintings){
+        gotPaint = true;
         canvas.getGraphicsContext2D().clearRect(canvas.getLayoutX(),canvas.getLayoutY(),canvas.getWidth(),canvas.getHeight());
-        //TODO
+        for(PaintStrokeToData stroke : paintings){
+            stroke.paintAll(canvas);
+        }
+
+    }
+
+    public void paintPolygon(PaintingToData paint){
+        paint.paint(canvas);
     }
 
     @Override
-    public void fireChange(Object subject) {
-
+    public void fireChange(PaintingContainer subject) {
+        if(subject.getStatus()){
+            updateLayoutX(subject.getLayoutX());
+            updateLayoutY(subject.getLayoutY());
+            resizeWidthRight(subject.getFitWidth());
+            resizeHeightDown(subject.getFitHeight());
+            if(subject.getIfNewPaint()) {
+                fillCanvas(subject.getPaintings());
+            }
+            if(!MainPageController.getCurrentNodes().contains(this)){
+                MainPageController.getCurrentNodes().add(this);
+                initCanvas();
+                this.requestFocus();
+            }
+        }else{
+            MainPageController.getCurrentNodes().remove(this);
+        }
     }
 }
