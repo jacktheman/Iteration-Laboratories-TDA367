@@ -2,10 +2,12 @@ package utilities;
 
 import javafx.scene.paint.Color;
 
+import java.io.Serializable;
+
 /**
  * Created by jackflurry on 2017-05-11.
  */
-public class PaintingToData {
+public class PaintingToData implements Serializable {
 
     private final double x;
     private final double y;

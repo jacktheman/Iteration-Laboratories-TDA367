@@ -1,13 +1,14 @@
 package utilities;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by jackflurry on 2017-05-11.
  */
-public class PaintStrokeToData {
+public class PaintStrokeToData implements Serializable {
 
     private List<PaintingToData> paintStroke;
 
