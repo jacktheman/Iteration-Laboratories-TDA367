@@ -99,4 +99,10 @@ public class FileHandler {
             Files.write(file.toPath(), sb.toString().getBytes(), StandardOpenOption.WRITE);
         }
     }
+
+    public static File[] listNotes() {
+        File file = new File(FILE_DIR);
+        return file.listFiles((file1, s) -> s.contains(FILE_TYPE));
+    }
+
 }

@@ -32,13 +32,15 @@ public class Note implements Serializable {
     public void addNoteObject(NoteObjectI model) {
         if (!this.models.contains(model)) {
             this.models.add(model);
-            model.add();
+            if (this == currentNote)
+                model.add();
         }
     }
 
     public void removeNoteObject(NoteObjectI model) {
         this.models.remove(model);
-        model.remove();
+        if (this == currentNote)
+            model.remove();
     }
 
     public List<NoteObjectI> getModels() {
