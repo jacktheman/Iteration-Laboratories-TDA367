@@ -4,10 +4,15 @@ import controllers.noteobject.NoteObjectControllerI;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import services.FileHandler;
+import java.io.IOException;
 import models.note.Note;
 import services.FileHandler;
 import utilities.NoteSave;
@@ -15,6 +20,7 @@ import utilities.NoteSave;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -32,15 +38,14 @@ public class TagPageController implements Initializable {
     private ListView<String> noteListView;
     @FXML
     private FlowPane tagFlowPane;
-
-    private String [] tags;
-
+    private List<String> tagsList;
+    private String[] tagsArray;
     private File[] notes;
+    private static TagPageController SINGLETON;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tags = Note.getCurrentNote().getTags().split(".");
-        FXMLLoader loadTags = new FXMLLoader(getClass().getResource("/TagPane.fxml"));
-
+        SINGLETON = this;
+        loadTagFlowPane();
         listNotes();
     }
 
@@ -65,6 +70,59 @@ public class TagPageController implements Initializable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
+
+
+    static void loadTagFlowPane() {
+        try {
+            SINGLETON.setTagsList(FileHandler.loadTags());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String [] str = new String[SINGLETON.getTagsList().size()];
+        SINGLETON.setTagsArray(str);
+        SINGLETON.getTagsList().toArray(SINGLETON.getTagsArray());
+
+        for (int i = 0; i < SINGLETON.getTagsArray().length; i++) {
+            String tagText = SINGLETON.getTagsArray()[i];
+            try {
+                AnchorPane tag;
+                FXMLLoader loadTag = new FXMLLoader(TagPageController.class.getResource("/TagPane.fxml"));
+                tag = loadTag.load();
+                ((Label) tag.getChildren().get(0)).setText(tagText);
+                SINGLETON.getTagFlowPane().getChildren().add(tag);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    void setTagsList(List<String> list) {
+        tagsList = list;
+    }
+
+
+    void setTagsArray (String [] str) {
+        tagsArray = str;
+    }
+
+    public List<String> getTagsList () {
+        return tagsList;
+    }
+
+    public static TagPageController getInstance() {
+        return SINGLETON;
+    }
+
+    public FlowPane getTagFlowPane() {
+        return tagFlowPane;
+    }
+
+    public String [] getTagsArray() {
+        return tagsArray;
+    }
+
+
+
 }

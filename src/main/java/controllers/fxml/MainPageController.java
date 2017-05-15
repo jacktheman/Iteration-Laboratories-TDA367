@@ -15,7 +15,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -32,7 +31,6 @@ import utilities.Paintbrush;
 import controllers.state.PaintState;
 import controllers.state.WriteState;
 import events.Event;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -181,6 +179,8 @@ public class MainPageController implements Initializable {
                 e.printStackTrace();
             }
             addTagTextField.clear();
+            TagPageController.getInstance().getTagFlowPane().getChildren().clear();
+            TagPageController.loadTagFlowPane();
         }
     }
 
