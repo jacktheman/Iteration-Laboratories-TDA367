@@ -88,7 +88,6 @@ public class MainPageController implements Initializable {
     private final int TRIANGLE_NUMBER_OF_CORNERS = 3;
     private AnchorPane fille;
     private List<String> fonts = Font.getFamilies();
-
     private static List<Node> currentNodes;
 
     public static List<Node> getCurrentNodes() {
@@ -166,6 +165,8 @@ public class MainPageController implements Initializable {
                 e.printStackTrace();
             }
             addTagTextField.clear();
+            TagPageController.getInstance().getTagFlowPane().getChildren().clear();
+            TagPageController.loadTagFlowPane();
         }
     }
 
