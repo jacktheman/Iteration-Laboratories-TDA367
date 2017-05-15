@@ -9,6 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import services.FileHandler;
 import java.io.IOException;
@@ -43,7 +44,6 @@ public class TagPageController implements Initializable {
     private static TagPageController SINGLETON;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         SINGLETON = this;
         loadTagFlowPane();
         listNotes();
@@ -72,7 +72,8 @@ public class TagPageController implements Initializable {
         }
     }
 
-    static void loadTagFlowPane () {
+
+    static void loadTagFlowPane() {
         try {
             SINGLETON.setTagsList(FileHandler.loadTags());
         } catch (IOException e) {
@@ -96,9 +97,11 @@ public class TagPageController implements Initializable {
         }
     }
 
+
     void setTagsList(List<String> list) {
         tagsList = list;
     }
+
 
     void setTagsArray (String [] str) {
         tagsArray = str;
