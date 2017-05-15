@@ -26,6 +26,8 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
     public ImageContainerController(ImageContainer imageContainer){
             super(new ImageContainerView(new Image(imageContainer.getURL()), imageContainer.getLayoutX(), imageContainer.getLayoutY()),
                     new ImageContainer(imageContainer.getURL()));
+            super.getModel().setFitWidth(imageContainer.getFitWidth());
+            super.getModel().setFitHeight(imageContainer.getFitHeight());
             Event.addEvent(new AddNoteEvent(super.getModel()));
             super.setBehavior(new DragDropResizeBehavior(super.getModel(), super.getNode()));
             ObserverBus.addListener(super.getModel(), super.getNode());
