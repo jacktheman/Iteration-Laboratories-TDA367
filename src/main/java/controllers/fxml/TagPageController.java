@@ -39,19 +39,13 @@ public class TagPageController implements Initializable {
     private FlowPane tagFlowPane;
     private List<String> tagsList;
     private String[] tagsArray;
-
-    public static TagPageController getInstance() {
-        return SINGLETON;
-    }
-
+    private File[] notes;
     private static TagPageController SINGLETON;
 
-    private File[] notes;
-
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tagsArray = Note.getCurrentNote().getTags().split(".");
-        FXMLLoader loadTags = new FXMLLoader(getClass().getResource("/TagPane.fxml"));
 
+        SINGLETON = this;
+        loadTagFlowPane();
         listNotes();
     }
 
@@ -76,9 +70,6 @@ public class TagPageController implements Initializable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-        SINGLETON = this;
-        loadTagFlowPane();
     }
 
     static void loadTagFlowPane () {
@@ -113,15 +104,19 @@ public class TagPageController implements Initializable {
         tagsArray = str;
     }
 
-    List<String> getTagsList () {
+    public List<String> getTagsList () {
         return tagsList;
+    }
+
+    public static TagPageController getInstance() {
+        return SINGLETON;
     }
 
     public FlowPane getTagFlowPane() {
         return tagFlowPane;
     }
 
-    String [] getTagsArray() {
+    public String [] getTagsArray() {
         return tagsArray;
     }
 
