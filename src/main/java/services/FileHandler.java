@@ -26,7 +26,7 @@ public class FileHandler {
 
     static final String[] IMAGE_EXTENSIONS = {"*.jpg", "*.png", "*.gif", "*.bmp"};
 
-    private static final String TAG_LIST = FILE_PATH + "TAG_LIST.txt";
+    public static final String TAG_LIST = FILE_PATH + "TAG_LIST.txt";
 
     private FileHandler() {
     }

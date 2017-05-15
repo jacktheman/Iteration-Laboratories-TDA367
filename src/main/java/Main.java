@@ -22,6 +22,12 @@ public class Main extends Application {
                 System.err.println(customDir + " didn't get created");
             }
         }
+        File tagList = new File(FileHandler.TAG_LIST);
+        if (!tagList.exists()) {
+            if (!tagList.createNewFile()) {
+                System.err.println(tagList + " didn't get created");
+            }
+        }
 
 
 
