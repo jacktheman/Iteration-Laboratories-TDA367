@@ -3,6 +3,7 @@ package views.noteobject;
 import controllers.fxml.MainPageController;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import models.noteobject.PaintingContainer;
 import utilities.*;
 
@@ -17,6 +18,10 @@ public class PaintingContainerView extends AnchorPane implements Serializable, O
     private Canvas canvas;
     private Canvas borderCanvas;
     private boolean gotPaint;
+
+    private final double TRIANGLE_QUANTIFIER_SMALL = 0.75;
+    private final double TRIANGLE_QUANTIFIER_BIG = 1.25;
+    private final int TRIANGLE_NUMBER_OF_CORNERS = 3;
 
     public PaintingContainerView(){
         gotPaint = false;
@@ -74,18 +79,44 @@ public class PaintingContainerView extends AnchorPane implements Serializable, O
         return gotPaint;
     }
 
-
-    public void fillCanvas(List<PaintStrokeToData> paintings){
-        gotPaint = true;
-        canvas.getGraphicsContext2D().clearRect(canvas.getLayoutX(),canvas.getLayoutY(),canvas.getWidth(),canvas.getHeight());
-        for(PaintStrokeToData stroke : paintings){
-            stroke.paintAll(canvas);
-        }
-
+    public void createPaintStroke(double x, double y, PaintStrokeToData stroke){
+        PaintingToData paintingToData = new PaintingToData(x,y,PaintingContainer.getPaintbrush(),Paintbrush.getSize(),Paintbrush.getColor());
+        stroke.addPaintToStroke(paintingToData);
+        paintPolygon(paintingToData);
     }
 
+
+    public void fillCanvas(List<PaintStrokeToData> paintings) {
+        gotPaint = true;
+        canvas.getGraphicsContext2D().clearRect(canvas.getLayoutX(), canvas.getLayoutY(), canvas.getWidth(), canvas.getHeight());
+        for (PaintStrokeToData stroke : paintings) {
+            for (PaintingToData painting : stroke.getPaintStroke()) {
+                paintPolygon(painting);
+            }
+        }
+    }
+
+
     public void paintPolygon(PaintingToData paint){
-        paint.paint(canvas);
+        paint(paint.getPaintbrush(),paint.getColor(),paint.getX(),paint.getY(),paint.getSize());
+    }
+
+    public void paint(Paintbrush paintbrush, Color color, double x, double y, double size) {
+        canvas.getGraphicsContext2D().setFill(color);
+        switch (paintbrush) {
+            case CIRCLE:
+                canvas.getGraphicsContext2D().fillOval(x - (size / 2), y - (size / 2), size, size);
+                break;
+            case SQUARE:
+                canvas.getGraphicsContext2D().fillRect(x - (size / 2), y - (size / 2), size, size);
+                break;
+            case TRIANGLE:
+                double[] xPoints = {x - size * TRIANGLE_QUANTIFIER_BIG, x, x + size * TRIANGLE_QUANTIFIER_BIG};
+                double[] yPoints = {y + size * TRIANGLE_QUANTIFIER_SMALL, y - size * TRIANGLE_QUANTIFIER_BIG, y + size * TRIANGLE_QUANTIFIER_SMALL};
+                canvas.getGraphicsContext2D().fillPolygon(xPoints, yPoints, TRIANGLE_NUMBER_OF_CORNERS);
+                break;
+        }
+
     }
 
     @Override

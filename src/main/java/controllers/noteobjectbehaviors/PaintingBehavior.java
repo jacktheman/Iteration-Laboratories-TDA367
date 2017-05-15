@@ -24,7 +24,7 @@ public class PaintingBehavior implements NoteObjectBehaviorI {
 
     @Override
     public void onMousePressed(MouseEvent mouseEvent) {
-        paintStroke = new PaintStrokeToData(mouseEvent.getX(),mouseEvent.getY(), view);
+        paintStroke = new PaintStrokeToData();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class PaintingBehavior implements NoteObjectBehaviorI {
 
     @Override
     public void onMouseDragged(MouseEvent mouseEvent) {
-        paintStroke.createPaintStroke(mouseEvent.getX(),mouseEvent.getY());
+        view.createPaintStroke(mouseEvent.getX(),mouseEvent.getY(),paintStroke);
         model.paintingSizeCounter(mouseEvent.getX(),mouseEvent.getY());
     }
 
