@@ -1,19 +1,24 @@
 package controllers.fxml;
 
+import controllers.noteobject.NoteObjectControllerI;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import models.note.Note;
 import services.FileHandler;
+import utilities.NoteSave;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -46,5 +51,20 @@ public class TagPageController implements Initializable {
             listItem += "  [" + (new Date(note.lastModified())).toString() + "]";
             noteListView.getItems().add(listItem);
         }
+    }
+
+    @FXML
+    private void onMousePressedMenuItem(MouseEvent mouseEvent) {
+        try {
+            String fileName = noteListView.getSelectionModel().getSelectedItem();
+            NoteSave noteSave = FileHandler.loadNote(new File(FileHandler.FILE_PATH +
+                    fileName.substring(0, fileName.indexOf("[") - 3) + FileHandler.FILE_TYPE));
+            MainPageController.loadNoteSave(noteSave);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 }

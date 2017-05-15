@@ -90,6 +90,8 @@ public class MainPageController implements Initializable {
     private AnchorPane fille;
     private List<String> fonts = Font.getFamilies();
 
+    private static TextField currentNoteName;
+
     private static List<Node> currentNodes;
 
     public static List<Node> getCurrentNodes() {
@@ -100,10 +102,22 @@ public class MainPageController implements Initializable {
         MainPageController.currentNodes = currentNodes;
     }
 
+    public static void loadNoteSave(NoteSave noteSave) {
+        List<NoteObjectControllerI> controllers = noteSave.loadControllers();
+        currentNodes.clear();
+        Note note = new Note(noteSave.getName());
+        note.setTags(noteSave.getTags());
+        for (NoteObjectControllerI controller : controllers)
+            note.getModels().add(controller.getModel());
+        Note.setCurrentNote(note);
+        currentNoteName.setText(note.getName());
+    }
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Note.setCurrentNote(new Note());
 
         currentNodes = notePane.getChildren();
+        currentNoteName = nameTextField;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TagPage.fxml"));
         try {
@@ -279,20 +293,11 @@ public class MainPageController implements Initializable {
         File file = fileChooser.showOpenDialog(this.notePane.getScene().getWindow());
         try {
             NoteSave noteSave = FileHandler.loadNote(file);
-            List<NoteObjectControllerI> controllers = noteSave.loadControllers();
-            this.notePane.getChildren().clear();
-            Note note = new Note(noteSave.getName());
-            note.setTags(noteSave.getTags());
-            for (NoteObjectControllerI controller : controllers)
-                note.getModels().add(controller.getModel());
-            Note.setCurrentNote(note);
-            this.nameTextField.setText(note.getName());
+            loadNoteSave(noteSave);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
         }
     }
 
