@@ -1,5 +1,7 @@
 package models.note;
 
+import events.Event;
+import events.RemoveNoteEvent;
 import models.noteobject.NoteObjectI;
 
 import java.io.Serializable;
@@ -38,6 +40,7 @@ public class Note implements Serializable {
     }
 
     public void removeNoteObject(NoteObjectI model) {
+        Event.addEvent(new RemoveNoteEvent(model));
         this.models.remove(model);
         if (this == currentNote)
             model.remove();
