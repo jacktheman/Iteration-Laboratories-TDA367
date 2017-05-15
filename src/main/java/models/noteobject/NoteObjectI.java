@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by svante on 2017-05-12.
  */
-public interface NoteObjectI extends Serializable{
+public interface NoteObjectI extends Serializable {
 
     void setLayoutX(double d);
 

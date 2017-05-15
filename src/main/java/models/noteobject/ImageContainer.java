@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class ImageContainer extends NoteObjectResizeable implements ObservableI {
 
+
+    private boolean remove;
     private Image image;
 
     public String getURL() {
@@ -33,19 +35,15 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
     private double quota;
 
 
-    public ImageContainer(Image image){
+
+    public ImageContainer(String URL){
         super();
-        this.image = image;
+        this.URL = URL;
+        this.image = new Image(URL);
         this.fitWidth = image.getWidth();
         this.fitHeight = image.getHeight();
         this.quota = Math.min(fitHeight / fitWidth, fitWidth / fitHeight);
         this.observerIList = new ArrayList<>();
-
-    }
-
-    public ImageContainer(String URL){
-        this(new Image(URL));
-        this.URL = URL;
     }
 
     @Override
@@ -88,12 +86,13 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
 
     @Override
     public void add() {
-
+        fireChange();
     }
 
     @Override
     public void remove() {
-
+        remove = true;
+        fireChange();
     }
 
     @Override
@@ -117,6 +116,7 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
     public void addListener(ObserverI observer) {
         if(!observerIList.contains(observer)) {
             observerIList.add(observer);
+            observer.fireChange(this);
         }
     }
 
@@ -144,5 +144,9 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
             }
         }
         return false;
+    }
+
+    public boolean getRemove(){
+        return remove;
     }
 }

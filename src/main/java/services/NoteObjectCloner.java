@@ -1,8 +1,12 @@
 package services;
 
 import controllers.noteobject.ImageContainerController;
+import controllers.noteobject.NoteObjectControllerI;
 import javafx.scene.Node;
 import models.note.Note;
+import models.noteobject.ImageContainer;
+import models.noteobject.NoteObjectI;
+import models.noteobject.Table;
 import views.noteobject.ImageContainerView;
 import views.noteobject.TableContainerView;
 
@@ -11,41 +15,39 @@ import views.noteobject.TableContainerView;
  */
 public class NoteObjectCloner {
 
-    private static Node node;
+    private static NoteObjectI model;
 
     private NoteObjectCloner(){}
 
-    private static Node cloneImageContainer(){
-        if (node instanceof ImageContainerView){
-            ImageContainerView imageContainerView = (ImageContainerView) node;
-            return new ImageContainerController(imageContainerView.getImage(),
-                    imageContainerView.getLayoutX(), imageContainerView.getLayoutY()).getNode();
+    private static NoteObjectControllerI cloneImageContainer(){
+        if (model instanceof ImageContainer){
+            return new ImageContainerController((ImageContainer)NoteObjectCloner.model);
         }
         return null;
     }
 
 
     private static Node cloneTableContainer(){
-        if (node instanceof TableContainerView){
-            TableContainerView tableContainerView = (TableContainerView) node;
+        if (model instanceof Table){
             return null;
         }
         return null;
     }
 
-    public static Node getCopiedObject(){
-        if (Note.getCurrentNote().getNodes().contains(node)) {
-            Node temp;
+    public static NoteObjectI getCopiedObject(){
+            NoteObjectControllerI temp;
             if((temp = cloneImageContainer()) != null){
-            } else if ((temp = cloneTableContainer()) != null){
+                return temp.getModel();
             }
-            node = temp;
-        }
-        return node;
+        return null;
     }
 
-    public static void setCopiedObject(Node node){
-        NoteObjectCloner.node = node;
+    public static void setCopiedObject(NoteObjectI model){
+        NoteObjectCloner.model = model;
+    }
+
+    public static NoteObjectI getModel(){
+        return model;
     }
 
 }

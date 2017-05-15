@@ -107,8 +107,8 @@ abstract class NoteObjectController<T1 extends Node, T2 extends NoteObjectI> imp
     }
 
     private void loadNewContextMenu(){
-        MenuItem copy = ContextMenuFactory.copyItem(this.getNode());
-        MenuItem remove = ContextMenuFactory.removeItem(this.getNode());
+        MenuItem copy = ContextMenuFactory.copyItem(this.getModel());
+        MenuItem remove = ContextMenuFactory.removeItem(this.getModel());
         MenuItem putToFront = ContextMenuFactory.putToFrontItem(this.getNode());
         this.getNode().setOnKeyPressed(KeyEvent ->{
             if(KeyEvent.getCode().equals(KeyCode.DELETE)) {
