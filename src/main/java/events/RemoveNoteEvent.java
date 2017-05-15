@@ -18,4 +18,5 @@ public class RemoveNoteEvent extends Event {
         Note.getCurrentNote().addNoteObject(super.getModel());
         Event.getEvents().remove(this);
     }
+
 }
