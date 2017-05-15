@@ -15,9 +15,9 @@ public class Note implements Serializable {
 
     private String tags;
 
-    private static Note currentNote;
-
     private List<NoteObjectI> models;
+
+    private static Note currentNote;
 
     public Note(String name) {
         this.name = name;

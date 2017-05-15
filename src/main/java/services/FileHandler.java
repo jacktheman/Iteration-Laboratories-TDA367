@@ -18,9 +18,9 @@ public class FileHandler {
 
     public static final String FILE_DIR = System.getProperty("user.home") + File.separator + ".fabNotes";
 
-    static final String FILE_PATH = FILE_DIR + File.separator;
+    public static final String FILE_PATH = FILE_DIR + File.separator;
 
-    static final String FILE_TYPE = ".fab";
+    public static final String FILE_TYPE = ".fab";
 
     static final String FILE_EXTENSION = "*" + FILE_TYPE;
 

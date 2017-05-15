@@ -6,7 +6,6 @@ import controllers.noteobject.TextContainerController;
 import models.note.Note;
 import models.noteobject.ImageContainer;
 import models.noteobject.NoteObjectI;
-import models.noteobject.PaintingContainer;
 import models.noteobject.TextContainer;
 
 import java.io.Serializable;

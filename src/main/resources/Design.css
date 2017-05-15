@@ -17,8 +17,20 @@
     -fx-opacity: 90%;
 }
 
-.list-view {
+#file-list .list-cell {
     -fx-background-color: slategray;
+    -fx-text-fill: lightgray;
+    -fx-font: bold 16px "Calibri";
+}
+
+#file-list .list-cell:hover {
+    -fx-background-color: #506070;
+    -fx-text-fill: white;
+}
+
+#file-list .list-cell:pressed, #file-list .list-cell:selected {
+    -fx-background-color: #304050;
+    -fx-text-fill: white;
 }
 
 #image-view:focused {
