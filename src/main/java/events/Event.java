@@ -13,6 +13,8 @@ public abstract class Event<T extends NoteObjectI> {
     private T model;
     private static List<Event> events = new ArrayList<>();
 
+    private static final int MAX_NUMBER_OF_EVENTS = 20;
+
     public Event(T model){
         this.model = model;
     }
@@ -26,8 +28,11 @@ public abstract class Event<T extends NoteObjectI> {
     }
 
     public static void addEvent(Event event){
+        if(events.size() == MAX_NUMBER_OF_EVENTS){
+            events.remove(0);
+        }
         events.add(event);
-        System.out.println(events.toString());
+
     }
 
     public abstract void undo();

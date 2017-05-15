@@ -118,6 +118,8 @@ public class PaintingContainer extends NoteObject implements ObservableI{
 
     @Override
     public void add() {
+        isAlive = true;
+        newPaint = true;
         notifyListerners();
     }
 

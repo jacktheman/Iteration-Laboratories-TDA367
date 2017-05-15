@@ -86,6 +86,7 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
 
     @Override
     public void add() {
+        remove = false;
         fireChange();
     }
 
