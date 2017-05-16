@@ -3,9 +3,10 @@ package views.noteobject;
 import controllers.fxml.MainPageController;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import models.note.Note;
 import models.noteobject.ImageContainer;
 import models.noteobject.NoteObjectI;
-import utilities.ObserverI;
+import observers.ObserverI;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -51,10 +52,10 @@ public class ImageContainerView extends ImageView implements Serializable, Obser
             this.setFitHeight(subject.getFitHeight());
             this.setLayoutX(subject.getLayoutX());
             this.setLayoutY(subject.getLayoutY());
-            if (!MainPageController.getCurrentNodes().contains(this))
-                MainPageController.getCurrentNodes().add(this);
+            if (!Note.getCurrentNodes().contains(this))
+                Note.getCurrentNodes().add(this);
         } else {
-            MainPageController.getCurrentNodes().remove(this);
+            Note.getCurrentNodes().remove(this);
         }
     }
 }

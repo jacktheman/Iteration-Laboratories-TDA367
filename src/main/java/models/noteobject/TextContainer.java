@@ -1,7 +1,7 @@
 package models.noteobject;
 
-import utilities.ObservableI;
-import utilities.ObserverI;
+import observers.ObservableI;
+import observers.ObserverI;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,5 @@
 package controllers.fxml;
 
-import controllers.noteobject.NoteObjectControllerI;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,22 +8,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import services.FileHandler;
 import java.io.IOException;
-import models.note.Note;
-import services.FileHandler;
-import utilities.NoteSave;
+
+import services.NoteSave;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.sql.Date;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**

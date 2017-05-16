@@ -5,10 +5,10 @@ import models.note.Note;
 import models.noteobject.PaintingContainer;
 import services.ObserverBus;
 import services.StateHandler;
-import utilities.ObserverI;
+import observers.ObserverI;
 import controllers.noteobjectbehaviors.DragDropBehavior;
 import controllers.noteobjectbehaviors.PaintingBehavior;
-import controllers.state.PaintState;
+import state.PaintState;
 import views.noteobject.PaintingContainerView;
 
 /**
@@ -27,6 +27,7 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
 
     public PaintingContainerController(PaintingContainer model){
         super(new PaintingContainerView(), new PaintingContainer(model));
+        fireChange(StateHandler.getInstance());
         ObserverBus.addListener(super.getModel(),super.getNode());
         ObserverBus.addListener(StateHandler.getInstance(), this);
         focusPropertyListener();
@@ -47,10 +48,10 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
     }
 
     public void fireChange(StateHandler subject) {
-        if (subject.getState().equals(PaintState.getInstance())){
-            super.setBehavior(new PaintingBehavior(super.getModel(),super.getNode()));
-        }else{
+        if (subject.isWriteState()){
             super.setBehavior(new DragDropBehavior(super.getModel(), super.getNode()));
+        }else{
+            super.setBehavior(new PaintingBehavior(super.getModel(),super.getNode()));
         }
 
     }

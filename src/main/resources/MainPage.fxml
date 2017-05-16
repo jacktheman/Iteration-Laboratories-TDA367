@@ -52,7 +52,7 @@
             </ContextMenu>
          </contextMenu>
       </MenuBar>
-      <TabPane layoutX="113.0" layoutY="59.0" prefHeight="83.0" prefWidth="487.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.0">
+      <TabPane layoutX="113.0" layoutY="63.0" prefHeight="83.0" prefWidth="487.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="63.0">
         <tabs>
           <Tab onSelectionChanged="#changeToWriteState" text="SKRIV">
             <content>
@@ -178,18 +178,18 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Label layoutX="113.0" layoutY="31.0" text="NAMN:" AnchorPane.leftAnchor="113.0" AnchorPane.topAnchor="31.0">
+      <Label layoutX="114.0" layoutY="37.0" text="NAMN:" AnchorPane.leftAnchor="114.0" AnchorPane.topAnchor="37.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="nameTextField" layoutX="166.0" layoutY="27.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="178.0" AnchorPane.leftAnchor="166.0" AnchorPane.topAnchor="27.0">
+      <TextField fx:id="nameTextField" layoutX="175.0" layoutY="31.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="178.0" promptText="Namnlös" AnchorPane.leftAnchor="175.0" AnchorPane.topAnchor="31.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </TextField>
-      <Button layoutX="1032.0" layoutY="27.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="104.0" text="Ny anteckning +" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="27.0" />
-      <Button fx:id="tagMenuButton" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="112.0" prefWidth="112.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <Button layoutX="1036.0" layoutY="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="104.0" text="Ny fabNote" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0" />
+      <Button fx:id="tagMenuButton" layoutY="29.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="117.0" prefWidth="113.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="29.0">
          <graphic>
             <ImageView fitHeight="111.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -198,7 +198,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <TextField fx:id="addTagTextField" layoutX="344.0" layoutY="27.0" onKeyPressed="#addTag" prefHeight="30.0" prefWidth="112.0" promptText="lägg till etikett" />
-      <TilePane fx:id="tagBar" hgap="3.0" layoutX="459.0" layoutY="27.0" prefHeight="30.0" prefWidth="570.0" />
+      <TextField fx:id="addTagTextField" layoutX="356.0" layoutY="31.0" onKeyPressed="#addTag" prefHeight="30.0" prefWidth="112.0" promptText="lägg till tag" />
+      <TilePane fx:id="tagBar" hgap="3.0" layoutX="471.0" layoutY="31.0" prefHeight="30.0" prefWidth="554.0" />
    </children>
 </AnchorPane>

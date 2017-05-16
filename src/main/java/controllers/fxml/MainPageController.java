@@ -26,10 +26,8 @@ import models.noteobject.TextContainer;
 import services.FileChooserFactory;
 import services.FileHandler;
 import services.StateHandler;
-import utilities.NoteSave;
+import services.NoteSave;
 import utilities.Paintbrush;
-import controllers.state.PaintState;
-import controllers.state.WriteState;
 import events.Event;
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +35,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import static utilities.Paintbrush.CIRCLE;
 import static utilities.Paintbrush.SQUARE;
@@ -87,34 +86,49 @@ public class MainPageController implements Initializable {
     private final int TRIANGLE_NUMBER_OF_CORNERS = 3;
     private AnchorPane fille;
     private List<String> fonts = Font.getFamilies();
+    private static MainPageController SINGLETON;
 
     private static TextField currentNoteName;
 
-    private static List<Node> currentNodes;
-
-    public static List<Node> getCurrentNodes() {
-        return currentNodes;
-    }
-
-    public static void setCurrentNodes(List<Node> currentNodes) {
-        MainPageController.currentNodes = currentNodes;
-    }
-
     public static void loadNoteSave(NoteSave noteSave) {
         List<NoteObjectControllerI> controllers = noteSave.loadControllers();
-        currentNodes.clear();
+        Note.getCurrentNodes().clear();
         Note note = new Note(noteSave.getName());
         note.setTags(noteSave.getTags());
+        getInstance().loadNoteTagsInTagBar(noteSave.getTags());
         for (NoteObjectControllerI controller : controllers)
             note.getModels().add(controller.getModel());
         Note.setCurrentNote(note);
         currentNoteName.setText(note.getName());
+
+    }
+
+    public void loadNoteTagsInTagBar (String tags) {
+        String[] tagsArray = tags.split(Pattern.quote("."));
+        System.out.println(tagsArray.toString());
+        tagBar.getChildren().clear();
+        for (int i = 0; i < tagsArray.length; i++) {
+            String tagText = tagsArray[i];
+            try {
+                FXMLLoader tagPane = new FXMLLoader(getClass().getResource("/TagPane.fxml"));
+                AnchorPane tag = tagPane.load();
+                ((Label) tag.getChildren().get(0)).setText(tagText);
+                tagBar.getChildren().add(tag);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static MainPageController getInstance () {
+        return SINGLETON;
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        SINGLETON = this;
         Note.setCurrentNote(new Note());
+        Note.setCurrentNodes(notePane.getChildren());
 
-        currentNodes = notePane.getChildren();
         currentNoteName = nameTextField;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TagPage.fxml"));
@@ -303,12 +317,12 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void changeToWriteState() {
-        StateHandler.getInstance().setState(WriteState.getInstance());
+        StateHandler.getInstance().changeToWriteState();
     }
 
     @FXML
     private void changeToPaintState() {
-        StateHandler.getInstance().setState(PaintState.getInstance());
+        StateHandler.getInstance().changeToPaintState();
     }
 
     @FXML

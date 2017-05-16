@@ -1,4 +1,4 @@
-package utilities;
+package services;
 
 import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;

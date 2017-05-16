@@ -21,7 +21,7 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     private double oldY;
     private double quota;
 
-    private boolean tooSmall = false;
+    private boolean minimumSizeReached;
 
     private static ResizablePositions pos;
 
@@ -62,20 +62,42 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     public ResizeBehavior(NoteObjectResizeableI model, Node view) {
         this.imageContainer = model;
         this.node = view;
-        this.nodeX = imageContainer.getFitWidth();
-        this.nodeY = imageContainer.getFitHeight();
-        this.oldX = imageContainer.getLayoutX();
-        this.oldY = imageContainer.getLayoutY();
-        this.quota = Math.min(nodeY / nodeX, nodeX / nodeY);
+        updateVariables();
     }
 
     private void updateVariables() {
-
         this.nodeX = imageContainer.getFitWidth();
         this.nodeY = imageContainer.getFitHeight();
         this.oldX = imageContainer.getLayoutX();
         this.oldY = imageContainer.getLayoutY();
-        this.quota = Math.min(nodeY / nodeX, nodeX / nodeY);
+        this.quota = fixQuota(nodeY / nodeX, nodeX / nodeY);
+    }
+
+    private void confirmVariables() {
+        imageContainer.setFitWidth(this.nodeX);
+        imageContainer.setFitHeight(this.nodeY);
+        imageContainer.setLayoutX(this.oldX);
+        imageContainer.setLayoutY(this.oldY);
+    }
+
+    private double fixQuota(double v1, double v2) {
+        if (this.nodeX > this.nodeY)
+            return Math.min(v1, v2);
+        return Math.max(v1, v2);
+    }
+
+    private void checkImageSize() {
+        this.minimumSizeReached = (this.nodeX < 40)
+                || (this.nodeY < 40);
+        if (minimumSizeReached) {
+            if (this.nodeX < this.nodeY) {
+                this.nodeX = 40;
+                this.nodeY = this.nodeX / quota;
+            } else {
+                this.nodeY = 40;
+                this.nodeX = this.nodeY / quota;
+            }
+        }
     }
 
     private ResizablePositions returnCursorLocation(MouseEvent mouseEvent) {
@@ -103,22 +125,14 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
 
     }
 
-    private void handleTooSmallImage() {
-        if (checkImageWidth()) {
-            imageContainer.setFitWidth(39);
-            imageContainer.setFitHeight(imageContainer.getFitWidth() / quota);
-        }
-        if (checkImageHeight()) {
-            imageContainer.setFitHeight(39);
-            imageContainer.setFitWidth(imageContainer.getFitHeight() / quota);
-        }
-    }
-
     private void dragResize(MouseEvent event) {
         double mouseX, mouseY;
         mouseX = event.getX();
         mouseY = event.getY();
+
         updateVariables();
+        checkImageSize();
+
         if (pos == ResizablePositions.LEFT_UPPER_CORNER) {
             leftUpperCornerResize(mouseY);
         } else if (pos == ResizablePositions.LEFT_LOWER_CORNER) {
@@ -136,16 +150,8 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
         } else if (pos == ResizablePositions.RIGHT_AREA) {
             rightAreaResize(mouseX);
         }
-        handleTooSmallImage();
 
-    }
-
-    private boolean checkImageWidth() {
-        return (imageContainer.getFitWidth() < 40);
-    }
-
-    private boolean checkImageHeight() {
-        return (imageContainer.getFitHeight() < 40);
+        confirmVariables();
     }
 
     private void changeCursorBasedOnPosition(ResizablePositions pos) {
@@ -215,37 +221,36 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     }
 
     private void leftUpperCornerResize(double mouseY) {
-        if (!(checkImageHeight() || checkImageWidth()) || mouseY + oldY < oldY) {
-            imageContainer.setFitHeight(nodeY - mouseY);
-            imageContainer.setFitWidth(imageContainer.getFitHeight() / quota);
-            System.out.println("Fan då");
-            imageContainer.setLayoutY(oldY + mouseY);
-            imageContainer.setLayoutX(oldX + mouseY / quota);
+        if (!minimumSizeReached) {
+            oldY = oldY + mouseY;
+            nodeY = nodeY - mouseY;
+            oldX = oldX + mouseY / quota;
+            nodeX = nodeY / quota;
+        } else if (mouseY < 0) {
+            if (oldY + mouseY < oldY) {
+                oldY = oldY + mouseY;
+                nodeY = nodeY - mouseY;
+                oldX = oldX + mouseY / quota;
+                nodeX = nodeY / quota;
+            }
         }
-
     }
 
     private void leftLowerCornerResize(double mouseY) {
-        if (mouseY <= nodeY || mouseY >= nodeY) {
-            imageContainer.setLayoutX(oldX + nodeX - mouseY / quota);
-            imageContainer.setFitWidth(mouseY / quota);
-            imageContainer.setFitHeight(mouseY);
-        }
+        imageContainer.setLayoutX(oldX + nodeX - mouseY / quota);
+        imageContainer.setFitWidth(mouseY / quota);
+        imageContainer.setFitHeight(mouseY);
     }
 
     private void rightUpperCornerResize(double mouseY) {
-        if (mouseY <= oldY || mouseY >= oldY) {
-            imageContainer.setLayoutY(oldY + mouseY);
-            imageContainer.setFitHeight(nodeY - mouseY);
-            imageContainer.setFitWidth(imageContainer.getFitHeight() / quota);
-        }
+        imageContainer.setLayoutY(oldY + mouseY);
+        imageContainer.setFitHeight(nodeY - mouseY);
+        imageContainer.setFitWidth(imageContainer.getFitHeight() / quota);
     }
 
     private void rightLowerCornerResize(double mouseY) {
-        if (mouseY <= nodeY || mouseY >= nodeY) {
-            imageContainer.setFitHeight(mouseY);
-            imageContainer.setFitWidth(mouseY / quota);
-        }
+        imageContainer.setFitHeight(mouseY);
+        imageContainer.setFitWidth(mouseY / quota);
     }
 
     private void upperAreaResize(double mouseY) {

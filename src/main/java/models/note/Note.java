@@ -2,6 +2,7 @@ package models.note;
 
 import events.Event;
 import events.RemoveNoteEvent;
+import javafx.scene.Node;
 import models.noteobject.NoteObjectI;
 
 import java.io.Serializable;
@@ -20,6 +21,8 @@ public class Note implements Serializable {
     private List<NoteObjectI> models;
 
     private static Note currentNote;
+
+    private static List<Node> currentNodes;
 
     public Note(String name) {
         this.name = name;
@@ -68,7 +71,9 @@ public class Note implements Serializable {
 
     public boolean addTag(String tag) {
         if (!tags.contains(tag.toLowerCase())) {
-            tags += "." + tag.toLowerCase();
+            if (!tags.isEmpty())
+                tags += ".";
+            tags += tag.toLowerCase();
             return true;
         }
         return false;
@@ -87,5 +92,13 @@ public class Note implements Serializable {
 
     public static Note getCurrentNote() {
         return currentNote;
+    }
+
+    public static void setCurrentNodes(List<Node> currentNodes) {
+        Note.currentNodes = currentNodes;
+    }
+
+    public static List<Node> getCurrentNodes() {
+        return currentNodes;
     }
 }

@@ -1,14 +1,13 @@
-package services;
+package generators;
 
 import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
+import controllers.noteobject.PaintingContainerController;
 import javafx.scene.Node;
-import models.note.Note;
 import models.noteobject.ImageContainer;
 import models.noteobject.NoteObjectI;
+import models.noteobject.PaintingContainer;
 import models.noteobject.Table;
-import views.noteobject.ImageContainerView;
-import views.noteobject.TableContainerView;
 
 /**
  * Created by svante on 2017-05-09.
@@ -26,6 +25,12 @@ public class NoteObjectCloner {
         return null;
     }
 
+    private static NoteObjectControllerI clonePaintingContainer(){
+        if (model instanceof PaintingContainer) {
+            return new PaintingContainerController((PaintingContainer) model);
+        }
+        return null;
+    }
 
     private static Node cloneTableContainer(){
         if (model instanceof Table){
@@ -37,6 +42,8 @@ public class NoteObjectCloner {
     public static NoteObjectI getCopiedObject(){
             NoteObjectControllerI temp;
             if((temp = cloneImageContainer()) != null){
+                return temp.getModel();
+            } else if((temp = clonePaintingContainer()) != null) {
                 return temp.getModel();
             }
         return null;

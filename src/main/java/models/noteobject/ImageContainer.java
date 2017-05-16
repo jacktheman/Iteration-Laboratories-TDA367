@@ -1,10 +1,9 @@
 package models.noteobject;
 
 import javafx.scene.image.Image;
-import utilities.ObservableI;
-import utilities.ObserverI;
+import observers.ObservableI;
+import observers.ObserverI;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
