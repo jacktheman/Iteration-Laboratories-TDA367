@@ -1,9 +1,10 @@
 package services;
 
-import utilities.ObservableI;
-import utilities.ObserverI;
-import controllers.state.NoteStateI;
-import controllers.state.WriteState;
+import state.PaintState;
+import observers.ObservableI;
+import observers.ObserverI;
+import state.NoteStateI;
+import state.WriteState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +33,21 @@ public class StateHandler implements ObservableI{
         return SINGLETON;
     }
 
-    public void setState(NoteStateI state) {
+    private void setState(NoteStateI state) {
         this.state = state;
         notifyListeners();
+    }
+
+    public void changeToWriteState() {
+        this.setState(WriteState.getInstance());
+    }
+
+    public void changeToPaintState() {
+        this.setState(PaintState.getInstance());
+    }
+
+    public boolean isWriteState() {
+        return this.state == WriteState.getInstance();
     }
 
     @Override
@@ -51,4 +64,5 @@ public class StateHandler implements ObservableI{
         for (ObserverI<StateHandler> observer : observers)
             observer.fireChange(this);
     }
+
 }
