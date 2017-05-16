@@ -68,7 +68,9 @@ public class Note implements Serializable {
 
     public boolean addTag(String tag) {
         if (!tags.contains(tag.toLowerCase())) {
-            tags += "." + tag.toLowerCase();
+            if (!tags.isEmpty())
+                tags += ".";
+            tags += tag.toLowerCase();
             return true;
         }
         return false;

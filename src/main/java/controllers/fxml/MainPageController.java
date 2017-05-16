@@ -37,6 +37,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import static utilities.Paintbrush.CIRCLE;
 import static utilities.Paintbrush.SQUARE;
@@ -87,6 +88,7 @@ public class MainPageController implements Initializable {
     private final int TRIANGLE_NUMBER_OF_CORNERS = 3;
     private AnchorPane fille;
     private List<String> fonts = Font.getFamilies();
+    private static MainPageController SINGLETON;
 
     private static TextField currentNoteName;
 
@@ -105,13 +107,37 @@ public class MainPageController implements Initializable {
         currentNodes.clear();
         Note note = new Note(noteSave.getName());
         note.setTags(noteSave.getTags());
+        getInstance().loadNoteTagsInTagBar(noteSave.getTags());
         for (NoteObjectControllerI controller : controllers)
             note.getModels().add(controller.getModel());
         Note.setCurrentNote(note);
         currentNoteName.setText(note.getName());
+
+    }
+
+    public void loadNoteTagsInTagBar (String tags) {
+        String[] tagsArray = tags.split(Pattern.quote("."));
+        System.out.println(tagsArray.toString());
+        tagBar.getChildren().clear();
+        for (int i = 0; i < tagsArray.length; i++) {
+            String tagText = tagsArray[i];
+            try {
+                FXMLLoader tagPane = new FXMLLoader(getClass().getResource("/TagPane.fxml"));
+                AnchorPane tag = tagPane.load();
+                ((Label) tag.getChildren().get(0)).setText(tagText);
+                tagBar.getChildren().add(tag);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static MainPageController getInstance () {
+        return SINGLETON;
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        SINGLETON = this;
         Note.setCurrentNote(new Note());
 
         currentNodes = notePane.getChildren();
