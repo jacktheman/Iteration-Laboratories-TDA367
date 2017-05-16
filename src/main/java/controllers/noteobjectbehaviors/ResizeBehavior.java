@@ -87,8 +87,8 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     }
 
     private void checkImageSize() {
-        this.minimumSizeReached = (this.nodeX < 40)
-                || (this.nodeY < 40);
+        this.minimumSizeReached = (this.nodeX <= 40)
+                || (this.nodeY <= 40);
         if (minimumSizeReached) {
             if (this.nodeX < this.nodeY) {
                 this.nodeX = 40;
@@ -131,7 +131,6 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
         mouseY = event.getY();
 
         updateVariables();
-        checkImageSize();
 
         if (pos == ResizablePositions.LEFT_UPPER_CORNER) {
             leftUpperCornerResize(mouseY);
@@ -150,6 +149,10 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
         } else if (pos == ResizablePositions.RIGHT_AREA) {
             rightAreaResize(mouseX);
         }
+
+        this.quota = fixQuota(nodeY / nodeX, nodeX / nodeY);
+
+        checkImageSize();
 
         confirmVariables();
     }
@@ -221,54 +224,53 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     }
 
     private void leftUpperCornerResize(double mouseY) {
-        if (!minimumSizeReached) {
+        if (!minimumSizeReached || mouseY < 0) {
             oldY = oldY + mouseY;
             nodeY = nodeY - mouseY;
             oldX = oldX + mouseY / quota;
             nodeX = nodeY / quota;
-        } else if (mouseY < 0) {
-            if (oldY + mouseY < oldY) {
-                oldY = oldY + mouseY;
-                nodeY = nodeY - mouseY;
-                oldX = oldX + mouseY / quota;
-                nodeX = nodeY / quota;
-            }
         }
     }
 
     private void leftLowerCornerResize(double mouseY) {
-        imageContainer.setLayoutX(oldX + nodeX - mouseY / quota);
-        imageContainer.setFitWidth(mouseY / quota);
-        imageContainer.setFitHeight(mouseY);
+        if (!minimumSizeReached || mouseY > nodeY) {
+            this.oldX = this.oldX + this.nodeX - mouseY / this.quota;
+            this.nodeX = mouseY / this.quota;
+            this.nodeY = mouseY;
+        }
     }
 
     private void rightUpperCornerResize(double mouseY) {
-        imageContainer.setLayoutY(oldY + mouseY);
-        imageContainer.setFitHeight(nodeY - mouseY);
-        imageContainer.setFitWidth(imageContainer.getFitHeight() / quota);
+        if (!minimumSizeReached || mouseY < 0) {
+            this.oldY = this.oldY + mouseY;
+            this.nodeY = this.nodeY - mouseY;
+            this.nodeX = this.nodeY / this.quota;
+        }
     }
 
     private void rightLowerCornerResize(double mouseY) {
-        imageContainer.setFitHeight(mouseY);
-        imageContainer.setFitWidth(mouseY / quota);
+        if (!minimumSizeReached || mouseY > nodeY) {
+            this.nodeY = mouseY;
+            this.nodeX = mouseY / this.quota;
+        }
     }
 
     private void upperAreaResize(double mouseY) {
-        imageContainer.setLayoutY(oldY + mouseY);
-        imageContainer.setFitHeight(nodeY - mouseY);
+        this.oldY = this.oldY + mouseY;
+        this.nodeY = this.nodeY - mouseY;
     }
 
     private void leftAreaResize(double mouseX) {
-        imageContainer.setLayoutX(oldX + mouseX);
-        imageContainer.setFitWidth(nodeX - mouseX);
+        this.oldX = this.oldX + mouseX;
+        this.nodeX = this.nodeX - mouseX;
     }
 
     private void bottomAreaResize(double mouseY) {
-        imageContainer.setFitHeight(mouseY);
+        this.nodeY = mouseY;
     }
 
     private void rightAreaResize(double mouseX) {
-        imageContainer.setFitWidth(mouseX);
+        this.nodeX = mouseX;
     }
 
 
