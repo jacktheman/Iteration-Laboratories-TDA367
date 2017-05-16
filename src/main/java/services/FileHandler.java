@@ -106,7 +106,7 @@ public class FileHandler {
         List<File> fileList = new ArrayList<>();
         for (File file : fileArray
                 ) {
-            if (file.getName().contains(word)) {
+            if (file.getName().toLowerCase().contains(word.toLowerCase())) {
                 fileList.add(file);
             }
         }
@@ -118,7 +118,7 @@ public class FileHandler {
         List<File> fileList = new ArrayList<>();
         for (File file : fileArray) {
             if (file.exists()) {
-                if (FileHandler.loadNote(file).getTags().contains(word)) {
+                if (FileHandler.loadNote(file).getTags().toLowerCase().contains(word.toLowerCase())) {
                     fileList.add(file);
                 }
             }
@@ -132,8 +132,7 @@ public class FileHandler {
         List<File> tagList = tagList(word);
         List<File> sortedList;
         fileList.addAll(fileList(word));
-        for (File file : tagList
-                ) {
+        for (File file : tagList) {
             if (!fileList.contains(file)) {
                 fileList.add(file);
             }
@@ -145,16 +144,13 @@ public class FileHandler {
     public static List<File> sortFiles(List<File> fileList) {
         List<String> stringList = new ArrayList<>();
         List<File> sortedList = new ArrayList<>();
-        for (File file : fileList
-                ) {
+        for (File file : fileList) {
             stringList.add(file.getName());
         }
         Collections.sort(stringList);
-        for (String string : stringList
-                ) {
-            for (File file : fileList
-                    ) {
-                if (string.equals(file.getName())) {
+        for (String string : stringList) {
+            for (File file : fileList) {
+                if (string.toLowerCase().equals(file.getName().toLowerCase())) {
                     sortedList.add(file);
                 }
             }

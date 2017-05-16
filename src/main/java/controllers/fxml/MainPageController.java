@@ -5,6 +5,7 @@ import controllers.noteobject.NoteObjectControllerI;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -80,6 +81,8 @@ public class MainPageController implements Initializable {
     private TextField addTagTextField;
     @FXML
     private TextField nameTextField;
+    @FXML
+    private ToggleButton newFabNote;
 
     private final double TRIANGLE_QUANTIFIER_SMALL = 0.75;
     private final double TRIANGLE_QUANTIFIER_BIG = 1.25;
@@ -118,6 +121,13 @@ public class MainPageController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setNewFabNote(){
+        Note.setCurrentNote(new Note());
+        Note.getCurrentNodes().clear();
+        nameTextField.setText("");
+        tagBar.getChildren().clear();
     }
 
     public static MainPageController getInstance () {
@@ -296,6 +306,7 @@ public class MainPageController implements Initializable {
         nameTextField.setText(Note.getCurrentNote().getName());
         try {
             File file = FileHandler.saveNote(new NoteSave(Note.getCurrentNote()));
+            TagPageController.updateNoteList();
         } catch (IOException e) {
             e.printStackTrace();
         }

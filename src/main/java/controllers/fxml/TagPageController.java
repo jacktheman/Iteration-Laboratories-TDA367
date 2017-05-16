@@ -42,16 +42,22 @@ public class TagPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SINGLETON = this;
         loadTagFlowPane();
-        listNotes(FileHandler.listNotes());
+        updateNoteList();
         addListenerToSearchField();
     }
 
-    private void listNotes(File[] notes) {
+    void listNotes(File[] notes) {
+        if (notes.length > 0)
+            noteListView.getItems().clear();
         for (File note : notes) {
             String listItem = note.getName().replace(FileHandler.FILE_TYPE, " ");
             listItem += "  [" + (new Date(note.lastModified())).toString() + "]";
             noteListView.getItems().add(listItem);
         }
+    }
+
+    public static void updateNoteList(){
+        SINGLETON.listNotes(FileHandler.listNotes());
     }
 
     @FXML
@@ -73,7 +79,10 @@ public class TagPageController implements Initializable {
        searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
            try {
                 List<File> searchList =  FileHandler.searchList(newValue);
-                listNotes((File[])searchList.toArray());
+                File[] searchArray = new File[searchList.size()];
+                for (int i = 0; i < searchList.size(); i++)
+                    searchArray[i] = searchList.get(i);
+                listNotes(searchArray);
            } catch (IOException e) {
                e.printStackTrace();
            } catch (ClassNotFoundException e) {
