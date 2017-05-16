@@ -1,6 +1,5 @@
-package controllers.state;
+package state;
 
-import controllers.fxml.MainPageController;
 import controllers.noteobject.NoteObjectControllerI;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
@@ -10,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import models.note.Note;
 import models.noteobject.NoteObjectI;
-import services.NoteObjectCloner;
+import generators.NoteObjectCloner;
 
 import java.net.MalformedURLException;
 

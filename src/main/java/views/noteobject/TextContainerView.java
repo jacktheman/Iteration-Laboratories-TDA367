@@ -4,9 +4,7 @@ import controllers.fxml.MainPageController;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import models.noteobject.TextContainer;
-import utilities.ObserverI;
-
-import java.io.Serializable;
+import observers.ObserverI;
 
 /**
  * Created by aron on 2017-04-06.

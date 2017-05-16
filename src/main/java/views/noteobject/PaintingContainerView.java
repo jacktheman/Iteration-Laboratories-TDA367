@@ -5,6 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import models.noteobject.PaintingContainer;
+import observers.ObserverI;
 import utilities.*;
 
 import java.io.Serializable;

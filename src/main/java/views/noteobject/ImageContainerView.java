@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import models.noteobject.ImageContainer;
 import models.noteobject.NoteObjectI;
-import utilities.ObserverI;
+import observers.ObserverI;
 
 import java.io.Serializable;
 import java.net.URL;

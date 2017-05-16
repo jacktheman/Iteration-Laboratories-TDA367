@@ -26,10 +26,8 @@ import models.noteobject.TextContainer;
 import services.FileChooserFactory;
 import services.FileHandler;
 import services.StateHandler;
-import utilities.NoteSave;
+import services.NoteSave;
 import utilities.Paintbrush;
-import controllers.state.PaintState;
-import controllers.state.WriteState;
 import events.Event;
 import java.io.File;
 import java.io.IOException;
@@ -303,12 +301,12 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void changeToWriteState() {
-        StateHandler.getInstance().setState(WriteState.getInstance());
+        StateHandler.getInstance().changeToWriteState();
     }
 
     @FXML
     private void changeToPaintState() {
-        StateHandler.getInstance().setState(PaintState.getInstance());
+        StateHandler.getInstance().changeToPaintState();
     }
 
     @FXML

@@ -1,12 +1,7 @@
 package services;
 
-import models.note.Note;
-import utilities.NoteSave;
-
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +17,9 @@ public class FileHandler {
 
     public static final String FILE_TYPE = ".fab";
 
-    static final String FILE_EXTENSION = "*" + FILE_TYPE;
+    public static final String FILE_EXTENSION = "*" + FILE_TYPE;
 
-    static final String[] IMAGE_EXTENSIONS = {"*.jpg", "*.png", "*.gif", "*.bmp"};
+    public static final String[] IMAGE_EXTENSIONS = {"*.jpg", "*.png", "*.gif", "*.bmp"};
 
     public static final String TAG_LIST = FILE_PATH + "TAG_LIST.txt";
 

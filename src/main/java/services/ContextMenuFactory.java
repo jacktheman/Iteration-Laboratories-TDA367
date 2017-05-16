@@ -1,6 +1,6 @@
 package services;
 
-import controllers.fxml.MainPageController;
+import generators.NoteObjectCloner;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
