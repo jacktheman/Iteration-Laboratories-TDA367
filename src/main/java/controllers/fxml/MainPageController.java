@@ -88,19 +88,9 @@ public class MainPageController implements Initializable {
 
     private static TextField currentNoteName;
 
-    private static List<Node> currentNodes;
-
-    public static List<Node> getCurrentNodes() {
-        return currentNodes;
-    }
-
-    public static void setCurrentNodes(List<Node> currentNodes) {
-        MainPageController.currentNodes = currentNodes;
-    }
-
     public static void loadNoteSave(NoteSave noteSave) {
         List<NoteObjectControllerI> controllers = noteSave.loadControllers();
-        currentNodes.clear();
+        Note.getCurrentNodes().clear();
         Note note = new Note(noteSave.getName());
         note.setTags(noteSave.getTags());
         for (NoteObjectControllerI controller : controllers)
@@ -111,8 +101,8 @@ public class MainPageController implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Note.setCurrentNote(new Note());
+        Note.setCurrentNodes(notePane.getChildren());
 
-        currentNodes = notePane.getChildren();
         currentNoteName = nameTextField;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TagPage.fxml"));

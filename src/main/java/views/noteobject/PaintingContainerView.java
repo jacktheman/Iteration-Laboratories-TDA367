@@ -4,6 +4,7 @@ import controllers.fxml.MainPageController;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import models.note.Note;
 import models.noteobject.PaintingContainer;
 import observers.ObserverI;
 import utilities.*;
@@ -130,13 +131,13 @@ public class PaintingContainerView extends AnchorPane implements Serializable, O
             if(subject.getIfNewPaint()) {
                 fillCanvas(subject.getPaintings());
             }
-            if(!MainPageController.getCurrentNodes().contains(this)){
-                MainPageController.getCurrentNodes().add(this);
+            if(!Note.getCurrentNodes().contains(this)){
+                Note.getCurrentNodes().add(this);
                 initCanvas();
                 this.requestFocus();
             }
         }else{
-            MainPageController.getCurrentNodes().remove(this);
+            Note.getCurrentNodes().remove(this);
         }
     }
 }

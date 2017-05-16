@@ -3,6 +3,7 @@ package views.noteobject;
 import controllers.fxml.MainPageController;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
+import models.note.Note;
 import models.noteobject.TextContainer;
 import observers.ObserverI;
 
@@ -39,10 +40,10 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
 
     @Override
     public void fireChange(TextContainer subject) {
-        if (MainPageController.getCurrentNodes().contains(this))
-            MainPageController.getCurrentNodes().remove(this);
+        if (Note.getCurrentNodes().contains(this))
+            Note.getCurrentNodes().remove(this);
         else {
-            MainPageController.getCurrentNodes().add(this);
+            Note.getCurrentNodes().add(this);
             this.requestFocus();
         }
     }
