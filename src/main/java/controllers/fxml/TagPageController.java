@@ -1,5 +1,7 @@
 package controllers.fxml;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,6 +18,7 @@ import services.NoteSave;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
 import java.util.ResourceBundle;
@@ -39,11 +42,11 @@ public class TagPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SINGLETON = this;
         loadTagFlowPane();
-        listNotes();
+        listNotes(FileHandler.listNotes());
+        addListenerToSearchField();
     }
 
-    private void listNotes() {
-        notes = FileHandler.listNotes();
+    private void listNotes(File[] notes) {
         for (File note : notes) {
             String listItem = note.getName().replace(FileHandler.FILE_TYPE, " ");
             listItem += "  [" + (new Date(note.lastModified())).toString() + "]";
@@ -65,6 +68,19 @@ public class TagPageController implements Initializable {
         }
     }
 
+
+    private void addListenerToSearchField(){
+       searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
+           try {
+                List<File> searchList =  FileHandler.searchList(newValue);
+                listNotes((File[])searchList.toArray());
+           } catch (IOException e) {
+               e.printStackTrace();
+           } catch (ClassNotFoundException e) {
+               e.printStackTrace();
+           }
+       });
+    }
 
     static void loadTagFlowPane() {
         try {
@@ -89,6 +105,8 @@ public class TagPageController implements Initializable {
             }
         }
     }
+
+
 
 
     void setTagsList(List<String> list) {

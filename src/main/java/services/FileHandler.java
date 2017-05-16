@@ -101,7 +101,7 @@ public class FileHandler {
         return file.listFiles((file1, s) -> s.contains(FILE_TYPE));
     }
 
-    public List<File> fileList(String word) {
+    public static List<File> fileList(String word) {
         File[] fileArray = listNotes();
         List<File> fileList = new ArrayList<>();
         for (File file : fileArray
@@ -113,7 +113,7 @@ public class FileHandler {
         return fileList;
     }
 
-    public List<File> tagList(String word) throws IOException, ClassNotFoundException {
+    public static List<File> tagList(String word) throws IOException, ClassNotFoundException {
         File[] fileArray = listNotes();
         List<File> fileList = new ArrayList<>();
         for (File file : fileArray) {
@@ -127,7 +127,7 @@ public class FileHandler {
         return fileList;
     }
 
-    public List<File> searchList(String word) throws IOException, ClassNotFoundException {
+    public static List<File> searchList(String word) throws IOException, ClassNotFoundException {
         List<File> fileList = new ArrayList<>();
         List<File> tagList = tagList(word);
         List<File> sortedList;
@@ -142,7 +142,7 @@ public class FileHandler {
         return sortedList;
     }
 
-    public List<File> sortFiles(List<File> fileList) {
+    public static List<File> sortFiles(List<File> fileList) {
         List<String> stringList = new ArrayList<>();
         List<File> sortedList = new ArrayList<>();
         for (File file : fileList
