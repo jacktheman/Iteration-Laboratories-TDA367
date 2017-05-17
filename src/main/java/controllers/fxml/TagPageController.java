@@ -31,10 +31,12 @@ public class TagPageController implements Initializable {
     private ListView<String> noteListView;
     @FXML
     private FlowPane tagFlowPane;
+
+    private static TagPageController SINGLETON;
+
     private List<String> tagsList;
     private String[] tagsArray;
     private File[] notes;
-    private static TagPageController SINGLETON;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SINGLETON = this;
@@ -51,21 +53,6 @@ public class TagPageController implements Initializable {
         }
     }
 
-    @FXML
-    private void onMousePressedMenuItem(MouseEvent mouseEvent) {
-        try {
-            String fileName = noteListView.getSelectionModel().getSelectedItem();
-            NoteSave noteSave = FileHandler.loadNote(new File(FileHandler.FILE_PATH +
-                    fileName.substring(0, fileName.indexOf("[") - 3) + FileHandler.FILE_TYPE));
-            MainPageController.loadNoteSave(noteSave);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     static void loadTagFlowPane() {
         try {
             SINGLETON.setTagsList(FileHandler.loadTags());
@@ -80,7 +67,7 @@ public class TagPageController implements Initializable {
             String tagText = SINGLETON.getTagsArray()[i];
             try {
                 AnchorPane tag;
-                FXMLLoader loadTag = new FXMLLoader(TagPageController.class.getResource("/TagPane.fxml"));
+                FXMLLoader loadTag = new FXMLLoader(TagPageController.class.getResource(MainPageController.TAG_PANE_PATH));
                 tag = loadTag.load();
                 ((Label) tag.getChildren().get(0)).setText(tagText);
                 SINGLETON.getTagFlowPane().getChildren().add(tag);
@@ -94,7 +81,6 @@ public class TagPageController implements Initializable {
     void setTagsList(List<String> list) {
         tagsList = list;
     }
-
 
     void setTagsArray (String [] str) {
         tagsArray = str;
@@ -116,6 +102,18 @@ public class TagPageController implements Initializable {
         return tagsArray;
     }
 
-
+    @FXML
+    private void onMousePressedMenuItem(MouseEvent mouseEvent) {
+        try {
+            String fileName = noteListView.getSelectionModel().getSelectedItem();
+            NoteSave noteSave = FileHandler.loadNote(new File(FileHandler.FILE_PATH +
+                    fileName.substring(0, fileName.indexOf("[") - 3) + FileHandler.FILE_TYPE));
+            MainPageController.getInstance().loadNoteSave(noteSave);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

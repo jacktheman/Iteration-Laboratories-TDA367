@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -81,26 +80,66 @@ public class MainPageController implements Initializable {
     @FXML
     private TextField nameTextField;
 
-    private final double TRIANGLE_QUANTIFIER_SMALL = 0.75;
-    private final double TRIANGLE_QUANTIFIER_BIG = 1.25;
-    private final int TRIANGLE_NUMBER_OF_CORNERS = 3;
-    private AnchorPane fille;
-    private List<String> fonts = Font.getFamilies();
+    static final String TAG_PANE_PATH = "/TagPane.fxml";
+
+    private static final String TAG_PAGE_PATH = "/TagPage.fxml";
+
+    private static final double TRIANGLE_QUANTIFIER_SMALL = 0.75;
+    private static final double TRIANGLE_QUANTIFIER_BIG = 1.25;
+    private static final int TRIANGLE_NUMBER_OF_CORNERS = 3;
+
+    private static final Integer[] DEFAULT_FONT_SIZES = {9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 28, 30};
+
+    private static final int TAG_PAGE_LAYOUT_X = 0;
+    private static final int TAG_PAGE_LAYOUT_Y = 150;
+    private static final int TAG_PAGE_TRANSLATE_X = -301;
+    private static final int TAG_PAGE_TO_X = 0;
+    private static final int TAG_PAGE_ANIMATION_DELAY = 650;
+
     private static MainPageController SINGLETON;
 
-    private static TextField currentNoteName;
+    private AnchorPane fille;
 
-    public static void loadNoteSave(NoteSave noteSave) {
+    public static MainPageController getInstance () {
+        return SINGLETON;
+    }
+
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        SINGLETON = this;
+
+        Note.setCurrentNote(new Note());
+        Note.setCurrentNodes(notePane.getChildren());
+
+        initFontComboBox();
+        initTextSizeComboBox();
+
+        loadFileManager();
+        prepareSlideMenuAnimation();
+
+        setOnMousePressedNotePane();
+        setOnMouseReleasedNotePane();
+        setOnNameTextFieldChanged();
+
+        initPaintConfigs();
+        setBrushPicture();
+    }
+
+    private void initPaintConfigs() {
+        colorPicker.setValue(Color.BLACK);
+        PaintingContainer.setPaintbrush(CIRCLE);
+        circleButton.setSelected(true);
+    }
+
+    public void loadNoteSave(NoteSave noteSave) {
         List<NoteObjectControllerI> controllers = noteSave.loadControllers();
         Note.getCurrentNodes().clear();
         Note note = new Note(noteSave.getName());
         note.setTags(noteSave.getTags());
-        getInstance().loadNoteTagsInTagBar(noteSave.getTags());
+        loadNoteTagsInTagBar(noteSave.getTags());
         for (NoteObjectControllerI controller : controllers)
             note.getModels().add(controller.getModel());
         Note.setCurrentNote(note);
-        currentNoteName.setText(note.getName());
-
+        nameTextField.setText(note.getName());
     }
 
     public void loadNoteTagsInTagBar (String tags) {
@@ -110,7 +149,7 @@ public class MainPageController implements Initializable {
         for (int i = 0; i < tagsArray.length; i++) {
             String tagText = tagsArray[i];
             try {
-                FXMLLoader tagPane = new FXMLLoader(getClass().getResource("/TagPane.fxml"));
+                FXMLLoader tagPane = new FXMLLoader(getClass().getResource(TAG_PANE_PATH));
                 AnchorPane tag = tagPane.load();
                 ((Label) tag.getChildren().get(0)).setText(tagText);
                 tagBar.getChildren().add(tag);
@@ -120,46 +159,29 @@ public class MainPageController implements Initializable {
         }
     }
 
-    public static MainPageController getInstance () {
-        return SINGLETON;
+    private void initTextSizeComboBox() {
+        ObservableList<Integer> sizes = FXCollections.observableArrayList(DEFAULT_FONT_SIZES);
+        textSizeComboBox.setItems(sizes);
+        textSizeComboBox.getSelectionModel().select(sizes.get(3));
     }
 
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        SINGLETON = this;
-        Note.setCurrentNote(new Note());
-        Note.setCurrentNodes(notePane.getChildren());
+    private void initFontComboBox() {
+        ObservableList<String> fonts = FXCollections.observableList(Font.getFamilies());
+        textFontComboBox.setItems(fonts);
+        textFontComboBox.getSelectionModel().select(TextContainer.DEFAULT_FONT);
+    }
 
-        currentNoteName = nameTextField;
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TagPage.fxml"));
+    private void loadFileManager() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(TAG_PAGE_PATH));
         try {
             fille = loader.load();
-            fille.setLayoutX(0);
-            fille.setTranslateX(-301);
-            fille.setLayoutY(150);
+            fille.setLayoutX(TAG_PAGE_LAYOUT_X);
+            fille.setTranslateX(TAG_PAGE_TRANSLATE_X);
+            fille.setLayoutY(TAG_PAGE_LAYOUT_Y);
             fabNotesWindow.getChildren().add(fille);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        ObservableList<String> fonts = FXCollections.observableList(this.fonts);
-
-        textFontComboBox.setItems(fonts);
-        textFontComboBox.getSelectionModel().select(TextContainer.DEFAULT_FONT);
-
-        ObservableList<Integer> sizes = FXCollections.observableArrayList(9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 28, 30);
-        textSizeComboBox.setItems(sizes);
-        textSizeComboBox.getSelectionModel().select(sizes.get(3));
-
-        prepareSlideMenuAnimation();
-        setOnMousePressedNotePane();
-        setOnMouseReleasedNotePane();
-        colorPicker.setValue(Color.BLACK);
-        PaintingContainer.setPaintbrush(CIRCLE);
-        circleButton.setSelected(true);
-        setBrushPicture();
-        setOnNameTextFieldChanged();
-
     }
 
     private void setOnNameTextFieldChanged() {
@@ -171,6 +193,73 @@ public class MainPageController implements Initializable {
         });
     }
 
+    private void setOnMousePressedNotePane() {
+        notePane.setOnMousePressed(event -> {
+            NoteObjectControllerI controller = null;
+            try {
+                controller = StateHandler.getInstance().getState().getOnMousePressed(notePane, event);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            addNodeToNotePane(controller);
+        });
+    }
+
+    private void setOnMouseReleasedNotePane() {
+        notePane.setOnMouseReleased(event -> {
+            NoteObjectControllerI controller = null;
+            try {
+                controller = StateHandler.getInstance().getState().getOnMouseReleased(notePane, event);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            addNodeToNotePane(controller);
+        });
+    }
+
+    private void addNodeToNotePane(NoteObjectControllerI controller) {
+        if (controller != null) {
+            Note.getCurrentNote().addNoteObject(controller.getModel());
+        }
+    }
+
+    private void prepareSlideMenuAnimation() {
+        TranslateTransition openFille = new TranslateTransition(new Duration(TAG_PAGE_ANIMATION_DELAY), fille);
+        openFille.setToX(TAG_PAGE_TO_X);
+        TranslateTransition closeFille = new TranslateTransition(new Duration(TAG_PAGE_ANIMATION_DELAY), fille);
+        tagMenuButton.setOnMouseClicked(mouseEvent -> {
+            fille.toFront();
+            if (fille.getTranslateX() != TAG_PAGE_TO_X) {
+                openFille.play();
+            } else {
+                closeFille.setToX(TAG_PAGE_TRANSLATE_X);
+                closeFille.play();
+            }
+        });
+    }
+
+    private void setBrushPicture() {
+        GraphicsContext gc = brushPictureCanvas.getGraphicsContext2D();
+        gc.clearRect(brushPictureCanvas.getLayoutX(), brushPictureCanvas.getLayoutY(), brushPictureCanvas.getWidth(), brushPictureCanvas.getHeight());
+        //gc.setFill(Color.WHITE);
+        //gc.fillRect(brushPictureCanvas.getLayoutX(),brushPictureCanvas.getLayoutY(),brushPictureCanvas.getWidth(),brushPictureCanvas.getHeight());
+        gc.setFill(Paintbrush.getColor());
+        switch (PaintingContainer.getPaintbrush()) {
+            case TRIANGLE:
+                double[] xPoints = {brushPicture.getPrefWidth() / 2 - Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefWidth() / 2, brushPicture.getPrefWidth() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG};
+                double[] yPoints = {brushPicture.getPrefHeight() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_SMALL, brushPicture.getPrefHeight() / 2 - Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefHeight() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_SMALL};
+                gc.fillPolygon(xPoints, yPoints, TRIANGLE_NUMBER_OF_CORNERS);
+                break;
+            case SQUARE:
+                gc.fillRect(brushPicture.getPrefWidth() / 2 - (Paintbrush.getSize() / 2), brushPicture.getPrefHeight() / 2 - (Paintbrush.getSize() / 2), Paintbrush.getSize(), Paintbrush.getSize());
+                break;
+            case CIRCLE:
+                gc.fillOval(brushPicture.getPrefWidth() / 2 - (Paintbrush.getSize() / 2), brushPicture.getPrefHeight() / 2 - (Paintbrush.getSize() / 2), Paintbrush.getSize(), Paintbrush.getSize());
+                break;
+        }
+
+    }
+
     @FXML
     private void undoAction() {
         Event.getEvents().get(Event.getEvents().size() - 1).undo();
@@ -178,7 +267,6 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void addTag(KeyEvent event) {
-        //System.out.println("addTag");
         if (event.getCode().equals(KeyCode.ENTER)) {
             String newTagText = addTagTextField.getText();
             try {
@@ -196,19 +284,6 @@ public class MainPageController implements Initializable {
             TagPageController.getInstance().getTagFlowPane().getChildren().clear();
             TagPageController.loadTagFlowPane();
         }
-    }
-
-
-    private void setOnMousePressedNotePane() {
-        notePane.setOnMousePressed(event -> {
-            NoteObjectControllerI controller = null;
-            try {
-                controller = StateHandler.getInstance().getState().getOnMousePressed(notePane, event);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            addNodeToNotePane(controller);
-        });
     }
 
     @FXML
@@ -237,39 +312,6 @@ public class MainPageController implements Initializable {
     @FXML
     private void changeSize() {
         TextContainer.setFontSize((int) textSizeComboBox.getSelectionModel().getSelectedItem());
-    }
-
-    private void setOnMouseReleasedNotePane() {
-        notePane.setOnMouseReleased(event -> {
-            NoteObjectControllerI controller = null;
-            try {
-                controller = StateHandler.getInstance().getState().getOnMouseReleased(notePane, event);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            addNodeToNotePane(controller);
-        });
-    }
-
-    private void addNodeToNotePane(NoteObjectControllerI controller) {
-        if (controller != null) {
-            Note.getCurrentNote().addNoteObject(controller.getModel());
-        }
-    }
-
-    private void prepareSlideMenuAnimation() {
-        TranslateTransition openFille = new TranslateTransition(new Duration(1000), fille);
-        openFille.setToX(0);
-        TranslateTransition closeFille = new TranslateTransition(new Duration(1000), fille);
-        tagMenuButton.setOnMouseClicked(mouseEvent -> {
-            fille.toFront();
-            if (fille.getTranslateX() != 0) {
-                openFille.play();
-            } else {
-                closeFille.setToX(-301);
-                closeFille.play();
-            }
-        });
     }
 
     @FXML
@@ -307,7 +349,7 @@ public class MainPageController implements Initializable {
         File file = fileChooser.showOpenDialog(this.notePane.getScene().getWindow());
         try {
             NoteSave noteSave = FileHandler.loadNote(file);
-            loadNoteSave(noteSave);
+            this.loadNoteSave(noteSave);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -347,28 +389,6 @@ public class MainPageController implements Initializable {
         circleButton.setSelected(false);
         squareButton.setSelected(false);
         setBrushPicture();
-    }
-
-    private void setBrushPicture() {
-        GraphicsContext gc = brushPictureCanvas.getGraphicsContext2D();
-        gc.clearRect(brushPictureCanvas.getLayoutX(), brushPictureCanvas.getLayoutY(), brushPictureCanvas.getWidth(), brushPictureCanvas.getHeight());
-        //gc.setFill(Color.WHITE);
-        //gc.fillRect(brushPictureCanvas.getLayoutX(),brushPictureCanvas.getLayoutY(),brushPictureCanvas.getWidth(),brushPictureCanvas.getHeight());
-        gc.setFill(Paintbrush.getColor());
-        switch (PaintingContainer.getPaintbrush()) {
-            case TRIANGLE:
-                double[] xPoints = {brushPicture.getPrefWidth() / 2 - Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefWidth() / 2, brushPicture.getPrefWidth() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG};
-                double[] yPoints = {brushPicture.getPrefHeight() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_SMALL, brushPicture.getPrefHeight() / 2 - Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefHeight() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_SMALL};
-                gc.fillPolygon(xPoints, yPoints, TRIANGLE_NUMBER_OF_CORNERS);
-                break;
-            case SQUARE:
-                gc.fillRect(brushPicture.getPrefWidth() / 2 - (Paintbrush.getSize() / 2), brushPicture.getPrefHeight() / 2 - (Paintbrush.getSize() / 2), Paintbrush.getSize(), Paintbrush.getSize());
-                break;
-            case CIRCLE:
-                gc.fillOval(brushPicture.getPrefWidth() / 2 - (Paintbrush.getSize() / 2), brushPicture.getPrefHeight() / 2 - (Paintbrush.getSize() / 2), Paintbrush.getSize(), Paintbrush.getSize());
-                break;
-        }
-
     }
 
     @FXML
