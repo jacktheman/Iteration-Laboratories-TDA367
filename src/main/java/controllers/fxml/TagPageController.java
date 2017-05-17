@@ -16,6 +16,7 @@ import services.NoteSave;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
 import java.util.ResourceBundle;
@@ -31,19 +32,23 @@ public class TagPageController implements Initializable {
     private ListView<String> noteListView;
     @FXML
     private FlowPane tagFlowPane;
+
+    private static TagPageController SINGLETON;
+
     private List<String> tagsList;
     private String[] tagsArray;
     private File[] notes;
-    private static TagPageController SINGLETON;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SINGLETON = this;
         loadTagFlowPane();
-        listNotes();
+        updateNoteList();
+        addListenerToSearchField();
     }
 
-    private void listNotes() {
-        notes = FileHandler.listNotes();
+    void listNotes(File[] notes) {
+        if (notes.length > 0)
+            noteListView.getItems().clear();
         for (File note : notes) {
             String listItem = note.getName().replace(FileHandler.FILE_TYPE, " ");
             listItem += "  [" + (new Date(note.lastModified())).toString() + "]";
@@ -51,20 +56,25 @@ public class TagPageController implements Initializable {
         }
     }
 
-    @FXML
-    private void onMousePressedMenuItem(MouseEvent mouseEvent) {
-        try {
-            String fileName = noteListView.getSelectionModel().getSelectedItem();
-            NoteSave noteSave = FileHandler.loadNote(new File(FileHandler.FILE_PATH +
-                    fileName.substring(0, fileName.indexOf("[") - 3) + FileHandler.FILE_TYPE));
-            MainPageController.loadNoteSave(noteSave);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    public static void updateNoteList(){
+        SINGLETON.listNotes(FileHandler.listNotes());
     }
 
+    private void addListenerToSearchField(){
+       searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
+           try {
+                List<File> searchList =  FileHandler.searchList(newValue);
+                File[] searchArray = new File[searchList.size()];
+                for (int i = 0; i < searchList.size(); i++)
+                    searchArray[i] = searchList.get(i);
+                listNotes(searchArray);
+           } catch (IOException e) {
+               e.printStackTrace();
+           } catch (ClassNotFoundException e) {
+               e.printStackTrace();
+           }
+       });
+    }
 
     static void loadTagFlowPane() {
         try {
@@ -90,11 +100,9 @@ public class TagPageController implements Initializable {
         }
     }
 
-
     void setTagsList(List<String> list) {
         tagsList = list;
     }
-
 
     void setTagsArray (String [] str) {
         tagsArray = str;
@@ -116,6 +124,18 @@ public class TagPageController implements Initializable {
         return tagsArray;
     }
 
-
+    @FXML
+    private void onMousePressedMenuItem(MouseEvent mouseEvent) {
+        try {
+            String fileName = noteListView.getSelectionModel().getSelectedItem();
+            NoteSave noteSave = FileHandler.loadNote(new File(FileHandler.FILE_PATH +
+                    fileName.substring(0, fileName.indexOf("[") - 3) + FileHandler.FILE_TYPE));
+            MainPageController.getInstance().loadNoteSave(noteSave);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

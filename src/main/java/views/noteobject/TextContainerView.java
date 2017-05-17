@@ -21,7 +21,6 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
         this.setLayoutY(layoutY);
         this.setPrefWidth(0);
         this.setPrefHeight(0);
-        textHolder.textProperty().bind(this.textProperty());
         updateTextContainerSize();
         this.setWrapText(true);
     }
@@ -31,6 +30,11 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
     }
 
     public void updateTextContainerSize() {
+        if (!this.textProperty().isBound()) {
+            textHolder.textProperty().bind(this.textProperty());
+            textHolder.setFont(this.getFont());
+        }
+
         double newWidth = this.textHolder.getLayoutBounds().getWidth() + TextContainer.PADDING + this.getFont().getSize();
         double newHeight = this.textHolder.getLayoutBounds().getHeight() + TextContainer.PADDING + this.getFont().getSize();
 

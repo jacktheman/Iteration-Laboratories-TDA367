@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -98,6 +99,63 @@ public class FileHandler {
     public static File[] listNotes() {
         File file = new File(FILE_DIR);
         return file.listFiles((file1, s) -> s.contains(FILE_TYPE));
+    }
+
+    public static List<File> fileList(String word) {
+        File[] fileArray = listNotes();
+        List<File> fileList = new ArrayList<>();
+        for (File file : fileArray
+                ) {
+            if (file.getName().toLowerCase().contains(word.toLowerCase())) {
+                fileList.add(file);
+            }
+        }
+        return fileList;
+    }
+
+    public static List<File> tagList(String word) throws IOException, ClassNotFoundException {
+        File[] fileArray = listNotes();
+        List<File> fileList = new ArrayList<>();
+        for (File file : fileArray) {
+            if (file.exists()) {
+                if (FileHandler.loadNote(file).getTags().toLowerCase().contains(word.toLowerCase())) {
+                    fileList.add(file);
+                }
+            }
+        }
+
+        return fileList;
+    }
+
+    public static List<File> searchList(String word) throws IOException, ClassNotFoundException {
+        List<File> fileList = new ArrayList<>();
+        List<File> tagList = tagList(word);
+        List<File> sortedList;
+        fileList.addAll(fileList(word));
+        for (File file : tagList) {
+            if (!fileList.contains(file)) {
+                fileList.add(file);
+            }
+        }
+        sortedList = sortFiles(fileList);
+        return sortedList;
+    }
+
+    public static List<File> sortFiles(List<File> fileList) {
+        List<String> stringList = new ArrayList<>();
+        List<File> sortedList = new ArrayList<>();
+        for (File file : fileList) {
+            stringList.add(file.getName());
+        }
+        Collections.sort(stringList);
+        for (String string : stringList) {
+            for (File file : fileList) {
+                if (string.toLowerCase().equals(file.getName().toLowerCase())) {
+                    sortedList.add(file);
+                }
+            }
+        }
+        return sortedList;
     }
 
 }
