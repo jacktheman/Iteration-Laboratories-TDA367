@@ -80,7 +80,7 @@ public class TagPageController implements Initializable {
             String tagText = SINGLETON.getTagsArray()[i];
             try {
                 AnchorPane tag;
-                FXMLLoader loadTag = new FXMLLoader(TagPageController.class.getResource("/TagPane.fxml"));
+                FXMLLoader loadTag = new FXMLLoader(TagPageController.class.getResource("/TagInCloudPane.fxml"));
                 tag = loadTag.load();
                 ((Label) tag.getChildren().get(0)).setText(tagText);
                 SINGLETON.getTagFlowPane().getChildren().add(tag);
