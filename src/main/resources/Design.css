@@ -56,6 +56,10 @@
     -fx-background-color: #CEE0ED;
 }
 
+#tagInCloudPane{
+    -fx-background-color: FFAB40;
+}
+
 #removeTagButton{
     -fx-background-color: #CEE0ED;
     -fx-text-fill: #212121;
@@ -64,3 +68,13 @@
 #removeTagButton:hover{
     -fx-background-color: #ABC5D7;
 }
+
+#removeTagInCloudButton{
+    -fx-background-color: FFAB40;
+    -fx-text-fill: 21#2121;
+}
+
+#removeTagInCloudButton:hover{
+    -fx-background-color: #C77C02;
+}
+
