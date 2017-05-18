@@ -139,7 +139,7 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
 
     @Override
     public int hashCode() {
-        return (super.hashCode() + super.getModelNumber() + 2*super.hashCode()*super.getModelNumber())*3;
+        return super.hashCode()*3;
     }
 
     @Override
@@ -150,6 +150,11 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
             }
         }
         return false;
+    }
+
+    @Override
+    public NoteObjectI duplicate() {
+        return new ImageContainer(this);
     }
 
     public boolean getRemove(){

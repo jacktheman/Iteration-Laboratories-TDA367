@@ -1,7 +1,4 @@
-package services;
-
-import observers.ObservableI;
-import observers.ObserverI;
+package observers;
 
 import java.util.ArrayList;
 import java.util.List;

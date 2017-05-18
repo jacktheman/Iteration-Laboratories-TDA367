@@ -1,6 +1,5 @@
-package services;
+package factory;
 
-import generators.NoteObjectCloner;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -11,6 +10,8 @@ import models.noteobject.NoteObjectI;
  * Created by svante on 2017-05-10.
  */
 public class ContextMenuFactory {
+
+    private static NoteObjectI copiedObject;
 
     private ContextMenuFactory(){}
 
@@ -33,7 +34,7 @@ public class ContextMenuFactory {
     public static MenuItem copyItem(NoteObjectI model){
         MenuItem copy = new MenuItem("Kopiera");
         copy.setOnAction(KeyEvent -> {
-            NoteObjectCloner.setCopiedObject(model);
+            copiedObject = model.duplicate();
             System.out.println("Kopierade något");
         });
         return copy;
@@ -47,4 +48,7 @@ public class ContextMenuFactory {
         return putToFront;
     }
 
+    public static NoteObjectI getCopiedObject() {
+        return copiedObject;
+    }
 }

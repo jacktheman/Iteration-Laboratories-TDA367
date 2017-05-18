@@ -12,11 +12,10 @@ import javafx.scene.layout.FlowPane;
 import services.FileHandler;
 import java.io.IOException;
 
-import services.NoteSave;
+import save.NoteSave;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
 import java.util.ResourceBundle;

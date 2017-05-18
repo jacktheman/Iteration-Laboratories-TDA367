@@ -5,7 +5,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import models.note.Note;
 import models.noteobject.TextContainer;
-import services.ObserverBus;
+import observers.ObserverBus;
 import views.noteobject.TextContainerView;
 
 /**
@@ -15,7 +15,6 @@ public class TextContainerController extends NoteObjectController<TextContainerV
 
     public TextContainerController(String text, double layoutX, double layoutY) {
         super(new TextContainerView(text, layoutX, layoutY), new TextContainer(text, layoutX, layoutY));
-        //super.getModel().addStyle(super.getModel().getFont());
         super.getNode().setFont(this.getFont());
         ObserverBus.addListener(super.getModel(), super.getNode());
         listener();
@@ -25,7 +24,6 @@ public class TextContainerController extends NoteObjectController<TextContainerV
     public TextContainerController(TextContainer textContainer) {
         super(new TextContainerView(textContainer.getText(), textContainer.getLayoutX(), textContainer.getLayoutY()),
                 new TextContainer(textContainer));
-        //super.getModel().addStyle(textContainer.getFont());
         super.getNode().setFont(this.getFont());
         ObserverBus.addListener(super.getModel(), super.getNode());
         listener();
@@ -64,5 +62,9 @@ public class TextContainerController extends NoteObjectController<TextContainerV
             font = Font.font(super.getModel().getFontFamilyName(), super.getModel().getFontSize());
         return font;
     }
-    
+
+    public TextContainerController clone() {
+        return new TextContainerController(super.getModel());
+    }
+
 }

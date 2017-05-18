@@ -1,9 +1,7 @@
 package controllers.noteobject;
 
-import javafx.scene.image.Image;
 import models.noteobject.ImageContainer;
-import models.noteobject.NoteObjectI;
-import services.ObserverBus;
+import observers.ObserverBus;
 import events.AddNoteEvent;
 import events.Event;
 import controllers.noteobjectbehaviors.DragDropResizeBehavior;
@@ -31,6 +29,11 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
             super.setBehavior(new DragDropResizeBehavior(super.getModel(), super.getNode()));
             ObserverBus.addListener(super.getModel(), super.getNode());
 
+    }
+
+    @Override
+    public ImageContainerController clone() throws CloneNotSupportedException {
+        return new ImageContainerController(super.getModel());
     }
 }
 
