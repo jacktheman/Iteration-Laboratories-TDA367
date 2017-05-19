@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by jackflurry on 2017-04-07.
  */
-public class PaintingContainer extends NoteObject implements ObservableI{
+public class PaintingContainer extends NoteObjectResizeable implements ObservableI{
 
     private static Paintbrush paintbrush;
     private List<PaintStrokeToData> paintings;
@@ -107,22 +107,24 @@ public class PaintingContainer extends NoteObject implements ObservableI{
         return y;
     }
 
-
+    @Override
     public double getFitWidth() {
         return w;
     }
 
-
-    private void setFitWidth(double w) {
+    @Override
+    public void setFitWidth(double w) {
         this.w = w;
         notifyListeners();
     }
 
+    @Override
     public double getFitHeight() {
         return h;
     }
 
-    private void setFitHeight(double h) {
+    @Override
+    public void setFitHeight(double h) {
         this.h = h;
         notifyListeners();
     }
@@ -186,7 +188,7 @@ public class PaintingContainer extends NoteObject implements ObservableI{
     }
 
     @Override
-    public NoteObjectI duplicate() {
+    public NoteObjectResizeableI duplicate() {
         return new PaintingContainer(this);
     }
 

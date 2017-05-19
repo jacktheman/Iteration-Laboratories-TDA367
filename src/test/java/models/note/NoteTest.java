@@ -15,8 +15,8 @@ import static org.junit.Assert.*;
 public class NoteTest {
 
     private static final String TEST_STRING = "Test";
-
-    private static final NoteObjectI TEST_NOTE_OBJECT = new TextContainer(TEST_STRING, 0, 0);
+    private static final int TEST_NUMBER = 0;
+    private static final NoteObjectI TEST_NOTE_OBJECT = new TextContainer(TEST_STRING, TEST_NUMBER, TEST_NUMBER);
 
     private static Note note;
 

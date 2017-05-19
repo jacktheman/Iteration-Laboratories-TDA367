@@ -10,6 +10,8 @@ import static org.junit.Assert.*;
  */
 public class TextContainerTest {
 
+    private static final String DEFAULT_STRING = "";
+    private static final int DEFAILT_NUMBER = 0;
     private static final String TEST_STRING = "Test";
     private static final int TEST_NUMBER = 10;
 
@@ -17,7 +19,7 @@ public class TextContainerTest {
 
     @BeforeClass
     public static void initTest() {
-        textContainer = new TextContainer("", 0, 0);
+        textContainer = new TextContainer(DEFAULT_STRING, DEFAILT_NUMBER, DEFAILT_NUMBER);
     }
 
     @Test
@@ -48,7 +50,7 @@ public class TextContainerTest {
     @Test
     public void setIsBold() throws Exception {
         TextContainer.setIsBold(true);
-        TextContainer test = new TextContainer("", 0, 0);
+        TextContainer test = new TextContainer(DEFAULT_STRING, DEFAILT_NUMBER, DEFAILT_NUMBER);
         TextContainer.setIsBold(false);
         assertTrue(test.isBold());
     }
@@ -56,7 +58,7 @@ public class TextContainerTest {
     @Test
     public void setIsItalic() throws Exception {
         TextContainer.setIsItalic(true);
-        TextContainer test = new TextContainer("", 0, 0);
+        TextContainer test = new TextContainer(DEFAULT_STRING, DEFAILT_NUMBER, DEFAILT_NUMBER);
         TextContainer.setIsItalic(false);
         assertTrue(test.isItalic());
     }
