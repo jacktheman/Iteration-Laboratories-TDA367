@@ -79,9 +79,11 @@ public class Note implements Serializable {
         return false;
     }
 
-    public void removeTagFromNote(String tag) {
-        String temp = tags.replace(tag.toLowerCase(), "");
-        tags = temp.replace("..", ".");
+    public void removeTag(String tag) {
+        tags = tags.replace(tag.toLowerCase(), "");
+        tags = tags.replace("..", ".");
+        if (tags.length() > 0 && tags.charAt(0) == '.')
+            tags = tags.substring(1);
     }
 
     public static void setCurrentNote(Note note) {
