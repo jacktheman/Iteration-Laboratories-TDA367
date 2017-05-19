@@ -165,7 +165,7 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
     }
 
     @Override
-    public NoteObjectI duplicate() {
+    public ImageContainer duplicate() {
         return new ImageContainer(this);
     }
 
