@@ -9,10 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import org.reactfx.collection.LiveArrayList;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -20,7 +18,6 @@ import java.util.ResourceBundle;
  */
 public class TagPaneController implements Initializable {
 
-    private static ObservableList<String> tags = new LiveArrayList<>();
 
     @FXML
     private AnchorPane tagPane;
@@ -42,6 +39,6 @@ public class TagPaneController implements Initializable {
     }
 
     public static ObservableList<String> getTags() {
-        return tags;
+        return null;
     }
 }

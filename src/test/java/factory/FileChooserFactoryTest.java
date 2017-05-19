@@ -1,6 +1,5 @@
 package factory;
 
-import factory.FileChooserFactory;
 import javafx.stage.FileChooser;
 import org.junit.Test;
 
