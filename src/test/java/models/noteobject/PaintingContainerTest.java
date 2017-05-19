@@ -1,3 +1,4 @@
+package models.noteobject;
 
 import models.noteobject.PaintingContainer;
 import org.junit.Test;
@@ -11,9 +12,13 @@ import static org.junit.Assert.*;
  */
 public class PaintingContainerTest {
 
+    private final int TEST_INIT_LAYOUT = 100;
+    private final int TEST_NUMBER = 50;
+    private final int TEST_BIGGER_NUMBER = 75;
+    private PaintingContainer container = new PaintingContainer(TEST_INIT_LAYOUT,TEST_INIT_LAYOUT);
+    
     @Test
-    public void duplicateContainer(){
-        PaintingContainer container = new PaintingContainer(100,100);
+    public void duplicateContainer() throws Exception {
         PaintingContainer container2 = (PaintingContainer)container.duplicate();
         assertTrue(container2.getLayoutX() == container.getLayoutX());
         assertTrue(container2.getLayoutY() == container.getLayoutY());
@@ -26,15 +31,26 @@ public class PaintingContainerTest {
     }
 
     @Test
-    public void testPaintbrush(){
+    public void setLayoutX() throws Exception {
+        container.setLayoutX(TEST_NUMBER);
+        assertTrue(container.getLayoutX() == TEST_NUMBER);
+    }
+
+    @Test
+    public void setLayoutY() throws Exception {
+        container.setLayoutY(TEST_NUMBER);
+        assertTrue(container.getLayoutY() == TEST_NUMBER);
+    }
+
+    @Test
+    public void testPaintbrush() throws Exception {
         PaintingContainer.setPaintbrush(Paintbrush.CIRCLE);
         assertEquals(PaintingContainer.getPaintbrush(),Paintbrush.CIRCLE);
     }
 
     @Test
-    public void testPaintings(){
+    public void testPaintings() throws Exception {
         PaintStrokeToData stroke = new PaintStrokeToData();
-        PaintingContainer container = new PaintingContainer(100,100);
         container.addPainting(stroke);
         assertSame(container.getPaintings().size(),1);
         container.removeLastPainting();
@@ -42,14 +58,13 @@ public class PaintingContainerTest {
     }
 
     @Test
-    public void testPaintingResizer(){
-        PaintingContainer container = new PaintingContainer(100,100);
-        container.setFitHeight(50);
-        container.setFitWidth(50);
-        assertTrue(container.getFitHeight() == 50);
-        assertTrue(container.getFitWidth()== 50.0);
-        container.paintingSizeCounter(100,100);
-        assertTrue(container.getFitHeight()>50 && container.getFitWidth()>50);
+    public void testPaintingResizer() throws Exception {
+        container.setFitHeight(TEST_NUMBER);
+        container.setFitWidth(TEST_NUMBER);
+        assertTrue(container.getFitHeight() == TEST_NUMBER);
+        assertTrue(container.getFitWidth()== TEST_NUMBER);
+        container.paintingSizeCounter(TEST_BIGGER_NUMBER,TEST_BIGGER_NUMBER);
+        assertTrue(container.getFitHeight()>TEST_NUMBER && container.getFitWidth()>TEST_NUMBER);
 
     }
 
