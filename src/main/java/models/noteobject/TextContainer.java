@@ -145,6 +145,10 @@ public class TextContainer extends NoteObject implements ObservableI {
         this.isFocused = isFocused;
     }
 
+    public boolean isFocused() {
+        return this.isFocused;
+    }
+
     public void setText(String text) {
         this.text = text;
     }
@@ -212,7 +216,7 @@ public class TextContainer extends NoteObject implements ObservableI {
     }
 
     @Override
-    public NoteObjectI duplicate() {
+    public TextContainer duplicate() {
         return new TextContainer(this);
     }
 }

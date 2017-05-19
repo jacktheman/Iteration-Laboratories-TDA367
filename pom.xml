@@ -39,11 +39,6 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
         </dependency>
-        <dependency>
-            <groupId>org.fxmisc.richtext</groupId>
-            <artifactId>richtextfx</artifactId>
-            <version>0.7-M5</version>
-        </dependency>
     </dependencies>
 
 

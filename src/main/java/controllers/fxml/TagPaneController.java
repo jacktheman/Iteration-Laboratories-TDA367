@@ -11,13 +11,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
  * Created by alexandra on 2017-05-16.
  */
 public class TagPaneController implements Initializable {
-
 
     @FXML
     private AnchorPane tagPane;
@@ -36,9 +36,5 @@ public class TagPaneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    }
-
-    public static ObservableList<String> getTags() {
-        return null;
     }
 }

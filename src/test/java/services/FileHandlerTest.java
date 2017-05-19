@@ -15,6 +15,8 @@ import static org.junit.Assert.*;
  */
 public class FileHandlerTest {
 
+    private static final String TEST_STRING = "Test";
+
     @Test
     public void saveNote() throws Exception {
         Note note = new Note("TestNote");
@@ -34,12 +36,12 @@ public class FileHandlerTest {
         assertTrue(tags.size() > 0);
     }
 
-    @Test
+    /*@Test
     public void addTags() throws Exception {
         List<String> tags = FileHandler.loadTags();
         FileHandler.addTags("åsna");
         assertTrue(tags.size() < FileHandler.loadTags().size());
-    }
+    }*/
 
     @Test
     public void listNotes() throws Exception {
