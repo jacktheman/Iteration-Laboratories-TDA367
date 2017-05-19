@@ -129,6 +129,7 @@ public class MainPageController implements Initializable {
     private void initPaintConfigs() {
         colorPicker.setValue(Color.BLACK);
         PaintingContainer.setPaintbrush(CIRCLE);
+        changeColor();
         circleButton.setSelected(true);
     }
 
@@ -250,8 +251,6 @@ public class MainPageController implements Initializable {
     private void setBrushPicture() {
         GraphicsContext gc = brushPictureCanvas.getGraphicsContext2D();
         gc.clearRect(brushPictureCanvas.getLayoutX(), brushPictureCanvas.getLayoutY(), brushPictureCanvas.getWidth(), brushPictureCanvas.getHeight());
-        //gc.setFill(Color.WHITE);
-        //gc.fillRect(brushPictureCanvas.getLayoutX(),brushPictureCanvas.getLayoutY(),brushPictureCanvas.getWidth(),brushPictureCanvas.getHeight());
         gc.setFill(Paintbrush.getColor());
         switch (PaintingContainer.getPaintbrush()) {
             case TRIANGLE:

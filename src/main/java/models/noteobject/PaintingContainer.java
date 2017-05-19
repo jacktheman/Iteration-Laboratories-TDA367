@@ -41,7 +41,7 @@ public class PaintingContainer extends NoteObject implements ObservableI{
 
     public PaintingContainer(PaintingContainer model){
         super();
-        paintings = model.getPaintings();
+        paintings = new ArrayList<>(model.getPaintings());
         listeners = new ArrayList<>();
         this.x = model.getLayoutX();
         this.y = model.getLayoutY();

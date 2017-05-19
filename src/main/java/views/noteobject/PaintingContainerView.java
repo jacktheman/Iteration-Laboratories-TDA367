@@ -84,7 +84,7 @@ public class PaintingContainerView extends AnchorPane implements Serializable, O
     public void createPaintStroke(double x, double y, PaintStrokeToData stroke){
         PaintingToData paintingToData = new PaintingToData(x,y,PaintingContainer.getPaintbrush(),Paintbrush.getSize(),Paintbrush.getColor());
         stroke.addPaintToStroke(paintingToData);
-        paintPolygon(paintingToData);
+        paint(paintingToData);
     }
 
 
@@ -93,28 +93,23 @@ public class PaintingContainerView extends AnchorPane implements Serializable, O
         canvas.getGraphicsContext2D().clearRect(canvas.getLayoutX(), canvas.getLayoutY(), canvas.getWidth(), canvas.getHeight());
         for (PaintStrokeToData stroke : paintings) {
             for (PaintingToData painting : stroke.getPaintStroke()) {
-                paintPolygon(painting);
+                paint(painting);
             }
         }
     }
 
-
-    public void paintPolygon(PaintingToData paint){
-        paint(paint.getPaintbrush(),paint.getColor(),paint.getX(),paint.getY(),paint.getSize());
-    }
-
-    public void paint(Paintbrush paintbrush, Color color, double x, double y, double size) {
-        canvas.getGraphicsContext2D().setFill(color);
-        switch (paintbrush) {
+    public void paint(PaintingToData paint) {
+        canvas.getGraphicsContext2D().setFill(paint.getColor());
+        switch (paint.getPaintbrush()) {
             case CIRCLE:
-                canvas.getGraphicsContext2D().fillOval(x - (size / 2), y - (size / 2), size, size);
+                canvas.getGraphicsContext2D().fillOval(paint.getX() - (paint.getSize() / 2), paint.getY() - (paint.getSize() / 2), paint.getSize(), paint.getSize());
                 break;
             case SQUARE:
-                canvas.getGraphicsContext2D().fillRect(x - (size / 2), y - (size / 2), size, size);
+                canvas.getGraphicsContext2D().fillRect(paint.getX() - (paint.getSize() / 2), paint.getY() - (paint.getSize() / 2), paint.getSize(), paint.getSize());
                 break;
             case TRIANGLE:
-                double[] xPoints = {x - size * TRIANGLE_QUANTIFIER_BIG, x, x + size * TRIANGLE_QUANTIFIER_BIG};
-                double[] yPoints = {y + size * TRIANGLE_QUANTIFIER_SMALL, y - size * TRIANGLE_QUANTIFIER_BIG, y + size * TRIANGLE_QUANTIFIER_SMALL};
+                double[] xPoints = {paint.getX() - paint.getSize() * TRIANGLE_QUANTIFIER_BIG, paint.getX(), paint.getX() + paint.getSize() * TRIANGLE_QUANTIFIER_BIG};
+                double[] yPoints = {paint.getY() + paint.getSize() * TRIANGLE_QUANTIFIER_SMALL, paint.getY() - paint.getSize() * TRIANGLE_QUANTIFIER_BIG, paint.getY() + paint.getSize() * TRIANGLE_QUANTIFIER_SMALL};
                 canvas.getGraphicsContext2D().fillPolygon(xPoints, yPoints, TRIANGLE_NUMBER_OF_CORNERS);
                 break;
         }
