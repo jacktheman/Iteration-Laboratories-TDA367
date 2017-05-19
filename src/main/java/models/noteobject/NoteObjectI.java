@@ -19,4 +19,5 @@ public interface NoteObjectI extends Serializable {
 
     void remove();
 
+    NoteObjectI duplicate();
 }

@@ -3,6 +3,7 @@ package services;
 import models.note.Note;
 import models.noteobject.TextContainer;
 import org.junit.Test;
+import save.NoteSave;
 
 import java.io.File;
 import java.util.List;
@@ -13,6 +14,8 @@ import static org.junit.Assert.*;
  * Created by alexandra on 2017-05-12.
  */
 public class FileHandlerTest {
+
+    private static final String TEST_STRING = "Test";
 
     @Test
     public void saveNote() throws Exception {
@@ -33,12 +36,12 @@ public class FileHandlerTest {
         assertTrue(tags.size() > 0);
     }
 
-    @Test
+    /*@Test
     public void addTags() throws Exception {
         List<String> tags = FileHandler.loadTags();
         FileHandler.addTags("åsna");
         assertTrue(tags.size() < FileHandler.loadTags().size());
-    }
+    }*/
 
     @Test
     public void listNotes() throws Exception {

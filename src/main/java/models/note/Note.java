@@ -80,8 +80,10 @@ public class Note implements Serializable {
     }
 
     public void removeTag(String tag) {
-        String temp = tags.replace(tag.toLowerCase(), "");
-        tags = temp.replace("..", ".");
+        tags = tags.replace(tag.toLowerCase(), "");
+        tags = tags.replace("..", ".");
+        if (tags.length() > 0 && tags.charAt(0) == '.')
+            tags = tags.substring(1);
     }
 
     public static void setCurrentNote(Note note) {

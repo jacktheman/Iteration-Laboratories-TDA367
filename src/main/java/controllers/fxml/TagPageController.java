@@ -1,7 +1,5 @@
 package controllers.fxml;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,11 +12,10 @@ import javafx.scene.layout.FlowPane;
 import services.FileHandler;
 import java.io.IOException;
 
-import services.NoteSave;
+import save.NoteSave;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
 import java.util.ResourceBundle;
@@ -34,10 +31,12 @@ public class TagPageController implements Initializable {
     private ListView<String> noteListView;
     @FXML
     private FlowPane tagFlowPane;
+
+    private static TagPageController SINGLETON;
+
     private List<String> tagsList;
     private String[] tagsArray;
     private File[] notes;
-    private static TagPageController SINGLETON;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SINGLETON = this;
@@ -59,21 +58,6 @@ public class TagPageController implements Initializable {
     public static void updateNoteList(){
         SINGLETON.listNotes(FileHandler.listNotes());
     }
-
-    @FXML
-    private void onMousePressedMenuItem(MouseEvent mouseEvent) {
-        try {
-            String fileName = noteListView.getSelectionModel().getSelectedItem();
-            NoteSave noteSave = FileHandler.loadNote(new File(FileHandler.FILE_PATH +
-                    fileName.substring(0, fileName.indexOf("[") - 3) + FileHandler.FILE_TYPE));
-            MainPageController.loadNoteSave(noteSave);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     private void addListenerToSearchField(){
        searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
@@ -105,7 +89,7 @@ public class TagPageController implements Initializable {
             String tagText = SINGLETON.getTagsArray()[i];
             try {
                 AnchorPane tag;
-                FXMLLoader loadTag = new FXMLLoader(TagPageController.class.getResource("/TagPane.fxml"));
+                FXMLLoader loadTag = new FXMLLoader(TagPageController.class.getResource("/TagInCloudPane.fxml"));
                 tag = loadTag.load();
                 ((Label) tag.getChildren().get(0)).setText(tagText);
                 SINGLETON.getTagFlowPane().getChildren().add(tag);
@@ -115,13 +99,9 @@ public class TagPageController implements Initializable {
         }
     }
 
-
-
-
     void setTagsList(List<String> list) {
         tagsList = list;
     }
-
 
     void setTagsArray (String [] str) {
         tagsArray = str;
@@ -143,6 +123,18 @@ public class TagPageController implements Initializable {
         return tagsArray;
     }
 
-
+    @FXML
+    private void onMousePressedMenuItem(MouseEvent mouseEvent) {
+        try {
+            String fileName = noteListView.getSelectionModel().getSelectedItem();
+            NoteSave noteSave = FileHandler.loadNote(new File(FileHandler.FILE_PATH +
+                    fileName.substring(0, fileName.indexOf("[") - 3) + FileHandler.FILE_TYPE));
+            MainPageController.getInstance().loadNoteSave(noteSave);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

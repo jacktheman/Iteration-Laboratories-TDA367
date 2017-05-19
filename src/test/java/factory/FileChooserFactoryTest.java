@@ -1,6 +1,6 @@
-package services;
+package factory;
 
-import services.FileChooserFactory;
+import factory.FileChooserFactory;
 import javafx.stage.FileChooser;
 import org.junit.Test;
 

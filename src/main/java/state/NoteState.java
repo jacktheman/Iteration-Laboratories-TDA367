@@ -1,6 +1,9 @@
 package state;
 
+import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
+import controllers.noteobject.PaintingContainerController;
+import controllers.noteobject.TextContainerController;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -8,8 +11,11 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import models.note.Note;
+import models.noteobject.ImageContainer;
 import models.noteobject.NoteObjectI;
-import generators.NoteObjectCloner;
+import models.noteobject.PaintingContainer;
+import models.noteobject.TextContainer;
+import factory.ContextMenuFactory;
 
 import java.net.MalformedURLException;
 
@@ -41,7 +47,7 @@ abstract class NoteState implements NoteStateI {
         paste.setOnAction(actionEvent -> {
             pasteOnCanvas(event);
         });
-        if(!pressedFocusOwner(notePane, event)) {
+        if (!pressedFocusOwner(notePane, event)) {
             if (event.getSource().equals(notePane) && event.getButton().equals(MouseButton.SECONDARY)) {
                 contextMenu = new ContextMenu(paste);
                 contextMenu.show(notePane, event.getScreenX(), event.getScreenY());
@@ -51,27 +57,32 @@ abstract class NoteState implements NoteStateI {
     }
 
     @Override
-    public NoteObjectControllerI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException{
+    public NoteObjectControllerI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
 
         return null;
     }
 
-    private void pasteOnCanvas(MouseEvent event){
-       /* Node node = NoteObjectCloner.getCopiedObject();
-        node.setLayoutX(event.getX());
-        node.setLayoutY(event.getY()); */
-
-        NoteObjectI model = NoteObjectCloner.getCopiedObject();
-        model.setLayoutX(event.getX());
-        model.setLayoutY(event.getY());
-        Note.getCurrentNote().addNoteObject(model);
+    private void pasteOnCanvas(MouseEvent event) {
+        NoteObjectI model = initNewNoteObjectController(ContextMenuFactory.getCopiedObject());
+        if (model != null) {
+            model.setLayoutX(event.getX());
+            model.setLayoutY(event.getY());
+            Note.getCurrentNote().addNoteObject(model);
+        }
     }
 
-    public ContextMenu getContextMenu(){
+    private NoteObjectI initNewNoteObjectController(NoteObjectI noteObject) {
+        if (noteObject instanceof TextContainer)
+            return (new TextContainerController((TextContainer) noteObject)).getModel();
+        else if (noteObject instanceof ImageContainer)
+            return (new ImageContainerController((ImageContainer) noteObject).getModel());
+        else if (noteObject instanceof PaintingContainer)
+            return (new PaintingContainerController((PaintingContainer) noteObject).getModel());
+        return null;
+    }
+
+    public ContextMenu getContextMenu() {
         return this.contextMenu;
     }
-
-
-
 
 }
