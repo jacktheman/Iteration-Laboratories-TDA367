@@ -50,6 +50,11 @@ public class StateHandler implements ObservableI{
         return this.state == WriteState.getInstance();
     }
 
+    private void notifyListeners() {
+        for (ObserverI<StateHandler> observer : observers)
+            observer.fireChange(this);
+    }
+
     @Override
     public void addListener(ObserverI observer) {
         observers.add(observer);
@@ -58,11 +63,6 @@ public class StateHandler implements ObservableI{
     @Override
     public void removeListener(ObserverI observer) {
         observers.remove(observer);
-    }
-
-    private void notifyListeners() {
-        for (ObserverI<StateHandler> observer : observers)
-            observer.fireChange(this);
     }
 
 }
