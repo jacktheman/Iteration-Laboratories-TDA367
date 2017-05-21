@@ -35,7 +35,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
 
         primaryStage.setTitle("FabNotes");
-        primaryStage.getIcons().add(new Image(getClass().getResource("Fab32x32.png").toString()));
+        //primaryStage.getIcons().add(new Image(getClass().getResource("Fab32x32.png").toString()));
         primaryStage.setScene(new Scene(root, 1233, 741));
         primaryStage.show();
 

@@ -55,14 +55,24 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
             quota = Math.max(nodeY / nodeX, nodeX / nodeY);
     }
 
-    private boolean minimumSizeReached() {
+    private synchronized boolean minimumSizeReached() {
         if (nodeX < 40 || nodeY < 40) {
+            double xDiff = 40 - nodeX;
+            double yDiff = 40 - nodeY;
             if (nodeX < nodeY) {
                 nodeX = 40;
-                nodeY = nodeX / quota;
+                nodeY = nodeX * quota;
             } else {
                 nodeY = 40;
                 nodeX = nodeY / quota;
+            }
+            if (pos == ResizablePositions.LEFT_UPPER_CORNER || pos == ResizablePositions.RIGHT_UPPER_CORNER ||
+                    pos == ResizablePositions.UPPER_AREA) {
+                oldY -= yDiff;
+            }
+            if (pos == ResizablePositions.LEFT_UPPER_CORNER || pos == ResizablePositions.LEFT_LOWER_CORNER ||
+                    pos == ResizablePositions.LEFT_AREA) {
+                oldX -= xDiff;
             }
             return true;
         }
@@ -98,7 +108,6 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
 
         updateVariables();
 
-        if (!minimumSizeReached()) {
             if (pos == ResizablePositions.LEFT_UPPER_CORNER) {
                 leftUpperCornerResize(mouseY);
             } else if (pos == ResizablePositions.LEFT_LOWER_CORNER) {
@@ -116,11 +125,9 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
             } else if (pos == ResizablePositions.RIGHT_AREA) {
                 rightAreaResize(mouseX);
             }
-        }
 
-        fixQuota();
-
-        confirmVariables();
+        if(!minimumSizeReached())
+            confirmVariables();
     }
 
     private void changeCursorBasedOnPosition() {
