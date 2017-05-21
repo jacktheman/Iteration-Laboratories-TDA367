@@ -21,42 +21,10 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     private double oldY;
     private double quota;
 
-    private boolean minimumSizeReached;
-
     private static ResizablePositions pos;
 
     static ResizablePositions getPos() {
         return pos;
-    }
-
-    @Override
-    public void onMousePressed(MouseEvent mouseEvent) {
-        node.requestFocus();
-        pos = returnCursorLocation(mouseEvent);
-    }
-
-    @Override
-    public void onMouseReleased(MouseEvent mouseEvent) {
-        pos = null;
-    }
-
-    @Override
-    public void onMouseEntered(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void onMouseExited(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void onMouseMoved(MouseEvent mouseEvent) {
-        ResizablePositions position = returnCursorLocation(mouseEvent);
-        changeCursorBasedOnPosition(position);
-    }
-
-    @Override
-    public void onMouseDragged(MouseEvent mouseEvent) {
-        dragResize(mouseEvent);
     }
 
     public ResizeBehavior(NoteObjectResizeableI model, Node view) {
@@ -70,7 +38,7 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
         this.nodeY = imageContainer.getFitHeight();
         this.oldX = imageContainer.getLayoutX();
         this.oldY = imageContainer.getLayoutY();
-        this.quota = fixQuota(nodeY / nodeX, nodeX / nodeY);
+        this.fixQuota();
     }
 
     private void confirmVariables() {
@@ -80,29 +48,28 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
         imageContainer.setLayoutY(this.oldY);
     }
 
-    private double fixQuota(double v1, double v2) {
-        if (this.nodeX > this.nodeY)
-            return Math.min(v1, v2);
-        return Math.max(v1, v2);
+    private void fixQuota() {
+        if (nodeX > nodeY)
+            quota = Math.min(nodeY / nodeX, nodeX / nodeY);
+        else
+            quota = Math.max(nodeY / nodeX, nodeX / nodeY);
     }
 
-    private void checkImageSize() {
-        this.minimumSizeReached = (this.nodeX <= 40)
-                || (this.nodeY <= 40);
-        if (minimumSizeReached) {
-            if (this.nodeX < this.nodeY) {
-                this.nodeX = 40;
-                this.nodeY = this.nodeX / quota;
+    private boolean minimumSizeReached() {
+        if (nodeX < 40 || nodeY < 40) {
+            if (nodeX < nodeY) {
+                nodeX = 40;
+                nodeY = nodeX / quota;
             } else {
-                this.nodeY = 40;
-                this.nodeX = this.nodeY / quota;
+                nodeY = 40;
+                nodeX = nodeY / quota;
             }
+            return true;
         }
+        return false;
     }
 
-    private ResizablePositions returnCursorLocation(MouseEvent mouseEvent) {
-        ResizablePositions pos = null;
-
+    private void returnCursorLocation(MouseEvent mouseEvent) {
         if (cursorIsInUpperLeftCorner(mouseEvent)) {
             pos = ResizablePositions.LEFT_UPPER_CORNER;
         } else if (cursorIsInLowerLeftCorner(mouseEvent)) {
@@ -119,10 +86,9 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
             pos = ResizablePositions.BOTTOM_AREA;
         } else if (cursorIsInRightArea(mouseEvent)) {
             pos = ResizablePositions.RIGHT_AREA;
+        } else {
+            pos = null;
         }
-
-        return pos;
-
     }
 
     private void dragResize(MouseEvent event) {
@@ -132,33 +98,32 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
 
         updateVariables();
 
-        if (pos == ResizablePositions.LEFT_UPPER_CORNER) {
-            leftUpperCornerResize(mouseY);
-        } else if (pos == ResizablePositions.LEFT_LOWER_CORNER) {
-            leftLowerCornerResize(mouseY);
-        } else if (pos == ResizablePositions.RIGHT_UPPER_CORNER) {
-            rightUpperCornerResize(mouseY);
-        } else if (pos == ResizablePositions.RIGHT_LOWER_CORNER) {
-            rightLowerCornerResize(mouseY);
-        } else if (pos == ResizablePositions.UPPER_AREA) {
-            upperAreaResize(mouseY);
-        } else if (pos == ResizablePositions.LEFT_AREA) {
-            leftAreaResize(mouseX);
-        } else if (pos == ResizablePositions.BOTTOM_AREA) {
-            bottomAreaResize(mouseY);
-        } else if (pos == ResizablePositions.RIGHT_AREA) {
-            rightAreaResize(mouseX);
+        if (!minimumSizeReached()) {
+            if (pos == ResizablePositions.LEFT_UPPER_CORNER) {
+                leftUpperCornerResize(mouseY);
+            } else if (pos == ResizablePositions.LEFT_LOWER_CORNER) {
+                leftLowerCornerResize(mouseY);
+            } else if (pos == ResizablePositions.RIGHT_UPPER_CORNER) {
+                rightUpperCornerResize(mouseY);
+            } else if (pos == ResizablePositions.RIGHT_LOWER_CORNER) {
+                rightLowerCornerResize(mouseY);
+            } else if (pos == ResizablePositions.UPPER_AREA) {
+                upperAreaResize(mouseY);
+            } else if (pos == ResizablePositions.LEFT_AREA) {
+                leftAreaResize(mouseX);
+            } else if (pos == ResizablePositions.BOTTOM_AREA) {
+                bottomAreaResize(mouseY);
+            } else if (pos == ResizablePositions.RIGHT_AREA) {
+                rightAreaResize(mouseX);
+            }
         }
 
-        this.quota = fixQuota(nodeY / nodeX, nodeX / nodeY);
-
-        checkImageSize();
+        fixQuota();
 
         confirmVariables();
     }
 
-    private void changeCursorBasedOnPosition(ResizablePositions pos) {
-
+    private void changeCursorBasedOnPosition() {
         if (pos != null) {
             switch (pos) {
                 case RIGHT_UPPER_CORNER:
@@ -224,35 +189,27 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     }
 
     private void leftUpperCornerResize(double mouseY) {
-        if (!minimumSizeReached || mouseY < 0) {
-            oldY = oldY + mouseY;
-            nodeY = nodeY - mouseY;
-            oldX = oldX + mouseY / quota;
-            nodeX = nodeY / quota;
-        }
+        oldY = oldY + mouseY;
+        nodeY = nodeY - mouseY;
+        oldX = oldX + mouseY / quota;
+        nodeX = nodeY / quota;
     }
 
     private void leftLowerCornerResize(double mouseY) {
-        if (!minimumSizeReached || mouseY > nodeY) {
-            this.oldX = this.oldX + this.nodeX - mouseY / this.quota;
-            this.nodeX = mouseY / this.quota;
-            this.nodeY = mouseY;
-        }
+        this.oldX = this.oldX + this.nodeX - mouseY / this.quota;
+        this.nodeX = mouseY / this.quota;
+        this.nodeY = mouseY;
     }
 
     private void rightUpperCornerResize(double mouseY) {
-        if (!minimumSizeReached || mouseY < 0) {
-            this.oldY = this.oldY + mouseY;
-            this.nodeY = this.nodeY - mouseY;
-            this.nodeX = this.nodeY / this.quota;
-        }
+        this.oldY = this.oldY + mouseY;
+        this.nodeY = this.nodeY - mouseY;
+        this.nodeX = this.nodeY / this.quota;
     }
 
     private void rightLowerCornerResize(double mouseY) {
-        if (!minimumSizeReached || mouseY > nodeY) {
-            this.nodeY = mouseY;
-            this.nodeX = mouseY / this.quota;
-        }
+        this.nodeY = mouseY;
+        this.nodeX = mouseY / this.quota;
     }
 
     private void upperAreaResize(double mouseY) {
@@ -273,5 +230,34 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
         this.nodeX = mouseX;
     }
 
+    @Override
+    public void onMousePressed(MouseEvent mouseEvent) {
+        node.requestFocus();
+        returnCursorLocation(mouseEvent);
+    }
+
+    @Override
+    public void onMouseReleased(MouseEvent mouseEvent) {
+        pos = null;
+    }
+
+    @Override
+    public void onMouseEntered(MouseEvent mouseEvent) {
+    }
+
+    @Override
+    public void onMouseExited(MouseEvent mouseEvent) {
+    }
+
+    @Override
+    public void onMouseMoved(MouseEvent mouseEvent) {
+        returnCursorLocation(mouseEvent);
+        changeCursorBasedOnPosition();
+    }
+
+    @Override
+    public void onMouseDragged(MouseEvent mouseEvent) {
+        dragResize(mouseEvent);
+    }
 
 }
