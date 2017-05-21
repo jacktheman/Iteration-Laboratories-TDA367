@@ -1,4 +1,9 @@
 
+
+#fabNotesWindow{
+    -fx-background-color: #d05ce3;
+}
+
 .split-pane:vertical > .split-pane-divider {
     -fx-background-color: gray;
     -fx-opacity: 20%;
@@ -10,8 +15,10 @@
 
 .text-field {
     -fx-border-color: transparent;
-    -fx-text-fill: blue;
-    -fx-opacity: 45%;
+    -fx-text-fill: black;
+    -fx-opacity: 65%;
+    -fx-prompt-text-fill: #bf5f82;
+
 }
 .text-field:focused {
     -fx-opacity: 90%;
@@ -57,7 +64,7 @@
 }
 
 #tagInCloudPane{
-    -fx-background-color: FFAB40;
+    -fx-background-color: #FFAB40;
 }
 
 #removeTagButton{
@@ -70,11 +77,72 @@
 }
 
 #removeTagInCloudButton{
-    -fx-background-color: FFAB40;
-    -fx-text-fill: 21#2121;
+    -fx-background-color: #FFAB40;
+    -fx-text-fill: #212121;
 }
 
 #removeTagInCloudButton:hover{
     -fx-background-color: #C77C02;
 }
+
+#menuBar{
+    -fx-background-color: #6a0080;
+}
+
+#menuHeader .label{
+    -fx-text-fill: white;
+}
+
+#menuHeader .menu-item .label {
+    -fx-text-fill: black;
+}
+
+#newNote {
+    -fx-background-color: #f48fb1;
+}
+
+#writingTab{
+    -fx-background-color: #6a0080;
+}
+
+#writingTab .tab-label{
+    -fx-text-fill: white;
+}
+
+#brushSizeLabel {
+    -fx-text-fill: white;
+}
+
+.button{
+    -fx-background-color: #f48fb1;
+}
+
+.tab-pane .tab-header-background {
+    -fx-background-color: #d05ce3;
+}
+
+.tab-pane .tab:pressed {
+    -fx-background-color: #9c27b0;
+}
+
+.combo-box {
+    -fx-background-color: white;
+}
+
+.toggle-button {
+    -fx-background-color: white;
+}
+
+.color-picker {
+    -fx-background-color: white;
+}
+
+#paintSizePlusButton {
+    -fx-background-color: white;
+}
+
+#paintSizeMinusButton {
+    -fx-background-color: white;
+}
+
 

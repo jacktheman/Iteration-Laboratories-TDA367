@@ -16,7 +16,7 @@ public class PaintingContainerTest {
     private final int TEST_NUMBER = 50;
     private final int TEST_BIGGER_NUMBER = 75;
     private PaintingContainer container = new PaintingContainer(TEST_INIT_LAYOUT,TEST_INIT_LAYOUT);
-    
+
     @Test
     public void duplicateContainer() throws Exception {
         PaintingContainer container2 = (PaintingContainer)container.duplicate();

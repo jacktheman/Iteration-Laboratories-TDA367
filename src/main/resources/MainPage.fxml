@@ -9,7 +9,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -21,28 +20,28 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="fabNotesWindow" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1150.0" stylesheets="@Design.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.fxml.MainPageController">
+<AnchorPane id="fabNotesWindow" fx:id="fabNotesWindow" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1150.0" stylesheets="@Design.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.fxml.MainPageController">
    <children>
-      <AnchorPane fx:id="notePane" layoutX="-14.0" layoutY="142.0" prefHeight="258.0" prefWidth="591.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="142.0" />
-      <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="notePane" layoutX="-88.0" layoutY="142.0" prefHeight="258.0" prefWidth="591.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-88.0" AnchorPane.rightAnchor="88.0" AnchorPane.topAnchor="142.0" />
+      <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
-          <Menu mnemonicParsing="false" text="Arkiv">
+          <Menu fx:id="menuHeader" mnemonicParsing="false" text="Arkiv">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#saveNote" text="Spara" />
                   <MenuItem mnemonicParsing="false" onAction="#loadNote" text="Ladda in" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Redigera">
+          <Menu fx:id="menuHeader" mnemonicParsing="false" text="Redigera">
                <items>
                   <MenuItem fx:id="undoButton" mnemonicParsing="false" onAction="#undoAction" text="Ångra" />
                </items></Menu>
-            <Menu mnemonicParsing="false" text="Infoga">
+            <Menu fx:id="menuHeader" mnemonicParsing="false" text="Infoga">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#importImage" text="Infoga bild" />
               </items>
             </Menu>
-          <Menu mnemonicParsing="false" text="Fönster" />
-            <Menu mnemonicParsing="false" text="Hjälp" />
+          <Menu fx:id="menuHeader" mnemonicParsing="false" text="Fönster" />
+            <Menu fx:id="menuHeader" mnemonicParsing="false" text="Hjälp" />
         </menus>
          <contextMenu>
             <ContextMenu>
@@ -52,53 +51,12 @@
             </ContextMenu>
          </contextMenu>
       </MenuBar>
-      <TabPane layoutX="113.0" layoutY="63.0" prefHeight="83.0" prefWidth="487.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="63.0">
+      <TabPane fx:id="tabPane" layoutX="113.0" layoutY="63.0" prefHeight="83.0" prefWidth="487.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="63.0">
         <tabs>
-          <Tab onSelectionChanged="#changeToWriteState" text="SKRIV">
+          <Tab id="writingTab" fx:id="writingTab" onSelectionChanged="#changeToWriteState" text="SKRIV">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="118.0" prefWidth="545.0" style="-fx-background-color: lightgray;">
+              <AnchorPane id="writingTab" minHeight="0.0" minWidth="0.0" prefHeight="118.0" prefWidth="545.0" style="-fx-background-color: #9c27b0;">
                      <children>
-                        <MenuButton layoutX="392.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="65.0" AnchorPane.leftAnchor="392.0" AnchorPane.topAnchor="3.0">
-                          <items>
-                            <MenuItem mnemonicParsing="false">
-                                 <graphic>
-                                    <ImageView pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@icons/list_ordered_dot.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic></MenuItem>
-                            <MenuItem mnemonicParsing="false">
-                                 <graphic>
-                                    <ImageView pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@icons/list_ordered_dash.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic></MenuItem>
-                              <MenuItem mnemonicParsing="false">
-                                 <graphic>
-                                    <ImageView pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@icons/list_ordered_decimal.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </MenuItem>
-                          </items>
-                           <graphic>
-                              <ImageView pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@icons/list_ordered_dot.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuButton>
-                        <ImageView disable="true" fitHeight="39.0" fitWidth="44.0" layoutX="541.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icons/highlight.png" />
-                           </image>
-                        </ImageView>
                         <ComboBox fx:id="textFontComboBox" layoutX="3.0" layoutY="3.0" onAction="#changeFont" prefHeight="45.0" prefWidth="122.0" />
                         <ComboBox fx:id="textSizeComboBox" layoutX="126.0" layoutY="3.0" onAction="#changeSize" prefHeight="45.0" prefWidth="65.0" />
                         <ToggleButton fx:id="boldToggleButton" layoutX="201.0" layoutY="3.0" mnemonicParsing="false" onAction="#makeBold" prefHeight="45.0" prefWidth="45.0" text="B">
@@ -121,14 +79,22 @@
                               <Font size="14.0" />
                            </font>
                         </ToggleButton>
-                        <ColorPicker layoutX="457.0" layoutY="3.0" prefHeight="45.0" prefWidth="65.0" AnchorPane.leftAnchor="457.0" AnchorPane.topAnchor="3.0" />
+                        <Button layoutX="913.0" layoutY="5.0" mnemonicParsing="false" onAction="#undoAction" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/36973.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab onSelectionChanged="#changeToPaintState" text="MÅLA">
+          <Tab id="writingTab" onSelectionChanged="#changeToPaintState" text="MÅLA">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: lightgray;">
+              <AnchorPane id="paintingTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #9c27b0;">
                      <children>
                         <ButtonBar buttonMinWidth="30.0" layoutX="14.0" layoutY="5.0" prefHeight="40.0" prefWidth="103.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="5.0">
                           <buttons>
@@ -162,10 +128,10 @@
                           </buttons>
                         </ButtonBar>
                         <ColorPicker fx:id="colorPicker" layoutX="204.0" layoutY="12.0" onAction="#changeColor" />
-                        <Label layoutX="455.0" layoutY="17.0" text="Penselstorlek:" />
+                        <Label id="brushSizeLabel" layoutX="455.0" layoutY="17.0" text="Penselstorlek:" />
                         <ButtonBar buttonMinWidth="30.0" layoutX="536.0" layoutY="5.0" prefHeight="40.0" prefWidth="0.0" AnchorPane.leftAnchor="536.0" AnchorPane.topAnchor="5.0">
                           <buttons>
-                            <Button fx:id="paintSizeMinusButton" mnemonicParsing="false" onAction="#shrinkBrushSize" text="-" />
+                            <Button fx:id="paintSizeMinusButton" mnemonicParsing="false" onAction="#shrinkBrushSize" text="-" wrapText="true" />
                               <Button fx:id="paintSizePlusButton" mnemonicParsing="false" onAction="#enlargeBrushSize" text="+" />
                           </buttons>
                         </ButtonBar>
@@ -173,17 +139,21 @@
                            <children>
                               <Canvas fx:id="brushPictureCanvas" height="50.0" width="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children></AnchorPane>
+                        <Button layoutX="923.0" layoutY="5.0" mnemonicParsing="false" onAction="#undoAction" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/36973.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children></AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
-      <Label layoutX="114.0" layoutY="37.0" text="NAMN:" AnchorPane.leftAnchor="114.0" AnchorPane.topAnchor="37.0">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="nameTextField" layoutX="175.0" layoutY="31.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="178.0" promptText="Namnlös" AnchorPane.leftAnchor="175.0" AnchorPane.topAnchor="31.0">
+      <TextField fx:id="nameTextField" layoutX="113.0" layoutY="31.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="178.0" promptText="Namnlös" AnchorPane.leftAnchor="113.0" AnchorPane.topAnchor="31.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -198,7 +168,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <TextField fx:id="addTagTextField" layoutX="356.0" layoutY="31.0" onKeyPressed="#addTag" prefHeight="30.0" prefWidth="112.0" promptText="lägg till tag" />
-      <TilePane fx:id="tagBar" hgap="3.0" layoutX="471.0" layoutY="31.0" prefHeight="30.0" prefWidth="554.0" />
+      <TextField fx:id="addTagTextField" layoutX="291.0" layoutY="31.0" onKeyPressed="#addTag" prefHeight="30.0" prefWidth="112.0" promptText="lägg till tag" />
+      <TilePane fx:id="tagBar" hgap="3.0" layoutX="403.0" layoutY="31.0" prefHeight="30.0" prefWidth="554.0" />
    </children>
 </AnchorPane>
