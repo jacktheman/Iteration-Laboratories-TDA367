@@ -16,7 +16,7 @@ public class Note implements Serializable {
 
     private String name;
 
-    private String tags;
+    private List<String> tags;
 
     private List<NoteObjectI> models;
 
@@ -24,9 +24,11 @@ public class Note implements Serializable {
 
     private static List<Node> currentNodes;
 
+    private List<String> tagsList = new ArrayList<>();
+
     public Note(String name) {
         this.name = name;
-        this.tags = "";
+        this.tags = tagsList;
         this.models = new ArrayList<>();
     }
 
@@ -57,7 +59,7 @@ public class Note implements Serializable {
         return name;
     }
 
-    public String getTags() {
+    public List<String> getTags(){
         return tags;
     }
 
@@ -65,27 +67,25 @@ public class Note implements Serializable {
         this.name = name;
     }
 
-    public void setTags(String tags) {
+    public void setTags(List<String> tags) { //istället för String som inargument
         this.tags = tags;
     }
 
     public boolean addTag(String tag) {
         if (!tags.contains(tag.toLowerCase())) {
-            if (!tags.isEmpty())
-                tags += ".";
-            tags += tag.toLowerCase();
+            tags.add(tag.toLowerCase());
             return true;
         }
         return false;
     }
 
-    public void removeTagFromNote(String tag) {
-        String temp = tags.replace(tag.toLowerCase(), "");
-        tags = temp.replace("..", ".");
+    public void removeTagFromNote (String tag) {
+        tags.remove(tag.toLowerCase());
     }
 
     public static void setCurrentNote(Note note) {
         currentNote = new Note(note.getName());
+        currentNote.setTags(note.getTags());
         for (NoteObjectI model : note.getModels())
             currentNote.addNoteObject(model);
     }

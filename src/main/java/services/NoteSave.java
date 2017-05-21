@@ -19,13 +19,13 @@ import java.util.List;
  */
 public class NoteSave implements Serializable {
     private String name;
-    private String tags;
+    private List<String> tags;
 
     private List<TextContainer> textContainers;
     private List<ImageContainer> imageContainers;
     private List<PaintingContainer> paintingContainers;
 
-    public NoteSave(String name, String tags, List<NoteObjectI> models) {
+    public NoteSave(String name, List<String> tags, List<NoteObjectI> models) {
         this.name = name;
         this.tags = tags;
         textContainers = new ArrayList<>();
@@ -49,7 +49,7 @@ public class NoteSave implements Serializable {
         return this.name;
     }
 
-    public String getTags() {
+    public List<String> getTags() {
         return this.tags;
     }
 

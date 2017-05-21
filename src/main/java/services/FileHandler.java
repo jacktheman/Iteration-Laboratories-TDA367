@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -96,6 +97,22 @@ public class FileHandler {
         }
     }
 
+
+    public static void removeTagFromTagList (String tagToRemove) throws IOException{
+        File file = new File(TAG_LIST);
+        List<String> currentTags = loadTags();
+        currentTags.remove(tagToRemove);
+        String [] remainingTags = currentTags.toArray(new String[currentTags.size()]);
+        System.out.println(Arrays.toString(remainingTags));
+        String str = "";
+        for (int i = 0; i < remainingTags.length; i++) {
+            str = str + remainingTags[i] + "\n";
+        }
+        file.delete();
+        if (file.createNewFile() && str.length() > 0)
+            Files.write(file.toPath(), str.substring(0, str.length()-1).getBytes(), StandardOpenOption.WRITE);
+    }
+
     public static File[] listNotes() {
         File file = new File(FILE_DIR);
         return file.listFiles((file1, s) -> s.contains(FILE_TYPE));
@@ -118,12 +135,13 @@ public class FileHandler {
         List<File> fileList = new ArrayList<>();
         for (File file : fileArray) {
             if (file.exists()) {
-                if (FileHandler.loadNote(file).getTags().toLowerCase().contains(word.toLowerCase())) {
-                    fileList.add(file);
+                for (String tag : FileHandler.loadNote(file).getTags()) {
+                    if (tag.contains(word.toLowerCase())) {
+                        fileList.add(file);
+                    }
                 }
             }
         }
-
         return fileList;
     }
 
