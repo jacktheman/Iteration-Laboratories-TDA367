@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import models.note.Note;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -33,7 +32,7 @@ public class TagPaneController implements Initializable {
 
     @FXML
     public void removeTag(ActionEvent event) {
-        Note.getCurrentNote().removeTag((tagText.getText()));
+        Note.getCurrentNote().removeTagFromNote((tagText.getText()));
         MainPageController.getInstance().loadNoteTagsInTagBar(Note.getCurrentNote().getTags());
     }
 
