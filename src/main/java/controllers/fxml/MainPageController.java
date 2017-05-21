@@ -145,19 +145,20 @@ public class MainPageController implements Initializable {
         nameTextField.setText(note.getName());
     }
 
-    public void loadNoteTagsInTagBar (String tags) {
-        String[] tagsArray = tags.split(Pattern.quote("."));
-        System.out.println(tagsArray.toString());
+    public void loadNoteTagsInTagBar (List<String> tags) {
         tagBar.getChildren().clear();
-        for (int i = 0; i < tagsArray.length; i++) {
-            String tagText = tagsArray[i];
-            try {
-                FXMLLoader tagPane = new FXMLLoader(getClass().getResource(TAG_PANE_PATH));
-                AnchorPane tag = tagPane.load();
-                ((Label) tag.getChildren().get(0)).setText(tagText);
-                tagBar.getChildren().add(tag);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (!tags.isEmpty()) {
+            String[] tagsArray = tags.toArray(new String [tags.size()]);
+            for (int i = 0; i < tagsArray.length; i++) {
+                String tagText = tagsArray[i];
+                try {
+                    FXMLLoader tagPane = new FXMLLoader(getClass().getResource(TAG_PANE_PATH));
+                    AnchorPane tag = tagPane.load();
+                    ((Label) tag.getChildren().get(0)).setText(tagText);
+                    tagBar.getChildren().add(tag);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
