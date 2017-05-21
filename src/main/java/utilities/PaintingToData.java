@@ -13,14 +13,14 @@ public class PaintingToData implements Serializable {
     private final double y;
     private final Paintbrush paintbrush;
     private final double size;
-    private final Color color;
+    private final ColorAdapter color;
 
     public PaintingToData(double x, double y, Paintbrush paintbrush, double size, Color color) {
         this.x = x;
         this.y = y;
         this.paintbrush = paintbrush;
         this.size = size;
-        this.color = color;
+        this.color = new ColorAdapter(color);
     }
 
     public Paintbrush getPaintbrush() {
@@ -28,7 +28,7 @@ public class PaintingToData implements Serializable {
     }
 
     public Color getColor() {
-        return color;
+        return new Color(color.getR(), color.getG(), color.getB(), color.getOpacity());
     }
 
     public double getSize() {

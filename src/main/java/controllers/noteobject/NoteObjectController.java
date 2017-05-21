@@ -39,16 +39,6 @@ abstract class NoteObjectController<T1 extends Node, T2 extends NoteObjectI> imp
     }
 
 
-    @Override
-    public T1 getNode() {
-        return this.view;
-    }
-
-    @Override
-    public T2 getModel() {
-        return this.model;
-    }
-
     NoteObjectBehaviorI getBehavior() {
         return this.noteObjectBehavior;
     }
@@ -117,7 +107,6 @@ abstract class NoteObjectController<T1 extends Node, T2 extends NoteObjectI> imp
         contextMenu = ContextMenuFactory.createContextMenu(copy,remove,putToFront);
     }
 
-
     void removeThisNode(){
         Note.getCurrentNote().removeNoteObject(this.getModel());
     }
@@ -125,5 +114,16 @@ abstract class NoteObjectController<T1 extends Node, T2 extends NoteObjectI> imp
     List<MenuItem> initContextMenuItems(){
         List<MenuItem> menuItemList = new ArrayList<>();
         return menuItemList;
+    }
+
+
+    @Override
+    public T1 getNode() {
+        return this.view;
+    }
+
+    @Override
+    public T2 getModel() {
+        return this.model;
     }
 }

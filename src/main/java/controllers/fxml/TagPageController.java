@@ -75,7 +75,7 @@ public class TagPageController implements Initializable {
        });
     }
 
-    static void loadTagFlowPane() {
+    public static void loadTagFlowPane() {
         try {
             SINGLETON.setTagsList(FileHandler.loadTags());
         } catch (IOException e) {
@@ -84,7 +84,7 @@ public class TagPageController implements Initializable {
         String [] str = new String[SINGLETON.getTagsList().size()];
         SINGLETON.setTagsArray(str);
         SINGLETON.getTagsList().toArray(SINGLETON.getTagsArray());
-
+        SINGLETON.getTagFlowPane().getChildren().clear();
         for (int i = 0; i < SINGLETON.getTagsArray().length; i++) {
             String tagText = SINGLETON.getTagsArray()[i];
             try {

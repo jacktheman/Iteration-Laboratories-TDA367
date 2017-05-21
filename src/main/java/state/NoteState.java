@@ -41,27 +41,6 @@ abstract class NoteState implements NoteStateI {
         return false;
     }
 
-    @Override
-    public NoteObjectControllerI getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
-        MenuItem paste = new MenuItem("Klistra in");
-        paste.setOnAction(actionEvent -> {
-            pasteOnCanvas(event);
-        });
-        if (!pressedFocusOwner(notePane, event)) {
-            if (event.getSource().equals(notePane) && event.getButton().equals(MouseButton.SECONDARY)) {
-                contextMenu = new ContextMenu(paste);
-                contextMenu.show(notePane, event.getScreenX(), event.getScreenY());
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public NoteObjectControllerI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
-
-        return null;
-    }
-
     private void pasteOnCanvas(MouseEvent event) {
         NoteObjectI model = initNewNoteObjectController(ContextMenuFactory.getCopiedObject());
         if (model != null) {
@@ -83,6 +62,27 @@ abstract class NoteState implements NoteStateI {
 
     public ContextMenu getContextMenu() {
         return this.contextMenu;
+    }
+
+    @Override
+    public NoteObjectControllerI getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
+        MenuItem paste = new MenuItem("Klistra in");
+        paste.setOnAction(actionEvent -> {
+            pasteOnCanvas(event);
+        });
+        if (!pressedFocusOwner(notePane, event)) {
+            if (event.getSource().equals(notePane) && event.getButton().equals(MouseButton.SECONDARY)) {
+                contextMenu = new ContextMenu(paste);
+                contextMenu.show(notePane, event.getScreenX(), event.getScreenY());
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public NoteObjectControllerI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
+
+        return null;
     }
 
 }
