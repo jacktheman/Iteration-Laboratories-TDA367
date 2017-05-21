@@ -41,6 +41,7 @@
     -fx-background-color: silver;
     -fx-border-color: silver;
 }
+
 #menu-button:pressed {
     -fx-effect: dropshadow(one-pass-box, gray, 3, 1.0, 0, 0);
     -fx-opacity: 75%;
@@ -54,15 +55,21 @@
 
 #tagPane{
     -fx-background-color: #CEE0ED;
+    -fx-border-radius: 8 8 8 8;
+    -fx-background-radius: 8 8 8 8;
 }
 
 #tagInCloudPane{
     -fx-background-color: #ffd180;
+    -fx-border-radius: 8 8 8 8;
+    -fx-background-radius: 8 8 8 8;
 }
 
 #removeTagButton{
     -fx-background-color: #CEE0ED;
     -fx-text-fill: #212121;
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
 }
 
 #removeTagButton:hover{
@@ -72,6 +79,8 @@
 #removeTagInCloudButton{
     -fx-background-color: #ffd180;
     -fx-text-fill: #212121;
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
 }
 
 #removeTagInCloudButton:hover{
