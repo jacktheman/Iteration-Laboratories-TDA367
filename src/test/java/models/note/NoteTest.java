@@ -49,7 +49,7 @@ public class NoteTest {
     @Test
     public void removeTag() throws Exception {
         int nTags = note.getTags().size();
-        note.removeTag(TEST_STRING);
+        note.removeTagFromNote(TEST_STRING);
         assertFalse(note.getTags().contains(TEST_STRING));
     }
 
