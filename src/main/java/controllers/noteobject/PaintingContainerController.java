@@ -3,12 +3,11 @@ package controllers.noteobject;
 import javafx.scene.input.MouseEvent;
 import models.note.Note;
 import models.noteobject.PaintingContainer;
-import services.ObserverBus;
+import observers.ObserverBus;
 import services.StateHandler;
 import observers.ObserverI;
 import controllers.noteobjectbehaviors.DragDropBehavior;
 import controllers.noteobjectbehaviors.PaintingBehavior;
-import state.PaintState;
 import views.noteobject.PaintingContainerView;
 
 /**
@@ -54,6 +53,11 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
             super.setBehavior(new PaintingBehavior(super.getModel(),super.getNode()));
         }
 
+    }
+
+    @Override
+    public PaintingContainerController clone() {
+        return new PaintingContainerController(super.getModel());
     }
 
 }

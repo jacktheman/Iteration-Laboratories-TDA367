@@ -12,7 +12,13 @@ abstract class NoteObject implements NoteObjectI {
         modelNumber = modelAmount++;
     }
 
-    int getModelNumber() {
+    private int getModelNumber() {
         return modelNumber;
     }
+
+    @Override
+    public int hashCode() {
+        return (super.hashCode() + getModelNumber() + 2*super.hashCode()*getModelNumber());
+    }
+
 }

@@ -1,5 +1,7 @@
 package services;
 
+import save.NoteSave;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
@@ -18,10 +20,6 @@ public class FileHandler {
     public static final String FILE_PATH = FILE_DIR + File.separator;
 
     public static final String FILE_TYPE = ".fab";
-
-    public static final String FILE_EXTENSION = "*" + FILE_TYPE;
-
-    public static final String[] IMAGE_EXTENSIONS = {"*.jpg", "*.png", "*.gif", "*.bmp"};
 
     public static final String TAG_LIST = FILE_PATH + "TAG_LIST.txt";
 

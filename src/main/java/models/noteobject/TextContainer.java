@@ -145,6 +145,10 @@ public class TextContainer extends NoteObject implements ObservableI {
         this.isFocused = isFocused;
     }
 
+    public boolean isFocused() {
+        return this.isFocused;
+    }
+
     public void setText(String text) {
         this.text = text;
     }
@@ -187,7 +191,7 @@ public class TextContainer extends NoteObject implements ObservableI {
 
     @Override
     public int hashCode() {
-        return (super.hashCode() + super.getModelNumber() + 2*super.hashCode()*super.getModelNumber())*2;
+        return super.hashCode()*2;
     }
 
     @Override
@@ -209,5 +213,10 @@ public class TextContainer extends NoteObject implements ObservableI {
     @Override
     public void removeListener(ObserverI observer) {
         listeners.remove(observer);
+    }
+
+    @Override
+    public TextContainer duplicate() {
+        return new TextContainer(this);
     }
 }

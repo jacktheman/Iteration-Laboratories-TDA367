@@ -15,13 +15,6 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
 
     private boolean remove;
 
-    public String getURL() {
-        return URL;
-    }
-
-    public void setURL(String URL) {
-        this.URL = URL;
-    }
 
     private String URL;
 
@@ -32,6 +25,17 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
     private double layoutY;
     private double quota;
 
+
+
+    ImageContainer(String URL, double width, double height){ //Testing constructor to avoid FX issues
+        super();
+        this.URL = URL;
+        this.fitWidth = width;
+        this.fitHeight = height;
+        this.quota = Math.min(fitHeight / fitWidth, fitWidth/fitHeight);
+        this.observerIList = new ArrayList<>();
+
+    }
 
 
     public ImageContainer(String URL){
@@ -65,6 +69,14 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
         this.fitWidth = fitWidth;
         this.fireChange();
     }
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
 
     @Override
     public double getFitHeight() {
@@ -139,7 +151,7 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
 
     @Override
     public int hashCode() {
-        return (super.hashCode() + super.getModelNumber() + 2*super.hashCode()*super.getModelNumber())*3;
+        return super.hashCode()*3;
     }
 
     @Override
@@ -150,6 +162,11 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
             }
         }
         return false;
+    }
+
+    @Override
+    public ImageContainer duplicate() {
+        return new ImageContainer(this);
     }
 
     public boolean getRemove(){

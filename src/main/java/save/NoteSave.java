@@ -1,4 +1,4 @@
-package services;
+package save;
 
 import controllers.noteobject.ImageContainerController;
 import controllers.noteobject.NoteObjectControllerI;
@@ -63,28 +63,10 @@ public class NoteSave implements Serializable {
 
     public List<NoteObjectControllerI> loadControllers(){
         List<NoteObjectControllerI> controllers = new ArrayList<>();
-        controllers.addAll(loadTextContainers());
-        controllers.addAll(loadImageContainers());
-        controllers.addAll(loadPaintingContainers());
-        return controllers;
-    }
-
-    private List<NoteObjectControllerI> loadTextContainers() {
-        List<NoteObjectControllerI> controllers = new ArrayList<>();
         for (TextContainer textContainer : textContainers)
             controllers.add(new TextContainerController(textContainer));
-        return controllers;
-    }
-
-    private List<NoteObjectControllerI> loadImageContainers() {
-        List<NoteObjectControllerI> controllers = new ArrayList<>();
         for (ImageContainer imageContainer : imageContainers)
             controllers.add(new ImageContainerController(imageContainer));
-        return controllers;
-    }
-
-    private List<NoteObjectControllerI> loadPaintingContainers() {
-        List<NoteObjectControllerI> controllers = new ArrayList<>();
         for (PaintingContainer paintingContainer : paintingContainers)
             controllers.add(new PaintingContainerController(paintingContainer));
         return controllers;

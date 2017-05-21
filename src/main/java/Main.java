@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import services.FileHandler;
 
@@ -34,8 +35,10 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
 
         primaryStage.setTitle("FabNotes");
+        primaryStage.getIcons().add(new Image(getClass().getResource("Fab32x32.png").toString()));
         primaryStage.setScene(new Scene(root, 1233, 741));
         primaryStage.show();
+
     }
 
     public static void main(String[] args) {

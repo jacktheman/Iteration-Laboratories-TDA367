@@ -1,4 +1,4 @@
-package services;
+package factory;
 
 import javafx.stage.FileChooser;
 
@@ -6,6 +6,10 @@ import javafx.stage.FileChooser;
  * Created by aron on 2017-04-25.
  */
 public class FileChooserFactory {
+
+    private static final String FILE_EXTENSION = "*.fab";
+
+    private static final String[] IMAGE_EXTENSIONS = {"*.jpg", "*.png", "*.gif", "*.bmp"};
 
     private FileChooserFactory() {}
 
@@ -21,11 +25,11 @@ public class FileChooserFactory {
     }
 
     public static FileChooser getImageChooser() {
-        return createFileChooser("Infoga Bild", FileHandler.IMAGE_EXTENSIONS);
+        return createFileChooser("Infoga Bild", IMAGE_EXTENSIONS);
     }
 
     public static FileChooser getFabNotesChooser() {
-        return createFileChooser("Importera Anteckning", FileHandler.FILE_EXTENSION);
+        return createFileChooser("Importera Anteckning", FILE_EXTENSION);
     }
 
 }

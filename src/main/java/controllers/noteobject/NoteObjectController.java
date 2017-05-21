@@ -4,10 +4,9 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import models.note.Note;
 import models.noteobject.NoteObjectI;
-import services.ContextMenuFactory;
+import factory.ContextMenuFactory;
 import controllers.noteobjectbehaviors.NoteObjectBehaviorI;
 
 import java.util.ArrayList;
@@ -61,7 +60,6 @@ abstract class NoteObjectController<T1 extends Node, T2 extends NoteObjectI> imp
     private void setOnMousePressed() {
         this.getNode().setOnMousePressed(mouseEvent -> {
             this.getNode().requestFocus();
-            onMousePressed(mouseEvent);
             if (noteObjectBehavior != null)
                 noteObjectBehavior.onMousePressed(mouseEvent);
             if(mouseEvent.isSecondaryButtonDown())
@@ -71,7 +69,6 @@ abstract class NoteObjectController<T1 extends Node, T2 extends NoteObjectI> imp
 
     private void setOnMouseReleased() {
         this.getNode().setOnMouseReleased(mouseEvent -> {
-            onMouseReleased(mouseEvent);
             if (noteObjectBehavior != null)
                 noteObjectBehavior.onMouseReleased(mouseEvent);
         });
@@ -100,7 +97,6 @@ abstract class NoteObjectController<T1 extends Node, T2 extends NoteObjectI> imp
 
     private void setOnMouseDragged() {
         this.getNode().setOnMouseDragged(mouseEvent -> {
-            onMouseDragged(mouseEvent);
             if (noteObjectBehavior != null)
                 noteObjectBehavior.onMouseDragged(mouseEvent);
         });
@@ -130,12 +126,4 @@ abstract class NoteObjectController<T1 extends Node, T2 extends NoteObjectI> imp
         List<MenuItem> menuItemList = new ArrayList<>();
         return menuItemList;
     }
-
-    void onMousePressed(MouseEvent event){}
-
-    void onMouseReleased(MouseEvent event){}
-
-    void onMouseDragged(MouseEvent event){}
-
-
 }

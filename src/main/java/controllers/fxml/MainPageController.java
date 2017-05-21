@@ -5,7 +5,6 @@ import controllers.noteobject.NoteObjectControllerI;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,10 +22,10 @@ import javafx.util.Duration;
 import models.note.Note;
 import models.noteobject.PaintingContainer;
 import models.noteobject.TextContainer;
-import services.FileChooserFactory;
+import factory.FileChooserFactory;
 import services.FileHandler;
 import services.StateHandler;
-import services.NoteSave;
+import save.NoteSave;
 import utilities.Paintbrush;
 import events.Event;
 import java.io.File;
@@ -130,6 +129,7 @@ public class MainPageController implements Initializable {
     private void initPaintConfigs() {
         colorPicker.setValue(Color.BLACK);
         PaintingContainer.setPaintbrush(CIRCLE);
+        changeColor();
         circleButton.setSelected(true);
     }
 

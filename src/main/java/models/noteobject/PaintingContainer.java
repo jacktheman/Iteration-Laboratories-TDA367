@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by jackflurry on 2017-04-07.
  */
-public class PaintingContainer extends NoteObject implements ObservableI{
+public class PaintingContainer extends NoteObjectResizeable implements ObservableI{
 
     private static Paintbrush paintbrush;
     private List<PaintStrokeToData> paintings;
@@ -41,7 +41,7 @@ public class PaintingContainer extends NoteObject implements ObservableI{
 
     public PaintingContainer(PaintingContainer model){
         super();
-        paintings = model.getPaintings();
+        paintings = new ArrayList<>(model.getPaintings());
         listeners = new ArrayList<>();
         this.x = model.getLayoutX();
         this.y = model.getLayoutY();
@@ -107,37 +107,25 @@ public class PaintingContainer extends NoteObject implements ObservableI{
         return y;
     }
 
-
+    @Override
     public double getFitWidth() {
         return w;
     }
 
-
-    private void setFitWidth(double w) {
+    @Override
+    public void setFitWidth(double w) {
         this.w = w;
         notifyListeners();
     }
 
-
+    @Override
     public double getFitHeight() {
         return h;
     }
 
-    private void setFitHeight(double h) {
+    @Override
+    public void setFitHeight(double h) {
         this.h = h;
-        notifyListeners();
-    }
-
-    @Override
-    public void add() {
-        isAlive = true;
-        newPaint = true;
-        notifyListeners();
-    }
-
-    @Override
-    public void remove() {
-        isAlive = false;
         notifyListeners();
     }
 
@@ -152,6 +140,19 @@ public class PaintingContainer extends NoteObject implements ObservableI{
     private void notifyListeners(){
         for (int i = 0; i < listeners.size(); i++)
             listeners.get(i).fireChange(this);
+    }
+
+    @Override
+    public void add() {
+        isAlive = true;
+        newPaint = true;
+        notifyListeners();
+    }
+
+    @Override
+    public void remove() {
+        isAlive = false;
+        notifyListeners();
     }
 
     @Override
@@ -173,7 +174,7 @@ public class PaintingContainer extends NoteObject implements ObservableI{
 
     @Override
     public int hashCode() {
-        return (super.hashCode() + super.getModelNumber() + 2*super.hashCode()*super.getModelNumber())*5;
+        return super.hashCode()*5;
     }
 
     @Override
@@ -184,6 +185,11 @@ public class PaintingContainer extends NoteObject implements ObservableI{
             }
         }
         return false;
+    }
+
+    @Override
+    public NoteObjectResizeableI duplicate() {
+        return new PaintingContainer(this);
     }
 
 }
