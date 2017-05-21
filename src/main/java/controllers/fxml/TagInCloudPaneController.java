@@ -25,7 +25,7 @@ public class TagInCloudPaneController {
     void removeTagInCloud(ActionEvent event) {
         String tagToRemove = tagTextInCloud.getText();
         if (Note.getCurrentNote().getTags().contains(tagToRemove.toLowerCase())){
-            Note.getCurrentNote().removeTagFromNote(tagTextInCloud.getText().toLowerCase());
+            Note.getCurrentNote().removeTag(tagTextInCloud.getText().toLowerCase());
             MainPageController.getInstance().loadNoteTagsInTagBar(Note.getCurrentNote().getTags());
         }
         try {

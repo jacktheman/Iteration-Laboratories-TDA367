@@ -32,7 +32,7 @@ public class TagPaneController implements Initializable {
 
     @FXML
     public void removeTag(ActionEvent event) {
-        Note.getCurrentNote().removeTagFromNote((tagText.getText()));
+        Note.getCurrentNote().removeTag((tagText.getText()));
         MainPageController.getInstance().loadNoteTagsInTagBar(Note.getCurrentNote().getTags());
     }
 
