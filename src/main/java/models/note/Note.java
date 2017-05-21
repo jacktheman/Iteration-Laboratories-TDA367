@@ -79,7 +79,7 @@ public class Note implements Serializable {
         return false;
     }
 
-    public void removeTagFromNote (String tag) {
+    public void removeTag(String tag) {
         tags.remove(tag.toLowerCase());
     }
 

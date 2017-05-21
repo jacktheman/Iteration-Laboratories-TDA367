@@ -40,15 +40,15 @@ public class NoteTest {
     }
 
     @Test
-    public void addTag() throws Exception { //TODO update
-        int nTags = note.getTags().split(Pattern.quote(".")).length;
+    public void addTag() throws Exception {
+        int nTags = note.getTags().size();
         note.addTag(TEST_STRING);
         assertTrue(note.getTags().contains(TEST_STRING.toLowerCase()));
     }
 
     @Test
-    public void removeTag() throws Exception { //TODO update
-        int nTags = note.getTags().split(Pattern.quote(".")).length;
+    public void removeTag() throws Exception {
+        int nTags = note.getTags().size();
         note.removeTag(TEST_STRING);
         assertFalse(note.getTags().contains(TEST_STRING));
     }
