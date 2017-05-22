@@ -9,11 +9,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import org.xml.sax.SAXException;
 import services.FileHandler;
 import java.io.IOException;
 
 import save.NoteSave;
+import services.XMLHandler;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
@@ -69,7 +72,9 @@ public class TagPageController implements Initializable {
                 listNotes(searchArray);
            } catch (IOException e) {
                e.printStackTrace();
-           } catch (ClassNotFoundException e) {
+           } catch (SAXException e) {
+               e.printStackTrace();
+           } catch (ParserConfigurationException e) {
                e.printStackTrace();
            }
        });
@@ -127,12 +132,14 @@ public class TagPageController implements Initializable {
     private void onMousePressedMenuItem(MouseEvent mouseEvent) {
         try {
             String fileName = noteListView.getSelectionModel().getSelectedItem();
-            NoteSave noteSave = FileHandler.loadNote(new File(FileHandler.FILE_PATH +
+            NoteSave noteSave = XMLHandler.readXMLToNote(new File(FileHandler.FILE_PATH +
                     fileName.substring(0, fileName.indexOf("[") - 3) + FileHandler.FILE_TYPE));
             MainPageController.getInstance().loadNoteSave(noteSave);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
     }

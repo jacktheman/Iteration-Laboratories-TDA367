@@ -24,11 +24,9 @@ public class Note implements Serializable {
 
     private static List<Node> currentNodes;
 
-    private List<String> tagsList = new ArrayList<>();
-
     public Note(String name) {
         this.name = name;
-        this.tags = tagsList;
+        this.tags = new ArrayList<>();
         this.models = new ArrayList<>();
     }
 

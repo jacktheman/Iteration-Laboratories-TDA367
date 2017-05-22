@@ -7,7 +7,7 @@ import javafx.stage.FileChooser;
  */
 public class FileChooserFactory {
 
-    private static final String FILE_EXTENSION = "*.fab";
+    private static final String FILE_EXTENSION = "*.fabxml";
 
     private static final String[] IMAGE_EXTENSIONS = {"*.jpg", "*.png", "*.gif", "*.bmp"};
 

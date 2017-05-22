@@ -17,17 +17,17 @@ public class FileHandlerTest {
 
     private static final String TEST_STRING = "Test";
 
-    @Test
+    /*@Test
     public void saveNote() throws Exception {
         Note note = new Note("TestNote");
         note.addNoteObject(new TextContainer("test", 1, 1));
         assertNotNull(FileHandler.saveNote(new NoteSave(note)));
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void loadNote() throws Exception {
         assertNotNull(FileHandler.loadNote(new File(FileHandler.FILE_PATH + "TestNote" + FileHandler.FILE_TYPE)));
-    }
+    }*/
 
     @Test
     public void loadTags() throws Exception {

@@ -23,11 +23,16 @@ import models.note.Note;
 import models.noteobject.PaintingContainer;
 import models.noteobject.TextContainer;
 import factory.FileChooserFactory;
+import org.xml.sax.SAXException;
 import services.FileHandler;
 import services.StateHandler;
 import save.NoteSave;
+import services.XMLHandler;
 import utilities.Paintbrush;
 import events.Event;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -346,9 +351,11 @@ public class MainPageController implements Initializable {
         Note.getCurrentNote().setName(FileHandler.checkFileName(Note.getCurrentNote().getName()));
         nameTextField.setText(Note.getCurrentNote().getName());
         try {
-            File file = FileHandler.saveNote(new NoteSave(Note.getCurrentNote()));
+            XMLHandler.writeToXML(new NoteSave(Note.getCurrentNote()));
             TagPageController.updateNoteList();
-        } catch (IOException e) {
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
     }
@@ -358,11 +365,14 @@ public class MainPageController implements Initializable {
         FileChooser fileChooser = FileChooserFactory.getFabNotesChooser();
         File file = fileChooser.showOpenDialog(this.notePane.getScene().getWindow());
         try {
-            NoteSave noteSave = FileHandler.loadNote(file);
+            //NoteSave noteSave = FileHandler.loadNote(file);
+            NoteSave noteSave = XMLHandler.readXMLToNote(file);
             this.loadNoteSave(noteSave);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
     }
