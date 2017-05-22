@@ -1,11 +1,12 @@
 package state;
 
-import controllers.noteobject.NoteObjectControllerI;
 import controllers.noteobject.PaintingContainerController;
 
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import models.noteobject.NoteObjectI;
+
 import java.net.MalformedURLException;
 
 /**
@@ -17,26 +18,19 @@ public class PaintState extends NoteState {
 
     private PaintState(){}
 
-
     public static PaintState getInstance(){
         return SINGLETON;
     }
 
     @Override
-    public NoteObjectControllerI getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
+    public NoteObjectI getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
         super.getOnMousePressed(notePane, event);
         if (!super.pressedFocusOwner(notePane, event)) {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                return new PaintingContainerController(event);
+                return (new PaintingContainerController(event)).getModel();
             }
         }
         return null;
     }
-
-    @Override
-    public NoteObjectControllerI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
-        return null;
-    }
-
 
 }

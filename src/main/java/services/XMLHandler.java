@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 /**
  * Created by aron on 2017-05-22.
  */
-public class XMLHandler {
+class XMLHandler {
 
     private static final String NOTE_TAGS = "tags";
 
@@ -64,7 +64,7 @@ public class XMLHandler {
     private XMLHandler() {
     }
 
-    public static void writeToXML(NoteSave noteSave) throws ParserConfigurationException, TransformerException {
+    static void writeToXML(NoteSave noteSave) throws ParserConfigurationException, TransformerException {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -73,7 +73,6 @@ public class XMLHandler {
         doc.appendChild(rootElement);
 
         addTags(rootElement, noteSave.getTags());
-
         appendElements(rootElement, noteSave.getModels());
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -221,19 +220,15 @@ public class XMLHandler {
         rootElement.appendChild(paintingCon);
     }
 
-    //HEREON FORTH LIES WRITING STUFF ONLY! YE HAVE BEEN WARNED!
+    //HENCEFORTH LIES WRITING STUFF ONLY! YE HAVE BEEN WARNED!
 
-    public static NoteSave readXMLToNote(File file) throws ParserConfigurationException, IOException, SAXException {
+    static NoteSave readXMLToNote(File file) throws ParserConfigurationException, IOException, SAXException {
         if (file.exists()) {
             String name = file.getName().replace(FileHandler.FILE_TYPE, "");
-
+            
             Document dom;
-            // Make an  instance of the DocumentBuilderFactory
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            // use the factory to take an instance of the document builder
             DocumentBuilder db = dbf.newDocumentBuilder();
-            // parse using the builder to get the DOM mapping of the
-            // XML file
             dom = db.parse(file);
 
             Element doc = dom.getDocumentElement();
@@ -313,10 +308,12 @@ public class XMLHandler {
                     break;
             }
         }
-        if (!fontFamilyName.isEmpty())
-            TextContainer.setFontFamilyName(fontFamilyName);
-        if (fontSize > 0)
-            TextContainer.setFontSize(fontSize);
+        
+        if (fontFamilyName.isEmpty() || fontSize == 0)
+            return null;
+        
+        TextContainer.setFontFamilyName(fontFamilyName);
+        TextContainer.setFontSize(fontSize);
         TextContainer.setIsBold(isBold);
         TextContainer.setIsItalic(isItalic);
         

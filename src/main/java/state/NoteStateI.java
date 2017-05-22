@@ -1,8 +1,8 @@
 package state;
 
-import controllers.noteobject.NoteObjectControllerI;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import models.noteobject.NoteObjectI;
 
 import java.net.MalformedURLException;
 
@@ -11,8 +11,8 @@ import java.net.MalformedURLException;
  */
 public interface NoteStateI{
 
-    NoteObjectControllerI getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException;
+    NoteObjectI getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException;
 
-    NoteObjectControllerI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException;
+    NoteObjectI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException;
 
 }

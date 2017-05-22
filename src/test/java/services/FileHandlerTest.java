@@ -1,9 +1,6 @@
 package services;
 
-import models.note.Note;
-import models.noteobject.TextContainer;
 import org.junit.Test;
-import save.NoteSave;
 
 import java.io.File;
 import java.util.List;
@@ -17,31 +14,23 @@ public class FileHandlerTest {
 
     private static final String TEST_STRING = "Test";
 
-    /*@Test
-    public void saveNote() throws Exception {
-        Note note = new Note("TestNote");
-        note.addNoteObject(new TextContainer("test", 1, 1));
-        assertNotNull(FileHandler.saveNote(new NoteSave(note)));
-    }*/
-
-    /*@Test
-    public void loadNote() throws Exception {
-        assertNotNull(FileHandler.loadNote(new File(FileHandler.FILE_PATH + "TestNote" + FileHandler.FILE_TYPE)));
-    }*/
-
     @Test
     public void loadTags() throws Exception {
         List<String> tags = FileHandler.loadTags();
-        System.out.println (tags);
-        assertTrue(tags.size() > 0);
+        assertNotNull(tags);
     }
 
-    /*@Test
-    public void addTags() throws Exception {
+    @Test
+    public void addRemoveTags() throws Exception {
         List<String> tags = FileHandler.loadTags();
-        FileHandler.addTags("åsna");
-        assertTrue(tags.size() < FileHandler.loadTags().size());
-    }*/
+        List<String> tagsAfterAdd;
+        List<String> tagsAfterRemove;
+        FileHandler.addTags(TEST_STRING);
+        tagsAfterAdd = FileHandler.loadTags();
+        FileHandler.removeTagFromTagList(TEST_STRING);
+        tagsAfterRemove = FileHandler.loadTags();
+        assertTrue(tags.size() == tagsAfterRemove.size() && tags.size() < tagsAfterAdd.size());
+    }
 
     @Test
     public void listNotes() throws Exception {

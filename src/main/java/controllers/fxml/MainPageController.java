@@ -15,12 +15,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import models.note.Note;
+import models.noteobject.NoteObjectI;
 import models.noteobject.PaintingContainer;
 import models.noteobject.TextContainer;
 import factory.FileChooserFactory;
@@ -28,7 +28,6 @@ import org.xml.sax.SAXException;
 import services.FileHandler;
 import services.StateHandler;
 import save.NoteSave;
-import services.XMLHandler;
 import utilities.Paintbrush;
 import events.Event;
 
@@ -40,7 +39,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 
 import static utilities.Paintbrush.CIRCLE;
 import static utilities.Paintbrush.SQUARE;
@@ -78,8 +76,6 @@ public class MainPageController implements Initializable {
     @FXML
     private ToggleButton italicsToggleButton;
     @FXML
-    private ToggleButton underlineToggleButton;
-    @FXML
     private FlowPane tagBar;
     @FXML
     private TextField addTagTextField;
@@ -108,7 +104,7 @@ public class MainPageController implements Initializable {
 
     private AnchorPane fille;
 
-    public static MainPageController getInstance () {
+    public static MainPageController getInstance() {
         return SINGLETON;
     }
 
@@ -151,10 +147,10 @@ public class MainPageController implements Initializable {
         nameTextField.setText(note.getName());
     }
 
-    public void loadNoteTagsInTagBar (List<String> tags) {
+    public void loadNoteTagsInTagBar(List<String> tags) {
         tagBar.getChildren().clear();
         if (!tags.isEmpty()) {
-            String[] tagsArray = tags.toArray(new String [tags.size()]);
+            String[] tagsArray = tags.toArray(new String[tags.size()]);
             for (int i = 0; i < tagsArray.length; i++) {
                 String tagText = tagsArray[i];
                 try {
@@ -169,7 +165,7 @@ public class MainPageController implements Initializable {
         }
     }
 
-    public void setNewFabNote(){
+    public void setNewFabNote() {
         Note.setCurrentNote(new Note());
         Note.getCurrentNodes().clear();
         nameTextField.setText("");
@@ -212,32 +208,32 @@ public class MainPageController implements Initializable {
 
     private void setOnMousePressedNotePane() {
         notePane.setOnMousePressed(event -> {
-            NoteObjectControllerI controller = null;
+            NoteObjectI model;
             try {
-                controller = StateHandler.getInstance().getState().getOnMousePressed(notePane, event);
+                model = StateHandler.getInstance().getState().getOnMousePressed(notePane, event);
+                if (model != null)
+                    addNodeToNotePane(model);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            addNodeToNotePane(controller);
         });
     }
 
     private void setOnMouseReleasedNotePane() {
         notePane.setOnMouseReleased(event -> {
-            NoteObjectControllerI controller = null;
+            NoteObjectI model;
             try {
-                controller = StateHandler.getInstance().getState().getOnMouseReleased(notePane, event);
+                model = StateHandler.getInstance().getState().getOnMouseReleased(notePane, event);
+                if (model != null)
+                   addNodeToNotePane(model);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            addNodeToNotePane(controller);
         });
     }
 
-    private void addNodeToNotePane(NoteObjectControllerI controller) {
-        if (controller != null) {
-            Note.getCurrentNote().addNoteObject(controller.getModel());
-        }
+    private void addNodeToNotePane(NoteObjectI model) {
+        Note.getCurrentNote().addNoteObject(model);
     }
 
     private void prepareSlideMenuAnimation() {
@@ -352,7 +348,7 @@ public class MainPageController implements Initializable {
         Note.getCurrentNote().setName(FileHandler.checkFileName(Note.getCurrentNote().getName()));
         nameTextField.setText(Note.getCurrentNote().getName());
         try {
-            XMLHandler.writeToXML(new NoteSave(Note.getCurrentNote()));
+            FileHandler.saveNote(new NoteSave(Note.getCurrentNote()));
             TagPageController.updateNoteList();
         } catch (TransformerException e) {
             e.printStackTrace();
@@ -367,13 +363,15 @@ public class MainPageController implements Initializable {
         File file = fileChooser.showOpenDialog(this.notePane.getScene().getWindow());
         try {
             //NoteSave noteSave = FileHandler.loadNote(file);
-            NoteSave noteSave = XMLHandler.readXMLToNote(file);
+            NoteSave noteSave = FileHandler.loadNote(file);
             this.loadNoteSave(noteSave);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

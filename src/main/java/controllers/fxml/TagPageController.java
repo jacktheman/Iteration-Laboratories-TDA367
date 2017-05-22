@@ -14,7 +14,6 @@ import services.FileHandler;
 import java.io.IOException;
 
 import save.NoteSave;
-import services.XMLHandler;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
@@ -132,14 +131,16 @@ public class TagPageController implements Initializable {
     private void onMousePressedMenuItem(MouseEvent mouseEvent) {
         try {
             String fileName = noteListView.getSelectionModel().getSelectedItem();
-            NoteSave noteSave = XMLHandler.readXMLToNote(new File(FileHandler.FILE_PATH +
+            NoteSave noteSave = FileHandler.loadNote(new File(FileHandler.FILE_PATH +
                     fileName.substring(0, fileName.indexOf("[") - 3) + FileHandler.FILE_TYPE));
             MainPageController.getInstance().loadNoteSave(noteSave);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

@@ -4,6 +4,7 @@ import org.xml.sax.SAXException;
 import save.NoteSave;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
@@ -46,31 +47,16 @@ public class FileHandler {
         return name;
     }
 
-    /*public static File saveNote(NoteSave noteSave) throws IOException {
-        if (noteSave.getModels().size() > 0 && !noteSave.getName().equals("")) {
-            String filePath = FILE_PATH + noteSave.getName() + FILE_TYPE;
-            FileOutputStream fos = new FileOutputStream(filePath);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(noteSave);
-            oos.close();
-            return new File(filePath);
-        }
-        return null;
-    }*/
+    public static void saveNote(NoteSave noteSave) throws TransformerException, ParserConfigurationException {
+        if (noteSave.getModels().size() > 0 && !noteSave.getName().equals(""))
+            XMLHandler.writeToXML(noteSave);
+    }
 
-    /*public static NoteSave loadNote(File file) throws IOException, ClassNotFoundException {
-        if (file.exists()) {
-            FileInputStream fis = new FileInputStream(file);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            Object loaded = ois.readObject();
-            ois.close();
-            if (loaded instanceof NoteSave) {
-                NoteSave noteSave = (NoteSave) loaded;
-                return noteSave;
-            }
-        }
+    public static NoteSave loadNote(File file) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
+        if (file.exists())
+            return XMLHandler.readXMLToNote(file);
         return null;
-    }*/
+    }
 
     public static List<String> loadTags() throws IOException {
         File file = new File(TAG_LIST);
