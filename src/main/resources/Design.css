@@ -1,12 +1,18 @@
 
 #fabNotesWindow{
-    -fx-background-color: #d05ce3;
+    -fx-background-color: #4fa191;
 }
+
+
+
 
 .split-pane:vertical > .split-pane-divider {
     -fx-background-color: gray;
     -fx-opacity: 20%;
 }
+
+
+
 
 .text-area, .text-area .viewport, .text-area .content {
     -fx-background-color: transparent ;
@@ -16,11 +22,14 @@
     -fx-border-color: transparent;
     -fx-text-fill: black;
     -fx-opacity: 65%;
-    -fx-prompt-text-fill: #bf5f82;
+    /*-fx-prompt-text-fill: #bf5f82;*/
 }
 .text-field:focused {
     -fx-opacity: 90%;
 }
+
+
+
 
 #file-list .list-cell {
     -fx-background-color: slategray;
@@ -38,14 +47,15 @@
     -fx-text-fill: white;
 }
 
+
+
+
 #image-view:focused {
     -fx-effect: dropshadow(one-pass-box, lightskyblue, 10, 1.0, 0, 0);
 }
 
-#menu-button {
-    -fx-background-color: silver;
-    -fx-border-color: silver;
-}
+
+
 
 #menu-button:pressed {
     -fx-effect: dropshadow(one-pass-box, gray, 3, 1.0, 0, 0);
@@ -58,98 +68,97 @@
     -fx-background-color: lightgray;
 }
 
-#tagPane{
-    -fx-background-color: #CEE0ED;
-    -fx-border-radius: 8 8 8 8;
-    -fx-background-radius: 8 8 8 8;
+
+
+
+ #tabPane {
+     -fx-background-color: #4fa191;
+ }
+
+ .tab-header-background {
+     -fx-background-color: #8dbf9b;
+ }
+
+ #writingTab{
+     -fx-background-color: #4fa191;
+ }
+
+ #paintingTab {
+     -fx-background-color: #4fa191;
+ }
+
+
+
+
+ .button {
+     -fx-background-color: #a2dbb2;
+ }
+
+ .button:hover {
+     -fx-background-color: #bcffcf;
+ }
+
+ .combo-box {
+     -fx-background-color: #a2dbb2;
+ }
+
+.combo-box:hover {
+    -fx-background-color: #bcffcf;
 }
 
-#tagInCloudPane{
-    -fx-background-color: #ffd180;
+ .toggle-button {
+     -fx-background-color: #a2dbb2;
+ }
+
+.toggle-button:hover {
+    -fx-background-color: #bcffcf;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #bcffcf;
+}
+
+.color-picker {
+    -fx-background-color: #a2dbb2;
+}
+
+.color-picker:hover {
+    -fx-background-color: #bcffcf;
+}
+
+
+
+
+#tagPane{
+    -fx-background-color: #a2dbb2;
     -fx-border-radius: 8 8 8 8;
     -fx-background-radius: 8 8 8 8;
 }
 
 #removeTagButton{
-    -fx-background-color: #CEE0ED;
+    -fx-background-color: #a2dbb2;
     -fx-text-fill: #212121;
     -fx-border-radius: 20 20 20 20;
     -fx-background-radius: 20 20 20 20;
 }
 
 #removeTagButton:hover{
-    -fx-background-color: #ABC5D7;
+    -fx-background-color: #8dbf9b;
+}
+
+#tagInCloudPane{
+    -fx-background-color: #a2dbb2;
+    -fx-border-radius: 8 8 8 8;
+    -fx-background-radius: 8 8 8 8;
 }
 
 #removeTagInCloudButton{
-    -fx-background-color: #ffd180;
+    -fx-background-color: #a2dbb2;
     -fx-text-fill: #212121;
     -fx-border-radius: 20 20 20 20;
     -fx-background-radius: 20 20 20 20;
 }
 
 #removeTagInCloudButton:hover{
-    -fx-background-color: #caa052;
+    -fx-background-color: #8dbf9b;
 }
-
-#menuBar{
-    -fx-background-color: #6a0080;
-}
-
-#menuHeader .label{
-    -fx-text-fill: white;
-}
-
-#menuHeader .menu-item .label {
-    -fx-text-fill: black;
-}
-
-#newNote {
-    -fx-background-color: #f48fb1;
-}
-
-#writingTab{
-    -fx-background-color: #6a0080;
-}
-
-#writingTab .tab-label{
-    -fx-text-fill: white;
-}
-
-#brushSizeLabel {
-    -fx-text-fill: white;
-}
-
-.button{
-    -fx-background-color: #f48fb1;
-}
-
-.tab-pane .tab-header-background {
-    -fx-background-color: #d05ce3;
-}
-
-.tab-pane .tab:pressed {
-    -fx-background-color: #9c27b0;
-}
-
-.combo-box {
-    -fx-background-color: white;
-}
-
-.toggle-button {
-    -fx-background-color: white;
-}
-
-.color-picker {
-    -fx-background-color: white;
-}
-
-#paintSizePlusButton {
-    -fx-background-color: white;
-}
-
-#paintSizeMinusButton {
-    -fx-background-color: white;
-}
-
-

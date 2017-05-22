@@ -22,7 +22,7 @@
 
 <AnchorPane id="fabNotesWindow" fx:id="fabNotesWindow" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1150.0" stylesheets="@Design.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.fxml.MainPageController">
    <children>
-      <AnchorPane fx:id="notePane" layoutX="-88.0" layoutY="142.0" prefHeight="258.0" prefWidth="591.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-88.0" AnchorPane.rightAnchor="88.0" AnchorPane.topAnchor="142.0" />
+      <AnchorPane fx:id="notePane" layoutX="-88.0" layoutY="146.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1150.0" style="-fx-background-color: white;" stylesheets="@Design.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="146.0" />
       <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu fx:id="menuHeader" mnemonicParsing="false" text="Arkiv">
@@ -55,31 +55,21 @@
         <tabs>
           <Tab id="writingTab" fx:id="writingTab" onSelectionChanged="#changeToWriteState" text="SKRIV">
             <content>
-              <AnchorPane id="writingTab" minHeight="0.0" minWidth="0.0" prefHeight="118.0" prefWidth="545.0" style="-fx-background-color: #9c27b0;">
+              <AnchorPane id="writingTab" fx:id="tabAnchor" minHeight="0.0" minWidth="0.0" prefHeight="118.0" prefWidth="545.0">
                      <children>
-                        <ComboBox fx:id="textFontComboBox" layoutX="3.0" layoutY="3.0" onAction="#changeFont" prefHeight="45.0" prefWidth="122.0" />
-                        <ComboBox fx:id="textSizeComboBox" layoutX="126.0" layoutY="3.0" onAction="#changeSize" prefHeight="45.0" prefWidth="65.0" />
-                        <ToggleButton fx:id="boldToggleButton" layoutX="201.0" layoutY="3.0" mnemonicParsing="false" onAction="#makeBold" prefHeight="45.0" prefWidth="45.0" text="B">
+                        <ComboBox fx:id="textFontComboBox" layoutX="3.0" layoutY="5.0" onAction="#changeFont" prefHeight="40.0" prefWidth="122.0" />
+                        <ComboBox fx:id="textSizeComboBox" layoutX="126.0" layoutY="5.0" onAction="#changeSize" prefHeight="40.0" prefWidth="65.0" AnchorPane.leftAnchor="127.0" />
+                        <ToggleButton fx:id="boldToggleButton" layoutX="200.0" layoutY="5.0" mnemonicParsing="false" onAction="#makeBold" prefHeight="40.0" prefWidth="45.0" text="B">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="italicsToggleButton" layoutX="246.0" layoutY="3.0" mnemonicParsing="false" onAction="#makeItalics" prefHeight="45.0" prefWidth="45.0" text="I">
+                        <ToggleButton fx:id="italicsToggleButton" layoutX="245.0" layoutY="5.0" mnemonicParsing="false" onAction="#makeItalics" prefHeight="40.0" prefWidth="45.0" text="I" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="247.0" AnchorPane.topAnchor="5.0">
                            <font>
                               <Font name="System Italic" size="14.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="underlineToggleButton" disable="true" layoutX="291.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" text="U">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </ToggleButton>
-                        <ToggleButton fx:id="strikeThroughToggleButton" disable="true" layoutX="336.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" text="T">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </ToggleButton>
-                        <Button layoutX="913.0" layoutY="5.0" mnemonicParsing="false" onAction="#undoAction" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+                        <Button layoutX="981.0" layoutY="3.0" mnemonicParsing="false" onAction="#undoAction" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -92,13 +82,13 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab id="writingTab" onSelectionChanged="#changeToPaintState" text="MÅLA">
+          <Tab fx:id="paintingTab" onSelectionChanged="#changeToPaintState" text="MÅLA">
             <content>
-              <AnchorPane id="paintingTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #9c27b0;">
+              <AnchorPane id="paintingTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <ButtonBar buttonMinWidth="30.0" layoutX="14.0" layoutY="5.0" prefHeight="40.0" prefWidth="103.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="5.0">
                           <buttons>
-                            <ToggleButton fx:id="circleButton" mnemonicParsing="false" onAction="#setPaintbrushToCircle">
+                            <ToggleButton fx:id="circleButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setPaintbrushToCircle" prefHeight="40.0" prefWidth="45.0">
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -107,7 +97,7 @@
                                     </ImageView>
                                  </graphic>
                               </ToggleButton>
-                              <ToggleButton fx:id="squareButton" mnemonicParsing="false" onAction="#setPaintbrushToSquare">
+                              <ToggleButton fx:id="squareButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setPaintbrushToSquare" prefHeight="40.0" prefWidth="45.0">
                                  <graphic>
                                     <ImageView fx:id="squareutton" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -116,7 +106,7 @@
                                     </ImageView>
                                  </graphic>
                               </ToggleButton>
-                              <ToggleButton fx:id="triangleButton" minWidth="0.0" mnemonicParsing="false" onAction="#setPaintbrushToTriangle" prefHeight="26.0">
+                              <ToggleButton fx:id="triangleButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setPaintbrushToTriangle" prefHeight="40.0" prefWidth="45.0">
                                  <graphic>
                                     <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -127,19 +117,25 @@
                               </ToggleButton>
                           </buttons>
                         </ButtonBar>
-                        <ColorPicker fx:id="colorPicker" layoutX="204.0" layoutY="12.0" onAction="#changeColor" />
-                        <Label id="brushSizeLabel" layoutX="455.0" layoutY="17.0" text="Penselstorlek:" />
-                        <ButtonBar buttonMinWidth="30.0" layoutX="536.0" layoutY="5.0" prefHeight="40.0" prefWidth="0.0" AnchorPane.leftAnchor="536.0" AnchorPane.topAnchor="5.0">
+                        <ColorPicker fx:id="colorPicker" layoutX="199.0" layoutY="5.0" onAction="#changeColor" prefHeight="40.0" />
+                        <Label id="brushSizeLabel" layoutX="409.0" layoutY="4.0" prefHeight="40.0" text="Penselstorlek:" />
+                        <ButtonBar buttonMinWidth="30.0" layoutX="481.0" layoutY="-7.0" prefHeight="62.0" prefWidth="122.0" AnchorPane.leftAnchor="481.0" AnchorPane.topAnchor="-7.0">
                           <buttons>
-                            <Button fx:id="paintSizeMinusButton" mnemonicParsing="false" onAction="#shrinkBrushSize" text="-" wrapText="true" />
-                              <Button fx:id="paintSizePlusButton" mnemonicParsing="false" onAction="#enlargeBrushSize" text="+" />
+                              <Button fx:id="paintSizePlusButton" mnemonicParsing="false" onAction="#enlargeBrushSize" prefHeight="40.0" prefWidth="45.0" text="+">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font></Button>
+                            <Button fx:id="paintSizeMinusButton" mnemonicParsing="false" onAction="#shrinkBrushSize" prefHeight="40.0" prefWidth="45.0" text="-" wrapText="true">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font></Button>
                           </buttons>
                         </ButtonBar>
-                        <AnchorPane fx:id="brushPicture" layoutX="645.0" layoutY="-1.0" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="645.0" AnchorPane.rightAnchor="334.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="brushPicture" layoutX="616.0" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="616.0" AnchorPane.rightAnchor="363.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Canvas fx:id="brushPictureCanvas" height="50.0" width="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children></AnchorPane>
-                        <Button layoutX="923.0" layoutY="5.0" mnemonicParsing="false" onAction="#undoAction" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+                        <Button layoutX="923.0" layoutY="5.0" mnemonicParsing="false" onAction="#undoAction" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -153,13 +149,13 @@
           </Tab>
         </tabs>
       </TabPane>
-      <TextField fx:id="nameTextField" layoutX="113.0" layoutY="31.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="178.0" promptText="Namnlös" AnchorPane.leftAnchor="113.0" AnchorPane.topAnchor="31.0">
+      <TextField fx:id="nameTextField" layoutX="117.0" layoutY="31.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="178.0" promptText="Namnlös" AnchorPane.leftAnchor="117.0" AnchorPane.topAnchor="31.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </TextField>
-      <Button fx:id="newNote" layoutX="1036.0" layoutY="30.0" mnemonicParsing="false" onAction="#setNewFabNote" prefHeight="30.0" prefWidth="104.0" text="Ny fabNote" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0" />
-      <Button fx:id="tagMenuButton" layoutY="29.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="117.0" prefWidth="113.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="29.0">
+      <Button fx:id="newNote" layoutX="1038.0" layoutY="31.0" mnemonicParsing="false" onAction="#setNewFabNote" prefHeight="30.0" prefWidth="104.0" text="Ny fabNote" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="31.0" />
+      <Button fx:id="tagMenuButton" layoutY="29.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="116.0" prefWidth="113.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="29.0">
          <graphic>
             <ImageView fitHeight="111.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -168,7 +164,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <TextField fx:id="addTagTextField" layoutX="291.0" layoutY="31.0" onKeyPressed="#addTag" prefHeight="30.0" prefWidth="112.0" promptText="lägg till tag" />
-      <TilePane fx:id="tagBar" hgap="3.0" layoutX="403.0" layoutY="31.0" prefHeight="30.0" prefWidth="554.0" />
+      <TextField fx:id="addTagTextField" layoutX="299.0" layoutY="31.0" onKeyPressed="#addTag" prefHeight="30.0" prefWidth="112.0" promptText="lägg till tag" AnchorPane.topAnchor="31.0" />
+      <TilePane fx:id="tagBar" hgap="3.0" layoutX="415.0" layoutY="31.0" prefHeight="30.0" prefWidth="617.0" stylesheets="@Design.css" />
    </children>
 </AnchorPane>
