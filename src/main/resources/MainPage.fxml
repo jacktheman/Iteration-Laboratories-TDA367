@@ -17,7 +17,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="fabNotesWindow" fx:id="fabNotesWindow" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1150.0" stylesheets="@Design.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.fxml.MainPageController">
@@ -169,6 +169,6 @@
          </graphic>
       </Button>
       <TextField fx:id="addTagTextField" layoutX="291.0" layoutY="31.0" onKeyPressed="#addTag" prefHeight="30.0" prefWidth="112.0" promptText="lägg till tag" />
-      <TilePane fx:id="tagBar" hgap="3.0" layoutX="403.0" layoutY="31.0" prefHeight="30.0" prefWidth="554.0" />
+      <FlowPane fx:id="tagBar" layoutX="403.0" layoutY="31.0" orientation="VERTICAL" prefHeight="30.0" prefWidth="528.0" />
    </children>
 </AnchorPane>
