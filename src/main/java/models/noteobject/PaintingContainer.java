@@ -27,12 +27,24 @@ public class PaintingContainer extends NoteObjectResizeable implements Observabl
     private double w;
     private double h;
 
-    public PaintingContainer(double x, double y){
+    public PaintingContainer(double x, double y, boolean newPaint) {
         super();
         paintings = new ArrayList<>();
         listeners = new ArrayList<>();
-        this.x = x - DEFAULT_CANVAS_SIZE/2;
-        this.y = y - DEFAULT_CANVAS_SIZE/2;
+        this.x = x;
+        this.y = y;
+        this.w = DEFAULT_CANVAS_SIZE;
+        setFitHeight(DEFAULT_CANVAS_SIZE);
+        isAlive = true;
+        this.newPaint = newPaint;
+    }
+
+    public PaintingContainer(double middleX, double middleY){
+        super();
+        paintings = new ArrayList<>();
+        listeners = new ArrayList<>();
+        this.x = middleX - DEFAULT_CANVAS_SIZE/2;
+        this.y = middleY - DEFAULT_CANVAS_SIZE/2;
         this.w = DEFAULT_CANVAS_SIZE;
         setFitHeight(DEFAULT_CANVAS_SIZE);
         isAlive = true;
@@ -79,6 +91,10 @@ public class PaintingContainer extends NoteObjectResizeable implements Observabl
         if(layoutY > h - (PAINTING_AREA_RESIZING_CONSTANT)) {
             setFitHeight(layoutY + PAINTING_AREA_RESIZING_CONSTANT + Paintbrush.getSize());
         }
+    }
+
+    public void setPaintings(List<PaintStrokeToData> paintings) {
+        this.paintings = paintings;
     }
 
     public List<PaintStrokeToData> getPaintings() {

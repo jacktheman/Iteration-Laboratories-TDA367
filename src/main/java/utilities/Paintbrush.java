@@ -30,4 +30,29 @@ public enum Paintbrush {
         return brushColor;
     }
 
+    public static Paintbrush parsePaintbrush(String string) {
+        switch (string.toLowerCase()) {
+            case "circle":
+                return CIRCLE;
+            case "triangle":
+                return TRIANGLE;
+            case "square":
+                return SQUARE;
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case CIRCLE:
+                return "circle";
+            case TRIANGLE:
+                return "triangle";
+            case SQUARE:
+                return "square";
+        }
+        return null;
+    }
+
 }

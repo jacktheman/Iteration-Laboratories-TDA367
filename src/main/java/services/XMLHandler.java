@@ -1,6 +1,6 @@
 package services;
 
-import models.note.Note;
+import javafx.scene.paint.Color;
 import models.noteobject.ImageContainer;
 import models.noteobject.NoteObjectI;
 import models.noteobject.PaintingContainer;
@@ -8,6 +8,9 @@ import models.noteobject.TextContainer;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import save.NoteSave;
+import utilities.PaintStrokeToData;
+import utilities.Paintbrush;
+import utilities.PaintingToData;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,7 +23,6 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -42,6 +44,13 @@ public class XMLHandler {
     private static final String TEXT = "text";
 
     private static final String URL = "url";
+
+    private static final String PAINTING = "painting";
+    private static final String PAINT_STROKE_DATA = "paintStrokeToData";
+    private static final String PAINTING_DATA = "paintingToData";
+    private static final String PAINT_RGBO = "rgbo";
+    private static final String PAINTBRUSH = "paintbrush";
+    private static final String PAINTBRUSH_SIZE = "size";
 
     private static final String LAYOUT_X = "layoutX";
     private static final String LAYOUT_Y = "layoutY";
@@ -79,7 +88,8 @@ public class XMLHandler {
         for (String tag : tags) {
             tagString += tag + ".";
         }
-        tagString = tagString.substring(0, tagString.length() - 1);
+        if (tags.size() > 1)
+            tagString = tagString.substring(0, tagString.length() - 1);
         noteTags.appendChild(doc.createTextNode(tagString));
         rootElement.appendChild(noteTags);
     }
@@ -153,7 +163,59 @@ public class XMLHandler {
     }
 
     private static void appendPaintingElement(Element rootElement, PaintingContainer paintingContainer) {
+        Document doc = rootElement.getOwnerDocument();
+        Element paintingCon = doc.createElement(PAINTING_CONTAINER);
 
+        Element fitWidth = doc.createElement(FIT_WIDTH);
+        Element fitHeight = doc.createElement(FIT_HEIGHT);
+        Element layoutX = doc.createElement(LAYOUT_X);
+        Element layoutY = doc.createElement(LAYOUT_Y);
+        Element painting = doc.createElement(PAINTING);
+
+        fitWidth.appendChild(doc.createTextNode(Double.toString(paintingContainer.getFitWidth())));
+        fitHeight.appendChild(doc.createTextNode(Double.toString(paintingContainer.getFitHeight())));
+        layoutX.appendChild(doc.createTextNode(Double.toString(paintingContainer.getLayoutX())));
+        layoutY.appendChild(doc.createTextNode(Double.toString(paintingContainer.getLayoutY())));
+
+        for (PaintStrokeToData paintStrokeData : paintingContainer.getPaintings()) {
+            Element paintStroke = doc.createElement(PAINT_STROKE_DATA);
+            for (PaintingToData paintingData : paintStrokeData.getPaintStroke()) {
+                Element paintData = doc.createElement(PAINTING_DATA);
+
+                Element rgbo = doc.createElement(PAINT_RGBO);
+                Element paintbrush = doc.createElement(PAINTBRUSH);
+                Element paintbrushSize = doc.createElement(PAINTBRUSH_SIZE);
+                Element paintLayoutX = doc.createElement(LAYOUT_X);
+                Element paintLayoutY = doc.createElement(LAYOUT_Y);
+
+                String redGreenBlueOpacity = "" + paintingData.getColor().getRed() + ";" + paintingData.getColor().getGreen() + ";" +
+                        paintingData.getColor().getBlue() + ";" + paintingData.getColor().getOpacity();
+
+                rgbo.appendChild(doc.createTextNode(redGreenBlueOpacity));
+                paintbrush.appendChild(doc.createTextNode(paintingData.getPaintbrush().toString()));
+                paintbrushSize.appendChild(doc.createTextNode(Double.toString(paintingData.getSize())));
+                paintLayoutX.appendChild(doc.createTextNode(Double.toString(paintingData.getX())));
+                paintLayoutY.appendChild(doc.createTextNode(Double.toString(paintingData.getY())));
+
+                paintData.appendChild(rgbo);
+                paintData.appendChild(paintbrush);
+                paintData.appendChild(paintbrushSize);
+                paintData.appendChild(paintLayoutX);
+                paintData.appendChild(paintLayoutY);
+
+                paintStroke.appendChild(paintData);
+            }
+
+            painting.appendChild(paintStroke);
+        }
+
+        paintingCon.appendChild(fitWidth);
+        paintingCon.appendChild(fitHeight);
+        paintingCon.appendChild(layoutX);
+        paintingCon.appendChild(layoutY);
+        paintingCon.appendChild(painting);
+
+        rootElement.appendChild(paintingCon);
     }
 
     public static NoteSave readXMLToNote(File file) throws ParserConfigurationException, IOException, SAXException {
@@ -222,20 +284,29 @@ public class XMLHandler {
             Node item = nl.item(i);
             String name = item.getNodeName();
             String value = item.getTextContent();
-            if (name.equals(FONT_FAMILY_NAME))
-                fontFamilyName = value;
-            else if (name.equals(FONT_SIZE))
-                fontSize = Integer.parseInt(value);
-            else if (name.equals(IS_BOLD))
-                isBold = Boolean.parseBoolean(value);
-            else if (name.equals(IS_ITALIC))
-                isItalic = Boolean.parseBoolean(value);
-            else if (name.equals(LAYOUT_X))
-                layoutX = Double.parseDouble(value);
-            else if (name.equals(LAYOUT_Y))
-                layoutY = Double.parseDouble(value);
-            else if (name.equals(TEXT))
-                text = value;
+            switch (name) {
+                case FONT_FAMILY_NAME:
+                    fontFamilyName = value;
+                    break;
+                case FONT_SIZE:
+                    fontSize = Integer.parseInt(value);
+                    break;
+                case IS_BOLD:
+                    isBold = Boolean.parseBoolean(value);
+                    break;
+                case IS_ITALIC:
+                    isItalic = Boolean.parseBoolean(value);
+                    break;
+                case LAYOUT_X:
+                    layoutX = Double.parseDouble(value);
+                    break;
+                case LAYOUT_Y:
+                    layoutY = Double.parseDouble(value);
+                    break;
+                case TEXT:
+                    text = value;
+                    break;
+            }
         }
         if (!fontFamilyName.isEmpty())
             TextContainer.setFontFamilyName(fontFamilyName);
@@ -259,16 +330,23 @@ public class XMLHandler {
             Node item = nl.item(i);
             String name = item.getNodeName();
             String value = item.getTextContent();
-            if (name.equals(URL))
-                url = value;
-            else if (name.equals(FIT_WIDTH))
-                fitWidth = Double.parseDouble(value);
-            else if (name.equals(FIT_HEIGHT))
-                fitHeight = Double.parseDouble(value);
-            else if (name.equals(LAYOUT_X))
-                layoutX = Double.parseDouble(value);
-            else if (name.equals(LAYOUT_Y))
-                layoutY = Double.parseDouble(value);
+            switch (name) {
+                case URL:
+                    url = value;
+                    break;
+                case FIT_WIDTH:
+                    fitWidth = Double.parseDouble(value);
+                    break;
+                case FIT_HEIGHT:
+                    fitHeight = Double.parseDouble(value);
+                    break;
+                case LAYOUT_X:
+                    layoutX = Double.parseDouble(value);
+                    break;
+                case LAYOUT_Y:
+                    layoutY = Double.parseDouble(value);
+                    break;
+            }
         }
         
         if (url.isEmpty())
@@ -284,6 +362,88 @@ public class XMLHandler {
     }
 
     private static NoteObjectI getPaintingContainer(Node node) {
-        return null;
+        List<PaintStrokeToData> paintStrokeToDataList = new ArrayList<>();
+        double fitWidth = 0;
+        double fitHeight = 0;
+        double layoutX = 0;
+        double layoutY = 0;
+
+        NodeList nl = node.getChildNodes();
+        for (int i = 0; i < nl.getLength(); i++) {
+            Node item = nl.item(i);
+            String name = item.getNodeName();
+            String value = item.getTextContent();
+            switch (name) {
+                case FIT_WIDTH:
+                    fitWidth = Double.parseDouble(value);
+                    break;
+                case FIT_HEIGHT:
+                    fitHeight = Double.parseDouble(value);
+                    break;
+                case LAYOUT_X:
+                    layoutX = Double.parseDouble(value);
+                    break;
+                case LAYOUT_Y:
+                    layoutY = Double.parseDouble(value);
+                    break;
+                case PAINTING:
+                    for (int j = 0; j < item.getChildNodes().getLength(); j++) {
+                        PaintStrokeToData paintStrokeToData = new PaintStrokeToData();
+                        Node paintStrokeData = item.getChildNodes().item(j);
+                        if (paintStrokeData.getNodeName().equals(PAINT_STROKE_DATA)) {
+                            for (int k = 0; k < paintStrokeData.getChildNodes().getLength(); k++) {
+                                Node paintData = paintStrokeData.getChildNodes().item(k);
+                                if (paintData.getNodeName().equals(PAINTING_DATA)) {
+                                    Color color = null;
+                                    Paintbrush paintbrush = null;
+                                    double paintbrushSize = 0;
+                                    double paintLayoutX = 0;
+                                    double paintLayoutY = 0;
+                                    NodeList paintDrawDataNL = paintData.getChildNodes();
+                                    for (int l = 0; l < paintDrawDataNL.getLength(); l++) {
+                                        Node paintDrawData = paintDrawDataNL.item(l);
+                                        String textContent = paintDrawData.getTextContent();
+                                        switch (paintDrawData.getNodeName()) {
+                                            case PAINT_RGBO:
+                                                String[] rgbo = textContent.split(";");
+                                                double red = Double.parseDouble(rgbo[0]);
+                                                double green = Double.parseDouble(rgbo[1]);
+                                                double blue = Double.parseDouble(rgbo[2]);
+                                                double opacity = Double.parseDouble(rgbo[3]);
+                                                color = Color.color(red, green, blue, opacity);
+                                                break;
+                                            case PAINTBRUSH:
+                                                paintbrush = Paintbrush.parsePaintbrush(textContent);
+                                                break;
+                                            case PAINTBRUSH_SIZE:
+                                                paintbrushSize = Double.parseDouble(textContent);
+                                                break;
+                                            case LAYOUT_X:
+                                                paintLayoutX = Double.parseDouble(textContent);
+                                                break;
+                                            case LAYOUT_Y:
+                                                paintLayoutY = Double.parseDouble(textContent);
+                                                break;
+                                        }
+                                    }
+                                    paintStrokeToData.addPaintToStroke(new PaintingToData(paintLayoutX, paintLayoutY, paintbrush, paintbrushSize, color));
+                                }
+                            }
+                        }
+                        paintStrokeToDataList.add(paintStrokeToData);
+                    }
+                    break;
+            }
+        }
+
+        if (paintStrokeToDataList.isEmpty())
+            return null;
+
+        PaintingContainer paintingContainer = new PaintingContainer(layoutX, layoutY, true);
+        paintingContainer.setFitWidth(fitWidth);
+        paintingContainer.setFitHeight(fitHeight);
+        paintingContainer.setPaintings(paintStrokeToDataList);
+
+        return paintingContainer;
     }
 }
