@@ -1,7 +1,9 @@
 package services;
 
+import org.xml.sax.SAXException;
 import save.NoteSave;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
@@ -19,7 +21,7 @@ public class FileHandler {
 
     public static final String FILE_PATH = FILE_DIR + File.separator;
 
-    public static final String FILE_TYPE = ".fab";
+    public static final String FILE_TYPE = ".fabxml";
 
     public static final String TAG_LIST = FILE_PATH + "TAG_LIST.txt";
 
@@ -44,7 +46,7 @@ public class FileHandler {
         return name;
     }
 
-    public static File saveNote(NoteSave noteSave) throws IOException {
+    /*public static File saveNote(NoteSave noteSave) throws IOException {
         if (noteSave.getModels().size() > 0 && !noteSave.getName().equals("")) {
             String filePath = FILE_PATH + noteSave.getName() + FILE_TYPE;
             FileOutputStream fos = new FileOutputStream(filePath);
@@ -54,9 +56,9 @@ public class FileHandler {
             return new File(filePath);
         }
         return null;
-    }
+    }*/
 
-    public static NoteSave loadNote(File file) throws IOException, ClassNotFoundException {
+    /*public static NoteSave loadNote(File file) throws IOException, ClassNotFoundException {
         if (file.exists()) {
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -68,7 +70,7 @@ public class FileHandler {
             }
         }
         return null;
-    }
+    }*/
 
     public static List<String> loadTags() throws IOException {
         File file = new File(TAG_LIST);
@@ -128,12 +130,12 @@ public class FileHandler {
         return fileList;
     }
 
-    public static List<File> tagList(String word) throws IOException, ClassNotFoundException {
+    public static List<File> tagList(String word) throws IOException, ParserConfigurationException, SAXException {
         File[] fileArray = listNotes();
         List<File> fileList = new ArrayList<>();
         for (File file : fileArray) {
             if (file.exists()) {
-                for (String tag : FileHandler.loadNote(file).getTags()) {
+                for (String tag : XMLHandler.readXMLToNote(file).getTags()) {
                     if (tag.contains(word.toLowerCase())) {
                         fileList.add(file);
                     }
@@ -143,7 +145,7 @@ public class FileHandler {
         return fileList;
     }
 
-    public static List<File> searchList(String word) throws IOException, ClassNotFoundException {
+    public static List<File> searchList(String word) throws IOException, ParserConfigurationException, SAXException {
         List<File> fileList = new ArrayList<>();
         List<File> tagList = tagList(word);
         List<File> sortedList;
