@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -74,7 +75,7 @@ public class MainPageController implements Initializable {
     @FXML
     private ToggleButton underlineToggleButton;
     @FXML
-    private TilePane tagBar;
+    private FlowPane tagBar;
     @FXML
     private TextField addTagTextField;
     @FXML
