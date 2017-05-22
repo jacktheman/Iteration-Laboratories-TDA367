@@ -23,6 +23,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -58,6 +59,8 @@ public class XMLHandler {
     private static final String FIT_WIDTH = "fitWidth";
     private static final String FIT_HEIGHT = "fitHeight";
 
+    private static final char SPLITTER = ';';
+
     private XMLHandler() {
     }
 
@@ -86,9 +89,9 @@ public class XMLHandler {
         Element noteTags = doc.createElement(NOTE_TAGS);
         String tagString = "";
         for (String tag : tags) {
-            tagString += tag + ".";
+            tagString += tag + SPLITTER;
         }
-        if (tags.size() > 1)
+        if (tags.size() > 0)
             tagString = tagString.substring(0, tagString.length() - 1);
         noteTags.appendChild(doc.createTextNode(tagString));
         rootElement.appendChild(noteTags);
@@ -188,8 +191,8 @@ public class XMLHandler {
                 Element paintLayoutX = doc.createElement(LAYOUT_X);
                 Element paintLayoutY = doc.createElement(LAYOUT_Y);
 
-                String redGreenBlueOpacity = "" + paintingData.getColor().getRed() + ";" + paintingData.getColor().getGreen() + ";" +
-                        paintingData.getColor().getBlue() + ";" + paintingData.getColor().getOpacity();
+                String redGreenBlueOpacity = "" + paintingData.getColor().getRed() + String.valueOf(SPLITTER) + paintingData.getColor().getGreen()
+                        + String.valueOf(SPLITTER) + paintingData.getColor().getBlue() + String.valueOf(SPLITTER) + paintingData.getColor().getOpacity();
 
                 rgbo.appendChild(doc.createTextNode(redGreenBlueOpacity));
                 paintbrush.appendChild(doc.createTextNode(paintingData.getPaintbrush().toString()));
@@ -218,6 +221,8 @@ public class XMLHandler {
         rootElement.appendChild(paintingCon);
     }
 
+    //HEREON FORTH LIES WRITING STUFF ONLY! YE HAVE BEEN WARNED!
+
     public static NoteSave readXMLToNote(File file) throws ParserConfigurationException, IOException, SAXException {
         if (file.exists()) {
             String name = file.getName().replace(FileHandler.FILE_TYPE, "");
@@ -244,29 +249,29 @@ public class XMLHandler {
             System.out.println(nl.item(0).getTextContent());
             String[] tagArray = nl.item(0).getTextContent().split(Pattern.quote("."));
             List<String> taglist = new ArrayList<>();
-            for (String tag : tagArray)
-                taglist.add(tag);
+            taglist.addAll(Arrays.asList(tagArray));
             return taglist;
         }
         return null;
     }
 
     private static List<NoteObjectI> getNoteContent(Element doc) {
-
         List<NoteObjectI> models = new ArrayList<>();
-
         NodeList nl = doc.getChildNodes();
-
         for (int i = 0; i < nl.getLength(); i++) {
             Node node = nl.item(i);
-            if (node.getNodeName().equals(TEXT_CONTAINER))
-                models.add(getTextContainer(node));
-            else if (node.getNodeName().equals(IMAGE_CONTAINER))
-                models.add(getImageContainer(node));
-            else if (node.getNodeName().equals(PAINTING_CONTAINER))
-                models.add(getPaintingContainer(node));
+            switch (node.getNodeName()) {
+                case TEXT_CONTAINER:
+                    models.add(getTextContainer(node));
+                    break;
+                case IMAGE_CONTAINER:
+                    models.add(getImageContainer(node));
+                    break;
+                case PAINTING_CONTAINER:
+                    models.add(getPaintingContainer(node));
+                    break;
+            }
         }
-
         return models;
     }
 
@@ -405,7 +410,7 @@ public class XMLHandler {
                                         String textContent = paintDrawData.getTextContent();
                                         switch (paintDrawData.getNodeName()) {
                                             case PAINT_RGBO:
-                                                String[] rgbo = textContent.split(";");
+                                                String[] rgbo = textContent.split(String.valueOf(SPLITTER));
                                                 double red = Double.parseDouble(rgbo[0]);
                                                 double green = Double.parseDouble(rgbo[1]);
                                                 double blue = Double.parseDouble(rgbo[2]);
