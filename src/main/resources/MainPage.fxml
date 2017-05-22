@@ -86,13 +86,22 @@
             <content>
               <AnchorPane id="paintingTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ButtonBar buttonMinWidth="30.0" layoutX="14.0" layoutY="5.0" prefHeight="40.0" prefWidth="103.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="5.0">
+                        <ButtonBar buttonMinWidth="30.0" layoutY="3.0" prefHeight="40.0" prefWidth="167.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="3.0">
                           <buttons>
                             <ToggleButton fx:id="circleButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setPaintbrushToCircle" prefHeight="40.0" prefWidth="45.0">
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@icons/circle.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </ToggleButton>
+                              <ToggleButton fx:id="triangleButton" maxWidth="-Infinity" minWidth="21.0" mnemonicParsing="false" onAction="#setPaintbrushToTriangle" prefHeight="40.0" prefWidth="50.0">
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@icons/triangle.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -106,20 +115,11 @@
                                     </ImageView>
                                  </graphic>
                               </ToggleButton>
-                              <ToggleButton fx:id="triangleButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setPaintbrushToTriangle" prefHeight="40.0" prefWidth="45.0">
-                                 <graphic>
-                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@icons/triangle.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </ToggleButton>
                           </buttons>
                         </ButtonBar>
                         <ColorPicker fx:id="colorPicker" layoutX="199.0" layoutY="5.0" onAction="#changeColor" prefHeight="40.0" />
-                        <Label id="brushSizeLabel" layoutX="409.0" layoutY="4.0" prefHeight="40.0" text="Penselstorlek:" />
-                        <ButtonBar buttonMinWidth="30.0" layoutX="481.0" layoutY="-7.0" prefHeight="62.0" prefWidth="122.0" AnchorPane.leftAnchor="481.0" AnchorPane.topAnchor="-7.0">
+                        <Label id="brushSizeLabel" layoutX="365.0" layoutY="3.0" prefHeight="40.0" text="Penselstorlek:" />
+                        <ButtonBar buttonMinWidth="30.0" layoutX="448.0" layoutY="-8.0" prefHeight="62.0" prefWidth="122.0" AnchorPane.leftAnchor="448.0" AnchorPane.topAnchor="-8.0">
                           <buttons>
                               <Button fx:id="paintSizePlusButton" mnemonicParsing="false" onAction="#enlargeBrushSize" prefHeight="40.0" prefWidth="45.0" text="+">
                                  <font>
@@ -131,10 +131,7 @@
                                  </font></Button>
                           </buttons>
                         </ButtonBar>
-                        <AnchorPane fx:id="brushPicture" layoutX="616.0" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="616.0" AnchorPane.rightAnchor="363.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <Canvas fx:id="brushPictureCanvas" height="50.0" width="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                           </children></AnchorPane>
+                        <AnchorPane fx:id="brushPicture" layoutX="616.0" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="616.0" AnchorPane.rightAnchor="363.0" AnchorPane.topAnchor="0.0" />
                         <Button layoutX="923.0" layoutY="5.0" mnemonicParsing="false" onAction="#undoAction" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -144,12 +141,13 @@
                               </ImageView>
                            </graphic>
                         </Button>
+                        <Canvas fx:id="brushPictureCanvas" height="50.0" layoutX="575.0" layoutY="2.0" width="50.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="575.0" AnchorPane.rightAnchor="-567.0" AnchorPane.topAnchor="2.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
-      <TextField fx:id="nameTextField" layoutX="117.0" layoutY="31.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="178.0" promptText="Namnlös" AnchorPane.leftAnchor="117.0" AnchorPane.topAnchor="31.0">
+      <TextField fx:id="nameTextField" layoutX="117.0" layoutY="31.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Namnlös" AnchorPane.leftAnchor="117.0" AnchorPane.topAnchor="31.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -164,7 +162,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <TextField fx:id="addTagTextField" layoutX="291.0" layoutY="31.0" onKeyPressed="#addTag" prefHeight="30.0" prefWidth="112.0" promptText="lägg till tag" />
-      <FlowPane fx:id="tagBar" layoutX="403.0" layoutY="31.0" orientation="VERTICAL" prefHeight="30.0" prefWidth="528.0" />
+      <TextField fx:id="addTagTextField" layoutX="302.0" layoutY="31.0" onKeyPressed="#addTag" prefHeight="30.0" prefWidth="112.0" promptText="lägg till tag" />
+      <FlowPane fx:id="tagBar" layoutX="419.0" layoutY="31.0" orientation="VERTICAL" prefHeight="30.0" prefWidth="617.0" />
    </children>
 </AnchorPane>

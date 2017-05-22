@@ -32,19 +32,29 @@
 
 
 #file-list .list-cell {
-    -fx-background-color: slategray;
-    -fx-text-fill: lightgray;
+    -fx-background-color: #8dbf9b;
     -fx-font: bold 16px "Calibri";
 }
 
 #file-list .list-cell:hover {
-    -fx-background-color: #506070;
-    -fx-text-fill: white;
+    -fx-background-color: #bcffcf;
 }
 
 #file-list .list-cell:pressed, #file-list .list-cell:selected {
-    -fx-background-color: #304050;
-    -fx-text-fill: white;
+    -fx-background-color: #bcffcf;
+}
+
+#fille {
+    -fx-background-color: #4fa191;
+
+}
+
+#tagCloudScrollPane {
+    -fx-background-color: #4fa191;
+}
+
+#tagFlowPane {
+    -fx-background-color: #4fa191;
 }
 
 
@@ -53,21 +63,6 @@
 #image-view:focused {
     -fx-effect: dropshadow(one-pass-box, lightskyblue, 10, 1.0, 0, 0);
 }
-
-
-
-
-#menu-button:pressed {
-    -fx-effect: dropshadow(one-pass-box, gray, 3, 1.0, 0, 0);
-    -fx-opacity: 75%;
-}
-#menu-button:focused {
-    -fx-border-color: slategray;
-}
-#menu-button:hover {
-    -fx-background-color: lightgray;
-}
-
 
 
 
@@ -86,6 +81,7 @@
  #paintingTab {
      -fx-background-color: #4fa191;
  }
+
 
 
 
@@ -122,12 +118,12 @@
     -fx-background-color: #a2dbb2;
 }
 
+
+
+
 .color-picker:hover {
     -fx-background-color: #bcffcf;
 }
-
-
-
 
 #tagPane{
     -fx-background-color: #a2dbb2;
@@ -138,12 +134,12 @@
 #removeTagButton{
     -fx-background-color: #a2dbb2;
     -fx-text-fill: #212121;
-    -fx-border-radius: 20 20 20 20;
-    -fx-background-radius: 20 20 20 20;
+    -fx-border-radius: 25 25 25 25;
+    -fx-background-radius: 25 25 25 25;
 }
 
 #removeTagButton:hover{
-    -fx-background-color: #8dbf9b;
+    -fx-background-color: #bcffcf;
 }
 
 #tagInCloudPane{
@@ -155,10 +151,11 @@
 #removeTagInCloudButton{
     -fx-background-color: #a2dbb2;
     -fx-text-fill: #212121;
-    -fx-border-radius: 20 20 20 20;
-    -fx-background-radius: 20 20 20 20;
+    -fx-border-radius: 25 25 25 25;
+    -fx-background-radius: 25 25 25 25;
 }
 
 #removeTagInCloudButton:hover{
-    -fx-background-color: #8dbf9b;
+    -fx-background-color: #bcffcf;
 }
+
