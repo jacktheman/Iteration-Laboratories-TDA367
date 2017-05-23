@@ -20,11 +20,10 @@ import javafx.util.Duration;
 import com.itlabs.fabnotes.note.model.Note;
 import com.itlabs.fabnotes.fxml.service.FileChooserFactory;
 import org.xml.sax.SAXException;
-import com.itlabs.fabnotes.fxml.service.FileHandler;
-import com.itlabs.fabnotes.service.NoteObjectConfigHelper;
+import com.itlabs.fabnotes.service.FileHandler;
 import com.itlabs.fabnotes.service.StateHandler;
-import com.itlabs.fabnotes.save.NoteSave;
-import com.itlabs.fabnotes.noteobject.utility.Paintbrush;
+import com.itlabs.fabnotes.service.NoteSave;
+import com.itlabs.fabnotes.service.NoteObjectConfigHelper;
 import com.itlabs.fabnotes.note.event.Event;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -239,19 +238,29 @@ public class MainPageController implements Initializable {
 
     private void setBrushPicture() {
         GraphicsContext gc = brushPictureCanvas.getGraphicsContext2D();
-        gc.clearRect(brushPictureCanvas.getLayoutX(), brushPictureCanvas.getLayoutY(), brushPictureCanvas.getWidth(), brushPictureCanvas.getHeight());
-        gc.setFill(Paintbrush.getColor());
+        gc.clearRect(brushPictureCanvas.getLayoutX(), brushPictureCanvas.getLayoutY(),
+                brushPictureCanvas.getWidth(), brushPictureCanvas.getHeight());
+        gc.setFill(NoteObjectConfigHelper.getPaintbrushColor());
         switch (NoteObjectConfigHelper.getPaintbrush()) {
             case TRIANGLE:
-                double[] xPoints = {brushPicture.getPrefWidth() / 2 - Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefWidth() / 2, brushPicture.getPrefWidth() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG};
-                double[] yPoints = {brushPicture.getPrefHeight() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_SMALL, brushPicture.getPrefHeight() / 2 - Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefHeight() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_SMALL};
+                double[] xPoints = {brushPicture.getPrefWidth() / 2 - NoteObjectConfigHelper.getPaintbrushSize()
+                        * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefWidth() / 2, brushPicture.getPrefWidth() / 2
+                        + NoteObjectConfigHelper.getPaintbrushSize() * TRIANGLE_QUANTIFIER_BIG};
+                double[] yPoints = {brushPicture.getPrefHeight() / 2 + NoteObjectConfigHelper.getPaintbrushSize()
+                        * TRIANGLE_QUANTIFIER_SMALL, brushPicture.getPrefHeight() / 2 - NoteObjectConfigHelper.getPaintbrushSize()
+                        * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefHeight() / 2 + NoteObjectConfigHelper.getPaintbrushSize()
+                        * TRIANGLE_QUANTIFIER_SMALL};
                 gc.fillPolygon(xPoints, yPoints, TRIANGLE_NUMBER_OF_CORNERS);
                 break;
             case SQUARE:
-                gc.fillRect(brushPicture.getPrefWidth() / 2 - (Paintbrush.getSize() / 2), brushPicture.getPrefHeight() / 2 - (Paintbrush.getSize() / 2), Paintbrush.getSize(), Paintbrush.getSize());
+                gc.fillRect(brushPicture.getPrefWidth() / 2 - (NoteObjectConfigHelper.getPaintbrushSize() / 2),
+                        brushPicture.getPrefHeight() / 2 - (NoteObjectConfigHelper.getPaintbrushSize() / 2),
+                        NoteObjectConfigHelper.getPaintbrushSize(), NoteObjectConfigHelper.getPaintbrushSize());
                 break;
             case CIRCLE:
-                gc.fillOval(brushPicture.getPrefWidth() / 2 - (Paintbrush.getSize() / 2), brushPicture.getPrefHeight() / 2 - (Paintbrush.getSize() / 2), Paintbrush.getSize(), Paintbrush.getSize());
+                gc.fillOval(brushPicture.getPrefWidth() / 2 - (NoteObjectConfigHelper.getPaintbrushSize() / 2),
+                        brushPicture.getPrefHeight() / 2 - (NoteObjectConfigHelper.getPaintbrushSize() / 2),
+                        NoteObjectConfigHelper.getPaintbrushSize(), NoteObjectConfigHelper.getPaintbrushSize());
                 break;
         }
 
@@ -324,7 +333,7 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void changeColor() {
-        Paintbrush.setColor(colorPicker.getValue());
+        NoteObjectConfigHelper.setPaintbrushColor(colorPicker.getValue());
         setBrushPicture();
     }
 
@@ -396,13 +405,15 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void shrinkBrushSize() {
-        Paintbrush.setSize(Paintbrush.getSize() * BRUSH_SHRINK_RATE);
+        NoteObjectConfigHelper.setPaintbrushSize(
+                NoteObjectConfigHelper.getPaintbrushSize() * BRUSH_SHRINK_RATE);
         setBrushPicture();
     }
 
     @FXML
     private void enlargeBrushSize() {
-        Paintbrush.setSize(Paintbrush.getSize() * BRUSH_ENLARGE_RATE);
+        NoteObjectConfigHelper.setPaintbrushSize(
+                NoteObjectConfigHelper.getPaintbrushSize() * BRUSH_ENLARGE_RATE);
         setBrushPicture();
     }
 }
