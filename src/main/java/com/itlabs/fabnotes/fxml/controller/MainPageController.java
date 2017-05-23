@@ -138,7 +138,6 @@ public class MainPageController implements Initializable {
 
     public void loadNoteSave(NoteSave noteSave) {
         if (noteSave.loadControllers()) {
-            System.out.println(noteSave.getModels());
             loadNoteTagsInTagBar(noteSave.getTags());
             nameTextField.setText(noteSave.getName());
         }

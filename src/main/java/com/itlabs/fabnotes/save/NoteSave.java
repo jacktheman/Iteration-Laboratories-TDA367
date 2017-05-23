@@ -74,6 +74,7 @@ public class NoteSave implements Serializable {
             return false;
 
         setCurrentNote(controllers);
+        setCurrentNodes(controllers);
         return true;
     }
 
@@ -84,5 +85,11 @@ public class NoteSave implements Serializable {
         Note note = new Note(name);
         note.setTags(tags);
         Note.setCurrentNote(note);
+    }
+
+    private void setCurrentNodes(List<NoteObjectControllerI> controllers) {
+        Note.getCurrentNodes().clear();
+        for (NoteObjectControllerI controller : controllers)
+            Note.getCurrentNodes().add(controller.getNode());
     }
 }
