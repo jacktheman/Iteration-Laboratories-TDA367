@@ -1,5 +1,6 @@
-package com.itlabs.fabnotes.service;
+package com.itlabs.fabnotes.service.filemanagment;
 
+import com.itlabs.fabnotes.service.NoteSave;
 import javafx.scene.paint.Color;
 import com.itlabs.fabnotes.noteobject.model.ImageContainer;
 import com.itlabs.fabnotes.noteobject.model.NoteObjectI;

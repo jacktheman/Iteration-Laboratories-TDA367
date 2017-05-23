@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import com.itlabs.fabnotes.note.model.Note;
 import org.xml.sax.SAXException;
 import com.itlabs.fabnotes.service.NoteSave;
-import com.itlabs.fabnotes.service.FileHandler;
+import com.itlabs.fabnotes.service.filemanagment.FileHandler;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;

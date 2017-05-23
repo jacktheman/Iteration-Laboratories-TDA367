@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import com.itlabs.fabnotes.service.FileHandler;
+import com.itlabs.fabnotes.service.filemanagment.FileHandler;
 
 import java.io.File;
 
