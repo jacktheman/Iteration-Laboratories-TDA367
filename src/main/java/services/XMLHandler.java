@@ -245,8 +245,7 @@ class XMLHandler {
     private static List<String> getNoteTags(Element doc) {
         NodeList nl = doc.getElementsByTagName(NOTE_TAGS);
         if (nl.getLength() == 1) {
-            System.out.println(nl.item(0).getTextContent());
-            String[] tagArray = nl.item(0).getTextContent().split(Pattern.quote("."));
+            String[] tagArray = nl.item(0).getTextContent().split(String.valueOf(SPLITTER));
             List<String> taglist = new ArrayList<>();
             taglist.addAll(Arrays.asList(tagArray));
             return taglist;
