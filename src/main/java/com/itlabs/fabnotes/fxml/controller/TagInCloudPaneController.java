@@ -6,8 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import com.itlabs.fabnotes.note.model.Note;
 import org.xml.sax.SAXException;
-import com.itlabs.fabnotes.save.NoteSave;
-import com.itlabs.fabnotes.fxml.service.FileHandler;
+import com.itlabs.fabnotes.service.NoteSave;
+import com.itlabs.fabnotes.service.FileHandler;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;

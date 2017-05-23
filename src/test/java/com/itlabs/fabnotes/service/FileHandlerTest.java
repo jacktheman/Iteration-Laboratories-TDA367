@@ -1,6 +1,6 @@
-package com.itlabs.fabnotes.fxml.service;
+package com.itlabs.fabnotes.service;
 
-import com.itlabs.fabnotes.fxml.service.FileHandler;
+import com.itlabs.fabnotes.service.FileHandler;
 import org.junit.Test;
 
 import java.io.File;

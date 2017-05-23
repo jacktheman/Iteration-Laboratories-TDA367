@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.state;
+package com.itlabs.fabnotes.service.state;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;

@@ -1,9 +1,9 @@
 package com.itlabs.fabnotes.service;
 
 import com.itlabs.fabnotes.noteobject.controller.PaintingContainerController;
-import com.itlabs.fabnotes.state.PaintState;
-import com.itlabs.fabnotes.state.NoteStateI;
-import com.itlabs.fabnotes.state.WriteState;
+import com.itlabs.fabnotes.service.state.PaintState;
+import com.itlabs.fabnotes.service.state.NoteStateI;
+import com.itlabs.fabnotes.service.state.WriteState;
 
 /**
  * Created by jackflurry on 2017-05-03.

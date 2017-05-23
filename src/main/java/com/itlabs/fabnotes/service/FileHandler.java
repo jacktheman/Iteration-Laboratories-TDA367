@@ -1,7 +1,6 @@
-package com.itlabs.fabnotes.fxml.service;
+package com.itlabs.fabnotes.service;
 
 import org.xml.sax.SAXException;
-import com.itlabs.fabnotes.save.NoteSave;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;

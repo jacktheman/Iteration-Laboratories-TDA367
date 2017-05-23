@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.fxml.service;
+package com.itlabs.fabnotes.service;
 
 import com.itlabs.fabnotes.noteobject.model.ImageContainer;
 import com.itlabs.fabnotes.noteobject.model.NoteObjectI;
@@ -6,7 +6,6 @@ import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
 import com.itlabs.fabnotes.noteobject.model.TextContainer;
 import com.itlabs.fabnotes.noteobject.utility.PaintStrokeToData;
 import com.itlabs.fabnotes.noteobject.utility.PaintingToData;
-import com.itlabs.fabnotes.save.NoteSave;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

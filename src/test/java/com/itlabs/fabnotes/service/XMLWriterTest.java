@@ -1,10 +1,9 @@
-package com.itlabs.fabnotes.fxml.service;
+package com.itlabs.fabnotes.service;
 
 import com.itlabs.fabnotes.noteobject.model.NoteObjectI;
 import com.itlabs.fabnotes.noteobject.model.TextContainer;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import com.itlabs.fabnotes.save.NoteSave;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,9 +12,9 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by aron on 2017-05-22.
+ * Created by aron on 2017-05-23.
  */
-public class XMLReaderTest {
+public class XMLWriterTest {
     private static final String TEST_STRING = "Test";
     private static final int TEST_NUMBER = 0;
 
@@ -31,12 +30,11 @@ public class XMLReaderTest {
     }
 
     @Test
-    public void readXMLToNote() throws Exception {
-        File file = new File(FileHandler.FILE_PATH + TEST_STRING + FileHandler.FILE_TYPE);
-        NoteSave noteSave = XMLReader.readXMLToNote(file);
-        assertTrue(noteSave.getName().equals(TEST_STRING) && noteSave.getTags().size() == 1 &&
-        noteSave.getTags().get(0).equals(TEST_STRING) && noteSave.getModels().size() == 1 &&
-        noteSave.getModels().get(0) instanceof TextContainer);
+    public void writeToXML() throws Exception {
+        NoteSave noteSave = new NoteSave(TEST_STRING, tags, models);
+        File file = XMLWriter.writeToXML(noteSave);
+        assertTrue(file.exists());
     }
+
 
 }

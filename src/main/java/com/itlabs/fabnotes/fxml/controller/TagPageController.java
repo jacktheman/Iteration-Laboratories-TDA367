@@ -10,10 +10,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import org.xml.sax.SAXException;
-import com.itlabs.fabnotes.fxml.service.FileHandler;
+import com.itlabs.fabnotes.service.FileHandler;
 import java.io.IOException;
 
-import com.itlabs.fabnotes.save.NoteSave;
+import com.itlabs.fabnotes.service.NoteSave;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;

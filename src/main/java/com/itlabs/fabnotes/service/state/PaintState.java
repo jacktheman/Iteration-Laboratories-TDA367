@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.state;
+package com.itlabs.fabnotes.service.state;
 
 import com.itlabs.fabnotes.noteobject.controller.PaintingContainerController;
 

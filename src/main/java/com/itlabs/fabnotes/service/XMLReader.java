@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.fxml.service;
+package com.itlabs.fabnotes.service;
 
 import javafx.scene.paint.Color;
 import com.itlabs.fabnotes.noteobject.model.ImageContainer;
@@ -7,7 +7,6 @@ import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
 import com.itlabs.fabnotes.noteobject.model.TextContainer;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
-import com.itlabs.fabnotes.save.NoteSave;
 import com.itlabs.fabnotes.noteobject.utility.PaintStrokeToData;
 import com.itlabs.fabnotes.noteobject.utility.Paintbrush;
 import com.itlabs.fabnotes.noteobject.utility.PaintingToData;
@@ -15,11 +14,6 @@ import com.itlabs.fabnotes.noteobject.utility.PaintingToData;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
