@@ -8,7 +8,7 @@ import models.noteobject.NoteObjectResizeableI;
 /**
  * Created by svante on 2017-0BORDER_WIDTH-03.
  */
-public class ResizeBehavior implements NoteObjectBehaviorI {
+public class ResizeBehavior extends NoteObjectBehavior {
 
     public static final double BORDER_WIDTH = 10;
 
@@ -55,17 +55,20 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
             quota = Math.max(nodeY / nodeX, nodeX / nodeY);
     }
 
-    private synchronized boolean minimumSizeReached() {
-        if (nodeX < 40 || nodeY < 40) {
+    private void minimize() {
+        if (nodeX < nodeY) {
+            nodeX = 40;
+            nodeY = nodeX * quota;
+        } else {
+            nodeY = 40;
+            nodeX = nodeY / quota;
+        }
+    }
+
+    private void replaceIfMinimum() {
+        if (nodeX <= 40 || nodeY <= 40) {
             double xDiff = 40 - nodeX;
             double yDiff = 40 - nodeY;
-            if (nodeX < nodeY) {
-                nodeX = 40;
-                nodeY = nodeX * quota;
-            } else {
-                nodeY = 40;
-                nodeX = nodeY / quota;
-            }
             if (pos == ResizablePositions.LEFT_UPPER_CORNER || pos == ResizablePositions.RIGHT_UPPER_CORNER ||
                     pos == ResizablePositions.UPPER_AREA) {
                 oldY -= yDiff;
@@ -74,6 +77,13 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
                     pos == ResizablePositions.LEFT_AREA) {
                 oldX -= xDiff;
             }
+        }
+    }
+
+    private synchronized boolean minimumSizeReached() {
+        if (nodeX < 40 || nodeY < 40) {
+            minimize();
+            replaceIfMinimum();
             return true;
         }
         return false;
@@ -105,27 +115,33 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
         double mouseX, mouseY;
         mouseX = event.getX();
         mouseY = event.getY();
-
         updateVariables();
-
-            if (pos == ResizablePositions.LEFT_UPPER_CORNER) {
+        switch (pos) {
+            case LEFT_UPPER_CORNER:
                 leftUpperCornerResize(mouseY);
-            } else if (pos == ResizablePositions.LEFT_LOWER_CORNER) {
+                break;
+            case LEFT_LOWER_CORNER:
                 leftLowerCornerResize(mouseY);
-            } else if (pos == ResizablePositions.RIGHT_UPPER_CORNER) {
+                break;
+            case RIGHT_UPPER_CORNER:
                 rightUpperCornerResize(mouseY);
-            } else if (pos == ResizablePositions.RIGHT_LOWER_CORNER) {
+                break;
+            case RIGHT_LOWER_CORNER:
                 rightLowerCornerResize(mouseY);
-            } else if (pos == ResizablePositions.UPPER_AREA) {
+                break;
+            case UPPER_AREA:
                 upperAreaResize(mouseY);
-            } else if (pos == ResizablePositions.LEFT_AREA) {
+                break;
+            case LEFT_AREA:
                 leftAreaResize(mouseX);
-            } else if (pos == ResizablePositions.BOTTOM_AREA) {
+                break;
+            case BOTTOM_AREA:
                 bottomAreaResize(mouseY);
-            } else if (pos == ResizablePositions.RIGHT_AREA) {
+                break;
+            case RIGHT_AREA:
                 rightAreaResize(mouseX);
-            }
-
+                break;
+        }
         if(!minimumSizeReached())
             confirmVariables();
     }
@@ -246,14 +262,6 @@ public class ResizeBehavior implements NoteObjectBehaviorI {
     @Override
     public void onMouseReleased(MouseEvent mouseEvent) {
         pos = null;
-    }
-
-    @Override
-    public void onMouseEntered(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void onMouseExited(MouseEvent mouseEvent) {
     }
 
     @Override

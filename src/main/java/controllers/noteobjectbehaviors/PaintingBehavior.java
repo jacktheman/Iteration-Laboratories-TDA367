@@ -10,7 +10,7 @@ import views.noteobject.PaintingContainerView;
 /**
  * Created by jackflurry on 2017-05-03.
  */
-public class PaintingBehavior implements NoteObjectBehaviorI {
+public class PaintingBehavior extends NoteObjectBehavior {
 
     private PaintingContainer model;
     private PaintingContainerView view;
@@ -31,18 +31,6 @@ public class PaintingBehavior implements NoteObjectBehaviorI {
     public void onMouseReleased(MouseEvent mouseEvent) {
         model.addPainting(paintStroke);
         Event.addEvent(new PaintingEvent(model));
-    }
-
-    @Override
-    public void onMouseEntered(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void onMouseExited(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void onMouseMoved(MouseEvent mouseEvent) {
     }
 
     @Override

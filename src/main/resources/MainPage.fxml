@@ -121,17 +121,16 @@
                         <Label id="brushSizeLabel" layoutX="365.0" layoutY="3.0" prefHeight="40.0" text="Penselstorlek:" />
                         <ButtonBar buttonMinWidth="30.0" layoutX="448.0" layoutY="-8.0" prefHeight="62.0" prefWidth="122.0" AnchorPane.leftAnchor="448.0" AnchorPane.topAnchor="-8.0">
                           <buttons>
-                              <Button fx:id="paintSizePlusButton" mnemonicParsing="false" onAction="#enlargeBrushSize" prefHeight="40.0" prefWidth="45.0" text="+">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font></Button>
                             <Button fx:id="paintSizeMinusButton" mnemonicParsing="false" onAction="#shrinkBrushSize" prefHeight="40.0" prefWidth="45.0" text="-" wrapText="true">
                                  <font>
                                     <Font size="21.0" />
                                  </font></Button>
+                              <Button fx:id="paintSizePlusButton" mnemonicParsing="false" onAction="#enlargeBrushSize" prefHeight="40.0" prefWidth="45.0" text="+">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font></Button>
                           </buttons>
                         </ButtonBar>
-                        <AnchorPane fx:id="brushPicture" layoutX="616.0" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="616.0" AnchorPane.rightAnchor="363.0" AnchorPane.topAnchor="0.0" />
                         <Button layoutX="923.0" layoutY="5.0" mnemonicParsing="false" onAction="#undoAction" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -141,7 +140,11 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Canvas fx:id="brushPictureCanvas" height="50.0" layoutX="575.0" layoutY="2.0" width="50.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="575.0" AnchorPane.rightAnchor="-567.0" AnchorPane.topAnchor="2.0" />
+                        <AnchorPane fx:id="brushPicture" layoutX="570.0" layoutY="1.0" prefHeight="51.0" prefWidth="50.0" AnchorPane.leftAnchor="570.0" AnchorPane.topAnchor="1.0">
+                           <children>
+                              <Canvas fx:id="brushPictureCanvas" height="50.0" layoutX="384.0" layoutY="1.0" width="50.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                           </children>
+                        </AnchorPane>
                      </children></AnchorPane>
             </content>
           </Tab>

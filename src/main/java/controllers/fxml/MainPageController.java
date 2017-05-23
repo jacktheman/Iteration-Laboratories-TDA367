@@ -84,6 +84,9 @@ public class MainPageController implements Initializable {
     private static final double TRIANGLE_QUANTIFIER_BIG = 1.25;
     private static final int TRIANGLE_NUMBER_OF_CORNERS = 3;
 
+    private static final double BRUSH_SHRINK_RATE = 0.9;
+    private static final double BRUSH_ENLARGE_RATE = 1.1;
+
     private static final Integer[] DEFAULT_FONT_SIZES = {9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 28, 30};
 
     private static final int TAG_PAGE_LAYOUT_X = 0;
@@ -135,6 +138,7 @@ public class MainPageController implements Initializable {
 
     public void loadNoteSave(NoteSave noteSave) {
         if (noteSave.loadControllers()) {
+            System.out.println(noteSave.getModels());
             loadNoteTagsInTagBar(noteSave.getTags());
             nameTextField.setText(noteSave.getName());
         }
@@ -239,15 +243,15 @@ public class MainPageController implements Initializable {
         gc.clearRect(brushPictureCanvas.getLayoutX(), brushPictureCanvas.getLayoutY(), brushPictureCanvas.getWidth(), brushPictureCanvas.getHeight());
         gc.setFill(Paintbrush.getColor());
         switch (NoteObjectConfigHelper.getPaintbrush()) {
-            case "trianlge":
+            case TRIANGLE:
                 double[] xPoints = {brushPicture.getPrefWidth() / 2 - Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefWidth() / 2, brushPicture.getPrefWidth() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG};
                 double[] yPoints = {brushPicture.getPrefHeight() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_SMALL, brushPicture.getPrefHeight() / 2 - Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefHeight() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_SMALL};
                 gc.fillPolygon(xPoints, yPoints, TRIANGLE_NUMBER_OF_CORNERS);
                 break;
-            case "square":
+            case SQUARE:
                 gc.fillRect(brushPicture.getPrefWidth() / 2 - (Paintbrush.getSize() / 2), brushPicture.getPrefHeight() / 2 - (Paintbrush.getSize() / 2), Paintbrush.getSize(), Paintbrush.getSize());
                 break;
-            case "circle":
+            case CIRCLE:
                 gc.fillOval(brushPicture.getPrefWidth() / 2 - (Paintbrush.getSize() / 2), brushPicture.getPrefHeight() / 2 - (Paintbrush.getSize() / 2), Paintbrush.getSize(), Paintbrush.getSize());
                 break;
         }
@@ -265,7 +269,7 @@ public class MainPageController implements Initializable {
             String newTagText = addTagTextField.getText();
             try {
                 if (Note.getCurrentNote().addTag(newTagText)) {
-                    FXMLLoader newTag = new FXMLLoader(getClass().getResource("/TagPane.fxml"));
+                    FXMLLoader newTag = new FXMLLoader(getClass().getResource(TAG_PANE_PATH));
                     AnchorPane tag = newTag.load();
                     ((Label) tag.getChildren().get(0)).setText(newTagText);
                     tagBar.getChildren().add(tag);
@@ -344,7 +348,6 @@ public class MainPageController implements Initializable {
         FileChooser fileChooser = FileChooserFactory.getFabNotesChooser();
         File file = fileChooser.showOpenDialog(this.notePane.getScene().getWindow());
         try {
-            //NoteSave noteSave = FileHandler.loadNote(file);
             NoteSave noteSave = FileHandler.loadNote(file);
             this.loadNoteSave(noteSave);
         } catch (SAXException e) {
@@ -394,13 +397,13 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void shrinkBrushSize() {
-        Paintbrush.setSize(Paintbrush.getSize() * 0.9);
+        Paintbrush.setSize(Paintbrush.getSize() * BRUSH_SHRINK_RATE);
         setBrushPicture();
     }
 
     @FXML
     private void enlargeBrushSize() {
-        Paintbrush.setSize(Paintbrush.getSize() * 1.1);
+        Paintbrush.setSize(Paintbrush.getSize() * BRUSH_ENLARGE_RATE);
         setBrushPicture();
     }
 }

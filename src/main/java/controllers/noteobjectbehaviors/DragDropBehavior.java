@@ -10,7 +10,7 @@ import events.MovedNoteEvent;
 /**
  * Created by aron on 2017-05-03.
  */
-public class DragDropBehavior implements NoteObjectBehaviorI {
+public class DragDropBehavior extends NoteObjectBehavior {
 
     private final Node view;
     private final NoteObjectI model;
@@ -49,10 +49,6 @@ public class DragDropBehavior implements NoteObjectBehaviorI {
         if (!mouseEvent.isPrimaryButtonDown()) {
             view.getScene().setCursor(Cursor.DEFAULT);
         }
-    }
-
-    @Override
-    public void onMouseMoved(MouseEvent mouseEvent) {
     }
 
     @Override
