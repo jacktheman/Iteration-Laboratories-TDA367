@@ -7,7 +7,7 @@ import models.noteobject.NoteObjectResizeableI;
 /**
  * Created by svante on 2017-05-04.
  */
-public class DragDropResizeBehavior implements NoteObjectBehaviorI {
+public class DragDropResizeBehavior extends NoteObjectBehavior {
 
     private NoteObjectBehaviorI dragDrop;
     private NoteObjectBehaviorI resize;
