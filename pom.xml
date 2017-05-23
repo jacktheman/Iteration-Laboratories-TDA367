@@ -25,7 +25,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Main</mainClass>
+                            <mainClass>com.itlabs.fabnotes.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
