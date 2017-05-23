@@ -1,7 +1,5 @@
 package com.itlabs.fabnotes.noteobject.behavior;
 
-import com.itlabs.fabnotes.note.event.Event;
-import com.itlabs.fabnotes.note.event.PaintingEvent;
 import javafx.scene.input.MouseEvent;
 import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
 import com.itlabs.fabnotes.noteobject.utility.PaintStrokeToData;
@@ -30,7 +28,6 @@ public class PaintingBehavior extends NoteObjectBehavior {
     @Override
     public void onMouseReleased(MouseEvent mouseEvent) {
         model.addPainting(paintStroke);
-        Event.addEvent(new PaintingEvent(model));
     }
 
     @Override

@@ -73,7 +73,7 @@ public class TextContainer extends NoteObject implements ObservableI {
     @Override
     public void setLayoutX(double layoutX) {
         this.layoutX = layoutX;
-    }
+        }
 
     @Override
     public double getLayoutY() {

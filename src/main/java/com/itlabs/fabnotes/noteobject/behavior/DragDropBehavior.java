@@ -1,5 +1,6 @@
 package com.itlabs.fabnotes.noteobject.behavior;
 
+import com.itlabs.fabnotes.noteobject.event.NoteEventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -27,7 +28,7 @@ public class DragDropBehavior extends NoteObjectBehavior {
         view.requestFocus();
         dragx = mouseEvent.getX();
         dragy = mouseEvent.getY();
-        Event.addEvent(new MovedNoteEvent(model,dragx,dragy));
+        NoteEventHandler.getInstance().createMoveEvent(model,dragx,dragy);
         view.getScene().setCursor(Cursor.MOVE);
     }
 
