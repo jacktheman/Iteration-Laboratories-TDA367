@@ -12,6 +12,11 @@ import com.itlabs.fabnotes.noteobject.observers.ObserverI;
 public class TextContainerView extends TextArea implements ObserverI<TextContainer> {
 
     private Text textHolder;
+    private String styles;
+
+    private final static String DEFAULT_BACKGROUND = "-fx-background-color: transparent";
+    private final static String VISABLE_BORDER = "-fx-border-color: lightskyblue";
+    private final static String INVISABLE_BORDER = "-fx-border-color: transparent";
 
     public TextContainerView(String text, double layoutX, double layoutY) {
         super(text);
@@ -22,6 +27,8 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
         this.setPrefHeight(0);
         updateTextContainerSize();
         this.setWrapText(true);
+        this.styles = DEFAULT_BACKGROUND + ";";
+        changeBorder();
     }
 
     public TextContainerView(double layoutX, double layoutY) {
@@ -41,6 +48,37 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
         this.setPrefHeight(newHeight);
     }
 
+    private void addStyle(String style) {
+        style = style.replace(";", "");
+        if (!this.styles.contains(style)) {
+            this.styles += style + ";";
+        }
+    }
+
+    private void removeStyle(String style) {
+        style = style.replace(";", "");
+        this.styles = this.styles.replace(style + ";", "");
+    }
+
+    private void switchToVisibleBorder() {
+        this.removeStyle(INVISABLE_BORDER);
+        this.addStyle(VISABLE_BORDER);
+    }
+
+    private void switchToInvisibleBorder() {
+        this.removeStyle(VISABLE_BORDER);
+        this.addStyle(INVISABLE_BORDER);
+    }
+
+    public void changeBorder() {
+        if (this.getText().equals("") || !this.isFocused()) {
+            switchToInvisibleBorder();
+        } else {
+            switchToVisibleBorder();
+        }
+        this.setStyle(this.styles);
+    }
+
     @Override
     public void fireChange(TextContainer subject) {
         if (Note.getCurrentNodes().contains(this))
@@ -50,6 +88,10 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
             this.requestFocus();
         }
     }
+
+
+
+
 }
 
 
