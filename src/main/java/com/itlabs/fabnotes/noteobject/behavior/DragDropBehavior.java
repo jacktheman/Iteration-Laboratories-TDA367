@@ -1,12 +1,10 @@
 package com.itlabs.fabnotes.noteobject.behavior;
 
-import com.itlabs.fabnotes.noteobject.event.NoteEventHandler;
+import com.itlabs.fabnotes.noteobject.service.NoteEventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import com.itlabs.fabnotes.noteobject.model.NoteObjectI;
-import com.itlabs.fabnotes.note.event.Event;
-import com.itlabs.fabnotes.note.event.MovedNoteEvent;
 
 /**
  * Created by aron on 2017-05-03.

@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.noteobject.utility;
+package com.itlabs.fabnotes.noteobject.utility.paint;
 
 
 import java.io.Serializable;

@@ -1,13 +1,13 @@
 package com.itlabs.fabnotes.noteobject.view;
 
-import com.itlabs.fabnotes.noteobject.utility.PaintStrokeToData;
-import com.itlabs.fabnotes.noteobject.utility.Paintbrush;
-import com.itlabs.fabnotes.noteobject.utility.PaintingToData;
+import com.itlabs.fabnotes.noteobject.utility.paint.PaintStrokeToData;
+import com.itlabs.fabnotes.noteobject.utility.paint.Paintbrush;
+import com.itlabs.fabnotes.noteobject.utility.paint.PaintingToData;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
 import com.itlabs.fabnotes.note.model.Note;
 import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
-import com.itlabs.fabnotes.noteobject.observers.ObserverI;
+import com.itlabs.fabnotes.noteobject.utility.observer.ObserverI;
 
 import java.io.Serializable;
 import java.util.List;

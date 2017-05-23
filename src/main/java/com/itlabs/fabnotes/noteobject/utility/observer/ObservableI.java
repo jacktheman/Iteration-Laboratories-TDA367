@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.noteobject.observers;
+package com.itlabs.fabnotes.noteobject.utility.observer;
 
 /**
  * Created by jackflurry on 2017-05-03.

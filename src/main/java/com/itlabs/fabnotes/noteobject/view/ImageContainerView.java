@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 import com.itlabs.fabnotes.note.model.Note;
 import com.itlabs.fabnotes.noteobject.model.ImageContainer;
 import com.itlabs.fabnotes.noteobject.model.NoteObjectI;
-import com.itlabs.fabnotes.noteobject.observers.ObserverI;
+import com.itlabs.fabnotes.noteobject.utility.observer.ObserverI;
 
 import java.io.Serializable;
 import java.net.URL;

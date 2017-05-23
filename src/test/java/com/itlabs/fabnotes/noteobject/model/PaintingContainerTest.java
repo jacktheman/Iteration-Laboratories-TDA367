@@ -1,9 +1,8 @@
 package com.itlabs.fabnotes.noteobject.model;
 
-import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
 import org.junit.Test;
-import com.itlabs.fabnotes.noteobject.utility.PaintStrokeToData;
-import com.itlabs.fabnotes.noteobject.utility.Paintbrush;
+import com.itlabs.fabnotes.noteobject.utility.paint.PaintStrokeToData;
+import com.itlabs.fabnotes.noteobject.utility.paint.Paintbrush;
 
 import static org.junit.Assert.*;
 

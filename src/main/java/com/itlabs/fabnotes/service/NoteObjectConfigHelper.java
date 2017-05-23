@@ -5,7 +5,7 @@ import com.itlabs.fabnotes.noteobject.controller.NoteObjectControllerI;
 import com.itlabs.fabnotes.note.model.Note;
 import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
 import com.itlabs.fabnotes.noteobject.model.TextContainer;
-import com.itlabs.fabnotes.noteobject.utility.Paintbrush;
+import com.itlabs.fabnotes.noteobject.utility.paint.Paintbrush;
 import javafx.scene.paint.Color;
 
 import java.net.URL;

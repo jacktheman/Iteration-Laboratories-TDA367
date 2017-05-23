@@ -1,10 +1,10 @@
 package com.itlabs.fabnotes.noteobject.model;
 
-import com.itlabs.fabnotes.noteobject.event.NoteEventHandler;
-import com.itlabs.fabnotes.noteobject.observers.ObservableI;
-import com.itlabs.fabnotes.noteobject.observers.ObserverI;
-import com.itlabs.fabnotes.noteobject.utility.PaintStrokeToData;
-import com.itlabs.fabnotes.noteobject.utility.Paintbrush;
+import com.itlabs.fabnotes.noteobject.service.NoteEventHandler;
+import com.itlabs.fabnotes.noteobject.utility.observer.ObservableI;
+import com.itlabs.fabnotes.noteobject.utility.observer.ObserverI;
+import com.itlabs.fabnotes.noteobject.utility.paint.PaintStrokeToData;
+import com.itlabs.fabnotes.noteobject.utility.paint.Paintbrush;
 
 import java.util.ArrayList;
 import java.util.List;

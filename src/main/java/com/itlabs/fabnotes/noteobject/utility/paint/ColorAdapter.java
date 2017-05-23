@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.noteobject.utility;
+package com.itlabs.fabnotes.noteobject.utility.paint;
 
 import javafx.scene.paint.Color;
 import java.io.Serializable;
@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Created by alexandra on 2017-05-21.
  */
 
-public class ColorAdapter implements Serializable{
+class ColorAdapter implements Serializable{
 
     private double r;
     private double g;
@@ -22,19 +22,19 @@ public class ColorAdapter implements Serializable{
         this.opacity = color.getOpacity();
     }
     
-    public double getR() {
+    double getR() {
         return r;
     }
 
-    public double getG() {
+    double getG() {
         return g;
     }
 
-    public double getB() {
+    double getB() {
         return b;
     }
 
-    public double getOpacity() {
+    double getOpacity() {
         return opacity;
     }
 

@@ -1,8 +1,8 @@
 package com.itlabs.fabnotes.noteobject.model;
 
 import javafx.scene.image.Image;
-import com.itlabs.fabnotes.noteobject.observers.ObservableI;
-import com.itlabs.fabnotes.noteobject.observers.ObserverI;
+import com.itlabs.fabnotes.noteobject.utility.observer.ObservableI;
+import com.itlabs.fabnotes.noteobject.utility.observer.ObserverI;
 
 import java.util.ArrayList;
 import java.util.List;

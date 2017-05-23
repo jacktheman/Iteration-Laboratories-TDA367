@@ -2,7 +2,7 @@ package com.itlabs.fabnotes.noteobject.behavior;
 
 import javafx.scene.input.MouseEvent;
 import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
-import com.itlabs.fabnotes.noteobject.utility.PaintStrokeToData;
+import com.itlabs.fabnotes.noteobject.utility.paint.PaintStrokeToData;
 import com.itlabs.fabnotes.noteobject.view.PaintingContainerView;
 
 /**

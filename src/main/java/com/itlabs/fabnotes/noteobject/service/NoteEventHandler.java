@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.noteobject.event;
+package com.itlabs.fabnotes.noteobject.service;
 
 import com.itlabs.fabnotes.note.event.*;
 import com.itlabs.fabnotes.noteobject.model.NoteObjectI;

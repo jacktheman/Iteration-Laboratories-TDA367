@@ -4,7 +4,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import com.itlabs.fabnotes.note.model.Note;
 import com.itlabs.fabnotes.noteobject.model.TextContainer;
-import com.itlabs.fabnotes.noteobject.observers.ObserverI;
+import com.itlabs.fabnotes.noteobject.utility.observer.ObserverI;
 
 /**
  * Created by aron on 2017-04-06.

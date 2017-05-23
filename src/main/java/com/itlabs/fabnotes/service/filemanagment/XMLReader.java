@@ -8,9 +8,9 @@ import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
 import com.itlabs.fabnotes.noteobject.model.TextContainer;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
-import com.itlabs.fabnotes.noteobject.utility.PaintStrokeToData;
-import com.itlabs.fabnotes.noteobject.utility.Paintbrush;
-import com.itlabs.fabnotes.noteobject.utility.PaintingToData;
+import com.itlabs.fabnotes.noteobject.utility.paint.PaintStrokeToData;
+import com.itlabs.fabnotes.noteobject.utility.paint.Paintbrush;
+import com.itlabs.fabnotes.noteobject.utility.paint.PaintingToData;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

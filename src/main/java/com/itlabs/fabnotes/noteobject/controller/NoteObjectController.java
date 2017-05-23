@@ -1,6 +1,6 @@
 package com.itlabs.fabnotes.noteobject.controller;
 
-import com.itlabs.fabnotes.noteobject.event.NoteEventHandler;
+import com.itlabs.fabnotes.noteobject.service.NoteEventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
