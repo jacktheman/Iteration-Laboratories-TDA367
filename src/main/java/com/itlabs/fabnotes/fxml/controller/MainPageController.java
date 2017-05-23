@@ -20,9 +20,9 @@ import javafx.util.Duration;
 import com.itlabs.fabnotes.note.model.Note;
 import com.itlabs.fabnotes.fxml.service.FileChooserFactory;
 import org.xml.sax.SAXException;
-import com.itlabs.fabnotes.service.FileHandler;
+import com.itlabs.fabnotes.fxml.service.FileHandler;
 import com.itlabs.fabnotes.service.StateHandler;
-import com.itlabs.fabnotes.service.NoteSave;
+import com.itlabs.fabnotes.save.NoteSave;
 import com.itlabs.fabnotes.service.NoteObjectConfigHelper;
 import com.itlabs.fabnotes.note.event.Event;
 
