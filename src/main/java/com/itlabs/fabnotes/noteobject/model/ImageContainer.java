@@ -98,6 +98,7 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
     public void setLayoutX(double layoutX) {
         this.layoutX = layoutX;
         this.fireChange();
+
     }
 
     @Override

@@ -43,7 +43,7 @@ public class Note implements Serializable {
     }
 
     public void removeNoteObject(NoteObjectI model) {
-        Event.addEvent(new RemoveNoteEvent(model));
+        //Event.addEvent(new RemoveNoteEvent(model));
         this.models.remove(model);
         if (this == currentNote)
             model.remove();

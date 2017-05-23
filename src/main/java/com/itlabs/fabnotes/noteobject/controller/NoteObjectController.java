@@ -1,5 +1,6 @@
 package com.itlabs.fabnotes.noteobject.controller;
 
+import com.itlabs.fabnotes.noteobject.event.NoteEventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -29,6 +30,7 @@ abstract class NoteObjectController<T1 extends Node, T2 extends NoteObjectI> imp
         this.view = view;
         this.model = model;
         this.contextMenu = new ContextMenu();
+        NoteEventHandler.getInstance().createAddEvent(model);
         loadNewContextMenu();
         setOnMousePressed();
         setOnMouseReleased();

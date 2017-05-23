@@ -1,5 +1,6 @@
 package com.itlabs.fabnotes.noteobject.model;
 
+import com.itlabs.fabnotes.noteobject.event.NoteEventHandler;
 import com.itlabs.fabnotes.noteobject.observers.ObservableI;
 import com.itlabs.fabnotes.noteobject.observers.ObserverI;
 import com.itlabs.fabnotes.noteobject.utility.PaintStrokeToData;
@@ -22,8 +23,8 @@ public class PaintingContainer extends NoteObjectResizeable implements Observabl
     private final int DEFAULT_CANVAS_SIZE = 100;
     private final int PAINTING_AREA_RESIZING_CONSTANT = 10;
 
-    private double x;
-    private double y;
+    private double layoutX;
+    private double layoutY;
     private double w;
     private double h;
 
@@ -31,8 +32,8 @@ public class PaintingContainer extends NoteObjectResizeable implements Observabl
         super();
         paintings = new ArrayList<>();
         listeners = new ArrayList<>();
-        this.x = x;
-        this.y = y;
+        this.layoutX = x;
+        this.layoutY = y;
         this.w = DEFAULT_CANVAS_SIZE;
         setFitHeight(DEFAULT_CANVAS_SIZE);
         isAlive = true;
@@ -43,8 +44,8 @@ public class PaintingContainer extends NoteObjectResizeable implements Observabl
         super();
         paintings = new ArrayList<>();
         listeners = new ArrayList<>();
-        this.x = middleX - DEFAULT_CANVAS_SIZE/2;
-        this.y = middleY - DEFAULT_CANVAS_SIZE/2;
+        this.layoutX = middleX - DEFAULT_CANVAS_SIZE/2;
+        this.layoutY = middleY - DEFAULT_CANVAS_SIZE/2;
         this.w = DEFAULT_CANVAS_SIZE;
         setFitHeight(DEFAULT_CANVAS_SIZE);
         isAlive = true;
@@ -55,8 +56,8 @@ public class PaintingContainer extends NoteObjectResizeable implements Observabl
         super();
         paintings = new ArrayList<>(model.getPaintings());
         listeners = new ArrayList<>();
-        this.x = model.getLayoutX();
-        this.y = model.getLayoutY();
+        this.layoutX = model.getLayoutX();
+        this.layoutY = model.getLayoutY();
         this.w = model.getFitWidth();
         setFitHeight(model.getFitHeight());
         isAlive = true;
@@ -79,6 +80,7 @@ public class PaintingContainer extends NoteObjectResizeable implements Observabl
 
     public void addPainting(PaintStrokeToData paintStroke){
         paintings.add(paintStroke);
+        NoteEventHandler.getInstance().createPaintingEvent(this);
         newPaint = true;
         notifyListeners();
     }
@@ -103,24 +105,24 @@ public class PaintingContainer extends NoteObjectResizeable implements Observabl
 
     @Override
     public void setLayoutX(double x) {
-        this.x = x;
+        this.layoutX = x;
         notifyListeners();
     }
 
     @Override
     public double getLayoutX() {
-        return x;
+        return layoutX;
     }
 
     @Override
     public void setLayoutY(double y) {
-        this.y = y;
+        this.layoutY = y;
         notifyListeners();
     }
 
     @Override
     public double getLayoutY() {
-        return y;
+        return layoutY;
     }
 
     @Override
