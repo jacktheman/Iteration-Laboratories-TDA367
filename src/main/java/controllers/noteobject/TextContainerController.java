@@ -1,5 +1,6 @@
 package controllers.noteobject;
 
+import controllers.fxml.MainPageController;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;

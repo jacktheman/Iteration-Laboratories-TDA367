@@ -116,6 +116,7 @@ public class FileHandler {
         return fileList;
     }
 
+    //ger mig en List med alla notes som har en samma tag i sig
     public static List<File> tagList(String word) throws IOException, ParserConfigurationException, SAXException {
         File[] fileArray = listNotes();
         List<File> fileList = new ArrayList<>();
