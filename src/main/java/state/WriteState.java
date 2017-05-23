@@ -6,6 +6,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.AnchorPane;
+import models.note.Note;
 import models.noteobject.NoteObjectI;
 
 import java.net.MalformedURLException;
@@ -26,15 +27,17 @@ public class WriteState extends NoteState {
     }
 
     @Override
-    public NoteObjectI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
+    public void getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
         if (!super.pressedFocusOwner(notePane, event)) {
+            NoteObjectI model = null;
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                return (new TextContainerController("", event.getX(), event.getY())).getModel();
+                model = (new TextContainerController("", event.getX(), event.getY())).getModel();
             } else if (event.getButton().equals(MouseButton.MIDDLE)) {
-                return (new TableController(event.getX(),event.getY(), 3, 3)).getModel();
+                model = (new TableController(event.getX(),event.getY(), 3, 3)).getModel();
             }
+            if (model != null)
+                Note.getCurrentNote().addNoteObject(model);
         }
-        return null;
     }
 
 }

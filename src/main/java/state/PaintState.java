@@ -5,6 +5,7 @@ import controllers.noteobject.PaintingContainerController;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import models.note.Note;
 import models.noteobject.NoteObjectI;
 
 import java.net.MalformedURLException;
@@ -23,14 +24,13 @@ public class PaintState extends NoteState {
     }
 
     @Override
-    public NoteObjectI getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
+    public void getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
         super.getOnMousePressed(notePane, event);
         if (!super.pressedFocusOwner(notePane, event)) {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                return (new PaintingContainerController(event)).getModel();
+                Note.getCurrentNote().addNoteObject((new PaintingContainerController(event)).getModel());
             }
         }
-        return null;
     }
 
 }

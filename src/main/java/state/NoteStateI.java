@@ -11,8 +11,8 @@ import java.net.MalformedURLException;
  */
 public interface NoteStateI{
 
-    NoteObjectI getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException;
+    void getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException;
 
-    NoteObjectI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException;
+    void getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException;
 
 }

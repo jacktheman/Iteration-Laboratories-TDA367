@@ -1,7 +1,5 @@
 package controllers.fxml;
 
-import controllers.noteobject.ImageContainerController;
-import controllers.noteobject.NoteObjectControllerI;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,12 +18,10 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import models.note.Note;
-import models.noteobject.NoteObjectI;
-import models.noteobject.PaintingContainer;
-import models.noteobject.TextContainer;
 import factory.FileChooserFactory;
 import org.xml.sax.SAXException;
 import services.FileHandler;
+import services.NoteObjectConfigHelper;
 import services.StateHandler;
 import save.NoteSave;
 import utilities.Paintbrush;
@@ -39,10 +35,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import static utilities.Paintbrush.CIRCLE;
-import static utilities.Paintbrush.SQUARE;
-import static utilities.Paintbrush.TRIANGLE;
 
 /**
  * Created by aron on 2017-03-29.
@@ -100,6 +92,12 @@ public class MainPageController implements Initializable {
     private static final int TAG_PAGE_TO_X = 0;
     private static final int TAG_PAGE_ANIMATION_DELAY = 650;
 
+    private static final String DEFAULT_FONT = "Calibri";
+
+    private static final String SQUARE = "square";
+    private static final String CIRCLE = "circle";
+    private static final String TRIANGLE = "triangle";
+
     private static MainPageController SINGLETON;
 
     private AnchorPane fille;
@@ -130,21 +128,16 @@ public class MainPageController implements Initializable {
 
     private void initPaintConfigs() {
         colorPicker.setValue(Color.BLACK);
-        PaintingContainer.setPaintbrush(CIRCLE);
+        NoteObjectConfigHelper.setPaintbrush("circle");
         changeColor();
         circleButton.setSelected(true);
     }
 
     public void loadNoteSave(NoteSave noteSave) {
-        List<NoteObjectControllerI> controllers = noteSave.loadControllers();
-        Note.getCurrentNodes().clear();
-        Note note = new Note(noteSave.getName());
-        note.setTags(noteSave.getTags());
-        loadNoteTagsInTagBar(noteSave.getTags());
-        for (NoteObjectControllerI controller : controllers)
-            note.getModels().add(controller.getModel());
-        Note.setCurrentNote(note);
-        nameTextField.setText(note.getName());
+        if (noteSave.loadControllers()) {
+            loadNoteTagsInTagBar(noteSave.getTags());
+            nameTextField.setText(noteSave.getName());
+        }
     }
 
     public void loadNoteTagsInTagBar(List<String> tags) {
@@ -181,7 +174,7 @@ public class MainPageController implements Initializable {
     private void initFontComboBox() {
         ObservableList<String> fonts = FXCollections.observableList(Font.getFamilies());
         textFontComboBox.setItems(fonts);
-        textFontComboBox.getSelectionModel().select(TextContainer.DEFAULT_FONT);
+        textFontComboBox.getSelectionModel().select(DEFAULT_FONT);
     }
 
     private void loadFileManager() {
@@ -208,11 +201,8 @@ public class MainPageController implements Initializable {
 
     private void setOnMousePressedNotePane() {
         notePane.setOnMousePressed(event -> {
-            NoteObjectI model;
             try {
-                model = StateHandler.getInstance().getState().getOnMousePressed(notePane, event);
-                if (model != null)
-                    addNodeToNotePane(model);
+                StateHandler.getInstance().getState().getOnMousePressed(notePane, event);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -221,19 +211,12 @@ public class MainPageController implements Initializable {
 
     private void setOnMouseReleasedNotePane() {
         notePane.setOnMouseReleased(event -> {
-            NoteObjectI model;
             try {
-                model = StateHandler.getInstance().getState().getOnMouseReleased(notePane, event);
-                if (model != null)
-                   addNodeToNotePane(model);
+                StateHandler.getInstance().getState().getOnMouseReleased(notePane, event);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
         });
-    }
-
-    private void addNodeToNotePane(NoteObjectI model) {
-        Note.getCurrentNote().addNoteObject(model);
     }
 
     private void prepareSlideMenuAnimation() {
@@ -255,16 +238,16 @@ public class MainPageController implements Initializable {
         GraphicsContext gc = brushPictureCanvas.getGraphicsContext2D();
         gc.clearRect(brushPictureCanvas.getLayoutX(), brushPictureCanvas.getLayoutY(), brushPictureCanvas.getWidth(), brushPictureCanvas.getHeight());
         gc.setFill(Paintbrush.getColor());
-        switch (PaintingContainer.getPaintbrush()) {
-            case TRIANGLE:
+        switch (NoteObjectConfigHelper.getPaintbrush()) {
+            case "trianlge":
                 double[] xPoints = {brushPicture.getPrefWidth() / 2 - Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefWidth() / 2, brushPicture.getPrefWidth() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG};
                 double[] yPoints = {brushPicture.getPrefHeight() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_SMALL, brushPicture.getPrefHeight() / 2 - Paintbrush.getSize() * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefHeight() / 2 + Paintbrush.getSize() * TRIANGLE_QUANTIFIER_SMALL};
                 gc.fillPolygon(xPoints, yPoints, TRIANGLE_NUMBER_OF_CORNERS);
                 break;
-            case SQUARE:
+            case "square":
                 gc.fillRect(brushPicture.getPrefWidth() / 2 - (Paintbrush.getSize() / 2), brushPicture.getPrefHeight() / 2 - (Paintbrush.getSize() / 2), Paintbrush.getSize(), Paintbrush.getSize());
                 break;
-            case CIRCLE:
+            case "circle":
                 gc.fillOval(brushPicture.getPrefWidth() / 2 - (Paintbrush.getSize() / 2), brushPicture.getPrefHeight() / 2 - (Paintbrush.getSize() / 2), Paintbrush.getSize(), Paintbrush.getSize());
                 break;
         }
@@ -300,29 +283,29 @@ public class MainPageController implements Initializable {
     @FXML
     private void makeItalics() {
         if (italicsToggleButton.isSelected()) {
-            TextContainer.setIsItalic(true);
+            NoteObjectConfigHelper.setIsItalic(true);
         } else {
-            TextContainer.setIsItalic(false);
+            NoteObjectConfigHelper.setIsItalic(false);
         }
     }
 
     @FXML
     private void makeBold() {
         if (boldToggleButton.isSelected()) {
-            TextContainer.setIsBold(true);
+            NoteObjectConfigHelper.setIsBold(true);
         } else {
-            TextContainer.setIsBold(false);
+            NoteObjectConfigHelper.setIsBold(false);
         }
     }
 
     @FXML
     private void changeFont() {
-        TextContainer.setFontFamilyName((String) textFontComboBox.getSelectionModel().getSelectedItem());
+        NoteObjectConfigHelper.setFontFamilyName((String) textFontComboBox.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void changeSize() {
-        TextContainer.setFontSize((int) textSizeComboBox.getSelectionModel().getSelectedItem());
+        NoteObjectConfigHelper.setFontSize((int) textSizeComboBox.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -330,8 +313,7 @@ public class MainPageController implements Initializable {
         FileChooser fileChooser = FileChooserFactory.getImageChooser();
         File image = fileChooser.showOpenDialog(notePane.getScene().getWindow());
         try {
-            NoteObjectControllerI controller = new ImageContainerController(image.toURI().toURL(), 0, 0);
-            Note.getCurrentNote().addNoteObject(controller.getModel());
+            NoteObjectConfigHelper.addImageToNote(image.toURI().toURL());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -388,7 +370,7 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void setPaintbrushToSquare() {
-        PaintingContainer.setPaintbrush(SQUARE);
+        NoteObjectConfigHelper.setPaintbrush(SQUARE);
         circleButton.setSelected(false);
         triangleButton.setSelected(false);
         setBrushPicture();
@@ -396,7 +378,7 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void setPaintbrushToCircle() {
-        PaintingContainer.setPaintbrush(CIRCLE);
+        NoteObjectConfigHelper.setPaintbrush(CIRCLE);
         squareButton.setSelected(false);
         triangleButton.setSelected(false);
         setBrushPicture();
@@ -404,7 +386,7 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void setPaintbrushToTriangle() {
-        PaintingContainer.setPaintbrush(TRIANGLE);
+        NoteObjectConfigHelper.setPaintbrush(TRIANGLE);
         circleButton.setSelected(false);
         squareButton.setSelected(false);
         setBrushPicture();

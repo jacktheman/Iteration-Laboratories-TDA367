@@ -64,7 +64,9 @@ class XMLHandler {
     private XMLHandler() {
     }
 
-    static void writeToXML(NoteSave noteSave) throws ParserConfigurationException, TransformerException {
+    static File writeToXML(NoteSave noteSave) throws ParserConfigurationException, TransformerException {
+        File file = new File(FileHandler.FILE_PATH + noteSave.getName() + FileHandler.FILE_TYPE);
+
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -78,9 +80,11 @@ class XMLHandler {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(new File(FileHandler.FILE_PATH + noteSave.getName() + FileHandler.FILE_TYPE));
+        StreamResult result = new StreamResult(file);
 
         transformer.transform(source, result);
+
+        return file;
     }
 
     private static void addTags(Element rootElement, List<String> tags) {
@@ -220,7 +224,7 @@ class XMLHandler {
         rootElement.appendChild(paintingCon);
     }
 
-    //HENCEFORTH LIES WRITING STUFF ONLY! YE HAVE BEEN WARNED!
+    //HENCEFORTH LIES READING STUFF ONLY! YE HAVE BEEN WARNED!
 
     static NoteSave readXMLToNote(File file) throws ParserConfigurationException, IOException, SAXException {
         if (file.exists()) {

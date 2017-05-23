@@ -65,7 +65,7 @@ abstract class NoteState implements NoteStateI {
     }
 
     @Override
-    public NoteObjectI getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
+    public void getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
         MenuItem paste = new MenuItem("Klistra in");
         paste.setOnAction(actionEvent -> {
             pasteOnCanvas(event);
@@ -76,12 +76,10 @@ abstract class NoteState implements NoteStateI {
                 contextMenu.show(notePane, event.getScreenX(), event.getScreenY());
             }
         }
-        return null;
     }
 
     @Override
-    public NoteObjectI getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
-        return null;
+    public void getOnMouseReleased(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
     }
 
 }

@@ -61,7 +61,7 @@ public class NoteSave implements Serializable {
         return models;
     }
 
-    public List<NoteObjectControllerI> loadControllers(){
+    public boolean loadControllers(){
         List<NoteObjectControllerI> controllers = new ArrayList<>();
         for (TextContainer textContainer : textContainers)
             controllers.add(new TextContainerController(textContainer));
@@ -69,6 +69,20 @@ public class NoteSave implements Serializable {
             controllers.add(new ImageContainerController(imageContainer));
         for (PaintingContainer paintingContainer : paintingContainers)
             controllers.add(new PaintingContainerController(paintingContainer));
-        return controllers;
+
+        if (controllers.isEmpty())
+            return false;
+
+        setCurrentNote(controllers);
+        return true;
+    }
+
+    private void setCurrentNote(List<NoteObjectControllerI> controllers) {
+        Note.getCurrentNodes().clear();
+        for (NoteObjectControllerI controller : controllers)
+            Note.getCurrentNote().getModels().add(controller.getModel());
+        Note note = new Note(name);
+        note.setTags(tags);
+        Note.setCurrentNote(note);
     }
 }
