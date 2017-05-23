@@ -126,13 +126,7 @@ class XMLWriter {
         layoutY.appendChild(doc.createTextNode(Double.toString(textContainer.getLayoutY())));
         text.appendChild(doc.createTextNode(textContainer.getText()));
 
-        textCon.appendChild(fontFamilyName);
-        textCon.appendChild(fontSize);
-        textCon.appendChild(isBold);
-        textCon.appendChild(isItalic);
-        textCon.appendChild(layoutX);
-        textCon.appendChild(layoutY);
-        textCon.appendChild(text);
+        appendChildren(textCon, fontFamilyName, fontSize, isBold, isItalic, layoutX, layoutY, text);
 
         rootElement.appendChild(textCon);
     }

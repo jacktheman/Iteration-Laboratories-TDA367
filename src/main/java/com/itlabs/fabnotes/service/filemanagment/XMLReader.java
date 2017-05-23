@@ -102,14 +102,10 @@ class XMLReader {
     }
 
     private static NoteObjectI getTextContainer(Node node) {
-        String fontFamilyName = "";
-        int fontSize = 0;
-        boolean isBold = false;
-        boolean isItalic = false;
         double layoutX = 0;
         double layoutY = 0;
         String text = "";
-        
+
         NodeList nl = node.getChildNodes();
         for (int i = 0; i < nl.getLength(); i++) {
             Node item = nl.item(i);
@@ -117,16 +113,16 @@ class XMLReader {
             String value = item.getTextContent();
             switch (name) {
                 case FONT_FAMILY_NAME:
-                    fontFamilyName = value;
+                    TextContainer.setFontFamilyName(value);
                     break;
                 case FONT_SIZE:
-                    fontSize = Integer.parseInt(value);
+                    TextContainer.setFontSize(Integer.parseInt(value));
                     break;
                 case IS_BOLD:
-                    isBold = Boolean.parseBoolean(value);
+                    TextContainer.setIsBold(Boolean.parseBoolean(value));
                     break;
                 case IS_ITALIC:
-                    isItalic = Boolean.parseBoolean(value);
+                    TextContainer.setIsItalic(Boolean.parseBoolean(value));
                     break;
                 case LAYOUT_X:
                     layoutX = Double.parseDouble(value);
@@ -139,14 +135,6 @@ class XMLReader {
                     break;
             }
         }
-        
-        if (fontFamilyName.isEmpty() || fontSize == 0)
-            return null;
-        
-        TextContainer.setFontFamilyName(fontFamilyName);
-        TextContainer.setFontSize(fontSize);
-        TextContainer.setIsBold(isBold);
-        TextContainer.setIsItalic(isItalic);
         
         return new TextContainer(text, layoutX, layoutY);
     }
@@ -185,13 +173,7 @@ class XMLReader {
         if (url.isEmpty())
             return null;
         
-        ImageContainer imageContainer = new ImageContainer(url);
-        imageContainer.setFitWidth(fitWidth);
-        imageContainer.setFitHeight(fitHeight);
-        imageContainer.setLayoutX(layoutX);
-        imageContainer.setLayoutY(layoutY);
-        
-        return imageContainer;
+        return createImageContainer(url, fitWidth, fitHeight, layoutX, layoutY);
     }
 
     private static NoteObjectI getPaintingContainer(Node node) {
@@ -272,11 +254,25 @@ class XMLReader {
         if (paintStrokeToDataList.isEmpty())
             return null;
 
+        return createPaintingContainer(paintStrokeToDataList, fitWidth, fitHeight, layoutX, layoutY);
+    }
+
+    private static ImageContainer createImageContainer(String URL, double fitWidth, double fitHeight, double layoutX, double layoutY) {
+        ImageContainer imageContainer = new ImageContainer(URL);
+        imageContainer.setFitWidth(fitWidth);
+        imageContainer.setFitHeight(fitHeight);
+        imageContainer.setLayoutX(layoutX);
+        imageContainer.setLayoutY(layoutY);
+        return imageContainer;
+    }
+
+    private static PaintingContainer createPaintingContainer(List<PaintStrokeToData> paintStrokeToDataList,
+                                                             double fitWidth, double fitHeight, double layoutX, double layoutY) {
         PaintingContainer paintingContainer = new PaintingContainer(layoutX, layoutY, true);
         paintingContainer.setFitWidth(fitWidth);
         paintingContainer.setFitHeight(fitHeight);
         paintingContainer.setPaintings(paintStrokeToDataList);
-
         return paintingContainer;
     }
+
 }
