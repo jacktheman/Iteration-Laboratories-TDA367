@@ -6,6 +6,7 @@ import com.itlabs.fabnotes.note.model.Note;
 import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
 import com.itlabs.fabnotes.noteobject.model.TextContainer;
 import com.itlabs.fabnotes.noteobject.utility.Paintbrush;
+import javafx.scene.paint.Color;
 
 import java.net.URL;
 
@@ -20,6 +21,22 @@ public class NoteObjectConfigHelper {
 
     public static void setPaintbrush(String shape) {
         PaintingContainer.setPaintbrush(Paintbrush.parsePaintbrush(shape));
+    }
+
+    public static void setPaintbrushColor(Color color) {
+        Paintbrush.setColor(color);
+    }
+
+    public static Color getPaintbrushColor() {
+        return Paintbrush.getColor();
+    }
+
+    public static void setPaintbrushSize(double size) {
+        Paintbrush.setSize(size);
+    }
+
+    public static double getPaintbrushSize() {
+        return Paintbrush.getSize();
     }
 
     public static String getPaintbrush() {
@@ -41,4 +58,5 @@ public class NoteObjectConfigHelper {
     public static void setFontSize(int fontSize) {
         TextContainer.setFontSize(fontSize);
     }
+
 }

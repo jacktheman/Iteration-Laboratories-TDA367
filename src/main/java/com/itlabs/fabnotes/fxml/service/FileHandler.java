@@ -49,12 +49,12 @@ public class FileHandler {
 
     public static void saveNote(NoteSave noteSave) throws TransformerException, ParserConfigurationException {
         if (noteSave.getModels().size() > 0 && !noteSave.getName().equals(""))
-            XMLHandler.writeToXML(noteSave);
+            XMLWriter.writeToXML(noteSave);
     }
 
     public static NoteSave loadNote(File file) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
         if (file.exists())
-            return XMLHandler.readXMLToNote(file);
+            return XMLReader.readXMLToNote(file);
         return null;
     }
 
@@ -122,7 +122,7 @@ public class FileHandler {
         List<File> fileList = new ArrayList<>();
         for (File file : fileArray) {
             if (file.exists()) {
-                for (String tag : XMLHandler.readXMLToNote(file).getTags()) {
+                for (String tag : XMLReader.readXMLToNote(file).getTags()) {
                     if (tag.contains(word.toLowerCase())) {
                         fileList.add(file);
                     }

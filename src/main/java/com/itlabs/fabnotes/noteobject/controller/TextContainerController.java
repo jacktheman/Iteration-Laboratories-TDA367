@@ -33,17 +33,15 @@ public class TextContainerController extends NoteObjectController<TextContainerV
     private void listener() {
         super.getNode().textProperty().addListener((value, oldValue, newValue) -> {
             super.getModel().setText(newValue);
-            super.getModel().changeBorder();
+            super.getNode().changeBorder();
             super.getNode().updateTextContainerSize();
-            super.getNode().setStyle(super.getModel().getStyles());
         });
     }
 
     private void listener2() {
         super.getNode().focusedProperty().addListener(e -> {
             super.getModel().setIsFocused(super.getNode().isFocused());
-            super.getModel().changeBorder();
-            super.getNode().setStyle(super.getModel().getStyles());
+            super.getNode().changeBorder();
             if (!super.getNode().isFocused() && super.getNode().getText().equals("")) {
                 Note.getCurrentNote().removeNoteObject(super.getModel());
             }
