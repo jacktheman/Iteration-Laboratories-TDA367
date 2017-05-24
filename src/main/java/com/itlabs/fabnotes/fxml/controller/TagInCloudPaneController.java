@@ -1,12 +1,12 @@
 package com.itlabs.fabnotes.fxml.controller;
 
 import com.itlabs.fabnotes.fxml.service.NoteBridge;
+import com.itlabs.fabnotes.fxml.service.SavedNoteBridge;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import org.xml.sax.SAXException;
-import com.itlabs.fabnotes.service.NoteSave;
 import com.itlabs.fabnotes.service.filemanagment.FileHandler;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -42,9 +42,9 @@ public class TagInCloudPaneController {
             File[] filesArray = new File[filesList.size()];
             filesList.toArray(filesArray);
             for (int i = 0; i < filesArray.length; i++) {
-                NoteSave noteSave = FileHandler.loadNote(filesArray[i]);
-                noteSave.getTags().remove(tagToRemove);
-                FileHandler.saveNote(noteSave);
+                SavedNoteBridge savedNoteBridge = SavedNoteBridge.loadSavedNote(filesArray[i]);
+                savedNoteBridge.getTags().remove(tagToRemove);
+                savedNoteBridge.save();
             }
         } catch (IOException e) {
             e.printStackTrace();

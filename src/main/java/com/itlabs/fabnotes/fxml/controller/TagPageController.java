@@ -1,5 +1,6 @@
 package com.itlabs.fabnotes.fxml.controller;
 
+import com.itlabs.fabnotes.fxml.service.SavedNoteBridge;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,8 +13,6 @@ import javafx.scene.layout.FlowPane;
 import org.xml.sax.SAXException;
 import com.itlabs.fabnotes.service.filemanagment.FileHandler;
 import java.io.IOException;
-
-import com.itlabs.fabnotes.service.NoteSave;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
@@ -131,9 +130,8 @@ public class TagPageController implements Initializable {
     private void onMousePressedMenuItem(MouseEvent mouseEvent) {
         try {
             String fileName = noteListView.getSelectionModel().getSelectedItem();
-            NoteSave noteSave = FileHandler.loadNote(new File(FileHandler.FILE_PATH +
-                    fileName.substring(0, fileName.indexOf("[") - 3) + FileHandler.FILE_TYPE));
-            MainPageController.getInstance().loadNoteSave(noteSave);
+            MainPageController.getInstance().loadNoteSave(SavedNoteBridge.loadSavedNote(new File(FileHandler.FILE_PATH +
+                    fileName.substring(0, fileName.indexOf("[") - 3) + FileHandler.FILE_TYPE)));
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {

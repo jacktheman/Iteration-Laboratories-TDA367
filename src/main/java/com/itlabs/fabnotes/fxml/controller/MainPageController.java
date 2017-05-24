@@ -1,6 +1,7 @@
 package com.itlabs.fabnotes.fxml.controller;
 
 import com.itlabs.fabnotes.fxml.service.NoteBridge;
+import com.itlabs.fabnotes.fxml.service.SavedNoteBridge;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +23,6 @@ import com.itlabs.fabnotes.fxml.service.FileChooserFactory;
 import org.xml.sax.SAXException;
 import com.itlabs.fabnotes.service.filemanagment.FileHandler;
 import com.itlabs.fabnotes.service.StateHandler;
-import com.itlabs.fabnotes.service.NoteSave;
 import com.itlabs.fabnotes.fxml.service.NoteObjectBridge;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -133,10 +133,10 @@ public class MainPageController implements Initializable {
         circleButton.setSelected(true);
     }
 
-    public void loadNoteSave(NoteSave noteSave) {
-        if (noteSave.loadControllers()) {
-            loadNoteTagsInTagBar(noteSave.getTags());
-            nameTextField.setText(noteSave.getName());
+    public void loadNoteSave(SavedNoteBridge savedNoteBridge) {
+        if (savedNoteBridge.initializeNoteObjects()) {
+            loadNoteTagsInTagBar(savedNoteBridge.getTags());
+            nameTextField.setText(savedNoteBridge.getName());
         }
     }
 
@@ -352,8 +352,7 @@ public class MainPageController implements Initializable {
         FileChooser fileChooser = FileChooserFactory.getFabNotesChooser();
         File file = fileChooser.showOpenDialog(this.notePane.getScene().getWindow());
         try {
-            NoteSave noteSave = FileHandler.loadNote(file);
-            this.loadNoteSave(noteSave);
+            this.loadNoteSave(SavedNoteBridge.loadSavedNote(file));
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
