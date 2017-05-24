@@ -234,7 +234,6 @@ public class MainPageController implements Initializable {
     }
 
     //A method for painting the dynamical picture of the paintbrush when changed.
-
     private void setBrushPicture() {
         //clears picture before painting new
         brushPictureCanvas.getGraphicsContext2D().clearRect(brushPictureCanvas.getLayoutX(), brushPictureCanvas.getLayoutY(),
