@@ -17,6 +17,7 @@ public class NoteBridge {
 
     public static void createNewNote(List<Node> nodes) {
         Note.setCurrentNote(new Note());
+        nodes.clear();
         Note.setCurrentNodes(nodes);
     }
 

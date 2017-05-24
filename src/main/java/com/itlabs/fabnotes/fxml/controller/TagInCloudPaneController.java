@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import org.xml.sax.SAXException;
-import com.itlabs.fabnotes.service.filemanagment.FileHandler;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -31,14 +30,14 @@ public class TagInCloudPaneController {
     void removeTagInCloud(ActionEvent event) {
         String tagToRemove = tagTextInCloud.getText();
         try {
-            FileHandler.removeTagFromTagList(tagToRemove);
+            SavedNoteBridge.removeTagsFromTagList(tagToRemove);
             TagPageController.getInstance().getTagFlowPane().getChildren().clear();
             TagPageController.loadTagFlowPane();
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
-            List<File> filesList = FileHandler.tagList(tagToRemove);
+            List<File> filesList = SavedNoteBridge.getNotesWithTag(tagToRemove);
             File[] filesArray = new File[filesList.size()];
             filesList.toArray(filesArray);
             for (int i = 0; i < filesArray.length; i++) {

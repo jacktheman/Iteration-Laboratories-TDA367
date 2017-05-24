@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -21,7 +20,6 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import com.itlabs.fabnotes.fxml.service.FileChooserFactory;
 import org.xml.sax.SAXException;
-import com.itlabs.fabnotes.service.filemanagment.FileHandler;
 import com.itlabs.fabnotes.service.StateHandler;
 import com.itlabs.fabnotes.fxml.service.NoteObjectBridge;
 
@@ -158,12 +156,6 @@ public class MainPageController implements Initializable {
         }
     }
 
-    public void setNewFabNote() {
-        NoteBridge.createNewNote(notePane.getChildren());
-        nameTextField.setText("");
-        tagBar.getChildren().clear();
-    }
-
     private void initTextSizeComboBox() {
         ObservableList<Integer> sizes = FXCollections.observableArrayList(DEFAULT_FONT_SIZES);
         textSizeComboBox.setItems(sizes);
@@ -280,6 +272,13 @@ public class MainPageController implements Initializable {
     }
 
     @FXML
+    public void setNewFabNote() {
+        NoteBridge.createNewNote(notePane.getChildren());
+        nameTextField.setText("");
+        tagBar.getChildren().clear();
+    }
+
+    @FXML
     private void undoAction() {
         NoteBridge.undoNoteAction();
     }
@@ -294,7 +293,7 @@ public class MainPageController implements Initializable {
                     AnchorPane tag = newTag.load();
                     ((Label) tag.getChildren().get(0)).setText(newTagText);
                     tagBar.getChildren().add(tag);
-                    FileHandler.addTags(newTagText);
+                    SavedNoteBridge.addTagToTagsList(newTagText);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
