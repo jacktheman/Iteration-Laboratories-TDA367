@@ -209,39 +209,7 @@ class XMLReader {
                             for (int k = 0; k < paintStrokeData.getChildNodes().getLength(); k++) {
                                 Node paintData = paintStrokeData.getChildNodes().item(k);
                                 if (paintData.getNodeName().equals(PAINTING_DATA)) {
-                                    Color color = null;
-                                    Paintbrush paintbrush = null;
-                                    double paintbrushSize = 0;
-                                    double paintLayoutX = 0;
-                                    double paintLayoutY = 0;
-                                    NodeList paintDrawDataNL = paintData.getChildNodes();
-                                    for (int l = 0; l < paintDrawDataNL.getLength(); l++) {
-                                        Node paintDrawData = paintDrawDataNL.item(l);
-                                        String textContent = paintDrawData.getTextContent();
-                                        switch (paintDrawData.getNodeName()) {
-                                            case PAINT_RGBO:
-                                                String[] rgbo = textContent.split(String.valueOf(SPLITTER));
-                                                double red = Double.parseDouble(rgbo[0]);
-                                                double green = Double.parseDouble(rgbo[1]);
-                                                double blue = Double.parseDouble(rgbo[2]);
-                                                double opacity = Double.parseDouble(rgbo[3]);
-                                                color = Color.color(red, green, blue, opacity);
-                                                break;
-                                            case PAINTBRUSH:
-                                                paintbrush = Paintbrush.parsePaintbrush(textContent);
-                                                break;
-                                            case PAINTBRUSH_SIZE:
-                                                paintbrushSize = Double.parseDouble(textContent);
-                                                break;
-                                            case LAYOUT_X:
-                                                paintLayoutX = Double.parseDouble(textContent);
-                                                break;
-                                            case LAYOUT_Y:
-                                                paintLayoutY = Double.parseDouble(textContent);
-                                                break;
-                                        }
-                                    }
-                                    paintStrokeToData.addPaintToStroke(new PaintingToData(paintLayoutX, paintLayoutY, paintbrush, paintbrushSize, color));
+                                    paintStrokeToData.addPaintToStroke(paintingToDataCreator(paintData.getChildNodes()));
                                 }
                             }
                         }
@@ -255,6 +223,42 @@ class XMLReader {
             return null;
 
         return createPaintingContainer(paintStrokeToDataList, fitWidth, fitHeight, layoutX, layoutY);
+    }
+
+    private static PaintingToData paintingToDataCreator(NodeList paintDrawDataNL){
+        Color color = null;
+        Paintbrush paintbrush = null;
+        double paintbrushSize = 0;
+        double paintLayoutX = 0;
+        double paintLayoutY = 0;
+        for (int l = 0; l < paintDrawDataNL.getLength(); l++) {
+            Node paintDrawData = paintDrawDataNL.item(l);
+            String textContent = paintDrawData.getTextContent();
+            switch (paintDrawData.getNodeName()) {
+                case PAINT_RGBO:
+                    String[] rgbo = textContent.split(String.valueOf(SPLITTER));
+                    double red = Double.parseDouble(rgbo[0]);
+                    double green = Double.parseDouble(rgbo[1]);
+                    double blue = Double.parseDouble(rgbo[2]);
+                    double opacity = Double.parseDouble(rgbo[3]);
+                    color = Color.color(red, green, blue, opacity);
+                    break;
+                case PAINTBRUSH:
+                    paintbrush = Paintbrush.parsePaintbrush(textContent);
+                    break;
+                case PAINTBRUSH_SIZE:
+                    paintbrushSize = Double.parseDouble(textContent);
+                    break;
+                case LAYOUT_X:
+                    paintLayoutX = Double.parseDouble(textContent);
+                    break;
+                case LAYOUT_Y:
+                    paintLayoutY = Double.parseDouble(textContent);
+                    break;
+            }
+        }
+            return new PaintingToData(paintLayoutX,paintLayoutY,paintbrush,paintbrushSize,color);
+
     }
 
     private static ImageContainer createImageContainer(String URL, double fitWidth, double fitHeight, double layoutX, double layoutY) {
