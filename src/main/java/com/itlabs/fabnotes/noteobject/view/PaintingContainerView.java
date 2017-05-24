@@ -49,13 +49,13 @@ public class PaintingContainerView extends AnchorPane implements Serializable, O
         createBorder();
     }
 
-    public void updateLayoutX(double x){
+    private void updateLayoutX(double x){
         this.setLayoutX(x);
         removeBorder();
         createBorder();
     }
 
-    public void updateLayoutY(double y){
+    private void updateLayoutY(double y){
         this.setLayoutY(y);
         removeBorder();
         createBorder();
@@ -88,7 +88,7 @@ public class PaintingContainerView extends AnchorPane implements Serializable, O
     }
 
 
-    public void fillCanvas(List<PaintStrokeToData> paintings) {
+    private void fillCanvas(List<PaintStrokeToData> paintings) {
         gotPaint = true;
         canvas.getGraphicsContext2D().clearRect(canvas.getLayoutX(), canvas.getLayoutY(), canvas.getWidth(), canvas.getHeight());
         for (PaintStrokeToData stroke : paintings) {
@@ -98,22 +98,34 @@ public class PaintingContainerView extends AnchorPane implements Serializable, O
         }
     }
 
-    public void paint(PaintingToData paint) {
+    private void paint(PaintingToData paint) {
         canvas.getGraphicsContext2D().setFill(paint.getColor());
         switch (paint.getPaintbrush()) {
             case CIRCLE:
-                canvas.getGraphicsContext2D().fillOval(paint.getX() - (paint.getSize() / 2), paint.getY() - (paint.getSize() / 2), paint.getSize(), paint.getSize());
+                paintCircle(paint);
                 break;
             case SQUARE:
-                canvas.getGraphicsContext2D().fillRect(paint.getX() - (paint.getSize() / 2), paint.getY() - (paint.getSize() / 2), paint.getSize(), paint.getSize());
+                paintSquare(paint);
                 break;
             case TRIANGLE:
-                double[] xPoints = {paint.getX() - paint.getSize() * TRIANGLE_QUANTIFIER_BIG, paint.getX(), paint.getX() + paint.getSize() * TRIANGLE_QUANTIFIER_BIG};
-                double[] yPoints = {paint.getY() + paint.getSize() * TRIANGLE_QUANTIFIER_SMALL, paint.getY() - paint.getSize() * TRIANGLE_QUANTIFIER_BIG, paint.getY() + paint.getSize() * TRIANGLE_QUANTIFIER_SMALL};
-                canvas.getGraphicsContext2D().fillPolygon(xPoints, yPoints, TRIANGLE_NUMBER_OF_CORNERS);
+                paintTriangle(paint);
                 break;
         }
 
+    }
+
+    private void paintCircle(PaintingToData paint){
+        canvas.getGraphicsContext2D().fillOval(paint.getX() - (paint.getSize() / 2), paint.getY() - (paint.getSize() / 2), paint.getSize(), paint.getSize());
+    }
+
+    private void paintSquare(PaintingToData paint){
+        canvas.getGraphicsContext2D().fillRect(paint.getX() - (paint.getSize() / 2), paint.getY() - (paint.getSize() / 2), paint.getSize(), paint.getSize());
+    }
+
+    private void paintTriangle(PaintingToData paint){
+        double[] xPoints = {paint.getX() - paint.getSize() * TRIANGLE_QUANTIFIER_BIG, paint.getX(), paint.getX() + paint.getSize() * TRIANGLE_QUANTIFIER_BIG};
+        double[] yPoints = {paint.getY() + paint.getSize() * TRIANGLE_QUANTIFIER_SMALL, paint.getY() - paint.getSize() * TRIANGLE_QUANTIFIER_BIG, paint.getY() + paint.getSize() * TRIANGLE_QUANTIFIER_SMALL};
+        canvas.getGraphicsContext2D().fillPolygon(xPoints, yPoints, TRIANGLE_NUMBER_OF_CORNERS);
     }
 
     @Override

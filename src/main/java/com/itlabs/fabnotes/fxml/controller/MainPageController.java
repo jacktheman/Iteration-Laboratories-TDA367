@@ -233,34 +233,50 @@ public class MainPageController implements Initializable {
         });
     }
 
+    //A method for painting the dynamical picture of the paintbrush when changed.
+
     private void setBrushPicture() {
-        GraphicsContext gc = brushPictureCanvas.getGraphicsContext2D();
-        gc.clearRect(brushPictureCanvas.getLayoutX(), brushPictureCanvas.getLayoutY(),
+        //clears picture before painting new
+        brushPictureCanvas.getGraphicsContext2D().clearRect(brushPictureCanvas.getLayoutX(), brushPictureCanvas.getLayoutY(),
                 brushPictureCanvas.getWidth(), brushPictureCanvas.getHeight());
-        gc.setFill(NoteObjectBridge.getPaintbrushColor());
+        //paints new picture on Canvas
         switch (NoteObjectBridge.getPaintbrush()) {
             case TRIANGLE:
-                double[] xPoints = {brushPicture.getPrefWidth() / 2 - NoteObjectBridge.getPaintbrushSize()
-                        * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefWidth() / 2, brushPicture.getPrefWidth() / 2
-                        + NoteObjectBridge.getPaintbrushSize() * TRIANGLE_QUANTIFIER_BIG};
-                double[] yPoints = {brushPicture.getPrefHeight() / 2 + NoteObjectBridge.getPaintbrushSize()
-                        * TRIANGLE_QUANTIFIER_SMALL, brushPicture.getPrefHeight() / 2 - NoteObjectBridge.getPaintbrushSize()
-                        * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefHeight() / 2 + NoteObjectBridge.getPaintbrushSize()
-                        * TRIANGLE_QUANTIFIER_SMALL};
-                gc.fillPolygon(xPoints, yPoints, TRIANGLE_NUMBER_OF_CORNERS);
+                paintTriangle();
                 break;
             case SQUARE:
-                gc.fillRect(brushPicture.getPrefWidth() / 2 - (NoteObjectBridge.getPaintbrushSize() / 2),
-                        brushPicture.getPrefHeight() / 2 - (NoteObjectBridge.getPaintbrushSize() / 2),
-                        NoteObjectBridge.getPaintbrushSize(), NoteObjectBridge.getPaintbrushSize());
+                paintSquare();
                 break;
             case CIRCLE:
-                gc.fillOval(brushPicture.getPrefWidth() / 2 - (NoteObjectBridge.getPaintbrushSize() / 2),
-                        brushPicture.getPrefHeight() / 2 - (NoteObjectBridge.getPaintbrushSize() / 2),
-                        NoteObjectBridge.getPaintbrushSize(), NoteObjectBridge.getPaintbrushSize());
+                paintCircle();
                 break;
         }
+    }
 
+    private void paintTriangle(){
+        brushPictureCanvas.getGraphicsContext2D().setFill(NoteObjectBridge.getPaintbrushColor());
+        double[] xPoints = {brushPicture.getPrefWidth() / 2 - NoteObjectBridge.getPaintbrushSize()
+                * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefWidth() / 2, brushPicture.getPrefWidth() / 2
+                + NoteObjectBridge.getPaintbrushSize() * TRIANGLE_QUANTIFIER_BIG};
+        double[] yPoints = {brushPicture.getPrefHeight() / 2 + NoteObjectBridge.getPaintbrushSize()
+                * TRIANGLE_QUANTIFIER_SMALL, brushPicture.getPrefHeight() / 2 - NoteObjectBridge.getPaintbrushSize()
+                * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefHeight() / 2 + NoteObjectBridge.getPaintbrushSize()
+                * TRIANGLE_QUANTIFIER_SMALL};
+        brushPictureCanvas.getGraphicsContext2D().fillPolygon(xPoints, yPoints, TRIANGLE_NUMBER_OF_CORNERS);
+    }
+
+    private void paintSquare(){
+        brushPictureCanvas.getGraphicsContext2D().setFill(NoteObjectBridge.getPaintbrushColor());
+        brushPictureCanvas.getGraphicsContext2D().fillRect(brushPicture.getPrefWidth() / 2 - (NoteObjectBridge.getPaintbrushSize() / 2),
+                brushPicture.getPrefHeight() / 2 - (NoteObjectBridge.getPaintbrushSize() / 2),
+                NoteObjectBridge.getPaintbrushSize(), NoteObjectBridge.getPaintbrushSize());
+    }
+
+    private void paintCircle(){
+        brushPictureCanvas.getGraphicsContext2D().setFill(NoteObjectBridge.getPaintbrushColor());
+        brushPictureCanvas.getGraphicsContext2D().fillOval(brushPicture.getPrefWidth() / 2 - (NoteObjectBridge.getPaintbrushSize() / 2),
+                brushPicture.getPrefHeight() / 2 - (NoteObjectBridge.getPaintbrushSize() / 2),
+                NoteObjectBridge.getPaintbrushSize(), NoteObjectBridge.getPaintbrushSize());
     }
 
     @FXML
