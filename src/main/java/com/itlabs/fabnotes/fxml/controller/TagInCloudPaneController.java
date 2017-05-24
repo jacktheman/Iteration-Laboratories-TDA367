@@ -1,10 +1,10 @@
 package com.itlabs.fabnotes.fxml.controller;
 
+import com.itlabs.fabnotes.fxml.service.NoteBridge;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import com.itlabs.fabnotes.note.model.Note;
 import org.xml.sax.SAXException;
 import com.itlabs.fabnotes.service.NoteSave;
 import com.itlabs.fabnotes.service.filemanagment.FileHandler;
@@ -42,9 +42,9 @@ public class TagInCloudPaneController {
             File[] filesArray = new File[filesList.size()];
             filesList.toArray(filesArray);
             for (int i = 0; i < filesArray.length; i++) {
-                NoteSave note = FileHandler.loadNote(filesArray[i]);
-                note.getTags().remove(tagToRemove);
-                FileHandler.saveNote(note);
+                NoteSave noteSave = FileHandler.loadNote(filesArray[i]);
+                noteSave.getTags().remove(tagToRemove);
+                FileHandler.saveNote(noteSave);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,9 +57,9 @@ public class TagInCloudPaneController {
         } catch (TransformerException e) {
             e.printStackTrace();
         }
-        if (Note.getCurrentNote().getTags().contains(tagToRemove.toLowerCase())) {
-            Note.getCurrentNote().removeTag(tagTextInCloud.getText().toLowerCase());
-            MainPageController.getInstance().loadNoteTagsInTagBar(Note.getCurrentNote().getTags());
+        if (NoteBridge.getNoteTags().contains(tagToRemove.toLowerCase())) {
+            NoteBridge.removeNoteTag(tagTextInCloud.getText().toLowerCase());
+            MainPageController.getInstance().loadNoteTagsInTagBar(NoteBridge.getNoteTags());
         }
     }
 

@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.service;
+package com.itlabs.fabnotes.fxml.service;
 
 import com.itlabs.fabnotes.noteobject.controller.ImageContainerController;
 import com.itlabs.fabnotes.noteobject.controller.NoteObjectControllerI;
@@ -13,7 +13,7 @@ import java.net.URL;
 /**
  * Created by aron on 2017-05-23.
  */
-public class NoteObjectConfigHelper {
+public class NoteObjectBridge {
     public static void addImageToNote(URL url) {
         NoteObjectControllerI controller = new ImageContainerController(url, 0, 0);
         Note.getCurrentNote().addNoteObject(controller.getModel());

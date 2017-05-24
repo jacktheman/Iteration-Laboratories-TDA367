@@ -1,12 +1,12 @@
 package com.itlabs.fabnotes.fxml.controller;
 
+import com.itlabs.fabnotes.fxml.service.NoteBridge;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import com.itlabs.fabnotes.note.model.Note;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,8 +32,8 @@ public class TagPaneController implements Initializable {
 
     @FXML
     public void removeTag(ActionEvent event) {
-        Note.getCurrentNote().removeTag((tagText.getText()));
-        MainPageController.getInstance().loadNoteTagsInTagBar(Note.getCurrentNote().getTags());
+        NoteBridge.removeNoteTag(tagText.getText());
+        MainPageController.getInstance().loadNoteTagsInTagBar(NoteBridge.getNoteTags());
     }
 
 }

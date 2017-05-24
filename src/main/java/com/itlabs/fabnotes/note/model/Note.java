@@ -1,7 +1,5 @@
 package com.itlabs.fabnotes.note.model;
 
-import com.itlabs.fabnotes.note.event.Event;
-import com.itlabs.fabnotes.note.event.RemoveNoteEvent;
 import javafx.scene.Node;
 import com.itlabs.fabnotes.noteobject.model.NoteObjectI;
 
