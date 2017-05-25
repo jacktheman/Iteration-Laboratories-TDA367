@@ -24,40 +24,14 @@ import java.util.List;
 /**
  * Created by aron on 2017-05-22.
  */
-class XMLReader {
-    private static final String NOTE_TAGS = "tags";
+class XMLReader extends XMLAbstract {
 
-    private static final String TEXT_CONTAINER = "textContainer";
-    private static final String IMAGE_CONTAINER = "imageContainer";
-    private static final String PAINTING_CONTAINER = "paintingContainer";
-
-    private static final String FONT_FAMILY_NAME = "fontFamilyName";
-    private static final String FONT_SIZE = "fontSize";
-    private static final String IS_BOLD = "isBold";
-    private static final String IS_ITALIC = "isItalic";
-    private static final String TEXT = "text";
-
-    private static final String URL = "url";
-
-    private static final String PAINTING = "painting";
-    private static final String PAINT_STROKE_DATA = "paintStrokeToData";
-    private static final String PAINTING_DATA = "paintingToData";
-    private static final String PAINT_RGBO = "rgbo";
-    private static final String PAINTBRUSH = "paintbrush";
-    private static final String PAINTBRUSH_SIZE = "size";
-
-    private static final String LAYOUT_X = "layoutX";
-    private static final String LAYOUT_Y = "layoutY";
-
-    private static final String FIT_WIDTH = "fitWidth";
-    private static final String FIT_HEIGHT = "fitHeight";
-
-    private static final char SPLITTER = ';';
+    private XMLReader() {}
 
     static NoteSave readXMLToNote(File file) throws ParserConfigurationException, IOException, SAXException {
         if (file.exists()) {
             String name = file.getName().replace(FileHandler.FILE_TYPE, "");
-            
+
             Document dom;
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -135,7 +109,7 @@ class XMLReader {
                     break;
             }
         }
-        
+
         return new TextContainer(text, layoutX, layoutY);
     }
 
@@ -169,15 +143,15 @@ class XMLReader {
                     break;
             }
         }
-        
+
         if (url.isEmpty())
             return null;
-        
+
         return createImageContainer(url, fitWidth, fitHeight, layoutX, layoutY);
     }
 
     private static NoteObjectI getPaintingContainer(Node node) {
-        List<PaintStrokeToData> paintStrokeToDataList = new ArrayList<>();
+        List<PaintStrokeToData> paintStrokeToDataList = null;
         double fitWidth = 0;
         double fitHeight = 0;
         double layoutX = 0;
@@ -202,30 +176,40 @@ class XMLReader {
                     layoutY = Double.parseDouble(value);
                     break;
                 case PAINTING:
-                    for (int j = 0; j < item.getChildNodes().getLength(); j++) {
-                        PaintStrokeToData paintStrokeToData = new PaintStrokeToData();
-                        Node paintStrokeData = item.getChildNodes().item(j);
-                        if (paintStrokeData.getNodeName().equals(PAINT_STROKE_DATA)) {
-                            for (int k = 0; k < paintStrokeData.getChildNodes().getLength(); k++) {
-                                Node paintData = paintStrokeData.getChildNodes().item(k);
-                                if (paintData.getNodeName().equals(PAINTING_DATA)) {
-                                    paintStrokeToData.addPaintToStroke(paintingToDataCreator(paintData.getChildNodes()));
-                                }
-                            }
-                        }
-                        paintStrokeToDataList.add(paintStrokeToData);
-                    }
+                    paintStrokeToDataList = getPaintStrokeToDataList(item);
                     break;
             }
         }
 
-        if (paintStrokeToDataList.isEmpty())
+        if (paintStrokeToDataList == null)
             return null;
 
         return createPaintingContainer(paintStrokeToDataList, fitWidth, fitHeight, layoutX, layoutY);
     }
 
-    private static PaintingToData paintingToDataCreator(NodeList paintDrawDataNL){
+    private static List<PaintStrokeToData> getPaintStrokeToDataList(Node item) {
+        List<PaintStrokeToData> paintStrokeToDataList = new ArrayList<>();
+        for (int j = 0; j < item.getChildNodes().getLength(); j++) {
+            Node paintStrokeData = item.getChildNodes().item(j);
+            paintStrokeToDataList.add(paintStrokeToDataCreator(paintStrokeData));
+        }
+        return paintStrokeToDataList;
+    }
+
+    private static PaintStrokeToData paintStrokeToDataCreator(Node paintStrokeData) {
+        PaintStrokeToData paintStrokeToData = new PaintStrokeToData();
+        if (paintStrokeData.getNodeName().equals(PAINT_STROKE_DATA)) {
+            for (int k = 0; k < paintStrokeData.getChildNodes().getLength(); k++) {
+                Node paintData = paintStrokeData.getChildNodes().item(k);
+                if (paintData.getNodeName().equals(PAINTING_DATA)) {
+                    paintStrokeToData.addPaintToStroke(paintingToDataCreator(paintData.getChildNodes()));
+                }
+            }
+        }
+        return paintStrokeToData;
+    }
+
+    private static PaintingToData paintingToDataCreator(NodeList paintDrawDataNL) {
         Color color = null;
         Paintbrush paintbrush = null;
         double paintbrushSize = 0;
@@ -257,8 +241,7 @@ class XMLReader {
                     break;
             }
         }
-            return new PaintingToData(paintLayoutX,paintLayoutY,paintbrush,paintbrushSize,color);
-
+        return new PaintingToData(paintLayoutX, paintLayoutY, paintbrush, paintbrushSize, color);
     }
 
     private static ImageContainer createImageContainer(String URL, double fitWidth, double fitHeight, double layoutX, double layoutY) {
