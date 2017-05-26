@@ -54,6 +54,12 @@ public class FileHandler {
         savedNoteBridge.save(FILE_PATH, FILE_TYPE);
     }
 
+    public static void  deleteFile(File file){
+        if (file.exists()){
+            file.delete();
+        }
+    }
+
     public static List<String> loadTags() throws IOException {
         createTagListFile();
         File file = new File(TAG_LIST);
