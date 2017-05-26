@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
@@ -141,5 +143,41 @@ public class TagPageController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void onKeyPressed (KeyEvent event) {
+            try {
+                if (event.getCode().equals(KeyCode.ENTER)) {
+                    keyPressedLoad();
+                } else if (event.getCode() == KeyCode.DELETE || event.getCode() == KeyCode.BACK_SPACE){
+                    keyPressedDelete();
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+    }
+
+    private void keyPressedLoad() throws ClassNotFoundException, ParserConfigurationException, SAXException, IOException {
+        String fileName = noteListView.getSelectionModel().getSelectedItem();
+        int fileIndex = noteListView.getSelectionModel().getSelectedIndex();
+        noteListView.getFocusModel().focus(fileIndex);
+        MainPageController.getInstance().loadNoteSave(SavedNoteBridge.loadSavedNote(new File(FileHandler.FILE_PATH
+                + fileName.substring(0, fileName.indexOf("[") -3) + FileHandler.FILE_TYPE)));
+    }
+
+    private void keyPressedDelete() {
+        String fileName = noteListView.getSelectionModel().getSelectedItem();
+        FileHandler.deleteFile(new File(FileHandler.FILE_PATH
+                + fileName.substring(0, fileName.indexOf("[") -3) + FileHandler.FILE_TYPE));
+        updateNoteList();
+    }
+
 
 }
