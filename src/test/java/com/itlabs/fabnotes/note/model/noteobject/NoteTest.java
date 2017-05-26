@@ -1,8 +1,8 @@
 package com.itlabs.fabnotes.note.model.noteobject;
 
-import com.itlabs.fabnotes.note.model.note.Note;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.TextContainer;
+import com.itlabs.fabnotes.note.model.Note;
+import com.itlabs.fabnotes.note.model.NoteObjectI;
+import com.itlabs.fabnotes.note.model.TextContainer;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

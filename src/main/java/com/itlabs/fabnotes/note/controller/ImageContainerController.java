@@ -1,6 +1,6 @@
 package com.itlabs.fabnotes.note.controller;
 
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.ImageContainer;
+import com.itlabs.fabnotes.note.model.ImageContainer;
 import com.itlabs.fabnotes.note.service.ObserverBus;
 import com.itlabs.fabnotes.note.behavior.DragDropResizeBehavior;
 import com.itlabs.fabnotes.note.view.ImageContainerView;

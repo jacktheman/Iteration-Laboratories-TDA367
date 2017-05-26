@@ -4,7 +4,7 @@ import com.itlabs.fabnotes.note.service.NoteEventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
+import com.itlabs.fabnotes.note.model.NoteObjectI;
 
 /**
  * Created by aron on 2017-05-03.

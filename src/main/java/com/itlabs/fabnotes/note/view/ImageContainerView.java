@@ -2,9 +2,9 @@ package com.itlabs.fabnotes.note.view;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import com.itlabs.fabnotes.note.model.note.Note;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.ImageContainer;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
+import com.itlabs.fabnotes.note.model.Note;
+import com.itlabs.fabnotes.note.model.ImageContainer;
+import com.itlabs.fabnotes.note.model.NoteObjectI;
 import com.itlabs.fabnotes.note.utility.observer.ObserverI;
 
 import java.io.Serializable;

@@ -1,9 +1,9 @@
 package com.itlabs.fabnotes.note.save.xml;
 
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.ImageContainer;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.PaintingContainer;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.TextContainer;
+import com.itlabs.fabnotes.note.model.ImageContainer;
+import com.itlabs.fabnotes.note.model.NoteObjectI;
+import com.itlabs.fabnotes.note.model.PaintingContainer;
+import com.itlabs.fabnotes.note.model.TextContainer;
 import com.itlabs.fabnotes.note.utility.paint.PaintStrokeToData;
 import com.itlabs.fabnotes.note.utility.paint.PaintingToData;
 import com.itlabs.fabnotes.note.save.NoteSave;

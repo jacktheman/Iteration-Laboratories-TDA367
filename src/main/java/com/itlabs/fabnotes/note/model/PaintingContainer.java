@@ -1,6 +1,5 @@
-package com.itlabs.fabnotes.note.model.noteobject.noteobject;
+package com.itlabs.fabnotes.note.model;
 
-import com.itlabs.fabnotes.note.service.NoteEventHandler;
 import com.itlabs.fabnotes.note.utility.observer.ObservableI;
 import com.itlabs.fabnotes.note.utility.observer.ObserverI;
 import com.itlabs.fabnotes.note.utility.paint.PaintStrokeToData;
@@ -80,7 +79,6 @@ public class PaintingContainer extends NoteObjectResizeable implements Observabl
 
     public void addPainting(PaintStrokeToData paintStroke){
         paintings.add(paintStroke);
-        NoteEventHandler.getInstance().createPaintingEvent(this);
         newPaint = true;
         notifyListeners();
     }

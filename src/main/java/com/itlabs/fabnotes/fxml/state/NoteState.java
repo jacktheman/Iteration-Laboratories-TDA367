@@ -9,11 +9,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import com.itlabs.fabnotes.note.model.note.Note;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.ImageContainer;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.PaintingContainer;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.TextContainer;
+import com.itlabs.fabnotes.note.model.Note;
+import com.itlabs.fabnotes.note.model.ImageContainer;
+import com.itlabs.fabnotes.note.model.NoteObjectI;
+import com.itlabs.fabnotes.note.model.PaintingContainer;
+import com.itlabs.fabnotes.note.model.TextContainer;
 import com.itlabs.fabnotes.note.service.ContextMenuFactory;
 
 import java.net.MalformedURLException;

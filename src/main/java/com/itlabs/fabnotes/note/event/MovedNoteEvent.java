@@ -1,6 +1,6 @@
 package com.itlabs.fabnotes.note.event;
 
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
+import com.itlabs.fabnotes.note.model.NoteObjectI;
 
 /**
  * Created by jackflurry on 2017-05-08.

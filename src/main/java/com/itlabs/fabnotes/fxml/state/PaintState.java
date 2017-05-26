@@ -5,7 +5,7 @@ import com.itlabs.fabnotes.note.controller.PaintingContainerController;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import com.itlabs.fabnotes.note.model.note.Note;
+import com.itlabs.fabnotes.note.model.Note;
 
 import java.net.MalformedURLException;
 

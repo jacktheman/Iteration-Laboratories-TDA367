@@ -2,7 +2,7 @@ package com.itlabs.fabnotes.note.behavior;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectResizeableI;
+import com.itlabs.fabnotes.note.model.NoteObjectResizeableI;
 
 /**
  * Created by svante on 2017-05-04.

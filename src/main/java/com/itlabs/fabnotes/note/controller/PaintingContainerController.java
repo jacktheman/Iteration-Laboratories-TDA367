@@ -1,8 +1,8 @@
 package com.itlabs.fabnotes.note.controller;
 
 import javafx.scene.input.MouseEvent;
-import com.itlabs.fabnotes.note.model.note.Note;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.PaintingContainer;
+import com.itlabs.fabnotes.note.model.Note;
+import com.itlabs.fabnotes.note.model.PaintingContainer;
 import com.itlabs.fabnotes.note.service.ObserverBus;
 import com.itlabs.fabnotes.note.behavior.DragDropBehavior;
 import com.itlabs.fabnotes.note.behavior.PaintingBehavior;

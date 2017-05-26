@@ -6,8 +6,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.AnchorPane;
-import com.itlabs.fabnotes.note.model.note.Note;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
+import com.itlabs.fabnotes.note.model.Note;
+import com.itlabs.fabnotes.note.model.NoteObjectI;
 
 import java.net.MalformedURLException;
 

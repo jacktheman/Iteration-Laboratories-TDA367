@@ -3,7 +3,7 @@ package com.itlabs.fabnotes.note.behavior;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectResizeableI;
+import com.itlabs.fabnotes.note.model.NoteObjectResizeableI;
 
 /**
  * Created by svante on 2017-0BORDER_WIDTH-03.

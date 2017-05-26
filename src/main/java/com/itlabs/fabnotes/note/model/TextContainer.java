@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.note.model.noteobject.noteobject;
+package com.itlabs.fabnotes.note.model;
 
 import com.itlabs.fabnotes.note.utility.observer.ObservableI;
 import com.itlabs.fabnotes.note.utility.observer.ObserverI;

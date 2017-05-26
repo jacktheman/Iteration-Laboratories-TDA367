@@ -1,6 +1,6 @@
 package com.itlabs.fabnotes.note.event;
 
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
+import com.itlabs.fabnotes.note.model.NoteObjectI;
 
 import java.util.ArrayList;
 import java.util.List;

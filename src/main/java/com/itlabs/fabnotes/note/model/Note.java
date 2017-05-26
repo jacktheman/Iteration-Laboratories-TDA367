@@ -1,6 +1,5 @@
-package com.itlabs.fabnotes.note.model.note;
+package com.itlabs.fabnotes.note.model;
 
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
 import javafx.scene.Node;
 
 import java.io.Serializable;

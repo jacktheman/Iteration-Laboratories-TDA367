@@ -1,6 +1,6 @@
 package com.itlabs.fabnotes.note.model.noteobject;
 
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.PaintingContainer;
+import com.itlabs.fabnotes.note.model.PaintingContainer;
 import org.junit.Test;
 import com.itlabs.fabnotes.note.utility.paint.PaintStrokeToData;
 import com.itlabs.fabnotes.note.utility.paint.Paintbrush;

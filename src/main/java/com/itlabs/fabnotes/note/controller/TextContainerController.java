@@ -3,8 +3,8 @@ package com.itlabs.fabnotes.note.controller;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import com.itlabs.fabnotes.note.model.note.Note;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.TextContainer;
+import com.itlabs.fabnotes.note.model.Note;
+import com.itlabs.fabnotes.note.model.TextContainer;
 import com.itlabs.fabnotes.note.service.ObserverBus;
 import com.itlabs.fabnotes.note.view.TextContainerView;
 

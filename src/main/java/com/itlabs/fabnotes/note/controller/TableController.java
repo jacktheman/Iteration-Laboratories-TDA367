@@ -1,7 +1,7 @@
 package com.itlabs.fabnotes.note.controller;
 
 import javafx.scene.control.MenuItem;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
+import com.itlabs.fabnotes.note.model.NoteObjectI;
 import com.itlabs.fabnotes.note.view.TableContainerView;
 
 import java.util.ArrayList;

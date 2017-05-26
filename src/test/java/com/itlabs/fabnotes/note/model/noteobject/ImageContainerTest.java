@@ -1,6 +1,6 @@
 package com.itlabs.fabnotes.note.model.noteobject;
 
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.ImageContainer;
+import com.itlabs.fabnotes.note.model.ImageContainer;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

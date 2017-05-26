@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.note.model.noteobject.noteobject;
+package com.itlabs.fabnotes.note.model;
 
 /**
  * Created by svante on 2017-05-12.

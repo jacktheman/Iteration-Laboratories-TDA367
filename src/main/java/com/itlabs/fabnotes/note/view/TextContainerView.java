@@ -2,8 +2,8 @@ package com.itlabs.fabnotes.note.view;
 
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
-import com.itlabs.fabnotes.note.model.note.Note;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.TextContainer;
+import com.itlabs.fabnotes.note.model.Note;
+import com.itlabs.fabnotes.note.model.TextContainer;
 import com.itlabs.fabnotes.note.utility.observer.ObserverI;
 
 /**

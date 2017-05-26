@@ -2,9 +2,9 @@ package com.itlabs.fabnotes.fxml.service.bridge;
 
 import com.itlabs.fabnotes.note.controller.ImageContainerController;
 import com.itlabs.fabnotes.note.controller.NoteObjectControllerI;
-import com.itlabs.fabnotes.note.model.note.Note;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.PaintingContainer;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.TextContainer;
+import com.itlabs.fabnotes.note.model.Note;
+import com.itlabs.fabnotes.note.model.PaintingContainer;
+import com.itlabs.fabnotes.note.model.TextContainer;
 import com.itlabs.fabnotes.note.utility.paint.Paintbrush;
 import javafx.scene.paint.Color;
 

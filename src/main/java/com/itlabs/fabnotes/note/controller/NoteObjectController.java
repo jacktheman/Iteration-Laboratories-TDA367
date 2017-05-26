@@ -5,8 +5,8 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
-import com.itlabs.fabnotes.note.model.note.Note;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
+import com.itlabs.fabnotes.note.model.Note;
+import com.itlabs.fabnotes.note.model.NoteObjectI;
 import com.itlabs.fabnotes.note.service.ContextMenuFactory;
 import com.itlabs.fabnotes.note.behavior.NoteObjectBehaviorI;
 

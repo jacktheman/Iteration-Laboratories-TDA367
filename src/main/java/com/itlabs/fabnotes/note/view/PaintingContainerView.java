@@ -5,8 +5,8 @@ import com.itlabs.fabnotes.note.utility.paint.Paintbrush;
 import com.itlabs.fabnotes.note.utility.paint.PaintingToData;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
-import com.itlabs.fabnotes.note.model.note.Note;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.PaintingContainer;
+import com.itlabs.fabnotes.note.model.Note;
+import com.itlabs.fabnotes.note.model.PaintingContainer;
 import com.itlabs.fabnotes.note.utility.observer.ObserverI;
 
 import java.io.Serializable;

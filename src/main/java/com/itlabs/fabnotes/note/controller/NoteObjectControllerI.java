@@ -1,7 +1,7 @@
 package com.itlabs.fabnotes.note.controller;
 
 import javafx.scene.Node;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
+import com.itlabs.fabnotes.note.model.NoteObjectI;
 
 /**
  * Created by svante on 2017-04-06.

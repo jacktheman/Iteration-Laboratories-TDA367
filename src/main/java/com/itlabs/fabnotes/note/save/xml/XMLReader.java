@@ -2,10 +2,10 @@ package com.itlabs.fabnotes.note.save.xml;
 
 import com.itlabs.fabnotes.note.save.NoteSave;
 import javafx.scene.paint.Color;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.ImageContainer;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.PaintingContainer;
-import com.itlabs.fabnotes.note.model.noteobject.noteobject.TextContainer;
+import com.itlabs.fabnotes.note.model.ImageContainer;
+import com.itlabs.fabnotes.note.model.NoteObjectI;
+import com.itlabs.fabnotes.note.model.PaintingContainer;
+import com.itlabs.fabnotes.note.model.TextContainer;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import com.itlabs.fabnotes.note.utility.paint.PaintStrokeToData;
