@@ -3,7 +3,6 @@ package com.itlabs.fabnotes.note.controller;
 import javafx.scene.input.MouseEvent;
 import com.itlabs.fabnotes.note.model.Note;
 import com.itlabs.fabnotes.note.model.PaintingContainer;
-import com.itlabs.fabnotes.note.service.ObserverBus;
 import com.itlabs.fabnotes.note.behavior.DragDropBehavior;
 import com.itlabs.fabnotes.note.behavior.PaintingBehavior;
 import com.itlabs.fabnotes.note.view.PaintingContainerView;
@@ -22,14 +21,14 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
         super(new PaintingContainerView(), new PaintingContainer(event.getX(),event.getY()));
         super.setBehavior(new PaintingBehavior(getModel(), getNode()));
         super.getBehavior().onMousePressed(event);
-        ObserverBus.addListener(super.getModel(),super.getNode());
+        super.getModel().addListener(super.getNode());
         controllers.add(this);
         focusPropertyListener();
     }
 
     public PaintingContainerController(PaintingContainer model){
         super(new PaintingContainerView(), new PaintingContainer(model));
-        ObserverBus.addListener(super.getModel(),super.getNode());
+        super.getModel().addListener(super.getNode());
         controllers.add(this);
         focusPropertyListener();
     }

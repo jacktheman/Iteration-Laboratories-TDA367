@@ -1,7 +1,6 @@
 package com.itlabs.fabnotes.note.controller;
 
 import com.itlabs.fabnotes.note.model.ImageContainer;
-import com.itlabs.fabnotes.note.service.ObserverBus;
 import com.itlabs.fabnotes.note.behavior.DragDropResizeBehavior;
 import com.itlabs.fabnotes.note.view.ImageContainerView;
 
@@ -15,7 +14,7 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
     public ImageContainerController(URL url, double layoutX, double layoutY) {
         super(new ImageContainerView(url, layoutX, layoutY), new ImageContainer(url.toString()));
         super.setBehavior(new DragDropResizeBehavior(super.getModel(), super.getNode()));
-        ObserverBus.addListener(super.getModel(), super.getNode());
+        super.getModel().addListener(super.getNode());
     }
 
     public ImageContainerController(ImageContainer imageContainer){
@@ -23,8 +22,7 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
             super.getModel().setFitWidth(imageContainer.getFitWidth());
             super.getModel().setFitHeight(imageContainer.getFitHeight());
             super.setBehavior(new DragDropResizeBehavior(super.getModel(), super.getNode()));
-            ObserverBus.addListener(super.getModel(), super.getNode());
-
+            super.getModel().addListener(super.getNode());
     }
 
     @Override
