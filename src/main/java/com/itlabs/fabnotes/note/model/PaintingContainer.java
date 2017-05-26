@@ -19,8 +19,8 @@ public class PaintingContainer extends NoteObjectResizeable implements Observabl
     private boolean isAlive;
     private boolean newPaint;
 
-    private final int DEFAULT_CANVAS_SIZE = 100;
-    private final int PAINTING_AREA_RESIZING_CONSTANT = 10;
+    private static final int DEFAULT_CANVAS_SIZE = 100;
+    private static final int PAINTING_AREA_RESIZING_CONSTANT = 10;
 
     private double layoutX;
     private double layoutY;
