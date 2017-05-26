@@ -30,19 +30,43 @@ public class FileHandler {
     private FileHandler() {
     }
 
+    public static void createfabNotesFolder (){
+        File customDir = new File(FileHandler.FILE_DIR);
+        if (!customDir.exists()) {
+            if (!customDir.mkdirs()) {
+                System.err.println(customDir + " didn't get created");
+            }
+        }
+
+    }
+
+    public static void createTagListFile (){
+        createfabNotesFolder();
+        File tagList = new File(FileHandler.TAG_LIST);
+        if (!tagList.exists()) {
+            try {
+                if (!tagList.createNewFile()) {
+                    System.err.println(tagList + " didn't get created");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void saveNote(SavedNoteBridge savedNoteBridge) throws TransformerException, ParserConfigurationException {
+        createfabNotesFolder();
         savedNoteBridge.save(FILE_PATH, FILE_TYPE);
     }
 
     public static List<String> loadTags() throws IOException {
+        createTagListFile();
         File file = new File(TAG_LIST);
-        if (file.exists()) {
             return Files.readAllLines(file.toPath());
-        }
-        return null;
     }
 
     public static void addTags(String... tags) throws IOException {
+        createTagListFile();
         File file = new File(TAG_LIST);
         List<String> currentTags = loadTags();
         List<String> totalTags = new ArrayList<>();
@@ -92,6 +116,8 @@ public class FileHandler {
         }
         return fileList;
     }
+
+
 
     //ger mig en List med alla notes som har en samma tag i sig
     public static List<File> tagList(String word) throws IOException, ParserConfigurationException, SAXException {
