@@ -46,30 +46,4 @@ public class SavedNoteBridge {
         return new SavedNoteBridge(FileHandler.loadNote(file));
     }
 
-    public static List<String> loadTagsFromTagList() throws IOException {
-        return FileHandler.loadTags();
-    }
-
-    public static void addTagToTagsList(String... tags) throws IOException {
-        FileHandler.addTags(tags);
-    }
-
-    public static void removeTagsFromTagList(String tag) throws IOException {
-        FileHandler.removeTagFromTagList(tag);
-    }
-
-    public static List<File> getNotesWithTag(String tag) throws ParserConfigurationException, SAXException, IOException {
-        return FileHandler.tagList(tag);
-    }
-
-    public static List<File> listNotes() {
-        List<File> files = new ArrayList<>();
-        files.addAll(Arrays.asList(FileHandler.listNotes()));
-        return files;
-    }
-
-    public static List<File> searchNotes(String word) throws ParserConfigurationException, SAXException, IOException {
-        return FileHandler.searchList(word);
-    }
-
 }

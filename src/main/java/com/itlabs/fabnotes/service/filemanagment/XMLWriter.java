@@ -25,38 +25,9 @@ import java.util.List;
 /**
  * Created by aron on 2017-05-23.
  */
-class XMLWriter {
-    private static final String NOTE_TAGS = "tags";
+class XMLWriter extends XMLAbstract {
 
-    private static final String TEXT_CONTAINER = "textContainer";
-    private static final String IMAGE_CONTAINER = "imageContainer";
-    private static final String PAINTING_CONTAINER = "paintingContainer";
-
-    private static final String FONT_FAMILY_NAME = "fontFamilyName";
-    private static final String FONT_SIZE = "fontSize";
-    private static final String IS_BOLD = "isBold";
-    private static final String IS_ITALIC = "isItalic";
-    private static final String TEXT = "text";
-
-    private static final String URL = "url";
-
-    private static final String PAINTING = "painting";
-    private static final String PAINT_STROKE_DATA = "paintStrokeToData";
-    private static final String PAINTING_DATA = "paintingToData";
-    private static final String PAINT_RGBO = "rgbo";
-    private static final String PAINTBRUSH = "paintbrush";
-    private static final String PAINTBRUSH_SIZE = "size";
-
-    private static final String LAYOUT_X = "layoutX";
-    private static final String LAYOUT_Y = "layoutY";
-
-    private static final String FIT_WIDTH = "fitWidth";
-    private static final String FIT_HEIGHT = "fitHeight";
-
-    private static final char SPLITTER = ';';
-
-    private XMLWriter() {
-    }
+    private XMLWriter() {}
 
     static File writeToXML(NoteSave noteSave) throws ParserConfigurationException, TransformerException {
         File file = new File(FileHandler.FILE_PATH + noteSave.getName() + FileHandler.FILE_TYPE);

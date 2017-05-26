@@ -1,6 +1,8 @@
 package com.itlabs.fabnotes.fxml.controller;
 
+import com.itlabs.fabnotes.fxml.service.FileHandlerBridge;
 import com.itlabs.fabnotes.fxml.service.SavedNoteBridge;
+import com.itlabs.fabnotes.fxml.service.TagsListBridge;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -56,13 +58,13 @@ public class TagPageController implements Initializable {
     }
 
     public static void updateNoteList(){
-        SINGLETON.listNotes(SavedNoteBridge.listNotes());
+        SINGLETON.listNotes(FileHandlerBridge.listNotes());
     }
 
     private void addListenerToSearchField(){
        searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
            try {
-                List<File> searchList = SavedNoteBridge.searchNotes(newValue);
+                List<File> searchList = FileHandlerBridge.searchNotes(newValue);
                 listNotes(searchList);
            } catch (IOException e) {
                e.printStackTrace();
@@ -76,7 +78,7 @@ public class TagPageController implements Initializable {
 
     public static void loadTagFlowPane() {
         try {
-            SINGLETON.setTagsList(SavedNoteBridge.loadTagsFromTagList());
+            SINGLETON.setTagsList(TagsListBridge.loadTagsFromTagList());
         } catch (IOException e) {
             e.printStackTrace();
         }

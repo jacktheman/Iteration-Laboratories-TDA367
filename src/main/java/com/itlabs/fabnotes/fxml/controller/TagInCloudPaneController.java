@@ -1,7 +1,9 @@
 package com.itlabs.fabnotes.fxml.controller;
 
+import com.itlabs.fabnotes.fxml.service.FileHandlerBridge;
 import com.itlabs.fabnotes.fxml.service.NoteBridge;
 import com.itlabs.fabnotes.fxml.service.SavedNoteBridge;
+import com.itlabs.fabnotes.fxml.service.TagsListBridge;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,14 +32,14 @@ public class TagInCloudPaneController {
     void removeTagInCloud(ActionEvent event) {
         String tagToRemove = tagTextInCloud.getText();
         try {
-            SavedNoteBridge.removeTagsFromTagList(tagToRemove);
+            TagsListBridge.removeTagsFromTagList(tagToRemove);
             TagPageController.getInstance().getTagFlowPane().getChildren().clear();
             TagPageController.loadTagFlowPane();
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
-            List<File> filesList = SavedNoteBridge.getNotesWithTag(tagToRemove);
+            List<File> filesList = FileHandlerBridge.getNotesWithTag(tagToRemove);
             File[] filesArray = new File[filesList.size()];
             filesList.toArray(filesArray);
             for (int i = 0; i < filesArray.length; i++) {
