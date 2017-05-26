@@ -1,7 +1,6 @@
 package com.itlabs.fabnotes.fxml.service;
 
 import com.itlabs.fabnotes.fxml.service.bridge.SavedNoteBridge;
-import com.itlabs.fabnotes.note.save.xml.XMLReader;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -94,11 +93,11 @@ public class FileHandler {
     }
 
     //ger mig en List med alla notes som har en samma tag i sig
-    public static List<File> tagList(String word) throws IOException, ParserConfigurationException, SAXException {
+    public static List<File> tagList(String word) throws IOException, ParserConfigurationException, SAXException, ClassNotFoundException {
         List<File> fileList = listNotes();
         for (File file : fileList) {
             if (file.exists()) {
-                for (String tag : XMLReader.readXMLToNote(file).getTags()) {
+                for (String tag : SavedNoteBridge.loadSavedNote(file).getTags()) {
                     if (tag.contains(word.toLowerCase())) {
                         fileList.add(file);
                     }
@@ -108,7 +107,7 @@ public class FileHandler {
         return fileList;
     }
 
-    public static List<File> searchList(String word) throws IOException, ParserConfigurationException, SAXException {
+    public static List<File> searchList(String word) throws IOException, ParserConfigurationException, SAXException, ClassNotFoundException {
         List<File> fileList = new ArrayList<>();
         List<File> tagList = tagList(word);
         List<File> sortedList;

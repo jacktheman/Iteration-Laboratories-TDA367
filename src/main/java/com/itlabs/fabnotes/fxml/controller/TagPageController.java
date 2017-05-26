@@ -71,6 +71,8 @@ public class TagPageController implements Initializable {
                e.printStackTrace();
            } catch (ParserConfigurationException e) {
                e.printStackTrace();
+           } catch (ClassNotFoundException e) {
+               e.printStackTrace();
            }
        });
     }
