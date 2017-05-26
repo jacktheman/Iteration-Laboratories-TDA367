@@ -1,9 +1,9 @@
-package com.itlabs.fabnotes.fxml.service;
+package com.itlabs.fabnotes.fxml.service.bridge;
 
 import com.itlabs.fabnotes.note.event.Event;
 import com.itlabs.fabnotes.note.model.note.Note;
-import com.itlabs.fabnotes.service.NoteSave;
-import com.itlabs.fabnotes.service.filemanagment.FileHandler;
+import com.itlabs.fabnotes.note.save.NoteSave;
+import com.itlabs.fabnotes.note.save.xml.XMLWriter;
 import javafx.scene.Node;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -41,8 +41,8 @@ public class NoteBridge {
         return Note.getCurrentNote().getTags();
     }
 
-    public static void saveNote() throws TransformerException, ParserConfigurationException {
-        FileHandler.saveNote(new NoteSave(Note.getCurrentNote()));
+    public static void saveNote(String filePath, String fileType) throws TransformerException, ParserConfigurationException {
+        XMLWriter.writeToXML(new NoteSave(Note.getCurrentNote()), filePath, fileType);
     }
 
     public static void undoNoteAction() {

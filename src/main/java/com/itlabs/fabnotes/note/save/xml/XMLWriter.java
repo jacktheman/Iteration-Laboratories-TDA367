@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.service.filemanagment;
+package com.itlabs.fabnotes.note.save.xml;
 
 import com.itlabs.fabnotes.note.model.noteobject.noteobject.ImageContainer;
 import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
@@ -6,7 +6,7 @@ import com.itlabs.fabnotes.note.model.noteobject.noteobject.PaintingContainer;
 import com.itlabs.fabnotes.note.model.noteobject.noteobject.TextContainer;
 import com.itlabs.fabnotes.note.utility.paint.PaintStrokeToData;
 import com.itlabs.fabnotes.note.utility.paint.PaintingToData;
-import com.itlabs.fabnotes.service.NoteSave;
+import com.itlabs.fabnotes.note.save.NoteSave;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -25,12 +25,12 @@ import java.util.List;
 /**
  * Created by aron on 2017-05-23.
  */
-class XMLWriter extends XMLAbstract {
+public class XMLWriter extends XMLAbstract {
 
     private XMLWriter() {}
 
-    static File writeToXML(NoteSave noteSave) throws ParserConfigurationException, TransformerException {
-        File file = new File(FileHandler.FILE_PATH + noteSave.getName() + FileHandler.FILE_TYPE);
+    public static File writeToXML(NoteSave noteSave, String filePath, String fileType) throws ParserConfigurationException, TransformerException {
+        File file = new File(filePath + noteSave.getName() + fileType);
 
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();

@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.fxml.service;
+package com.itlabs.fabnotes.fxml.service.bridge;
 
 import com.itlabs.fabnotes.note.controller.ImageContainerController;
 import com.itlabs.fabnotes.note.controller.NoteObjectControllerI;

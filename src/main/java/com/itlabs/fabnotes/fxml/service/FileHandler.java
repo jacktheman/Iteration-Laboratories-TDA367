@@ -1,6 +1,7 @@
-package com.itlabs.fabnotes.service.filemanagment;
+package com.itlabs.fabnotes.fxml.service;
 
-import com.itlabs.fabnotes.service.NoteSave;
+import com.itlabs.fabnotes.fxml.service.bridge.SavedNoteBridge;
+import com.itlabs.fabnotes.note.save.xml.XMLReader;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,33 +30,8 @@ public class FileHandler {
     private FileHandler() {
     }
 
-    public static String checkFileName(String name) {
-        File file = new File(FILE_PATH + name + FILE_TYPE);
-        if (file.exists()) {
-            int fileNumber = 1;
-            String fileName = file.getName().replaceAll(FILE_TYPE, "");
-            if (fileName.contains("_")) {
-                int index = fileName.lastIndexOf("_") + 1;
-                String number = fileName.substring(index);
-                if (number.matches("\\d+")) {
-                    fileName = fileName.substring(0, index - 1);
-                    fileNumber += Integer.parseInt(number);
-                }
-            }
-            return checkFileName(fileName + "_" + fileNumber);
-        }
-        return name;
-    }
-
-    public static void saveNote(NoteSave noteSave) throws TransformerException, ParserConfigurationException {
-        if (noteSave.getModels().size() > 0 && !noteSave.getName().equals(""))
-            XMLWriter.writeToXML(noteSave);
-    }
-
-    public static NoteSave loadNote(File file) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
-        if (file.exists())
-            return XMLReader.readXMLToNote(file);
-        return null;
+    public static void saveNote(SavedNoteBridge savedNoteBridge) throws TransformerException, ParserConfigurationException {
+        savedNoteBridge.save(FILE_PATH, FILE_TYPE);
     }
 
     public static List<String> loadTags() throws IOException {
@@ -84,7 +60,7 @@ public class FileHandler {
     }
 
 
-    public static void removeTagFromTagList (String tagToRemove) throws IOException{
+    public static void removeTag(String tagToRemove) throws IOException{
         File file = new File(TAG_LIST);
         List<String> currentTags = loadTags();
         currentTags.remove(tagToRemove);
@@ -99,16 +75,17 @@ public class FileHandler {
             Files.write(file.toPath(), str.substring(0, str.length()-1).getBytes(), StandardOpenOption.WRITE);
     }
 
-    public static File[] listNotes() {
+    public static List<File> listNotes() {
         File file = new File(FILE_DIR);
-        return file.listFiles((file1, s) -> s.contains(FILE_TYPE));
+        List<File> files = new ArrayList<>();
+        for (File note : file.listFiles((file1, s) -> s.contains(FILE_TYPE)))
+            files.add(note);
+        return files;
     }
 
-    public static List<File> fileList(String word) {
-        File[] fileArray = listNotes();
-        List<File> fileList = new ArrayList<>();
-        for (File file : fileArray
-                ) {
+    private static List<File> fileList(String word) {
+        List<File> fileList = listNotes();
+        for (File file : fileList) {
             if (file.getName().toLowerCase().contains(word.toLowerCase())) {
                 fileList.add(file);
             }
@@ -118,9 +95,8 @@ public class FileHandler {
 
     //ger mig en List med alla notes som har en samma tag i sig
     public static List<File> tagList(String word) throws IOException, ParserConfigurationException, SAXException {
-        File[] fileArray = listNotes();
-        List<File> fileList = new ArrayList<>();
-        for (File file : fileArray) {
+        List<File> fileList = listNotes();
+        for (File file : fileList) {
             if (file.exists()) {
                 for (String tag : XMLReader.readXMLToNote(file).getTags()) {
                     if (tag.contains(word.toLowerCase())) {
@@ -146,7 +122,7 @@ public class FileHandler {
         return sortedList;
     }
 
-    public static List<File> sortFiles(List<File> fileList) {
+    private static List<File> sortFiles(List<File> fileList) {
         List<String> stringList = new ArrayList<>();
         List<File> sortedList = new ArrayList<>();
         for (File file : fileList) {

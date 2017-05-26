@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.service;
+package com.itlabs.fabnotes.note.save;
 
 import com.itlabs.fabnotes.note.controller.ImageContainerController;
 import com.itlabs.fabnotes.note.controller.NoteObjectControllerI;

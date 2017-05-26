@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.service.filemanagment;
+package com.itlabs.fabnotes.fxml.service;
 
 import org.junit.Test;
 
@@ -27,14 +27,14 @@ public class FileHandlerTest {
         List<String> tagsAfterRemove;
         FileHandler.addTags(TEST_STRING);
         tagsAfterAdd = FileHandler.loadTags();
-        FileHandler.removeTagFromTagList(TEST_STRING);
+        FileHandler.removeTag(TEST_STRING);
         tagsAfterRemove = FileHandler.loadTags();
         assertTrue(tags.size() == tagsAfterRemove.size() && tags.size() < tagsAfterAdd.size());
     }
 
     @Test
     public void listNotes() throws Exception {
-        File[] files = FileHandler.listNotes();
+        List<File> files = FileHandler.listNotes();
         for (File file : files)
             assertFalse(file.getName().equals(FileHandler.FILE_TYPE));
     }

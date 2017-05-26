@@ -1,6 +1,6 @@
 package com.itlabs.fabnotes.fxml.controller;
 
-import com.itlabs.fabnotes.fxml.service.NoteBridge;
+import com.itlabs.fabnotes.fxml.service.bridge.NoteBridge;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

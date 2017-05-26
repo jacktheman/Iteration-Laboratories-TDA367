@@ -1,8 +1,8 @@
 package com.itlabs.fabnotes.fxml.controller;
 
-import com.itlabs.fabnotes.fxml.service.FileHandlerBridge;
-import com.itlabs.fabnotes.fxml.service.SavedNoteBridge;
-import com.itlabs.fabnotes.fxml.service.TagsListBridge;
+import com.itlabs.fabnotes.fxml.service.FileHandler;
+import com.itlabs.fabnotes.fxml.service.bridge.FileHandlerBridge;
+import com.itlabs.fabnotes.fxml.service.bridge.SavedNoteBridge;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -38,7 +38,6 @@ public class TagPageController implements Initializable {
 
     private List<String> tagsList;
     private String[] tagsArray;
-    private File[] notes;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SINGLETON = this;
@@ -47,24 +46,24 @@ public class TagPageController implements Initializable {
         addListenerToSearchField();
     }
 
-    void listNotes(List<File> notes) {
+    private void listNotes(List<File> notes) {
         if (notes.size() > 0)
             noteListView.getItems().clear();
         for (File note : notes) {
-            String listItem = note.getName().replace(SavedNoteBridge.FILE_TYPE, " ");
+            String listItem = note.getName().replace(FileHandler.FILE_TYPE, " ");
             listItem += "  [" + (new Date(note.lastModified())).toString() + "]";
             noteListView.getItems().add(listItem);
         }
     }
 
-    public static void updateNoteList(){
-        SINGLETON.listNotes(FileHandlerBridge.listNotes());
+    static void updateNoteList(){
+        SINGLETON.listNotes(FileHandler.listNotes());
     }
 
     private void addListenerToSearchField(){
        searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
            try {
-                List<File> searchList = FileHandlerBridge.searchNotes(newValue);
+                List<File> searchList = FileHandler.searchList(newValue);
                 listNotes(searchList);
            } catch (IOException e) {
                e.printStackTrace();
@@ -76,9 +75,9 @@ public class TagPageController implements Initializable {
        });
     }
 
-    public static void loadTagFlowPane() {
+    static void loadTagFlowPane() {
         try {
-            SINGLETON.setTagsList(TagsListBridge.loadTagsFromTagList());
+            SINGLETON.setTagsList(FileHandler.loadTags());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -100,15 +99,15 @@ public class TagPageController implements Initializable {
         }
     }
 
-    void setTagsList(List<String> list) {
+    private void setTagsList(List<String> list) {
         tagsList = list;
     }
 
-    void setTagsArray (String [] str) {
+    private void setTagsArray (String [] str) {
         tagsArray = str;
     }
 
-    public List<String> getTagsList () {
+    private List<String> getTagsList () {
         return tagsList;
     }
 
@@ -116,11 +115,11 @@ public class TagPageController implements Initializable {
         return SINGLETON;
     }
 
-    public FlowPane getTagFlowPane() {
+    FlowPane getTagFlowPane() {
         return tagFlowPane;
     }
 
-    public String [] getTagsArray() {
+    private String [] getTagsArray() {
         return tagsArray;
     }
 
@@ -128,8 +127,8 @@ public class TagPageController implements Initializable {
     private void onMousePressedMenuItem(MouseEvent mouseEvent) {
         try {
             String fileName = noteListView.getSelectionModel().getSelectedItem();
-            MainPageController.getInstance().loadNoteSave(SavedNoteBridge.loadSavedNote(new File(SavedNoteBridge.FILE_PATH +
-                    fileName.substring(0, fileName.indexOf("[") - 3) + SavedNoteBridge.FILE_TYPE)));
+            MainPageController.getInstance().loadNoteSave(SavedNoteBridge.loadSavedNote(new File(FileHandler.FILE_PATH +
+                    fileName.substring(0, fileName.indexOf("[") - 3) + FileHandler.FILE_TYPE)));
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {

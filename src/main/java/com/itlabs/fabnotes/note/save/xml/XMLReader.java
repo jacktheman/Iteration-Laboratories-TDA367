@@ -1,6 +1,6 @@
-package com.itlabs.fabnotes.service.filemanagment;
+package com.itlabs.fabnotes.note.save.xml;
 
-import com.itlabs.fabnotes.service.NoteSave;
+import com.itlabs.fabnotes.note.save.NoteSave;
 import javafx.scene.paint.Color;
 import com.itlabs.fabnotes.note.model.noteobject.noteobject.ImageContainer;
 import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
@@ -24,13 +24,13 @@ import java.util.List;
 /**
  * Created by aron on 2017-05-22.
  */
-class XMLReader extends XMLAbstract {
+public class XMLReader extends XMLAbstract {
 
     private XMLReader() {}
 
-    static NoteSave readXMLToNote(File file) throws ParserConfigurationException, IOException, SAXException {
+    public static NoteSave readXMLToNote(File file) throws ParserConfigurationException, IOException, SAXException {
         if (file.exists()) {
-            String name = file.getName().replace(FileHandler.FILE_TYPE, "");
+            String name = file.getName().replace(getFileType(file.getName()), "");
 
             Document dom;
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

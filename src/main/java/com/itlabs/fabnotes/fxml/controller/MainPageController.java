@@ -1,6 +1,7 @@
 package com.itlabs.fabnotes.fxml.controller;
 
 import com.itlabs.fabnotes.fxml.service.*;
+import com.itlabs.fabnotes.fxml.service.bridge.*;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +19,6 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import org.xml.sax.SAXException;
-import com.itlabs.fabnotes.service.StateHandler;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -289,7 +289,7 @@ public class MainPageController implements Initializable {
                     AnchorPane tag = newTag.load();
                     ((Label) tag.getChildren().get(0)).setText(newTagText);
                     tagBar.getChildren().add(tag);
-                    TagsListBridge.addTagToTagsList(newTagText);
+                    FileHandler.addTags(newTagText);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -349,7 +349,7 @@ public class MainPageController implements Initializable {
     private void saveNote() {
         nameTextField.setText(NoteBridge.getNoteName());
         try {
-            NoteBridge.saveNote();
+            NoteBridge.saveNote(FileHandler.FILE_PATH, FileHandler.FILE_TYPE);
             TagPageController.updateNoteList();
         } catch (TransformerException e) {
             e.printStackTrace();

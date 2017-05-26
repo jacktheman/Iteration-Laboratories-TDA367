@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.service.filemanagment;
+package com.itlabs.fabnotes.note.save.xml;
 
 /**
  * Created by aron on 2017-05-25.
@@ -32,4 +32,8 @@ abstract class XMLAbstract {
     static final String FIT_HEIGHT = "fitHeight";
 
     static final char SPLITTER = ';';
+
+    static String getFileType(String fileName) {
+        return fileName.substring(fileName.lastIndexOf("."));
+    }
 }
