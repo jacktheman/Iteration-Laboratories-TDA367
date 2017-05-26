@@ -49,8 +49,6 @@ public class MainPageController implements Initializable {
     @FXML
     private ColorPicker colorPicker;
     @FXML
-    private AnchorPane brushPicture;
-    @FXML
     private Canvas brushPictureCanvas;
     @FXML
     private ComboBox textFontComboBox;
@@ -72,10 +70,6 @@ public class MainPageController implements Initializable {
     static final String TAG_PANE_PATH = "/com/itlabs/fabnotes/TagPane.fxml";
 
     private static final String TAG_PAGE_PATH = "/com/itlabs/fabnotes/TagPage.fxml";
-
-    private static final double TRIANGLE_QUANTIFIER_SMALL = 0.75;
-    private static final double TRIANGLE_QUANTIFIER_BIG = 1.25;
-    private static final int TRIANGLE_NUMBER_OF_CORNERS = 3;
 
     private static final double BRUSH_SHRINK_RATE = 0.9;
     private static final double BRUSH_ENLARGE_RATE = 1.1;
@@ -224,51 +218,11 @@ public class MainPageController implements Initializable {
 
     //A method for painting the dynamical picture of the paintbrush when changed.
     private void setBrushPicture() {
-        //clears picture before painting new
-        brushPictureCanvas.getGraphicsContext2D().clearRect(brushPictureCanvas.getLayoutX(), brushPictureCanvas.getLayoutY(),
-                brushPictureCanvas.getWidth(), brushPictureCanvas.getHeight());
-        //paints new picture on Canvas
-        switch (NoteObjectBridge.getPaintbrush()) {
-            case TRIANGLE:
-                paintTriangle();
-                break;
-            case SQUARE:
-                paintSquare();
-                break;
-            case CIRCLE:
-                paintCircle();
-                break;
-        }
-    }
-
-    private void paintTriangle(){
-        brushPictureCanvas.getGraphicsContext2D().setFill(NoteObjectBridge.getPaintbrushColor());
-        double[] xPoints = {brushPicture.getPrefWidth() / 2 - NoteObjectBridge.getPaintbrushSize()
-                * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefWidth() / 2, brushPicture.getPrefWidth() / 2
-                + NoteObjectBridge.getPaintbrushSize() * TRIANGLE_QUANTIFIER_BIG};
-        double[] yPoints = {brushPicture.getPrefHeight() / 2 + NoteObjectBridge.getPaintbrushSize()
-                * TRIANGLE_QUANTIFIER_SMALL, brushPicture.getPrefHeight() / 2 - NoteObjectBridge.getPaintbrushSize()
-                * TRIANGLE_QUANTIFIER_BIG, brushPicture.getPrefHeight() / 2 + NoteObjectBridge.getPaintbrushSize()
-                * TRIANGLE_QUANTIFIER_SMALL};
-        brushPictureCanvas.getGraphicsContext2D().fillPolygon(xPoints, yPoints, TRIANGLE_NUMBER_OF_CORNERS);
-    }
-
-    private void paintSquare(){
-        brushPictureCanvas.getGraphicsContext2D().setFill(NoteObjectBridge.getPaintbrushColor());
-        brushPictureCanvas.getGraphicsContext2D().fillRect(brushPicture.getPrefWidth() / 2 - (NoteObjectBridge.getPaintbrushSize() / 2),
-                brushPicture.getPrefHeight() / 2 - (NoteObjectBridge.getPaintbrushSize() / 2),
-                NoteObjectBridge.getPaintbrushSize(), NoteObjectBridge.getPaintbrushSize());
-    }
-
-    private void paintCircle(){
-        brushPictureCanvas.getGraphicsContext2D().setFill(NoteObjectBridge.getPaintbrushColor());
-        brushPictureCanvas.getGraphicsContext2D().fillOval(brushPicture.getPrefWidth() / 2 - (NoteObjectBridge.getPaintbrushSize() / 2),
-                brushPicture.getPrefHeight() / 2 - (NoteObjectBridge.getPaintbrushSize() / 2),
-                NoteObjectBridge.getPaintbrushSize(), NoteObjectBridge.getPaintbrushSize());
+        BrushPicture.setBrushPicture(brushPictureCanvas);
     }
 
     @FXML
-    public void setNewFabNote() {
+    private void setNewFabNote() {
         NoteBridge.createNewNote(notePane.getChildren());
         nameTextField.setText("");
         tagBar.getChildren().clear();
