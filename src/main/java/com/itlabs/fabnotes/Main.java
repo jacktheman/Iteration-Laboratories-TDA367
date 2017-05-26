@@ -18,20 +18,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        File customDir = new File(FileHandler.FILE_DIR);
-        if (!customDir.exists()) {
-            if (!customDir.mkdirs()) {
-                System.err.println(customDir + " didn't get created");
-            }
-        }
-        File tagList = new File(FileHandler.TAG_LIST);
-        if (!tagList.exists()) {
-            if (!tagList.createNewFile()) {
-                System.err.println(tagList + " didn't get created");
-            }
-        }
-
-
 
         Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
 
