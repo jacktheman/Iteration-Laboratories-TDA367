@@ -1,4 +1,4 @@
-package com.itlabs.fabnotes.fxml.service.bridge;
+package com.itlabs.fabnotes.fxml.service;
 
 import com.itlabs.fabnotes.note.controller.PaintingContainerController;
 import com.itlabs.fabnotes.fxml.state.PaintState;

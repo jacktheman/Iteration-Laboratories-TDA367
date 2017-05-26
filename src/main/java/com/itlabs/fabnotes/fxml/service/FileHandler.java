@@ -1,7 +1,6 @@
 package com.itlabs.fabnotes.fxml.service;
 
 import com.itlabs.fabnotes.fxml.service.bridge.SavedNoteBridge;
-import com.itlabs.fabnotes.note.save.xml.XMLReader;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -30,19 +29,39 @@ public class FileHandler {
     private FileHandler() {
     }
 
+    private static void createFabNotesFolder(){
+        File customDir = new File(FileHandler.FILE_DIR);
+        if (!customDir.exists()) {
+            if (!customDir.mkdirs()) {
+                System.err.println(customDir + " didn't get created");
+            }
+        }
+
+    }
+
+    private static void createTagListFile () throws IOException {
+        createFabNotesFolder();
+        File tagList = new File(FileHandler.TAG_LIST);
+        if (!tagList.exists()) {
+            if (!tagList.createNewFile()) {
+                System.err.println(tagList + " didn't get created");
+            }
+        }
+    }
+
     public static void saveNote(SavedNoteBridge savedNoteBridge) throws TransformerException, ParserConfigurationException {
+        createFabNotesFolder();
         savedNoteBridge.save(FILE_PATH, FILE_TYPE);
     }
 
     public static List<String> loadTags() throws IOException {
+        createTagListFile();
         File file = new File(TAG_LIST);
-        if (file.exists()) {
             return Files.readAllLines(file.toPath());
-        }
-        return null;
     }
 
     public static void addTags(String... tags) throws IOException {
+        createTagListFile();
         File file = new File(TAG_LIST);
         List<String> currentTags = loadTags();
         List<String> totalTags = new ArrayList<>();
@@ -93,12 +112,14 @@ public class FileHandler {
         return fileList;
     }
 
+
+
     //ger mig en List med alla notes som har en samma tag i sig
-    public static List<File> tagList(String word) throws IOException, ParserConfigurationException, SAXException {
+    public static List<File> tagList(String word) throws IOException, ParserConfigurationException, SAXException, ClassNotFoundException {
         List<File> fileList = listNotes();
         for (File file : fileList) {
             if (file.exists()) {
-                for (String tag : XMLReader.readXMLToNote(file).getTags()) {
+                for (String tag : SavedNoteBridge.loadSavedNote(file).getTags()) {
                     if (tag.contains(word.toLowerCase())) {
                         fileList.add(file);
                     }
@@ -108,7 +129,7 @@ public class FileHandler {
         return fileList;
     }
 
-    public static List<File> searchList(String word) throws IOException, ParserConfigurationException, SAXException {
+    public static List<File> searchList(String word) throws IOException, ParserConfigurationException, SAXException, ClassNotFoundException {
         List<File> fileList = new ArrayList<>();
         List<File> tagList = tagList(word);
         List<File> sortedList;
