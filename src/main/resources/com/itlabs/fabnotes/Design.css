@@ -65,12 +65,7 @@
 }
 
 
-
- #tabPane {
-     -fx-background-color: #4fa191;
- }
-
- .tab-header-background {
+/* .tab-header-background {
      -fx-background-color: #8dbf9b;
  }
 
@@ -80,8 +75,23 @@
 
  #paintingTab {
      -fx-background-color: #4fa191;
- }
+ }*/
 
+/*.tab-pane{
+    -fx-background-color: #4fa191;
+}*/
+
+.tab-header-background {
+    -fx-background-color: #8dbf9b;
+}
+
+.tab {
+    -fx-background-color: #85b292;
+}
+
+.tab:selected {
+    -fx-background-color: #4fa191;
+}
 
 
 

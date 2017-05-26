@@ -19,7 +19,7 @@
         <items>
             <ScrollPane>
                <content>
-                  <ListView id="file-list" fx:id="noteListView" maxWidth="-Infinity" minWidth="-Infinity" onMousePressed="#onMousePressedMenuItem" prefHeight="261.0" prefWidth="299.0" />
+                  <ListView id="file-list" fx:id="noteListView" maxWidth="-Infinity" minWidth="-Infinity" onKeyPressed="#onKeyPressed" onMousePressed="#onMousePressedMenuItem" prefHeight="261.0" prefWidth="299.0" />
                </content>
             </ScrollPane>
             <ScrollPane fx:id="tagCloudScrollPane" hbarPolicy="NEVER" prefViewportHeight="251.0" prefViewportWidth="299.0">
