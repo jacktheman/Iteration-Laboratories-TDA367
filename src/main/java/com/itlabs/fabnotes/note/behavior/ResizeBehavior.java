@@ -10,7 +10,7 @@ import com.itlabs.fabnotes.note.model.NoteObjectResizeableI;
  */
 public class ResizeBehavior extends NoteObjectBehavior {
 
-    public static final double BORDER_WIDTH = 10;
+    private static final double BORDER_WIDTH = 10;
 
     private final NoteObjectResizeableI imageContainer;
     private final Node node;
@@ -27,7 +27,7 @@ public class ResizeBehavior extends NoteObjectBehavior {
         return pos;
     }
 
-    public ResizeBehavior(NoteObjectResizeableI model, Node view) {
+    ResizeBehavior(NoteObjectResizeableI model, Node view) {
         this.imageContainer = model;
         this.node = view;
         updateVariables();
