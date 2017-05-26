@@ -174,7 +174,7 @@ public class MainPageController implements Initializable {
 
     private void setOnNameTextFieldChanged() {
         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.matches("") || newValue.matches("[A-ZÅÄÖÆØÐÞa-zåäöæøðþ0-9_ ]+"))
+            if (newValue.matches("") || newValue.matches("[A-ZÅÄÖÆØÐÞa-zåäöæøðþ0-9_]+"))
                 NoteBridge.setNoteName(newValue);
             else
                 nameTextField.setText(oldValue);
@@ -235,7 +235,7 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void addTag(KeyEvent event) {
-        if (event.getCode().equals(KeyCode.ENTER)) {
+        if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE) {
             String newTagText = addTagTextField.getText();
             try {
                 if (NoteBridge.addNoteTag(newTagText)) {
