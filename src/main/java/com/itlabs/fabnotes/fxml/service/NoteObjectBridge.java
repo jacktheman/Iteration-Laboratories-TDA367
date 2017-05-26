@@ -1,11 +1,11 @@
 package com.itlabs.fabnotes.fxml.service;
 
-import com.itlabs.fabnotes.noteobject.controller.ImageContainerController;
-import com.itlabs.fabnotes.noteobject.controller.NoteObjectControllerI;
-import com.itlabs.fabnotes.note.model.Note;
-import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
-import com.itlabs.fabnotes.noteobject.model.TextContainer;
-import com.itlabs.fabnotes.noteobject.utility.paint.Paintbrush;
+import com.itlabs.fabnotes.note.controller.ImageContainerController;
+import com.itlabs.fabnotes.note.controller.NoteObjectControllerI;
+import com.itlabs.fabnotes.note.model.note.Note;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.PaintingContainer;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.TextContainer;
+import com.itlabs.fabnotes.note.utility.paint.Paintbrush;
 import javafx.scene.paint.Color;
 
 import java.net.URL;

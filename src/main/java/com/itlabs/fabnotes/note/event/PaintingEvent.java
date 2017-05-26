@@ -1,6 +1,6 @@
 package com.itlabs.fabnotes.note.event;
 
-import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.PaintingContainer;
 
 /**
  * Created by jackflurry on 2017-05-11.

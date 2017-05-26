@@ -20,7 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import com.itlabs.fabnotes.fxml.service.FileChooserFactory;
 import org.xml.sax.SAXException;
-import com.itlabs.fabnotes.service.StateHandler;
+import com.itlabs.fabnotes.fxml.service.StateHandler;
 import com.itlabs.fabnotes.fxml.service.NoteObjectBridge;
 
 import javax.xml.parsers.ParserConfigurationException;

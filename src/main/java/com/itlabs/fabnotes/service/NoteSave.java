@@ -1,14 +1,14 @@
 package com.itlabs.fabnotes.service;
 
-import com.itlabs.fabnotes.noteobject.controller.ImageContainerController;
-import com.itlabs.fabnotes.noteobject.controller.NoteObjectControllerI;
-import com.itlabs.fabnotes.noteobject.controller.PaintingContainerController;
-import com.itlabs.fabnotes.noteobject.controller.TextContainerController;
-import com.itlabs.fabnotes.note.model.Note;
-import com.itlabs.fabnotes.noteobject.model.ImageContainer;
-import com.itlabs.fabnotes.noteobject.model.NoteObjectI;
-import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
-import com.itlabs.fabnotes.noteobject.model.TextContainer;
+import com.itlabs.fabnotes.note.controller.ImageContainerController;
+import com.itlabs.fabnotes.note.controller.NoteObjectControllerI;
+import com.itlabs.fabnotes.note.controller.PaintingContainerController;
+import com.itlabs.fabnotes.note.controller.TextContainerController;
+import com.itlabs.fabnotes.note.model.note.Note;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.ImageContainer;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.PaintingContainer;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.TextContainer;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,11 +1,11 @@
 package com.itlabs.fabnotes.service.filemanagment;
 
-import com.itlabs.fabnotes.noteobject.model.ImageContainer;
-import com.itlabs.fabnotes.noteobject.model.NoteObjectI;
-import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
-import com.itlabs.fabnotes.noteobject.model.TextContainer;
-import com.itlabs.fabnotes.noteobject.utility.paint.PaintStrokeToData;
-import com.itlabs.fabnotes.noteobject.utility.paint.PaintingToData;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.ImageContainer;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.PaintingContainer;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.TextContainer;
+import com.itlabs.fabnotes.note.utility.paint.PaintStrokeToData;
+import com.itlabs.fabnotes.note.utility.paint.PaintingToData;
 import com.itlabs.fabnotes.service.NoteSave;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

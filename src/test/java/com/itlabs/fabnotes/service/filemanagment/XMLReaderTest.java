@@ -1,6 +1,6 @@
 package com.itlabs.fabnotes.service.filemanagment;
 
-import com.itlabs.fabnotes.noteobject.model.TextContainer;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.TextContainer;
 import com.itlabs.fabnotes.service.NoteSave;
 import org.junit.Test;
 

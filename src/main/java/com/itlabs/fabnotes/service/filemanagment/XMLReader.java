@@ -2,15 +2,15 @@ package com.itlabs.fabnotes.service.filemanagment;
 
 import com.itlabs.fabnotes.service.NoteSave;
 import javafx.scene.paint.Color;
-import com.itlabs.fabnotes.noteobject.model.ImageContainer;
-import com.itlabs.fabnotes.noteobject.model.NoteObjectI;
-import com.itlabs.fabnotes.noteobject.model.PaintingContainer;
-import com.itlabs.fabnotes.noteobject.model.TextContainer;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.ImageContainer;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.NoteObjectI;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.PaintingContainer;
+import com.itlabs.fabnotes.note.model.noteobject.noteobject.TextContainer;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
-import com.itlabs.fabnotes.noteobject.utility.paint.PaintStrokeToData;
-import com.itlabs.fabnotes.noteobject.utility.paint.Paintbrush;
-import com.itlabs.fabnotes.noteobject.utility.paint.PaintingToData;
+import com.itlabs.fabnotes.note.utility.paint.PaintStrokeToData;
+import com.itlabs.fabnotes.note.utility.paint.Paintbrush;
+import com.itlabs.fabnotes.note.utility.paint.PaintingToData;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

@@ -1,7 +1,7 @@
 package com.itlabs.fabnotes.fxml.service;
 
 import com.itlabs.fabnotes.note.event.Event;
-import com.itlabs.fabnotes.note.model.Note;
+import com.itlabs.fabnotes.note.model.note.Note;
 import com.itlabs.fabnotes.service.NoteSave;
 import com.itlabs.fabnotes.service.filemanagment.FileHandler;
 import javafx.scene.Node;
