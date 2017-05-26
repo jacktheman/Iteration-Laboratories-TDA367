@@ -59,18 +59,14 @@ abstract class NoteState implements NoteStateI {
         return null;
     }
 
-    public ContextMenu getContextMenu() {
-        return this.contextMenu;
-    }
-
     @Override
     public void getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
-        MenuItem paste = new MenuItem("Klistra in");
-        paste.setOnAction(actionEvent -> {
-            pasteOnCanvas(event);
-        });
         if (!pressedFocusOwner(notePane, event)) {
             if (event.getSource().equals(notePane) && event.getButton().equals(MouseButton.SECONDARY)) {
+                MenuItem paste = new MenuItem("Klistra in");
+                paste.setOnAction(actionEvent -> {
+                    pasteOnCanvas(event);
+                });
                 contextMenu = new ContextMenu(paste);
                 contextMenu.show(notePane, event.getScreenX(), event.getScreenY());
             }

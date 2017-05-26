@@ -1,6 +1,5 @@
 package com.itlabs.fabnotes.fxml.service;
 
-import com.itlabs.fabnotes.fxml.service.bridge.StateHandler;
 import org.junit.AfterClass;
 import org.junit.Test;
 
