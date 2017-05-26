@@ -29,7 +29,7 @@ public class FileHandler {
     private FileHandler() {
     }
 
-    public static void createfabNotesFolder (){
+    private static void createFabNotesFolder(){
         File customDir = new File(FileHandler.FILE_DIR);
         if (!customDir.exists()) {
             if (!customDir.mkdirs()) {
@@ -39,22 +39,18 @@ public class FileHandler {
 
     }
 
-    public static void createTagListFile (){
-        createfabNotesFolder();
+    private static void createTagListFile () throws IOException {
+        createFabNotesFolder();
         File tagList = new File(FileHandler.TAG_LIST);
         if (!tagList.exists()) {
-            try {
-                if (!tagList.createNewFile()) {
-                    System.err.println(tagList + " didn't get created");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (!tagList.createNewFile()) {
+                System.err.println(tagList + " didn't get created");
             }
         }
     }
 
     public static void saveNote(SavedNoteBridge savedNoteBridge) throws TransformerException, ParserConfigurationException {
-        createfabNotesFolder();
+        createFabNotesFolder();
         savedNoteBridge.save(FILE_PATH, FILE_TYPE);
     }
 
