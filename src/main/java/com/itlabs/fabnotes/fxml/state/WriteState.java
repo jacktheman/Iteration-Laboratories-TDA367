@@ -1,6 +1,5 @@
 package com.itlabs.fabnotes.fxml.state;
 
-import com.itlabs.fabnotes.note.controller.TableController;
 import com.itlabs.fabnotes.note.controller.TextContainerController;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -32,8 +31,6 @@ public class WriteState extends NoteState {
             NoteObjectI model = null;
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 model = (new TextContainerController("", event.getX(), event.getY())).getModel();
-            } else if (event.getButton().equals(MouseButton.MIDDLE)) {
-                model = (new TableController(event.getX(),event.getY(), 3, 3)).getModel();
             }
             if (model != null)
                 Note.getCurrentNote().addNoteObject(model);
