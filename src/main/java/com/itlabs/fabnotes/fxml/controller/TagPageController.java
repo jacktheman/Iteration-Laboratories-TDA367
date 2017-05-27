@@ -141,6 +141,8 @@ public class TagPageController implements Initializable {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("Could not find note");
         }
     }
 

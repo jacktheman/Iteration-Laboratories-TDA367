@@ -122,14 +122,14 @@ public class MainPageController implements Initializable {
         circleButton.setSelected(true);
     }
 
-    public void loadNoteSave(SavedNoteBridge savedNoteBridge) {
+    void loadNoteSave(SavedNoteBridge savedNoteBridge) {
         if (savedNoteBridge.initializeNoteObjects()) {
             loadNoteTagsInTagBar(savedNoteBridge.getTags());
             nameTextField.setText(savedNoteBridge.getName());
         }
     }
 
-    public void loadNoteTagsInTagBar(List<String> tags) {
+    void loadNoteTagsInTagBar(List<String> tags) {
         tagBar.getChildren().clear();
         if (!tags.isEmpty()) {
             String[] tagsArray = tags.toArray(new String[tags.size()]);

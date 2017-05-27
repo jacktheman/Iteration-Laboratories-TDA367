@@ -19,7 +19,7 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
 
     public PaintingContainerController(MouseEvent event) {
         super(new PaintingContainerView(), new PaintingContainer(event.getX(),event.getY()));
-        super.setBehavior(new PaintingBehavior(getModel(), getNode()));
+        super.setBehavior(new PaintingBehavior(super.getModel(), super.getNode()));
         super.getBehavior().onMousePressed(event);
         super.getModel().addListener(super.getNode());
         controllers.add(this);
@@ -28,12 +28,13 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
 
     public PaintingContainerController(PaintingContainer model){
         super(new PaintingContainerView(), new PaintingContainer(model));
+        super.setBehavior(new DragDropBehavior(super.getModel(), super.getNode()));
         super.getModel().addListener(super.getNode());
         controllers.add(this);
         focusPropertyListener();
     }
 
-    public void focusPropertyListener(){
+    private void focusPropertyListener(){
         super.getNode().focusedProperty().addListener(observable -> {
             if(!super.getNode().isFocused()){
                 if(!super.getNode().getPaintStatus()){
@@ -70,11 +71,6 @@ public class PaintingContainerController extends NoteObjectController<PaintingCo
                 deadControllers.add(controller);
         }
         controllers.removeAll(deadControllers);
-    }
-
-    @Override
-    public PaintingContainerController clone() {
-        return new PaintingContainerController(super.getModel());
     }
 
 }

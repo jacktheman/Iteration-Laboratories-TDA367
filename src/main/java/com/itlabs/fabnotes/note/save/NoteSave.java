@@ -79,11 +79,10 @@ public class NoteSave implements Serializable {
     }
 
     private void setCurrentNote(List<NoteObjectControllerI> controllers) {
-        Note.getCurrentNodes().clear();
-        for (NoteObjectControllerI controller : controllers)
-            Note.getCurrentNote().getModels().add(controller.getModel());
         Note note = new Note(name);
         note.setTags(tags);
+        for (NoteObjectControllerI controller : controllers)
+            note.getModels().add(controller.getModel());
         Note.setCurrentNote(note);
     }
 

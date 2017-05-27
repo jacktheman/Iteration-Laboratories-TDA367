@@ -18,13 +18,13 @@ import java.util.List;
  */
 public class FileHandler {
 
-    public static final String FILE_DIR = System.getProperty("user.home") + File.separator + ".fabNotes";
+    private static final String FILE_DIR = System.getProperty("user.home") + File.separator + ".fabNotes";
 
     public static final String FILE_PATH = FILE_DIR + File.separator;
 
     public static final String FILE_TYPE = ".fabxml";
 
-    public static final String TAG_LIST = FILE_PATH + "TAG_LIST.txt";
+    private static final String TAG_LIST = FILE_PATH + "TAG_LIST.txt";
 
     private FileHandler() {
     }
@@ -84,13 +84,11 @@ public class FileHandler {
         }
     }
 
-
     public static void removeTag(String tagToRemove) throws IOException{
         File file = new File(TAG_LIST);
         List<String> currentTags = loadTags();
         currentTags.remove(tagToRemove);
         String [] remainingTags = currentTags.toArray(new String[currentTags.size()]);
-        System.out.println(Arrays.toString(remainingTags));
         String str = "";
         for (int i = 0; i < remainingTags.length; i++) {
             str = str + remainingTags[i] + "\n";
@@ -103,8 +101,7 @@ public class FileHandler {
     public static List<File> listNotes() {
         File file = new File(FILE_DIR);
         List<File> files = new ArrayList<>();
-        for (File note : file.listFiles((file1, s) -> s.contains(FILE_TYPE)))
-            files.add(note);
+        files.addAll(Arrays.asList(file.listFiles((file1, s) -> s.contains(FILE_TYPE))));
         return files;
     }
 
@@ -118,9 +115,6 @@ public class FileHandler {
         return fileList;
     }
 
-
-
-    //ger mig en List med alla notes som har en samma tag i sig
     public static List<File> tagList(String word) throws IOException, ParserConfigurationException, SAXException, ClassNotFoundException {
         List<File> fileList = listNotes();
         for (File file : fileList) {

@@ -53,14 +53,15 @@ public class XMLWriter extends XMLAbstract {
     }
 
     private static void addTags(Element rootElement, List<String> tags) {
+        if (tags.isEmpty())
+            return;
         Document doc = rootElement.getOwnerDocument();
         Element noteTags = doc.createElement(NOTE_TAGS);
         String tagString = "";
         for (String tag : tags) {
             tagString += tag + SPLITTER;
         }
-        if (tags.size() > 0)
-            tagString = tagString.substring(0, tagString.length() - 1);
+        tagString = tagString.substring(0, tagString.length() - 1);
         noteTags.appendChild(doc.createTextNode(tagString));
         rootElement.appendChild(noteTags);
     }

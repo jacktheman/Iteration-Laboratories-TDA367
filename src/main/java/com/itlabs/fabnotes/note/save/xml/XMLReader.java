@@ -29,30 +29,32 @@ public class XMLReader extends XMLAbstract {
     private XMLReader() {}
 
     public static NoteSave readXMLToNote(File file) throws ParserConfigurationException, IOException, SAXException {
-        if (file.exists()) {
-            String name = file.getName().replace(getFileType(file.getName()), "");
+        if (!file.exists())
+            return null;
 
-            Document dom;
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            dom = db.parse(file);
+        String name = file.getName().replace(getFileType(file.getName()), "");
 
-            Element doc = dom.getDocumentElement();
+        Document dom;
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        dom = db.parse(file);
 
-            return new NoteSave(name, getNoteTags(doc), getNoteContent(doc));
-        }
-        return null;
+        Element doc = dom.getDocumentElement();
+
+        return new NoteSave(name, getNoteTags(doc), getNoteContent(doc));
     }
 
     private static List<String> getNoteTags(Element doc) {
         NodeList nl = doc.getElementsByTagName(NOTE_TAGS);
+        List<String> tagList = new ArrayList<>();
         if (nl.getLength() == 1) {
             String[] tagArray = nl.item(0).getTextContent().split(String.valueOf(SPLITTER));
-            List<String> taglist = new ArrayList<>();
-            taglist.addAll(Arrays.asList(tagArray));
-            return taglist;
+            for (String tag : tagArray) {
+                if (!tag.equals(""))
+                    tagList.add(tag);
+            }
         }
-        return null;
+        return tagList;
     }
 
     private static List<NoteObjectI> getNoteContent(Element doc) {

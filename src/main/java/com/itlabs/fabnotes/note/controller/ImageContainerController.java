@@ -25,9 +25,5 @@ public class ImageContainerController extends NoteObjectController<ImageContaine
             super.getModel().addListener(super.getNode());
     }
 
-    @Override
-    public ImageContainerController clone() throws CloneNotSupportedException {
-        return new ImageContainerController(super.getModel());
-    }
 }
 

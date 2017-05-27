@@ -31,10 +31,6 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
         changeBorder();
     }
 
-    public TextContainerView(double layoutX, double layoutY) {
-        this("", layoutX, layoutY);
-    }
-
     public void updateTextContainerSize() {
         if (!this.textProperty().isBound()) {
             textHolder.textProperty().bind(this.textProperty());

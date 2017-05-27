@@ -16,8 +16,8 @@ public class TextContainerController extends NoteObjectController<TextContainerV
         super(new TextContainerView(text, layoutX, layoutY), new TextContainer(text, layoutX, layoutY));
         super.getNode().setFont(this.getFont());
         super.getModel().addListener(super.getNode());
-        listener();
-        listener2();
+        initTextPropertyListener();
+        initFocusPropertyListener();
     }
 
     public TextContainerController(TextContainer textContainer) {
@@ -25,11 +25,12 @@ public class TextContainerController extends NoteObjectController<TextContainerV
                 new TextContainer(textContainer));
         super.getNode().setFont(this.getFont());
         super.getModel().addListener(super.getNode());
-        listener();
-        listener2();
+        super.getNode().updateTextContainerSize();
+        initTextPropertyListener();
+        initFocusPropertyListener();
     }
 
-    private void listener() {
+    private void initTextPropertyListener() {
         super.getNode().textProperty().addListener((value, oldValue, newValue) -> {
             super.getModel().setText(newValue);
             super.getNode().changeBorder();
@@ -37,7 +38,7 @@ public class TextContainerController extends NoteObjectController<TextContainerV
         });
     }
 
-    private void listener2() {
+    private void initFocusPropertyListener() {
         super.getNode().focusedProperty().addListener(e -> {
             super.getModel().setIsFocused(super.getNode().isFocused());
             super.getNode().changeBorder();
@@ -58,10 +59,6 @@ public class TextContainerController extends NoteObjectController<TextContainerV
         else
             font = Font.font(super.getModel().getFontFamilyName(), super.getModel().getFontSize());
         return font;
-    }
-
-    public TextContainerController clone() {
-        return new TextContainerController(super.getModel());
     }
 
 }
