@@ -99,6 +99,7 @@ public class FileHandler {
     }
 
     public static List<File> listNotes() {
+        createFabNotesFolder();
         File file = new File(FILE_DIR);
         List<File> files = new ArrayList<>();
         files.addAll(Arrays.asList(file.listFiles((file1, s) -> s.contains(FILE_TYPE))));

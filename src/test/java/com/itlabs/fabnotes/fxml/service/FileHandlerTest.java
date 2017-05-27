@@ -35,6 +35,8 @@ public class FileHandlerTest {
     @Test
     public void listNotes() throws Exception {
         List<File> files = FileHandler.listNotes();
+        if (files.isEmpty())
+            assert true;
         for (File file : files)
             assertFalse(file.getName().equals(FileHandler.FILE_TYPE));
     }
