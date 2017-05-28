@@ -106,7 +106,12 @@ public class TextContainer extends NoteObject implements ObservableI {
 
     @Override
     public int hashCode() {
-        return super.hashCode()*2;
+        int multi = 2;
+        if (isBold)
+            multi *= 2;
+        if (isItalic)
+            multi *= 3;
+        return super.hashCode() + text.length()*multi;
     }
 
     @Override

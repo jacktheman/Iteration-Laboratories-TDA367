@@ -103,7 +103,7 @@ abstract class NoteObjectController<T1 extends Node, T2 extends NoteObjectI> imp
                 remove.fire();
             } else if (KeyEvent.getCode().equals(KeyCode.C) && KeyEvent.isControlDown()){
                 copy.fire();
-            } // else if (KeyEvent.getCode())
+            }
         });
 
         contextMenu = ContextMenuFactory.createContextMenu(copy,remove,putToFront);

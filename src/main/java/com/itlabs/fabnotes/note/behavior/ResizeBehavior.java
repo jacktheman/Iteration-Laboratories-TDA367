@@ -11,6 +11,7 @@ import com.itlabs.fabnotes.note.model.NoteObjectResizeableI;
 public class ResizeBehavior extends NoteObjectBehavior {
 
     private static final double BORDER_WIDTH = 10;
+    private static final double MINIMUM_SIZE = 40;
 
     private final NoteObjectResizeableI imageContainer;
     private final Node node;
@@ -57,18 +58,18 @@ public class ResizeBehavior extends NoteObjectBehavior {
 
     private void minimize() {
         if (nodeX < nodeY) {
-            nodeX = 40;
+            nodeX = MINIMUM_SIZE;
             nodeY = nodeX * quota;
         } else {
-            nodeY = 40;
+            nodeY = MINIMUM_SIZE;
             nodeX = nodeY / quota;
         }
     }
 
     private void replaceIfMinimum() {
-        if (nodeX <= 40 || nodeY <= 40) {
-            double xDiff = 40 - nodeX;
-            double yDiff = 40 - nodeY;
+        if (nodeX <= MINIMUM_SIZE || nodeY <= MINIMUM_SIZE) {
+            double xDiff = MINIMUM_SIZE - nodeX;
+            double yDiff = MINIMUM_SIZE - nodeY;
             if (pos == ResizablePositions.LEFT_UPPER_CORNER || pos == ResizablePositions.RIGHT_UPPER_CORNER ||
                     pos == ResizablePositions.UPPER_AREA) {
                 oldY -= yDiff;
@@ -81,7 +82,7 @@ public class ResizeBehavior extends NoteObjectBehavior {
     }
 
     private synchronized boolean minimumSizeReached() {
-        if (nodeX < 40 || nodeY < 40) {
+        if (nodeX < MINIMUM_SIZE || nodeY < MINIMUM_SIZE) {
             minimize();
             replaceIfMinimum();
             return true;
@@ -184,15 +185,22 @@ public class ResizeBehavior extends NoteObjectBehavior {
     }
 
     private boolean cursorIsInLowerLeftCorner(MouseEvent event) {
-        return (event.getX() >= 0 && event.getX() <= BORDER_WIDTH && event.getY() >= imageContainer.getFitHeight() - BORDER_WIDTH && event.getY() <= imageContainer.getFitHeight());
+        return (event.getX() >= 0 && event.getX() <= BORDER_WIDTH &&
+                event.getY() >= imageContainer.getFitHeight() - BORDER_WIDTH &&
+                event.getY() <= imageContainer.getFitHeight());
     }
 
     private boolean cursorIsInUpperRightCorner(MouseEvent event) {
-        return (event.getX() >= imageContainer.getFitWidth() - BORDER_WIDTH && event.getX() <= imageContainer.getFitWidth() && event.getY() >= 0 && event.getY() <= BORDER_WIDTH);
+        return (event.getX() >= imageContainer.getFitWidth() - BORDER_WIDTH &&
+                event.getX() <= imageContainer.getFitWidth() &&
+                event.getY() >= 0 && event.getY() <= BORDER_WIDTH);
     }
 
     private boolean cursorIsInLowerRightCorner(MouseEvent event) {
-        return (event.getX() >= imageContainer.getFitWidth() - BORDER_WIDTH && event.getX() <= imageContainer.getFitWidth() && event.getY() >= imageContainer.getFitHeight() - BORDER_WIDTH && event.getY() <= imageContainer.getFitHeight());
+        return (event.getX() >= imageContainer.getFitWidth() - BORDER_WIDTH &&
+                event.getX() <= imageContainer.getFitWidth() &&
+                event.getY() >= imageContainer.getFitHeight() - BORDER_WIDTH &&
+                event.getY() <= imageContainer.getFitHeight());
     }
 
     private boolean cursorIsInUpperArea(MouseEvent event) {

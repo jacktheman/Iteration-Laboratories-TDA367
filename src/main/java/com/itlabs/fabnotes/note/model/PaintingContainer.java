@@ -184,13 +184,9 @@ public class PaintingContainer extends NoteObjectResizeable implements Observabl
         listeners.remove(observer);
     }
 
-    public List<ObserverI<PaintingContainer>> getListeners() {
-        return listeners;
-    }
-
     @Override
     public int hashCode() {
-        return super.hashCode()*5;
+        return super.hashCode() + paintings.size()*5;
     }
 
     @Override

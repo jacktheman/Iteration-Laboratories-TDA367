@@ -64,11 +64,8 @@ public class MainPageController implements Initializable {
     private TextField addTagTextField;
     @FXML
     private TextField nameTextField;
-    @FXML
-    private ToggleButton newFabNote;
 
-    static final String TAG_PANE_PATH = "/com/itlabs/fabnotes/TagPane.fxml";
-
+    private static final String TAG_PANE_PATH = "/com/itlabs/fabnotes/TagPane.fxml";
     private static final String TAG_PAGE_PATH = "/com/itlabs/fabnotes/TagPage.fxml";
 
     private static final double BRUSH_SHRINK_RATE = 0.9;
@@ -117,7 +114,7 @@ public class MainPageController implements Initializable {
 
     private void initPaintConfigs() {
         colorPicker.setValue(Color.BLACK);
-        NoteObjectBridge.setPaintbrush("circle");
+        NoteObjectBridge.setPaintbrush(CIRCLE);
         changeColor();
         circleButton.setSelected(true);
     }

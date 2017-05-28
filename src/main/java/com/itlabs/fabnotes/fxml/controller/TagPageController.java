@@ -36,6 +36,9 @@ public class TagPageController implements Initializable {
     @FXML
     private FlowPane tagFlowPane;
 
+    private static final String TAG_IN_CLOUD_PANE = "/com/itlabs/fabnotes/TagInCloudPane.fxml";
+    private static final String COULD_NOT_FIND_NOTE_ERROR_MESSAGE = "Could not find note";
+
     private static TagPageController SINGLETON;
 
     private List<String> tagsList;
@@ -93,7 +96,7 @@ public class TagPageController implements Initializable {
             String tagText = SINGLETON.getTagsArray()[i];
             try {
                 AnchorPane tag;
-                FXMLLoader loadTag = new FXMLLoader(TagPageController.class.getResource("/com/itlabs/fabnotes/TagInCloudPane.fxml"));
+                FXMLLoader loadTag = new FXMLLoader(TagPageController.class.getResource(TAG_IN_CLOUD_PANE));
                 tag = loadTag.load();
                 ((Label) tag.getChildren().get(0)).setText(tagText);
                 SINGLETON.getTagFlowPane().getChildren().add(tag);
@@ -142,7 +145,7 @@ public class TagPageController implements Initializable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-            System.out.println("Could not find note");
+            System.out.println(COULD_NOT_FIND_NOTE_ERROR_MESSAGE);
         }
     }
 
@@ -163,7 +166,7 @@ public class TagPageController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NullPointerException e) {
-                System.out.println("Could not find note");
+                System.out.println(COULD_NOT_FIND_NOTE_ERROR_MESSAGE);
             }
 
     }

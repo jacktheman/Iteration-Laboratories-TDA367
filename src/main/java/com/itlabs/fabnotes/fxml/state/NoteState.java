@@ -23,6 +23,8 @@ import java.net.MalformedURLException;
  */
 abstract class NoteState implements NoteStateI {
 
+    private static final String PASTE = "Klistra in";
+
     private ContextMenu contextMenu;
 
     boolean pressedFocusOwner(AnchorPane notePane, MouseEvent event) {
@@ -63,7 +65,7 @@ abstract class NoteState implements NoteStateI {
     public void getOnMousePressed(AnchorPane notePane, MouseEvent event) throws MalformedURLException {
         if (!pressedFocusOwner(notePane, event)) {
             if (event.getSource().equals(notePane) && event.getButton().equals(MouseButton.SECONDARY)) {
-                MenuItem paste = new MenuItem("Klistra in");
+                MenuItem paste = new MenuItem(PASTE);
                 paste.setOnAction(actionEvent -> {
                     pasteOnCanvas(event);
                 });

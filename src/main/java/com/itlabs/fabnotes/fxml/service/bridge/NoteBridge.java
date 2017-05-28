@@ -46,6 +46,7 @@ public class NoteBridge {
     }
 
     public static void undoNoteAction() {
-        Event.getEvents().get(Event.getEvents().size() - 1).undo();
+        if (!Event.getEvents().isEmpty())
+            Event.getEvents().get(Event.getEvents().size() - 1).undo();
     }
 }

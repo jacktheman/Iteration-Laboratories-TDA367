@@ -15,16 +15,6 @@ import java.net.URL;
  */
 public class ImageContainerView extends ImageView implements Serializable, ObserverI<ImageContainer> {
 
-    public ImageContainerView(Image image, double layoutX, double layoutY) {
-        super(image);
-        this.setFitWidth(image.getWidth());
-        this.setFitHeight(image.getHeight());
-        this.setLayoutX(layoutX);
-        this.setLayoutY(layoutY);
-        this.setId("image-view");
-    }
-
-
     public ImageContainerView(URL url, double layoutX, double layoutY) {
         super(new Image(url.toString()));
         this.setFitWidth(this.getImage().getWidth());

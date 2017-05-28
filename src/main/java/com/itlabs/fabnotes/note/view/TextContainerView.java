@@ -6,6 +6,8 @@ import com.itlabs.fabnotes.note.model.Note;
 import com.itlabs.fabnotes.note.model.TextContainer;
 import com.itlabs.fabnotes.note.utility.observer.ObserverI;
 
+import java.util.regex.Pattern;
+
 /**
  * Created by aron on 2017-04-06.
  */
@@ -18,6 +20,8 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
     private final static String VISABLE_BORDER = "-fx-border-color: lightskyblue";
     private final static String INVISABLE_BORDER = "-fx-border-color: transparent";
 
+    private final static String STYLE_SPLITTER = ";";
+    
     public TextContainerView(String text, double layoutX, double layoutY) {
         super(text);
         this.textHolder = new Text(text);
@@ -27,7 +31,7 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
         this.setPrefHeight(0);
         updateTextContainerSize();
         this.setWrapText(true);
-        this.styles = DEFAULT_BACKGROUND + ";";
+        this.styles = DEFAULT_BACKGROUND + STYLE_SPLITTER;
         changeBorder();
     }
 
@@ -45,15 +49,15 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
     }
 
     private void addStyle(String style) {
-        style = style.replace(";", "");
+        style = style.replace(STYLE_SPLITTER, "");
         if (!this.styles.contains(style)) {
-            this.styles += style + ";";
+            this.styles += style + STYLE_SPLITTER;
         }
     }
 
     private void removeStyle(String style) {
-        style = style.replace(";", "");
-        this.styles = this.styles.replace(style + ";", "");
+        style = style.replace(STYLE_SPLITTER, "");
+        this.styles = this.styles.replace(style + STYLE_SPLITTER, "");
     }
 
     private void switchToVisibleBorder() {
@@ -84,9 +88,6 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
             this.requestFocus();
         }
     }
-
-
-
 
 }
 

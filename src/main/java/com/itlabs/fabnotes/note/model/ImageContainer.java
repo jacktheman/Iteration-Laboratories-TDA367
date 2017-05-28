@@ -27,14 +27,13 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
 
 
 
-    public ImageContainer(String URL, double width, double height){ //Testing constructor to avoid FX issues
+    public ImageContainer(String URL, double width, double height){
         super();
         this.URL = URL;
         this.fitWidth = width;
         this.fitHeight = height;
         this.quota = Math.min(fitHeight / fitWidth, fitWidth/fitHeight);
         this.observerIList = new ArrayList<>();
-
     }
 
 
@@ -124,11 +123,6 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
         this.fireChange();
     }
 
-    public void setQuota(double quota) {
-        this.quota = quota;
-        this.fireChange();
-    }
-
     public double getQuota() { return this.quota; }
 
     @Override
@@ -152,7 +146,7 @@ public class ImageContainer extends NoteObjectResizeable implements ObservableI 
 
     @Override
     public int hashCode() {
-        return super.hashCode()*3;
+        return super.hashCode() + URL.length() * (int)fitWidth * (int)fitHeight*3;
     }
 
     @Override

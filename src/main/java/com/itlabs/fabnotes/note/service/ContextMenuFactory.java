@@ -11,6 +11,10 @@ import com.itlabs.fabnotes.note.model.NoteObjectI;
  */
 public class ContextMenuFactory {
 
+    private static final String REMOVE = "Ta bort";
+    private static final String COPY = "Kopiera";
+    private static final String MOVE_TO_FRONT = "Flytta längst fram";
+
     private static NoteObjectI copiedObject;
 
     private ContextMenuFactory(){}
@@ -24,7 +28,7 @@ public class ContextMenuFactory {
     }
 
     public static MenuItem removeItem(NoteObjectI model){
-        MenuItem remove = new MenuItem("Ta bort");
+        MenuItem remove = new MenuItem(REMOVE);
         remove.setOnAction(actionEvent -> {
             Note.getCurrentNote().removeNoteObject(model);
         });
@@ -32,16 +36,15 @@ public class ContextMenuFactory {
     }
 
     public static MenuItem copyItem(NoteObjectI model){
-        MenuItem copy = new MenuItem("Kopiera");
+        MenuItem copy = new MenuItem(COPY);
         copy.setOnAction(KeyEvent -> {
             copiedObject = model.duplicate();
-            System.out.println("Kopierade något");
         });
         return copy;
     }
 
     public static MenuItem putToFrontItem(Node view){
-        MenuItem putToFront = new MenuItem("Flytta längst fram");
+        MenuItem putToFront = new MenuItem(MOVE_TO_FRONT);
         putToFront.setOnAction(actionEvent -> {
             view.toFront();
         });
