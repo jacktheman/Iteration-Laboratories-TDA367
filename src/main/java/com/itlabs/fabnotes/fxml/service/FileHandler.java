@@ -118,7 +118,8 @@ public class FileHandler {
 
     public static List<File> tagList(String word) throws IOException, ParserConfigurationException, SAXException, ClassNotFoundException {
         List<File> fileList = listNotes();
-        for (File file : fileList) {
+        for (int i = 0, fileListSize = fileList.size(); i < fileListSize; i++) {
+            File file = fileList.get(i);
             if (file.exists()) {
                 for (String tag : SavedNoteBridge.loadSavedNote(file).getTags()) {
                     if (tag.contains(word.toLowerCase())) {
