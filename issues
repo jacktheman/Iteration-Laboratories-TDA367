@@ -1,7 +1,0 @@
-Fix unwanted scrollbar in textContainers
-Make it possible to resize Containers
-Make it impossible for a textContainerModel to go outside the note
-Remove Listener qualities in the NoteModel (it should only be updated when user com.itlabs.fabnotes.save)
-Make the logic for certain parts of the ImageContainers to be listened to
-Just make sure the PaintingContainerModel doesn't look like that
-Make the MainPageController lighter
