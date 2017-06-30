@@ -1,5 +1,6 @@
 package com.itlabs.fabnotes.note.view;
 
+import com.itlabs.fabnotes.note.model.Note;
 import com.itlabs.fabnotes.note.model.TableContainer;
 import com.itlabs.fabnotes.note.utility.observer.ObserverI;
 import javafx.scene.layout.AnchorPane;
@@ -23,6 +24,15 @@ public class TableContainerView extends AnchorPane implements ObserverI<TableCon
         this.getChildren().add(tilepane);
 
         tilepane.setPrefColumns(3);
+
+        tableListView.add(new ArrayList<TextContainerView>());
+        tableListView.add(new ArrayList<TextContainerView>());
+        tableListView.add(new ArrayList<TextContainerView>());
+        for (List<TextContainerView> textContainerViews : tableListView) {
+            textContainerViews.add(new TextContainerView("", 0, 0));
+            textContainerViews.add(new TextContainerView("", 0, 0));
+            textContainerViews.add(new TextContainerView("", 0, 0));
+        }
     }
 
 
@@ -32,6 +42,7 @@ public class TableContainerView extends AnchorPane implements ObserverI<TableCon
             TextContainerView textContainerView = new TextContainerView(string, 0, 0);
             newColumn.add(textContainerView);
         }
+        tilepane.setPrefColumns(tilepane.getPrefColumns() + 1);
         addToTilePane();
     }
 
@@ -40,6 +51,7 @@ public class TableContainerView extends AnchorPane implements ObserverI<TableCon
         for (TextContainerView textContainerView : columns) {
             tableListView.remove(textContainerView);
         }
+        tilepane.setPrefColumns(tilepane.getPrefColumns() - 1);
         addToTilePane();
     }
 
@@ -75,6 +87,10 @@ public class TableContainerView extends AnchorPane implements ObserverI<TableCon
         }
     }
 
+    public List<List<TextContainerView>> getTableListView() {
+        return tableListView;
+    }
+
     @Override
     public void fireChange(TableContainer subject) {
         this.setLayoutX(subject.getLayoutX());
@@ -89,6 +105,11 @@ public class TableContainerView extends AnchorPane implements ObserverI<TableCon
             addRow(subject.getRow(table.get(0).size() - 1));
         } else if (table.get(0).size() < tableListView.get(0).size()) {
             removeRow();
+        }
+
+        if (!Note.getCurrentNodes().contains(this)) {
+            Note.getCurrentNodes().add(this);
+            this.requestFocus();
         }
     }
 }

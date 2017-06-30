@@ -2,6 +2,7 @@ package com.itlabs.fabnotes.fxml.service.bridge;
 
 import com.itlabs.fabnotes.note.controller.ImageContainerController;
 import com.itlabs.fabnotes.note.controller.NoteObjectControllerI;
+import com.itlabs.fabnotes.note.controller.TableContainerController;
 import com.itlabs.fabnotes.note.model.Note;
 import com.itlabs.fabnotes.note.model.PaintingContainer;
 import com.itlabs.fabnotes.note.model.TextContainer;
@@ -17,6 +18,10 @@ public class NoteObjectBridge {
     public static void addImageToNote(URL url) {
         NoteObjectControllerI controller = new ImageContainerController(url, 0, 0);
         Note.getCurrentNote().addNoteObject(controller.getModel());
+    }
+
+    public static void addTableToNote(TableContainerController tableContainerController){
+        Note.getCurrentNote().addNoteObject(tableContainerController.getModel());
     }
 
     public static void setPaintbrush(String shape) {

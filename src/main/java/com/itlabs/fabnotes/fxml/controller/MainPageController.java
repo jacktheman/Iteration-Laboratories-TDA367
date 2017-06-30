@@ -2,6 +2,7 @@ package com.itlabs.fabnotes.fxml.controller;
 
 import com.itlabs.fabnotes.fxml.service.*;
 import com.itlabs.fabnotes.fxml.service.bridge.*;
+import com.itlabs.fabnotes.note.controller.TableContainerController;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -288,6 +289,12 @@ public class MainPageController implements Initializable {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void createTable(){
+        TableContainerController tableContainerController = new TableContainerController(0, 0);
+        NoteObjectBridge.addTableToNote(tableContainerController);
     }
 
     @FXML

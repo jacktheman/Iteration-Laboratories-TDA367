@@ -38,6 +38,7 @@
             <Menu fx:id="menuHeader" mnemonicParsing="false" text="Infoga">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#importImage" text="Infoga bild" />
+                  <MenuItem mnemonicParsing="false" onAction="#createTable" text="Infoga tabell" />
               </items>
             </Menu>
           <Menu fx:id="menuHeader" mnemonicParsing="false" text="Fönster" />
