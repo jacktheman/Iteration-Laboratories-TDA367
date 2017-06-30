@@ -75,6 +75,24 @@ public class TableContainer extends NoteObject implements ObservableI{
         tableList.get(x).set(y, str);
     }
 
+    private void fireChange () {
+        for (ObserverI<TableContainer> observer : listeners){
+            observer.fireChange(this);
+        }
+    }
+
+    public List<List<String>> getTable () {
+        return tableList;
+    }
+
+    public List<String> getRow (int i) {
+        List<String> row = new ArrayList<>();
+        for (List<String> column : tableList) {
+            row.add(column.get(i));
+        }
+        return row;
+    }
+
     @Override
     public void setLayoutX(double d) {
         this.layoutX = d;
@@ -97,16 +115,12 @@ public class TableContainer extends NoteObject implements ObservableI{
 
     @Override
     public void add() {
-        for (ObserverI<TableContainer> observer : listeners){
-            observer.fireChange(this);
-        }
+        fireChange();
     }
 
     @Override
     public void remove() {
-        for (ObserverI<TableContainer> observer : listeners){
-            observer.fireChange(this);
-        }
+        fireChange();
     }
 
     @Override
