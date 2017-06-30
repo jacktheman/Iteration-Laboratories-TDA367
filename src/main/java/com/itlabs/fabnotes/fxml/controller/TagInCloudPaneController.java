@@ -22,10 +22,10 @@ public class TagInCloudPaneController {
 
 
     @FXML
-    private Label tagTextInCloud;
+    private Button removeTagInCloudButton;
 
     @FXML
-    private Button removeTagInCloudButton;
+    private Label tagTextInCloud;
 
     @FXML
     void removeTagInCloud(ActionEvent event) {
