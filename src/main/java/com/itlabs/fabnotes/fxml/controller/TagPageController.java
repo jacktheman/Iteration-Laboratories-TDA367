@@ -68,8 +68,8 @@ public class TagPageController implements Initializable {
     private void addListenerToSearchField(){
        searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
            try {
-                List<File> searchList = FileHandler.searchList(newValue);
-                listNotes(searchList);
+               List<File> searchList = FileHandler.searchList(newValue);
+               listNotes(searchList);
            } catch (IOException e) {
                e.printStackTrace();
            } catch (SAXException e) {

@@ -88,6 +88,20 @@ public class TableContainer extends NoteObject implements ObservableI{
         }
     }
 
+    public List<String> getAllContents () {
+        ArrayList<String> strings = new ArrayList<>();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                String temp = tableList.get(i, j);
+                if (temp == null) {
+                    temp = "";
+                }
+                strings.add(temp);
+            }
+        }
+        return strings;
+    }
+
     public ArrayMatrix<String> getTable () {
         return tableList;
     }

@@ -1,9 +1,6 @@
 package com.itlabs.fabnotes.note.save.xml;
 
-import com.itlabs.fabnotes.note.model.ImageContainer;
-import com.itlabs.fabnotes.note.model.NoteObjectI;
-import com.itlabs.fabnotes.note.model.PaintingContainer;
-import com.itlabs.fabnotes.note.model.TextContainer;
+import com.itlabs.fabnotes.note.model.*;
 import com.itlabs.fabnotes.note.utility.paint.PaintStrokeToData;
 import com.itlabs.fabnotes.note.utility.paint.PaintingToData;
 import com.itlabs.fabnotes.note.save.NoteSave;
@@ -74,6 +71,8 @@ public class XMLWriter extends XMLAbstract {
                 appendImageElement(rootElement, (ImageContainer) noteObject);
             } else if (noteObject instanceof PaintingContainer) {
                 appendPaintingElement(rootElement, (PaintingContainer) noteObject);
+            } else if (noteObject instanceof TableContainer) {
+                appendTableElement(rootElement, (TableContainer) noteObject);
             }
         }
     }
@@ -144,6 +143,35 @@ public class XMLWriter extends XMLAbstract {
         appendChildren(paintingCon, fitWidth, fitHeight, layoutX, layoutY, painting);
 
         rootElement.appendChild(paintingCon);
+    }
+
+    private static void appendTableElement(Element rootElement, TableContainer tableContainer) {
+        Document doc = rootElement.getOwnerDocument();
+        Element tableCon = doc.createElement(TABLE_CONTAINER);
+
+        Element layoutX = doc.createElement(LAYOUT_X);
+        Element layoutY = doc.createElement(LAYOUT_Y);
+        Element column = doc.createElement(COLUMN);
+        Element row = doc.createElement(ROW);
+        Element tableCell = doc.createElement(TABLE_CELL);
+
+        layoutX.appendChild(doc.createTextNode(Double.toString(tableContainer.getLayoutX())));
+        layoutY.appendChild(doc.createTextNode(Double.toString(tableContainer.getLayoutY())));
+        column.appendChild(doc.createTextNode(Double.toString(tableContainer.getWidth())));
+        row.appendChild(doc.createTextNode(Double.toString(tableContainer.getHeight())));
+
+        appendChildren(tableCell, appendTableCellContent(doc, tableContainer.getAllContents()));
+        appendChildren(tableCon, layoutX, layoutY, column, row, tableCell);
+        rootElement.appendChild(tableCon);
+    }
+
+    private static Element[] appendTableCellContent (Document doc, List<String> cellContent) {
+        Element[] contents = new Element[cellContent.size()];
+        for (int i = 0; i < cellContent.size(); i++) {
+            contents[i] = doc.createElement(TEXT);
+            contents[i].appendChild(doc.createTextNode(cellContent.get(i)));
+        }
+        return contents;
     }
 
     private static Element[] appendPaintStrokes(Document doc, List<PaintStrokeToData> paintStrokeToDataList) {

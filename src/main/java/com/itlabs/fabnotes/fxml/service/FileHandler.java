@@ -29,7 +29,7 @@ public class FileHandler {
     private FileHandler() {
     }
 
-    private static void createFabNotesFolder(){
+    private static void createFabNotesFolder() {
         File customDir = new File(FileHandler.FILE_DIR);
         if (!customDir.exists()) {
             if (!customDir.mkdirs()) {
@@ -39,7 +39,7 @@ public class FileHandler {
 
     }
 
-    private static void createTagListFile () throws IOException {
+    private static void createTagListFile() throws IOException {
         createFabNotesFolder();
         File tagList = new File(FileHandler.TAG_LIST);
         if (!tagList.exists()) {
@@ -54,8 +54,8 @@ public class FileHandler {
         savedNoteBridge.save(FILE_PATH, FILE_TYPE);
     }
 
-    public static void  deleteFile(File file){
-        if (file.exists()){
+    public static void deleteFile(File file) {
+        if (file.exists()) {
             file.delete();
         }
     }
@@ -63,7 +63,7 @@ public class FileHandler {
     public static List<String> loadTags() throws IOException {
         createTagListFile();
         File file = new File(TAG_LIST);
-            return Files.readAllLines(file.toPath());
+        return Files.readAllLines(file.toPath());
     }
 
     public static void addTags(String... tags) throws IOException {
@@ -84,18 +84,18 @@ public class FileHandler {
         }
     }
 
-    public static void removeTag(String tagToRemove) throws IOException{
+    public static void removeTag(String tagToRemove) throws IOException {
         File file = new File(TAG_LIST);
         List<String> currentTags = loadTags();
         currentTags.remove(tagToRemove);
-        String [] remainingTags = currentTags.toArray(new String[currentTags.size()]);
+        String[] remainingTags = currentTags.toArray(new String[currentTags.size()]);
         String str = "";
         for (int i = 0; i < remainingTags.length; i++) {
             str = str + remainingTags[i] + "\n";
         }
         file.delete();
         if (file.createNewFile() && str.length() > 0)
-            Files.write(file.toPath(), str.substring(0, str.length()-1).getBytes(), StandardOpenOption.WRITE);
+            Files.write(file.toPath(), str.substring(0, str.length() - 1).getBytes(), StandardOpenOption.WRITE);
     }
 
     public static List<File> listNotes() {
@@ -108,27 +108,26 @@ public class FileHandler {
 
     private static List<File> fileList(String word) {
         List<File> fileList = listNotes();
+        List<File> searchList = new ArrayList<>();
         for (File file : fileList) {
             if (file.getName().toLowerCase().contains(word.toLowerCase())) {
-                fileList.add(file);
+                searchList.add(file);
             }
         }
-        return fileList;
+        return searchList;
     }
 
     public static List<File> tagList(String word) throws IOException, ParserConfigurationException, SAXException, ClassNotFoundException {
         List<File> fileList = listNotes();
-        for (int i = 0, fileListSize = fileList.size(); i < fileListSize; i++) {
-            File file = fileList.get(i);
-            if (file.exists()) {
-                for (String tag : SavedNoteBridge.loadSavedNote(file).getTags()) {
-                    if (tag.contains(word.toLowerCase())) {
-                        fileList.add(file);
-                    }
+        List<File> searchList = new ArrayList<>();
+        for (File file : fileList) {
+            for (String tag : SavedNoteBridge.loadSavedNote(file).getTags()) {
+                if (tag.contains(word.toLowerCase())) {
+                    searchList.add(file);
                 }
             }
         }
-        return fileList;
+        return searchList;
     }
 
     public static List<File> searchList(String word) throws IOException, ParserConfigurationException, SAXException, ClassNotFoundException {

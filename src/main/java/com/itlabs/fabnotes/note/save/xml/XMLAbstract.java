@@ -9,6 +9,7 @@ abstract class XMLAbstract {
     static final String TEXT_CONTAINER = "textContainer";
     static final String IMAGE_CONTAINER = "imageContainer";
     static final String PAINTING_CONTAINER = "paintingContainer";
+    static final String TABLE_CONTAINER = "tableContainer";
 
     static final String FONT_FAMILY_NAME = "fontFamilyName";
     static final String FONT_SIZE = "fontSize";
@@ -24,6 +25,10 @@ abstract class XMLAbstract {
     static final String PAINT_RGBO = "rgbo";
     static final String PAINTBRUSH = "paintbrush";
     static final String PAINTBRUSH_SIZE = "size";
+
+    static final String COLUMN = "column";
+    static final String ROW = "row";
+    static final String TABLE_CELL = "tableCell";
 
     static final String LAYOUT_X = "layoutX";
     static final String LAYOUT_Y = "layoutY";
