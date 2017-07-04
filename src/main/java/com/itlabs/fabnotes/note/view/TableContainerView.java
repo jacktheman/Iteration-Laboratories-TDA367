@@ -18,7 +18,7 @@ public class TableContainerView extends AnchorPane implements ObserverI<TableCon
     private ArrayMatrix<TextContainerView> tableListView;
     private TilePane tilepane;
 
-    private static final String STYLE = "-fx-background-color: WHITE; -fx-border-color: BLACK";
+    private static final String STYLE = "-fx-background-color: BLACK";
     private static final int HGAP = 10;
     private static final int VGAP = 10;
 
@@ -38,6 +38,7 @@ public class TableContainerView extends AnchorPane implements ObserverI<TableCon
     private TextContainerView createTableCell (String str) {
         TextContainerView textContainerView = new TextContainerView(str, 0, 0);
         textContainerView.switchToVisibleBorder();
+        textContainerView.changeBackgroundColor("WHITE");
         return textContainerView;
     }
 

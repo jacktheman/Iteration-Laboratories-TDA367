@@ -161,7 +161,9 @@ public class XMLWriter extends XMLAbstract {
         row.appendChild(doc.createTextNode(Double.toString(tableContainer.getHeight())));
 
         appendChildren(tableCell, appendTableCellContent(doc, tableContainer.getAllContents()));
+
         appendChildren(tableCon, layoutX, layoutY, column, row, tableCell);
+
         rootElement.appendChild(tableCon);
     }
 

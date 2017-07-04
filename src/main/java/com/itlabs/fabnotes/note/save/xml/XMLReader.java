@@ -1,11 +1,8 @@
 package com.itlabs.fabnotes.note.save.xml;
 
+import com.itlabs.fabnotes.note.model.*;
 import com.itlabs.fabnotes.note.save.NoteSave;
 import javafx.scene.paint.Color;
-import com.itlabs.fabnotes.note.model.ImageContainer;
-import com.itlabs.fabnotes.note.model.NoteObjectI;
-import com.itlabs.fabnotes.note.model.PaintingContainer;
-import com.itlabs.fabnotes.note.model.TextContainer;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import com.itlabs.fabnotes.note.utility.paint.PaintStrokeToData;
@@ -18,7 +15,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,7 +22,8 @@ import java.util.List;
  */
 public class XMLReader extends XMLAbstract {
 
-    private XMLReader() {}
+    private XMLReader() {
+    }
 
     public static NoteSave readXMLToNote(File file) throws ParserConfigurationException, IOException, SAXException {
         if (!file.exists())
@@ -72,9 +69,46 @@ public class XMLReader extends XMLAbstract {
                 case PAINTING_CONTAINER:
                     models.add(getPaintingContainer(node));
                     break;
+                case TABLE_CONTAINER:
+                    models.add(getTableContainer(node));
+                    break;
             }
         }
         return models;
+    }
+
+    private static NoteObjectI getTableContainer(Node node) {
+        double layoutX = 0;
+        double layoutY = 0;
+        double columns = 0;
+        double rows = 0;
+
+        List<String> strings = new ArrayList<>();
+
+        NodeList nl = node.getChildNodes();
+        for (int i = 0; i < nl.getLength(); i++) {
+            Node item = nl.item(i);
+            String name = item.getNodeName();
+            String value = item.getTextContent();
+            switch (name) {
+                case LAYOUT_X:
+                    layoutX = Double.parseDouble(value);
+                    break;
+                case LAYOUT_Y:
+                    layoutY = Double.parseDouble(value);
+                    break;
+                case COLUMN:
+                    columns = Double.parseDouble(value);
+                    break;
+                case ROW:
+                    rows = Double.parseDouble(value);
+                    break;
+                case TABLE_CELL:
+                    strings = getTableContent(item);
+                    break;
+            }
+        }
+        return createTableContainer(layoutX, layoutY, columns, rows, strings);
     }
 
     private static NoteObjectI getTextContainer(Node node) {
@@ -246,6 +280,22 @@ public class XMLReader extends XMLAbstract {
         return new PaintingToData(paintLayoutX, paintLayoutY, paintbrush, paintbrushSize, color);
     }
 
+    private static List<String> getTableContent(Node item) {
+        List<String> strings = new ArrayList<>();
+        NodeList nl = item.getChildNodes();
+        for (int i = 0; i < nl.getLength(); i++) {
+            Node node = nl.item(i);
+            String name = node.getNodeName();
+            String value = node.getTextContent();
+            switch (name) {
+                case TEXT:
+                    strings.add(value);
+                    break;
+            }
+        }
+        return strings;
+    }
+
     private static ImageContainer createImageContainer(String URL, double fitWidth, double fitHeight, double layoutX, double layoutY) {
         ImageContainer imageContainer = new ImageContainer(URL);
         imageContainer.setFitWidth(fitWidth);
@@ -262,6 +312,21 @@ public class XMLReader extends XMLAbstract {
         paintingContainer.setFitHeight(fitHeight);
         paintingContainer.setPaintings(paintStrokeToDataList);
         return paintingContainer;
+    }
+
+    private static TableContainer createTableContainer(double layoutX, double layoutY, double columns, double
+            rows, List<String> strings) {
+        TableContainer tableContainer = new TableContainer(layoutX, layoutY);
+        tableContainer.setWidth((int) columns);
+        tableContainer.setHeight((int) rows);
+        int i = 0;
+        for (int y = 0; y < rows; y++) {
+            for (int x = 0; x < columns; x++) {
+                tableContainer.addText(x, y, strings.get(i));
+                i++;
+            }
+        }
+        return tableContainer;
     }
 
 }

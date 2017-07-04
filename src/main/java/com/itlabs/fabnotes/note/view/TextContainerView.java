@@ -1,6 +1,7 @@
 package com.itlabs.fabnotes.note.view;
 
 import javafx.scene.control.TextArea;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import com.itlabs.fabnotes.note.model.Note;
 import com.itlabs.fabnotes.note.model.TextContainer;
@@ -78,6 +79,12 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
         } else {
             switchToVisibleBorder();
         }
+    }
+
+    public void changeBackgroundColor (String color) {
+        String newColor = "-fx-background-color: " + color + STYLE_SPLITTER;
+        styles = styles.replace(DEFAULT_BACKGROUND, newColor);
+        this.setStyle(styles);
     }
 
     @Override
