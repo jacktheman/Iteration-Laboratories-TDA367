@@ -1,5 +1,6 @@
 package com.itlabs.fabnotes.note.model;
 
+import com.itlabs.fabnotes.note.utility.ArrayMatrix;
 import com.itlabs.fabnotes.note.utility.observer.ObservableI;
 import com.itlabs.fabnotes.note.utility.observer.ObserverI;
 
@@ -11,26 +12,35 @@ import java.util.List;
  */
 public class TableContainer extends NoteObject implements ObservableI{
 
-    private List <List<String>> tableList;
+    private ArrayMatrix<String> tableList;
     private double layoutX;
     private double layoutY;
+    private boolean alive;
+    private int width;
+    private int height;
 
     private List<ObserverI<TableContainer>> listeners;
 
     public TableContainer() {
-        tableList = new ArrayList<>();
+        tableList = new ArrayMatrix<>();
         layoutX = 0;
         layoutY = 0;
+        alive = false;
+        width = 3;
+        height = 3;
 
         listeners = new ArrayList<>();
+    }
 
-        for (int i = 0; i < 3; i++){
-            List<String> column = new ArrayList<String>();
-            tableList.add(column);
-            column.add("");
-            column.add("");
-            column.add("");
-        }
+    public TableContainer(TableContainer tableContainer) {
+        this.layoutX = tableContainer.getLayoutX();
+        this.layoutY = tableContainer.getLayoutY();
+        this.width = tableContainer.getWidth();
+        this.height = tableContainer.getHeight();
+        listeners = new ArrayList<>();
+        alive = false;
+        tableList = new ArrayMatrix<>();
+        tableContainer.getTable().transferTo(tableList);
     }
 
     public TableContainer(double layoutX, double layoutY){
@@ -40,39 +50,33 @@ public class TableContainer extends NoteObject implements ObservableI{
     }
 
     public void addColumn() {
-        List<String> column = new ArrayList<String> ();
-        for (int i = 0; i < getNumberOfRows(); i ++) {
-            column.add("");
-        }
-        tableList.add(column);
+        width++;
     }
 
     public void addRow() {
-        for (List<String> column: tableList){
-            column.add("");
-        }
+        height++;
     }
 
     public void deleteColumn(int i) {
-        tableList.remove(i);
+        tableList.removeColumn(i);
+        width--;
     }
 
     public void deleteRow(int i) {
-        for (List<String> column : tableList) {
-            column.remove(i);
-        }
+        tableList.removeRow(i);
+        height--;
     }
 
     public int getNumberOfColumns() {
-        return tableList.size();
+        return width;
     }
 
     public int getNumberOfRows() {
-        return tableList.get(0).size();
+        return height;
     }
 
     public void addText(int x, int y, String str) {
-        tableList.get(x).set(y, str);
+        tableList.set(x, y, str);
     }
 
     private void fireChange () {
@@ -81,21 +85,58 @@ public class TableContainer extends NoteObject implements ObservableI{
         }
     }
 
-    public List<List<String>> getTable () {
+    public ArrayMatrix<String> getTable () {
         return tableList;
     }
 
     public List<String> getRow (int i) {
         List<String> row = new ArrayList<>();
-        for (List<String> column : tableList) {
-            row.add(column.get(i));
+        for (int x = 0; x < width; x++) {
+            String str = tableList.get(x, i);
+            if (str == null) {
+                str = "";
+            }
+            row.add(str);
         }
         return row;
+    }
+
+    public List<String> getColumn (int i) {
+        List<String> column = new ArrayList<>();
+        for (int y = 0; y < height; y++) {
+            String str = tableList.get(i, y);
+            if (str == null) {
+                str = "";
+            }
+            column.add(str);
+        }
+        return column;
+    }
+
+    public boolean isAlive (){
+        return alive;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setWidth(int i) {
+        width = i;
+    }
+
+    public void setHeight(int i){
+        height = i;
     }
 
     @Override
     public void setLayoutX(double d) {
         this.layoutX = d;
+        fireChange();
     }
 
     @Override
@@ -106,6 +147,7 @@ public class TableContainer extends NoteObject implements ObservableI{
     @Override
     public void setLayoutY(double d) {
         this.layoutY = d;
+        fireChange();
     }
 
     @Override
@@ -115,17 +157,23 @@ public class TableContainer extends NoteObject implements ObservableI{
 
     @Override
     public void add() {
+        alive = true;
         fireChange();
     }
 
     @Override
     public void remove() {
+        alive = false;
         fireChange();
     }
 
     @Override
     public NoteObjectI duplicate() {
-        return null;
+        TableContainer tableContainer = new TableContainer();
+        tableContainer.setWidth(getWidth());
+        tableContainer.setHeight(getHeight());
+        tableList.transferTo(tableContainer.getTable());
+        return tableContainer;
     }
 
     @Override

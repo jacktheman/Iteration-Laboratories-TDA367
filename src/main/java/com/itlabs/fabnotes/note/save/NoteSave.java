@@ -1,14 +1,7 @@
 package com.itlabs.fabnotes.note.save;
 
-import com.itlabs.fabnotes.note.controller.ImageContainerController;
-import com.itlabs.fabnotes.note.controller.NoteObjectControllerI;
-import com.itlabs.fabnotes.note.controller.PaintingContainerController;
-import com.itlabs.fabnotes.note.controller.TextContainerController;
-import com.itlabs.fabnotes.note.model.Note;
-import com.itlabs.fabnotes.note.model.ImageContainer;
-import com.itlabs.fabnotes.note.model.NoteObjectI;
-import com.itlabs.fabnotes.note.model.PaintingContainer;
-import com.itlabs.fabnotes.note.model.TextContainer;
+import com.itlabs.fabnotes.note.controller.*;
+import com.itlabs.fabnotes.note.model.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,6 +17,7 @@ public class NoteSave implements Serializable {
     private List<TextContainer> textContainers;
     private List<ImageContainer> imageContainers;
     private List<PaintingContainer> paintingContainers;
+    private List<TableContainer> tableContainers;
 
     public NoteSave(String name, List<String> tags, List<NoteObjectI> models) {
         this.name = name;
@@ -31,6 +25,7 @@ public class NoteSave implements Serializable {
         textContainers = new ArrayList<>();
         imageContainers = new ArrayList<>();
         paintingContainers = new ArrayList<>();
+        tableContainers = new ArrayList<>();
         for (NoteObjectI model : models) {
             if (model instanceof TextContainer)
                 textContainers.add(new TextContainer((TextContainer) model));
@@ -38,6 +33,8 @@ public class NoteSave implements Serializable {
                 imageContainers.add(new ImageContainer((ImageContainer) model));
             else if (model instanceof PaintingContainer)
                 paintingContainers.add(new PaintingContainer((PaintingContainer) model));
+            else if (model instanceof  TableContainer)
+                tableContainers.add(new TableContainer((TableContainer) model));
         }
     }
 
@@ -58,6 +55,7 @@ public class NoteSave implements Serializable {
         models.addAll(textContainers);
         models.addAll(imageContainers);
         models.addAll(paintingContainers);
+        models.addAll(tableContainers);
         return models;
     }
 
@@ -69,6 +67,9 @@ public class NoteSave implements Serializable {
             controllers.add(new ImageContainerController(imageContainer));
         for (PaintingContainer paintingContainer : paintingContainers)
             controllers.add(new PaintingContainerController(paintingContainer));
+        for (TableContainer tableContainer : tableContainers)
+            controllers.add(new TableContainerController(tableContainer));
+
 
         if (controllers.isEmpty())
             return false;

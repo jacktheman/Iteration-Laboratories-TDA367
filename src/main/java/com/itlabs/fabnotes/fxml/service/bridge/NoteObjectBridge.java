@@ -20,8 +20,9 @@ public class NoteObjectBridge {
         Note.getCurrentNote().addNoteObject(controller.getModel());
     }
 
-    public static void addTableToNote(TableContainerController tableContainerController){
-        Note.getCurrentNote().addNoteObject(tableContainerController.getModel());
+    public static void addTableToNote(int width, int height){
+        NoteObjectControllerI controller = new TableContainerController(0, 0);
+        Note.getCurrentNote().addNoteObject(controller.getModel());
     }
 
     public static void setPaintbrush(String shape) {

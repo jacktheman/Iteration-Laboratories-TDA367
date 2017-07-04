@@ -293,8 +293,7 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void createTable(){
-        TableContainerController tableContainerController = new TableContainerController(0, 0);
-        NoteObjectBridge.addTableToNote(tableContainerController);
+        NoteObjectBridge.addTableToNote(0,0);
     }
 
     @FXML

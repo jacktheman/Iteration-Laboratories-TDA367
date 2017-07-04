@@ -13,34 +13,31 @@ import java.util.List;
  */
 public class TableContainerController extends NoteObjectController<TableContainerView, TableContainer> {
 
-    public TableContainerController(double layoutX, double layoutY) {
-        super(new TableContainerView(), new TableContainer(layoutX, layoutY));
+    public TableContainerController(TableContainer tableContainer) {
+        super(new TableContainerView(tableContainer), tableContainer);
         super.getModel().addListener(super.getNode());
         super.setBehavior(new DragDropBehavior(super.getModel(), super.getNode()));
-        initFocusPropertyListener();
         initTextPropertyListener();
+    }
+
+    public TableContainerController(double layoutX, double layoutY) {
+        this(new TableContainer(layoutX, layoutY));
     }
 
 
     private void initTextPropertyListener() {
-        for (List<TextContainerView> textContainerViewsList : super.getNode().getTableListView()) {
-            for (TextContainerView textContainerView : textContainerViewsList) {
-                textContainerView.textProperty().addListener((value, oldValue, newValue) -> {
-                    super.getNode().updateText(super.getModel());
-                    textContainerView.changeBorder();
-                    textContainerView.updateTextContainerSize();
-                });
+        for (int i = 0; i < super.getModel().getWidth(); i++) {
+            for (int j =0; j < super.getModel().getHeight(); j++) {
+                TextContainerView textContainerView = super.getNode().getTableListView().get(i, j);
+                if (textContainerView != null) {
+                    textContainerView.textProperty().addListener((value, oldValue, newValue) -> {
+                        super.getNode().updateText(super.getModel());
+                        textContainerView.updateTextContainerSize();
+                    });
+                }
             }
         }
     }
 
-    private void initFocusPropertyListener() {
-        for (List<TextContainerView> textContainerViewsList : super.getNode().getTableListView()) {
-            for (TextContainerView textContainerView : textContainerViewsList) {
-                super.getNode().focusedProperty().addListener(e -> {
-                    textContainerView.changeBorder();
-                });
-            }
-        }
-    }
+
 }

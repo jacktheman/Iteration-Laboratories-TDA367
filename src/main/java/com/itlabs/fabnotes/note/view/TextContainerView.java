@@ -60,14 +60,16 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
         this.styles = this.styles.replace(style + STYLE_SPLITTER, "");
     }
 
-    private void switchToVisibleBorder() {
+    public void switchToVisibleBorder() {
         this.removeStyle(INVISABLE_BORDER);
         this.addStyle(VISABLE_BORDER);
+        this.setStyle(this.styles);
     }
 
-    private void switchToInvisibleBorder() {
+    public void switchToInvisibleBorder() {
         this.removeStyle(VISABLE_BORDER);
         this.addStyle(INVISABLE_BORDER);
+        this.setStyle(this.styles);
     }
 
     public void changeBorder() {
@@ -76,7 +78,6 @@ public class TextContainerView extends TextArea implements ObserverI<TextContain
         } else {
             switchToVisibleBorder();
         }
-        this.setStyle(this.styles);
     }
 
     @Override

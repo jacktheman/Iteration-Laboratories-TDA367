@@ -2,18 +2,15 @@ package com.itlabs.fabnotes.fxml.state;
 
 import com.itlabs.fabnotes.note.controller.ImageContainerController;
 import com.itlabs.fabnotes.note.controller.PaintingContainerController;
+import com.itlabs.fabnotes.note.controller.TableContainerController;
 import com.itlabs.fabnotes.note.controller.TextContainerController;
+import com.itlabs.fabnotes.note.model.*;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import com.itlabs.fabnotes.note.model.Note;
-import com.itlabs.fabnotes.note.model.ImageContainer;
-import com.itlabs.fabnotes.note.model.NoteObjectI;
-import com.itlabs.fabnotes.note.model.PaintingContainer;
-import com.itlabs.fabnotes.note.model.TextContainer;
 import com.itlabs.fabnotes.note.service.ContextMenuFactory;
 
 import java.net.MalformedURLException;
@@ -58,6 +55,8 @@ abstract class NoteState implements NoteStateI {
             return (new ImageContainerController((ImageContainer) noteObject).getModel());
         else if (noteObject instanceof PaintingContainer)
             return (new PaintingContainerController((PaintingContainer) noteObject).getModel());
+        else if (noteObject instanceof TableContainer)
+            return (new TableContainerController((TableContainer) noteObject).getModel());
         return null;
     }
 

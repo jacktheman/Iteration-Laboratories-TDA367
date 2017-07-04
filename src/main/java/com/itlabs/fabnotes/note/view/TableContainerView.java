@@ -2,6 +2,7 @@ package com.itlabs.fabnotes.note.view;
 
 import com.itlabs.fabnotes.note.model.Note;
 import com.itlabs.fabnotes.note.model.TableContainer;
+import com.itlabs.fabnotes.note.utility.ArrayMatrix;
 import com.itlabs.fabnotes.note.utility.observer.ObserverI;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
@@ -14,80 +15,104 @@ import java.util.List;
  */
 public class TableContainerView extends AnchorPane implements ObserverI<TableContainer> {
 
-    private List<List<TextContainerView>> tableListView;
+    private ArrayMatrix<TextContainerView> tableListView;
     private TilePane tilepane;
 
     public TableContainerView() {
-        tableListView = new ArrayList<>();
-        tilepane = new TilePane();
+        tableListView = new ArrayMatrix<>();
+        tilepane = new TilePane(5, 5);
 
         this.getChildren().add(tilepane);
 
         tilepane.setPrefColumns(3);
 
-        tableListView.add(new ArrayList<TextContainerView>());
-        tableListView.add(new ArrayList<TextContainerView>());
-        tableListView.add(new ArrayList<TextContainerView>());
-        for (List<TextContainerView> textContainerViews : tableListView) {
-            textContainerViews.add(new TextContainerView("", 0, 0));
-            textContainerViews.add(new TextContainerView("", 0, 0));
-            textContainerViews.add(new TextContainerView("", 0, 0));
+        for (int i = 0; i < 3; i++) {
+            tableListView.set(i, 0, createTableCell(""));
+            tableListView.set(i, 1, createTableCell(""));
+            tableListView.set(i, 2, createTableCell(""));
         }
+
+        addToTilePane();
+        
+        this.setStyle("-fx-background-color: RED");
+    }
+
+    public TableContainerView(TableContainer tableContainer) {
+        tableListView = new ArrayMatrix<>();
+        tilepane = new TilePane(5, 5);
+
+        this.getChildren().add(tilepane);
+        tilepane.setPrefColumns(tableContainer.getWidth());
+        setText(tableContainer.getWidth(), tableContainer.getHeight(), tableContainer.getTable());
+        addToTilePane();
+        this.setStyle("-fx-background-color: RED");
+    }
+    
+    private TextContainerView createTableCell (String str) {
+        TextContainerView textContainerView = new TextContainerView(str, 0, 0);
+        textContainerView.switchToVisibleBorder();
+        return textContainerView;
     }
 
 
     public void addColumn (List<String> list) {
-        List<TextContainerView> newColumn = new ArrayList<>();
-        for (String string: list) {
-            TextContainerView textContainerView = new TextContainerView(string, 0, 0);
-            newColumn.add(textContainerView);
+        int x = tableListView.sizeWidth();
+        for (int i = 0; i < list.size(); i++) {
+            tableListView.set(x, i, createTableCell(list.get(i)));
         }
         tilepane.setPrefColumns(tilepane.getPrefColumns() + 1);
         addToTilePane();
     }
 
     public void removeColumn () {
-        List<TextContainerView> columns = tableListView.get(tableListView.size() - 1);
-        for (TextContainerView textContainerView : columns) {
-            tableListView.remove(textContainerView);
-        }
+        tableListView.removeColumn(tableListView.sizeWidth()-1);
         tilepane.setPrefColumns(tilepane.getPrefColumns() - 1);
         addToTilePane();
     }
 
     public void addRow (List<String> list) {
+        int y = tableListView.sizeHeight();
         for (int i = 0; i <list.size(); i++){
-            TextContainerView view = new TextContainerView(list.get(i), 0, 0);
-            tableListView.get(i).set(tableListView.get(0).size()-1, view);
+            TextContainerView view = createTableCell(list.get(i));
+            tableListView.set(i, y, view);
         }
     }
 
     public void removeRow () {
-        for (List<TextContainerView> list : tableListView){
-            TextContainerView object = list.get(list.size() - 1);
-            list.remove(object);
-        }
+        tableListView.removeRow(tableListView.sizeHeight());
         addToTilePane();
     }
 
     public void addToTilePane () {
         tilepane.getChildren().clear();
-        for (int i = 0; i <tableListView.get(0).size(); i++){
-            for (int j = 0; j < tableListView.size(); j++) {
-                tilepane.getChildren().add(tableListView.get(j).get(i));
+        for (int i = 0; i <tableListView.sizeHeight(); i++){
+            for (int j = 0; j < tableListView.sizeWidth(); j++) {
+                tilepane.getChildren().add(tableListView.get(j, i));
+            }
+        }
+    }
+
+    public void setText (int width, int height, ArrayMatrix<String> arrayMatrix) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                String str = arrayMatrix.get(i, j);
+                if (str == null) {
+                    str = "";
+                }
+                tableListView.set(i, j, createTableCell(str));
             }
         }
     }
 
     public void updateText(TableContainer tableContainer) {
-        for (int i = 0; i < tableListView.size(); i++){
-            for (int j = 0; j < tableListView.get(0).size(); j++){
-                tableContainer.addText(i, j, tableListView.get(i).get(j).getText());
+        for (int i = 0; i < tableListView.sizeWidth(); i++){
+            for (int j = 0; j < tableListView.sizeHeight(); j++){
+                tableContainer.addText(i, j, tableListView.get(i, j).getText());
             }
         }
     }
 
-    public List<List<TextContainerView>> getTableListView() {
+    public ArrayMatrix<TextContainerView> getTableListView() {
         return tableListView;
     }
 
@@ -95,21 +120,27 @@ public class TableContainerView extends AnchorPane implements ObserverI<TableCon
     public void fireChange(TableContainer subject) {
         this.setLayoutX(subject.getLayoutX());
         this.setLayoutY(subject.getLayoutY());
-        List<List<String>> table = subject.getTable();
-        if (table.size() > this.tableListView.size()){
-            addColumn(table.get(table.size() - 1));
-        } else if (table.size() < this.tableListView.size()){
+        ArrayMatrix<String> table = subject.getTable();
+        if (subject.getWidth() > this.tableListView.sizeWidth()){
+            addColumn(subject.getColumn(subject.getWidth() - 1));
+        } else if (subject.getWidth() < this.tableListView.sizeWidth()){
             removeColumn();
         }
-        if (table.get(0).size() > tableListView.get(0).size()){
-            addRow(subject.getRow(table.get(0).size() - 1));
-        } else if (table.get(0).size() < tableListView.get(0).size()) {
+        if (subject.getHeight() > tableListView.sizeHeight()){
+            addRow(subject.getRow(subject.getHeight() - 1));
+        } else if (subject.getHeight() < tableListView.sizeHeight()) {
             removeRow();
         }
 
         if (!Note.getCurrentNodes().contains(this)) {
-            Note.getCurrentNodes().add(this);
-            this.requestFocus();
+            if (subject.isAlive()) {
+                Note.getCurrentNodes().add(this);
+                this.requestFocus();
+            }
+        } else {
+            if (!subject.isAlive()) {
+                Note.getCurrentNodes().remove(this);
+            }
         }
     }
 }
