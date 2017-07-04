@@ -109,6 +109,10 @@ abstract class NoteObjectController<T1 extends Node, T2 extends NoteObjectI> imp
         contextMenu = ContextMenuFactory.createContextMenu(copy,remove,putToFront);
     }
 
+    public ContextMenu getContextMenu () {
+        return contextMenu;
+    }
+
     @Override
     public T1 getNode() {
         return this.view;

@@ -21,13 +21,16 @@ public class TableContainer extends NoteObject implements ObservableI{
 
     private List<ObserverI<TableContainer>> listeners;
 
+    private static final int DEFAULT_WIDTH = 3;
+    private static final int DEFAULT_HEIGHT = 3;
+
     public TableContainer() {
         tableList = new ArrayMatrix<>();
         layoutX = 0;
         layoutY = 0;
         alive = false;
-        width = 3;
-        height = 3;
+        width = DEFAULT_WIDTH;
+        height = DEFAULT_HEIGHT;
 
         listeners = new ArrayList<>();
     }
@@ -51,28 +54,28 @@ public class TableContainer extends NoteObject implements ObservableI{
 
     public void addColumn() {
         width++;
+        fireChange();
     }
 
     public void addRow() {
         height++;
+        fireChange();
     }
 
     public void deleteColumn(int i) {
-        tableList.removeColumn(i);
-        width--;
+        if (width > 1 ) {
+            tableList.removeColumn(i);
+            width--;
+            fireChange();
+        }
     }
 
     public void deleteRow(int i) {
-        tableList.removeRow(i);
-        height--;
-    }
-
-    public int getNumberOfColumns() {
-        return width;
-    }
-
-    public int getNumberOfRows() {
-        return height;
+        if (height > 1) {
+            tableList.removeRow(i);
+            height--;
+            fireChange();
+        }
     }
 
     public void addText(int x, int y, String str) {

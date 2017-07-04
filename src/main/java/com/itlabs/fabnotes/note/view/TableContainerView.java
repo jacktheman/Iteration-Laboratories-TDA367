@@ -18,34 +18,21 @@ public class TableContainerView extends AnchorPane implements ObserverI<TableCon
     private ArrayMatrix<TextContainerView> tableListView;
     private TilePane tilepane;
 
-    public TableContainerView() {
-        tableListView = new ArrayMatrix<>();
-        tilepane = new TilePane(5, 5);
+    private static final String STYLE = "-fx-background-color: WHITE; -fx-border-color: BLACK";
+    private static final int HGAP = 10;
+    private static final int VGAP = 10;
 
-        this.getChildren().add(tilepane);
-
-        tilepane.setPrefColumns(3);
-
-        for (int i = 0; i < 3; i++) {
-            tableListView.set(i, 0, createTableCell(""));
-            tableListView.set(i, 1, createTableCell(""));
-            tableListView.set(i, 2, createTableCell(""));
-        }
-
-        addToTilePane();
-        
-        this.setStyle("-fx-background-color: RED");
-    }
 
     public TableContainerView(TableContainer tableContainer) {
         tableListView = new ArrayMatrix<>();
-        tilepane = new TilePane(5, 5);
-
+        tilepane = new TilePane(HGAP, VGAP);
+        tilepane.setLayoutX(2);
+        tilepane.setLayoutY(2);
         this.getChildren().add(tilepane);
         tilepane.setPrefColumns(tableContainer.getWidth());
         setText(tableContainer.getWidth(), tableContainer.getHeight(), tableContainer.getTable());
         addToTilePane();
-        this.setStyle("-fx-background-color: RED");
+        this.setStyle(STYLE);
     }
     
     private TextContainerView createTableCell (String str) {
@@ -76,10 +63,11 @@ public class TableContainerView extends AnchorPane implements ObserverI<TableCon
             TextContainerView view = createTableCell(list.get(i));
             tableListView.set(i, y, view);
         }
+        addToTilePane();
     }
 
     public void removeRow () {
-        tableListView.removeRow(tableListView.sizeHeight());
+        tableListView.removeRow(tableListView.sizeHeight()-1);
         addToTilePane();
     }
 
@@ -120,7 +108,6 @@ public class TableContainerView extends AnchorPane implements ObserverI<TableCon
     public void fireChange(TableContainer subject) {
         this.setLayoutX(subject.getLayoutX());
         this.setLayoutY(subject.getLayoutY());
-        ArrayMatrix<String> table = subject.getTable();
         if (subject.getWidth() > this.tableListView.sizeWidth()){
             addColumn(subject.getColumn(subject.getWidth() - 1));
         } else if (subject.getWidth() < this.tableListView.sizeWidth()){
